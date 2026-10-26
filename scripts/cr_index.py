@@ -1,6 +1,10 @@
 """CR-1: build the blob-keyed chunk and token cache for every base commit.
 
-No vectors here (CR-1b). Writes runs/cr/index-stats.json.
+    cr_index.py                       chunk/token cache for all 500 instances (runs/cr/index-stats.json)
+    cr_index.py --embed MODEL --split dev [--sample N --estimate-split dev]
+                                      vector cache for one model (test needs --allow-test, CR-1c only)
+    cr_index.py --count-texts --split test --minus-split dev
+                                      unique chunk-text counts only (no model, no retrieval)
 """
 from __future__ import annotations
 
@@ -202,10 +206,11 @@ def main() -> int:
     ap.add_argument("--estimate-split", choices=["dev"])
     ap.add_argument("--count-texts", action="store_true")
     ap.add_argument("--minus-split", choices=["dev"])
+    ap.add_argument("--allow-test", action="store_true", help="embed test chunks (CR-1c only)")
     args = ap.parse_args()
     if args.embed:
-        if args.split != "dev":
-            print("CR-1b embeds dev only")
+        if args.split != "dev" and not args.allow_test:
+            print("refusing to embed test before CR-1c (pass --allow-test only in CR-1c)")
             return 2
         return cmd_embed(args)
     if args.count_texts:
