@@ -1,5 +1,6 @@
 """End to end on a tiny local repo: cache, snapshot, retrievers, labels, metrics."""
 import importlib.util
+import sys
 from pathlib import Path
 
 import pyarrow as pa
@@ -40,6 +41,7 @@ GOLD_DIFF = (
 def _load_cr_eval():
     spec = importlib.util.spec_from_file_location("cr_eval_pipeline", ROOT / "scripts" / "cr_eval.py")
     mod = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = mod  # dataclasses resolve string annotations through sys.modules
     spec.loader.exec_module(mod)
     return mod
 

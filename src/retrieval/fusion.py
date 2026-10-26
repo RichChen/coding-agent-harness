@@ -24,6 +24,21 @@ def max_by_file(chunk_scores, chunk_file, n_files: int) -> np.ndarray:
     return out
 
 
+def ranks_from_order(order: list[int], n: int) -> np.ndarray:
+    """1-based rank of every item given a full ordering of ``range(n)``."""
+    ranks = np.empty(n, np.int64)
+    ranks[np.asarray(order, np.int64)] = np.arange(1, n + 1)
+    return ranks
+
+
+def rrf(rank_arrays, weights, k: float) -> np.ndarray:
+    """score = sum_i w_i / (k + rank_i), over full 1-based rank arrays."""
+    out = np.zeros(len(rank_arrays[0]), np.float64)
+    for ranks, w in zip(rank_arrays, weights):
+        out += w / (k + np.asarray(ranks, np.float64))
+    return out
+
+
 def random_order(n: int, instance_id: str, salt: str = "") -> list[int]:
     seed = int(hashlib.sha256(f"{RANDOM_SEED}:{instance_id}:{salt}".encode()).hexdigest()[:16], 16)
     idx = list(range(n))

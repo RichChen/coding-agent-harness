@@ -7,6 +7,8 @@ from src.retrieval.fusion import (
     module_names,
     order_by_score,
     random_order,
+    ranks_from_order,
+    rrf,
 )
 
 
@@ -62,3 +64,15 @@ def test_no_partial_identifier_match():
 
 def test_mention_first_is_stable():
     assert mention_first([4, 2, 0, 3, 1], {3, 0}) == [0, 3, 4, 2, 1]
+
+
+def test_ranks_from_order():
+    assert ranks_from_order([2, 0, 1], 3).tolist() == [2, 3, 1]
+
+
+def test_rrf_formula_and_weights():
+    a = np.array([1, 2, 3])
+    b = np.array([3, 2, 1])
+    out = rrf([a, b], [1.0, 2.0], 60)
+    assert np.allclose(out, [1 / 61 + 2 / 63, 1 / 62 + 2 / 62, 1 / 63 + 2 / 61])
+    assert order_by_score(rrf([a, b], [1.0, 1.0], 10), ["x", "y", "z"]) == [0, 2, 1]  # symmetric tie -> key
