@@ -54,7 +54,11 @@ def _load_dotenv_if_present(dotenv_path: Path) -> dict[str, str]:
             values[key] = value
     return values
 
-
+"""
+输入：YAML 路径；其中 ${VAR:默认值} 依次用环境变量、上级目录的 .env、默认值替换。
+输出：经 HarnessConfig 校验后的普通 dict，交给 build_agent；教学入口还把它存成 config.json。
+失败入口：YAML 语法错误，或 pydantic ValidationError（未知字段、类型不对，报错里有字段路径），都在终端 traceback 里。
+"""
 def load_config(config_path: str | Path) -> dict:
     """Load a YAML config file with ${VAR:default} env-var substitution.
 
@@ -82,7 +86,12 @@ def load_config(config_path: str | Path) -> dict:
     # Validate and return as dict (not model instance) for backwards compat
     return HarnessConfig.model_validate(data).model_dump()
 
-
+"""
+输入：配置 dict + workspace 路径（+ 可选的 tracer、event_bus、外部注入的执行后端）。
+输出：装好 llm/tools/sandbox/budget/retry/hooks 的 AgentLoop，交给调用方，再由 RunSession.run 驱动。
+失败入口：组合不合法时直接抛 ValueError（如 Docker 配置下开了不允许的工具、启用子 agent 却不共享预算）
+，system prompt 文件不存在时抛 FileNotFoundError；都发生在会话创建之前，只能看终端 traceback。
+"""
 def build_agent(
     config: dict,
     workspace: Path,

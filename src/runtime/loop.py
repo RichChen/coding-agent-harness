@@ -1281,3 +1281,12 @@ class AgentLoop:
         if payload.get("schema_ok") is not None:
             record["schema_ok"] = payload.get("schema_ok")
         return record
+
+
+
+"""
+AgentLoop._run_loop
+输入：任务文本 + task_id，以及 build_agent 装好、RunSession.run 挂上 session 的 self（llm/tools/sandbox/budget/hooks）。
+输出：AgentRunResult（success、final_answer、steps、各计数器、model_budget），返回给 RunSession.run 再到教学入口；过程中每轮写 state.saved 等事件，每步 tracer.log_step。
+失败入口：几乎所有失败都 return success=False 并带 failure_reason/termination_kind，看 summary.json；单个工具失败不结束循环，只让 tool_failures 加 1、报错进下一轮的 tool message；只有 StoreError 会以 traceback 直接抛出。
+"""

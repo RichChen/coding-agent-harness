@@ -289,6 +289,11 @@ class RunSession:
         if self.state.terminal is None:
             self.append("run.finished", plain(result))
 
+    """
+    输入：build_agent 装好的 AgentLoop + 任务文本。
+    输出：先做兼容性检查、恢复预算和截止时间，再把自己挂到 loop 上，返回 loop.run 的 AgentRunResult；过程中的事件写入 session/events.sqlite3。
+    失败入口：模式/工作区/任务/运行时指纹/预算不一致或已过期时抛 StoreError；运行中的事件用 replay 只读查看，或直接查 events.sqlite3。
+    """
     async def run(self, loop, task_description: str):
         if self._running:
             raise StoreError("session already running in this process")
