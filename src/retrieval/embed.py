@@ -111,8 +111,25 @@ class VectorStore:
         )
         self.db.commit()
 
+    def preload(self) -> int:
+        """Read every vector with one sequential scan; later ``get_matrix`` calls
+        are served from memory (random sqlite reads are slow on spinning disks)."""
+        shas, blobs = [], []
+        for s, v in self.db.execute("SELECT text_sha, v FROM vec"):
+            shas.append(s)
+            blobs.append(v)
+        self._mem_index = {s: i for i, s in enumerate(shas)}
+        self._mem = np.frombuffer(b"".join(blobs), np.float16).reshape(len(shas), -1) if shas else None
+        return len(shas)
+
     def get_matrix(self, shas: list[str]) -> np.ndarray:
         """float32 matrix in the order of ``shas``; raises if any is missing."""
+        if getattr(self, "_mem_index", None) is not None:
+            idx = [self._mem_index.get(s) for s in shas]
+            n_missing = sum(i is None for i in idx)
+            if n_missing:
+                raise KeyError(f"{n_missing} vectors missing in {self.path.name}")
+            return self._mem[idx].astype(np.float32)
         found: dict[str, np.ndarray] = {}
         uniq = list(dict.fromkeys(shas))
         for i in range(0, len(uniq), 900):

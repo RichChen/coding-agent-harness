@@ -37,6 +37,10 @@ def test_vector_store_round_trip(tmp_path):
     assert vs.truncation_stats(shas) == (1, 3)
     with pytest.raises(KeyError):
         vs.get_matrix([text_sha("d")])
+    assert vs.preload() == 3
+    assert np.array_equal(vs.get_matrix([shas[2], shas[0], shas[2]]), got)
+    with pytest.raises(KeyError):
+        vs.get_matrix([text_sha("d")])
     vs.close()
 
 

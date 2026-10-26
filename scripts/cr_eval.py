@@ -286,7 +286,16 @@ def parse_model_arg(arg: str) -> tuple[str, int]:
 
 
 def _stores_setup(models: list[tuple[str, int]]):
-    return lambda: {key: VectorStore(MODELS[key], length) for key, length in models}
+    def setup() -> dict:
+        stores = {}
+        for key, length in models:
+            t = time.time()
+            stores[key] = VectorStore(MODELS[key], length)
+            n = stores[key].preload()
+            print(f"preloaded {n} vectors for {key} in {time.time() - t:.0f}s", flush=True)
+        return stores
+
+    return setup
 
 
 def per_instance_embed_select(q: QueryView, ix: SnapshotIndex, stores: dict) -> dict:
