@@ -112,11 +112,23 @@ def test_analyze_end_to_end(tmp_path):
             runs.append({**base, "group": "t", "run_dir": run_dir(task, "t", k, [started(), intent("retrieve_code", query="q"),
                                                                                   started(), intent("read_file", path="pkg/core.py")],
                                                                      [{"call_id": "1", "files": [{"path": "pkg/core.py"}]}])})
+            gold_path = "pkg/core.py" if task == "a" else "other.py"
+            runs.append({**base, "group": "o", "solved": True,
+                         "run_dir": run_dir(task, "o", k, [started(), intent("read_file", path=gold_path)])})
     gold = {"a": GOLD, "b": ("other.py",)}
     prefetch = {"a": {"files": [{"path": "pkg/core.py"}]}, "b": {"files": [{"path": "pkg/core.py"}]}}
-    report = an.analyze(runs, gold, prefetch, root=tmp_path)
-    assert report["complete"] and report["runs"] == 12
-    assert report["group_means"]["first_gold_step"] == {"n": (4 + 41) / 2, "p": (1 + 41) / 2, "t": (2 + 41) / 2}
+    assert not an.analyze(runs, gold, prefetch, root=tmp_path)["complete"]
+    report = an.analyze(runs, gold, prefetch, root=tmp_path, repeats=2)
+    assert report["complete"] and report["runs"] == 16
+    assert report["group_means"]["first_gold_step"]["o"] == 1
+    assert report["paired"]["first_gold_step"]["o_minus_n"]["diff"] == pytest.approx(1 - (4 + 41) / 2)
+    assert report["paired"]["solved"]["o_minus_n"]["diff"] == pytest.approx(1.0)
+    assert report["paired"]["solved"]["p_minus_n"]["diff"] == pytest.approx(0.0)
+    early = report["solve_by_early_touch"]
+    assert early["o"]["touched_within_10"] == {"runs": 4, "solved": 4, "rate": 1.0}
+    assert early["o"]["not_touched_within_10"] == {"runs": 0, "solved": 0, "rate": None}
+    assert early["n"]["touched_within_10"]["runs"] == 2 and early["n"]["not_touched_within_10"]["rate"] == 0.0
+    assert report["group_means"]["first_gold_step"] == {"n": (4 + 41) / 2, "p": (1 + 41) / 2, "t": (2 + 41) / 2, "o": 1}
     assert report["paired"]["first_gold_step"]["p_minus_n"]["diff"] == pytest.approx(-1.5)
     assert report["t_only"]["share_with_call"] == 1.0 and report["t_only"]["first_call_step_mean"] == 1
     assert report["t_only"]["share_gold_in_any_result"] == 0.5
