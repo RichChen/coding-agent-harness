@@ -1,0 +1,64 @@
+{
+  "code_commit": "f1d1b929175504850bfb11995751da985dbb1192",
+  "parquet_sha256": "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd",
+  "split_file": "docs/retrieval/cr1-split.json",
+  "chunk_cache_version": "chunk1-tok1",
+  "tokenizer_version": "1",
+  "top_k": 100,
+  "file_aggregation": "max over the file's chunks",
+  "ties": "path (files) / (path, start_line) (chunks)",
+  "bm25": {
+    "retriever": "bm25_chunk",
+    "k1": 1.2,
+    "b": 0.75
+  },
+  "embedding": {
+    "model": "jina-code",
+    "name": "jinaai/jina-embeddings-v2-base-code",
+    "revision": "516f4baf13dec4ddddda8631e019b5737c8bc250",
+    "code_revision": "3baf9e3ac750e76e8edd3019170176884695fb94",
+    "trust_remote_code": true,
+    "license": "apache-2.0",
+    "query_prefix": "",
+    "doc_prefix": "",
+    "max_len": 512,
+    "dtype": "float16",
+    "similarity": "dot product of unit-norm vectors"
+  },
+  "hybrid": {
+    "name": "hybrid_k60_w2_filefuse_bm25chunk",
+    "config": {
+      "k": 60,
+      "w_emb": 2.0,
+      "fusion": "file",
+      "bm25": "chunk"
+    },
+    "bm25_weight": 1.0,
+    "chunk_ranking": "chunk-level RRF of bm25_chunk and embedding chunk ranks (same k, w_emb)"
+  },
+  "hybrid_mention": {
+    "base": "hybrid",
+    "rerank": "fusion.mention_first (same as path_mention)"
+  },
+  "dev_selection": {
+    "embedding_mrr": {
+      "qwen3-0.6b": 0.656334767084767,
+      "jina-code": 0.692257704713587,
+      "coderank": 0.6832469401943086
+    },
+    "hybrid_mrr": 0.7419025280275281,
+    "hybrid_best_mrr": 0.7517326464385288
+  },
+  "dependencies": {
+    "python": "3.13.9",
+    "numpy": "2.5.3",
+    "pyarrow": "25.0.1",
+    "torch": "2.14.1+cu126",
+    "sentence-transformers": "5.7.0",
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2",
+    "safetensors": "0.8.0",
+    "huggingface-hub": "0.36.2",
+    "einops": "0.8.2"
+  }
+}

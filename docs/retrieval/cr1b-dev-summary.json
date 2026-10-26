@@ -1,0 +1,612 @@
+{
+  "embed_select": {
+    "code_commit": "f1d1b929175504850bfb11995751da985dbb1192",
+    "models": {
+      "qwen3-0.6b": {
+        "max_len": 512,
+        "all": {
+          "n": 100,
+          "hit@1": 0.51,
+          "hit@5": 0.82,
+          "hit@10": 0.94,
+          "recall@10": 0.9130000000000001,
+          "mrr": 0.656334767084767,
+          "fn_hit@5": 0.57,
+          "fn_hit@10": 0.66
+        },
+        "macro": {
+          "n_repos": 11,
+          "hit@1": 0.5584415584415585,
+          "hit@5": 0.8512987012987014,
+          "hit@10": 0.9538311688311688,
+          "recall@10": 0.9174935064935066,
+          "mrr": 0.7006291141518414,
+          "fn_hit@5": 0.5790259740259741,
+          "fn_hit@10": 0.6853246753246753
+        }
+      },
+      "jina-code": {
+        "max_len": 512,
+        "all": {
+          "n": 100,
+          "hit@1": 0.58,
+          "hit@5": 0.82,
+          "hit@10": 0.93,
+          "recall@10": 0.8993333333333333,
+          "mrr": 0.692257704713587,
+          "fn_hit@5": 0.53,
+          "fn_hit@10": 0.61
+        },
+        "macro": {
+          "n_repos": 11,
+          "hit@1": 0.5222077922077922,
+          "hit@5": 0.7376623376623376,
+          "hit@10": 0.9067532467532469,
+          "recall@10": 0.851112554112554,
+          "mrr": 0.6431048585147133,
+          "fn_hit@5": 0.46941558441558445,
+          "fn_hit@10": 0.615
+        }
+      },
+      "coderank": {
+        "max_len": 512,
+        "all": {
+          "n": 100,
+          "hit@1": 0.56,
+          "hit@5": 0.83,
+          "hit@10": 0.89,
+          "recall@10": 0.873,
+          "mrr": 0.6832469401943086,
+          "fn_hit@5": 0.53,
+          "fn_hit@10": 0.62
+        },
+        "macro": {
+          "n_repos": 11,
+          "hit@1": 0.6301948051948053,
+          "hit@5": 0.7710389610389611,
+          "hit@10": 0.8899350649350649,
+          "recall@10": 0.839961038961039,
+          "mrr": 0.7072274351777941,
+          "fn_hit@5": 0.5141558441558441,
+          "fn_hit@10": 0.5679220779220778
+        }
+      }
+    },
+    "bm25_chunk": {
+      "all": {
+        "n": 100,
+        "hit@1": 0.46,
+        "hit@5": 0.67,
+        "hit@10": 0.8,
+        "recall@10": 0.7693333333333334,
+        "mrr": 0.569689462704665,
+        "fn_hit@5": 0.47,
+        "fn_hit@10": 0.59
+      },
+      "macro": {
+        "n_repos": 11,
+        "hit@1": 0.3552597402597403,
+        "hit@5": 0.6744155844155845,
+        "hit@10": 0.7724025974025974,
+        "recall@10": 0.6826709956709957,
+        "mrr": 0.48416691031273545,
+        "fn_hit@5": 0.3734415584415584,
+        "fn_hit@10": 0.4806493506493506
+      }
+    },
+    "paired_vs_bm25_chunk": {
+      "qwen3-0.6b": {
+        "hit@5": {
+          "diff": 0.15,
+          "lo": 0.06,
+          "hi": 0.24
+        },
+        "mrr": {
+          "diff": 0.08664530438010211,
+          "lo": -0.004331986628818097,
+          "hi": 0.17803959235210792
+        }
+      },
+      "jina-code": {
+        "hit@5": {
+          "diff": 0.15,
+          "lo": 0.04,
+          "hi": 0.26
+        },
+        "mrr": {
+          "diff": 0.12256824200892211,
+          "lo": 0.026770134710346002,
+          "hi": 0.21618121670594326
+        }
+      },
+      "coderank": {
+        "hit@5": {
+          "diff": 0.16,
+          "lo": 0.06,
+          "hi": 0.26
+        },
+        "mrr": {
+          "diff": 0.11355747748964365,
+          "lo": 0.01800959979320122,
+          "hi": 0.20909724486927425
+        }
+      }
+    },
+    "selection_rule": "highest dev file-level MRR of the model retrieving alone (contract 11.2)",
+    "selected": "jina-code",
+    "selected_max_len": 512,
+    "seconds_per_instance": {
+      "n": 100,
+      "min": 0.04,
+      "median": 0.87,
+      "mean": 0.8902999999999999,
+      "p90": 1.442000000000001,
+      "max": 2.33
+    }
+  },
+  "grid": {
+    "code_commit": "f1d1b929175504850bfb11995751da985dbb1192",
+    "model": "jina-code",
+    "max_len": 512,
+    "n_configs": 24,
+    "table": [
+      {
+        "name": "hybrid_k10_w2_filefuse_bm25chunk",
+        "k": 10,
+        "w_emb": 2.0,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.64,
+        "hit@5": 0.91,
+        "hit@10": 0.94,
+        "recall@10": 0.9113333333333332,
+        "mrr": 0.7517326464385288,
+        "fn_hit@5": 0.6,
+        "fn_hit@10": 0.7,
+        "macro_mrr": 0.7423295883303523,
+        "within_0.01_of_best": true
+      },
+      {
+        "name": "hybrid_k60_w2_filefuse_bm25chunk",
+        "k": 60,
+        "w_emb": 2.0,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.63,
+        "hit@5": 0.9,
+        "hit@10": 0.94,
+        "recall@10": 0.9163333333333332,
+        "mrr": 0.7419025280275281,
+        "fn_hit@5": 0.63,
+        "fn_hit@10": 0.74,
+        "macro_mrr": 0.7658732475136696,
+        "within_0.01_of_best": true
+      },
+      {
+        "name": "hybrid_k30_w2_filefuse_bm25chunk",
+        "k": 30,
+        "w_emb": 2.0,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.62,
+        "hit@5": 0.91,
+        "hit@10": 0.93,
+        "recall@10": 0.9013333333333332,
+        "mrr": 0.7405737734487734,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.72,
+        "macro_mrr": 0.7258922152883192,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k10_w1_filefuse_bm25chunk",
+        "k": 10,
+        "w_emb": 1.0,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.6,
+        "hit@5": 0.91,
+        "hit@10": 0.95,
+        "recall@10": 0.9213333333333332,
+        "mrr": 0.7294278442146088,
+        "fn_hit@5": 0.65,
+        "fn_hit@10": 0.71,
+        "macro_mrr": 0.7170301536698594,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w1_filefuse_bm25chunk",
+        "k": 30,
+        "w_emb": 1.0,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.6,
+        "hit@5": 0.9,
+        "hit@10": 0.94,
+        "recall@10": 0.9113333333333332,
+        "mrr": 0.7253277417027416,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.75,
+        "macro_mrr": 0.7405691235171755,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w1_filefuse_bm25chunk",
+        "k": 60,
+        "w_emb": 1.0,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.6,
+        "hit@5": 0.89,
+        "hit@10": 0.94,
+        "recall@10": 0.9113333333333332,
+        "mrr": 0.7214906570038149,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.74,
+        "macro_mrr": 0.7379877779621457,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w1_filefuse_bm25file",
+        "k": 30,
+        "w_emb": 1.0,
+        "fusion": "file",
+        "bm25": "file",
+        "hit@1": 0.61,
+        "hit@5": 0.87,
+        "hit@10": 0.96,
+        "recall@10": 0.929,
+        "mrr": 0.7201399335958159,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.75,
+        "macro_mrr": 0.711261099544713,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w2_chunkfuse_bm25chunk",
+        "k": 60,
+        "w_emb": 2.0,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.61,
+        "hit@5": 0.88,
+        "hit@10": 0.96,
+        "recall@10": 0.9343333333333333,
+        "mrr": 0.718706349206349,
+        "fn_hit@5": 0.63,
+        "fn_hit@10": 0.74,
+        "macro_mrr": 0.7202986497629355,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w2_chunkfuse_bm25chunk",
+        "k": 30,
+        "w_emb": 2.0,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.61,
+        "hit@5": 0.87,
+        "hit@10": 0.94,
+        "recall@10": 0.9143333333333333,
+        "mrr": 0.7153949522699523,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.72,
+        "macro_mrr": 0.7105084021317788,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w1_chunkfuse_bm25chunk",
+        "k": 60,
+        "w_emb": 1.0,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.61,
+        "hit@5": 0.86,
+        "hit@10": 0.97,
+        "recall@10": 0.9443333333333334,
+        "mrr": 0.7152164502164502,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.74,
+        "macro_mrr": 0.7598296414984727,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w0.5_filefuse_bm25chunk",
+        "k": 60,
+        "w_emb": 0.5,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.61,
+        "hit@5": 0.87,
+        "hit@10": 0.91,
+        "recall@10": 0.8813333333333333,
+        "mrr": 0.713129718898784,
+        "fn_hit@5": 0.63,
+        "fn_hit@10": 0.69,
+        "macro_mrr": 0.7191428653501656,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w1_filefuse_bm25file",
+        "k": 60,
+        "w_emb": 1.0,
+        "fusion": "file",
+        "bm25": "file",
+        "hit@1": 0.6,
+        "hit@5": 0.86,
+        "hit@10": 0.96,
+        "recall@10": 0.924,
+        "mrr": 0.7130602453102455,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.74,
+        "macro_mrr": 0.7025679756751185,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k10_w2_chunkfuse_bm25chunk",
+        "k": 10,
+        "w_emb": 2.0,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.61,
+        "hit@5": 0.85,
+        "hit@10": 0.94,
+        "recall@10": 0.9159999999999999,
+        "mrr": 0.7111203420762244,
+        "fn_hit@5": 0.6,
+        "fn_hit@10": 0.7,
+        "macro_mrr": 0.6864605161623877,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w1_chunkfuse_bm25chunk",
+        "k": 30,
+        "w_emb": 1.0,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.6,
+        "hit@5": 0.87,
+        "hit@10": 0.94,
+        "recall@10": 0.9093333333333333,
+        "mrr": 0.7097380952380952,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.75,
+        "macro_mrr": 0.7556796536796536,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w2_filefuse_bm25file",
+        "k": 30,
+        "w_emb": 2.0,
+        "fusion": "file",
+        "bm25": "file",
+        "hit@1": 0.58,
+        "hit@5": 0.9,
+        "hit@10": 0.97,
+        "recall@10": 0.9463333333333332,
+        "mrr": 0.7074362581862581,
+        "fn_hit@5": 0.64,
+        "fn_hit@10": 0.72,
+        "macro_mrr": 0.6930713788376125,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w0.5_filefuse_bm25chunk",
+        "k": 30,
+        "w_emb": 0.5,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.6,
+        "hit@5": 0.86,
+        "hit@10": 0.91,
+        "recall@10": 0.8813333333333333,
+        "mrr": 0.7044862301969685,
+        "fn_hit@5": 0.61,
+        "fn_hit@10": 0.68,
+        "macro_mrr": 0.711086229450406,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w2_filefuse_bm25file",
+        "k": 60,
+        "w_emb": 2.0,
+        "fusion": "file",
+        "bm25": "file",
+        "hit@1": 0.58,
+        "hit@5": 0.9,
+        "hit@10": 0.98,
+        "recall@10": 0.9543333333333334,
+        "mrr": 0.7030876623376624,
+        "fn_hit@5": 0.63,
+        "fn_hit@10": 0.74,
+        "macro_mrr": 0.6891081595172504,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k10_w1_chunkfuse_bm25chunk",
+        "k": 10,
+        "w_emb": 1.0,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.59,
+        "hit@5": 0.82,
+        "hit@10": 0.91,
+        "recall@10": 0.8793333333333334,
+        "mrr": 0.6993288178110159,
+        "fn_hit@5": 0.65,
+        "fn_hit@10": 0.71,
+        "macro_mrr": 0.6738816941377102,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w0.5_filefuse_bm25file",
+        "k": 60,
+        "w_emb": 0.5,
+        "fusion": "file",
+        "bm25": "file",
+        "hit@1": 0.58,
+        "hit@5": 0.83,
+        "hit@10": 0.93,
+        "recall@10": 0.9009999999999999,
+        "mrr": 0.6965913386930009,
+        "fn_hit@5": 0.63,
+        "fn_hit@10": 0.69,
+        "macro_mrr": 0.7203877946287355,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w0.5_filefuse_bm25file",
+        "k": 30,
+        "w_emb": 0.5,
+        "fusion": "file",
+        "bm25": "file",
+        "hit@1": 0.58,
+        "hit@5": 0.83,
+        "hit@10": 0.92,
+        "recall@10": 0.8909999999999999,
+        "mrr": 0.6959803730583143,
+        "fn_hit@5": 0.61,
+        "fn_hit@10": 0.68,
+        "macro_mrr": 0.7195289027181121,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k10_w0.5_filefuse_bm25chunk",
+        "k": 10,
+        "w_emb": 0.5,
+        "fusion": "file",
+        "bm25": "chunk",
+        "hit@1": 0.59,
+        "hit@5": 0.86,
+        "hit@10": 0.9,
+        "recall@10": 0.8693333333333334,
+        "mrr": 0.6937048042537173,
+        "fn_hit@5": 0.59,
+        "fn_hit@10": 0.66,
+        "macro_mrr": 0.6833073165306366,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k60_w0.5_chunkfuse_bm25chunk",
+        "k": 60,
+        "w_emb": 0.5,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.55,
+        "hit@5": 0.85,
+        "hit@10": 0.9,
+        "recall@10": 0.8693333333333334,
+        "mrr": 0.6732333881559689,
+        "fn_hit@5": 0.63,
+        "fn_hit@10": 0.69,
+        "macro_mrr": 0.6845106292525647,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k30_w0.5_chunkfuse_bm25chunk",
+        "k": 30,
+        "w_emb": 0.5,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.55,
+        "hit@5": 0.81,
+        "hit@10": 0.87,
+        "recall@10": 0.8393333333333334,
+        "mrr": 0.6640325453390804,
+        "fn_hit@5": 0.61,
+        "fn_hit@10": 0.68,
+        "macro_mrr": 0.6612755984008893,
+        "within_0.01_of_best": false
+      },
+      {
+        "name": "hybrid_k10_w0.5_chunkfuse_bm25chunk",
+        "k": 10,
+        "w_emb": 0.5,
+        "fusion": "chunk",
+        "bm25": "chunk",
+        "hit@1": 0.53,
+        "hit@5": 0.79,
+        "hit@10": 0.88,
+        "recall@10": 0.8493333333333334,
+        "mrr": 0.6451168311919456,
+        "fn_hit@5": 0.59,
+        "fn_hit@10": 0.66,
+        "macro_mrr": 0.6190451703000291,
+        "within_0.01_of_best": false
+      }
+    ],
+    "embedding": {
+      "all": {
+        "n": 100,
+        "hit@1": 0.58,
+        "hit@5": 0.82,
+        "hit@10": 0.93,
+        "recall@10": 0.8993333333333333,
+        "mrr": 0.692257704713587,
+        "fn_hit@5": 0.53,
+        "fn_hit@10": 0.61
+      },
+      "macro": {
+        "n_repos": 11,
+        "hit@1": 0.5222077922077922,
+        "hit@5": 0.7376623376623376,
+        "hit@10": 0.9067532467532469,
+        "recall@10": 0.851112554112554,
+        "mrr": 0.6431048585147133,
+        "fn_hit@5": 0.46941558441558445,
+        "fn_hit@10": 0.615
+      }
+    },
+    "bm25_chunk": {
+      "all": {
+        "n": 100,
+        "hit@1": 0.46,
+        "hit@5": 0.67,
+        "hit@10": 0.8,
+        "recall@10": 0.7693333333333334,
+        "mrr": 0.569689462704665,
+        "fn_hit@5": 0.47,
+        "fn_hit@10": 0.59
+      },
+      "macro": {
+        "n_repos": 11,
+        "hit@1": 0.3552597402597403,
+        "hit@5": 0.6744155844155845,
+        "hit@10": 0.7724025974025974,
+        "recall@10": 0.6826709956709957,
+        "mrr": 0.48416691031273545,
+        "fn_hit@5": 0.3734415584415584,
+        "fn_hit@10": 0.4806493506493506
+      }
+    },
+    "best_mrr": 0.7517326464385288,
+    "selected": {
+      "name": "hybrid_k60_w2_filefuse_bm25chunk",
+      "k": 60,
+      "w_emb": 2.0,
+      "fusion": "file",
+      "bm25": "chunk",
+      "mrr": 0.7419025280275281
+    },
+    "selected_vs_bm25_chunk": {
+      "hit@5": {
+        "diff": 0.23,
+        "lo": 0.15,
+        "hi": 0.32
+      },
+      "mrr": {
+        "diff": 0.1722130653228631,
+        "lo": 0.1001254012667927,
+        "hi": 0.24389746509045854
+      }
+    },
+    "seconds_per_instance": {
+      "n": 100,
+      "min": 0.03,
+      "median": 0.71,
+      "mean": 0.7277,
+      "p90": 1.1930000000000003,
+      "max": 1.78
+    }
+  }
+}
