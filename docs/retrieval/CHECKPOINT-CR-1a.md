@@ -199,7 +199,7 @@ It seems to be falsely identifying my matrix as rank-deficient and removing the 
 |---|---|
 | `docs/retrieval/cr1-split.json` | `3b1f90369a47dcd0b40eef0f614a6d4cf93c112da33f4fd14476d5e84f4c0b0f` |
 | `docs/retrieval/cr1a-dev-summary.json` | `b054a94833cbde3afabf03afdff9ef4cb939642aee15628cd71ad690c0f98e1a` |
-| parquet（原始字节，写在划分清单里） | 见 `cr1-split.json` 的 `parquet_sha256` |
+| Verified parquet（原始字节，也写在 `cr1-split.json` 里） | `a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd` |
 
 ## 9. 复现命令
 

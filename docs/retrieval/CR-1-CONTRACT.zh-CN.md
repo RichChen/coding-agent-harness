@@ -189,3 +189,38 @@ C:/Users/Administrator/.cache/huggingface/hub/datasets--princeton-nlp--SWE-bench
 
 > 请阅读 `D:/crq/src/coding-harness/docs/retrieval/PLAN.zh-CN.md` 第 2 节，然后完整阅读同目录的 `CR-1-CONTRACT.zh-CN.md`，执行其中的 CR-1a。只做 CR-1a，写完 `docs/retrieval/CHECKPOINT-CR-1a.md` 并提交后停下，不要开始 CR-1b。不要修改合同第 0 节列出的禁改路径。遇到合同没覆盖、需要做取舍的情况，选保守的做法并写进检查点；会改变答案隔离、划分或主比较的问题，先停下来问。
 
+## 11. CR-1a 审计后的补充（2026-10-26，适用于 CR-1b 和 CR-1c）
+
+依据 [AUDIT-CR-1a](AUDIT-CR-1a.zh-CN.md)。只做细化，不改第 2、6、7 节。
+
+### 11.1 冻结的 BM25
+
+冻结的 BM25 配置取**块聚合**（`bm25_chunk`，`k1=1.2, b=0.75`），审计时已定，不再按 dev 结果改。整文件 BM25 仍可作为 hybrid 网格的一种成分。
+
+### 11.2 embedding
+
+- **缓存键** = sha256(实际送进模型的文本，含块头和前缀) + 模型名 + revision + 最大长度。不能只用 blob sha。
+- 模型下载时记录 commit hash，加载时用 `revision=<hash>` 固定。需要 `trust_remote_code` 的模型必须固定 revision，并在检查点里写明。
+- 2080 Ti 不支持 bf16，一律 fp16。每批检查向量里没有 NaN 和零范数，出现就停下。
+- torch 写确切版本和 CUDA 变体，例如 `torch==X.Y.Z+cu12N`，写进 `retrieval` 组，安装命令写进检查点。
+- **先做吞吐试跑**：每个候选模型取 5 道 dev 题，测编码速度和显存峰值，估算 dev 全量耗时。估算超过 3 小时，就把最大长度降到 256 或者放弃这个模型，写明原因。
+- embedding 模型按它**单独检索**时的 dev 文件级 MRR 选，不按它进入 hybrid 后的分数选。
+
+### 11.3 hybrid 选择规则与第四种冻结配置
+
+- 网格按 dev 文件级 MRR 排序。与最好一组差距在 0.01 以内的配置中，按以下顺序选最简单的：`k=60` 优先，embedding 权重 1 优先，块级融合优先，BM25 块聚合优先。
+- 新增第四种冻结配置 `hybrid_mention`：对冻结的 hybrid 排序做"提及优先"重排，与 CR-1a 的路径提及参照用同一个 `mention_first`，不引入新参数。
+- CR-1c 的主比较不变（hybrid 对 BM25）。增加两项次要比较：`hybrid_mention` 对路径提及参照，`hybrid_mention` 对 hybrid。
+
+### 11.4 隔离测试
+
+在 `tests/test_retrieval_isolation.py` 中加一条：除 `dataset.py` 和 `labels.py` 外，`src/retrieval/`、`scripts/cr_*.py` 的源码不出现 `load_gold_diffs`。
+
+### 11.5 测试基线说明
+
+`test_dataset_oracle` 和 `test_runner` 的两个用例会调用 PATH 上的 `python`，是否通过取决于终端有没有激活 `.venv`。检查点里写明运行全量测试时 venv 是否激活。
+
+### 11.6 CR-1b 启动文字
+
+> CR-1a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1a.zh-CN.md`。请先读这份审计，再读 `CR-1-CONTRACT.zh-CN.md` 第 5、8 节中 CR-1b 的部分和新增的第 11 节，然后执行 CR-1b。第 11 节与前文冲突时以第 11 节为准。只用 dev，不要对 test 运行任何检索或打分。写完 `docs/retrieval/CR-1-FREEZE.md`、打 tag `cr1-freeze`、写完 `docs/retrieval/CHECKPOINT-CR-1b.md` 并提交后停下，不要开始 CR-1c。吞吐试跑之后如果估算的总耗时超过 6 小时，先写一份简短的检查点停下来问。其他规则与 CR-1a 相同：不改禁改路径，不调用付费 API，取舍写进检查点，涉及答案隔离、划分或主比较的问题先停下来问。
+
