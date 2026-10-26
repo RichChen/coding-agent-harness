@@ -244,3 +244,37 @@ gold 文件 = `src/retrieval/labels.py` 的文件级标签（`LabelView.gold_fil
 | `docs/retrieval/cr1-freeze.json`（未改） | `e4c66754a53e87989f5752990abf4a5759d08495ec2889ff4514cb59c653b406` |
 | `tests/fixtures/cr2-b0v2-compat.json`（未改） | `dc7ed3624e21fe0e165580f3d2550f73bf8d7336869c0385cec0d89d74963482` |
 | `docs/retrieval/cr2-runs.mock-r1.json`（mock，不是 CR-2 数据） | `018924f81339e528c39a2fd6b76ab1a4f0f9fbc5b0d4ace1a36fea45631318a5` |
+
+## 11. r2 修订
+
+日期：2026-10-27。依据：[AUDIT-CR-2b](AUDIT-CR-2b.zh-CN.md)、[CR-2 合同](CR-2-CONTRACT.zh-CN.md)第 8.1、8.2 节。第 1–10 节保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r2` 冻结，旧 tag `cr2-freeze`、`cr2-freeze-r1` 不动。
+
+**代码提交：`9b83aff`**，只改了 `scripts/run_cr2.py` 和 `tests/test_run_cr2.py`。tag `cr2-freeze-r2` 打在加入本节的提交上，与 `9b83aff` 之间没有代码改动。
+
+### 11.1 为什么改
+
+canary 里返回模型名一个都没记到（CHECKPOINT-CR-2b 7.1）：httpx 默认请求 `Accept-Encoding: gzip, deflate`，钩子扫描的是解压前的字节。DeepSeek 的 `deepseek-flash` 是服务端别名，价格页（2026-10-27）写明旧模型已下线、请求由 `DeepSeek-V4.1-Flash-1017` 提供；运行期间版本可能再变，所以要记录（AUDIT-CR-2b 第 3 节）。
+
+### 11.2 改了什么
+
+- **模型名钩子**：响应头 `Content-Encoding` 为 `gzip` 或 `deflate` 时，另用一个 `zlib.decompressobj` 解压一份副本来扫描 `"model"` 字段（同时接受 zlib 头和 gzip 头；deflate 没有 zlib 头时退回原始 deflate）。原始字节照常透传给 httpx，请求头不变，`src/llm` 不变。没有编码或 `identity` 时照旧直接扫描；其他编码不扫描。解压或扫描出错时停止扫描，不影响响应。
+- **前 3 个槽位检查**：每次运行（不含 mock）里最先完成的 3 个真实槽位，如果都没有记到模型名（没有 `model-names.json`、文件为空、内容为空列表或无法解析），就停止启动新槽位，`halt_reason` 为 `no returned model name recorded in the first 3 real slots: ...`。已在运行的槽位照常跑完。不足 3 个槽位的运行不做这项检查。退役重跑的槽位按最终运行计。
+- **多个模型名不停止**：报告新增 `returned_model_slots`：`by_model`（模型名 → 槽位列表）和 `without_model_name`（没有记到模型名的槽位）。mock 运行为 null。
+- 常量 `MODEL_CHECK_SLOTS = 3`。其他常量、队列、组定义、注入核对、停止条件、infra 规则都不变。
+
+canary 的 8 个槽位保留，不重跑，它们的模型名记为缺失，在结果里注明。续跑判定（`resumable`）只看 mock、profile、variant，所以全量运行会把它们计入 `skipped_finished`；前 3 个槽位检查只看本次新跑的槽位，不包括它们。
+
+### 11.3 测试
+
+`tests/test_run_cr2.py` 由 22 个增加到 32 个：
+
+- 用 `MockTransport` 和真实的 `LLMClient`，对未压缩、gzip、deflate（zlib 头）、原始 deflate 四种响应，流式和非流式都记到模型名；加钩子后的输出与不加钩子、与未压缩时都相同；
+- `br` 编码和损坏的 gzip 正文原样透传、不记录、不报错；
+- 402 错误（未压缩和 gzip）照常抛 `LLMError`，错误信息完整；
+- 前 3 个真实槽位都没有模型名时停止（覆盖文件缺失、空文件、空列表）；有模型名时继续，并按模型名列出槽位；mock 和不足 3 个槽位的运行不检查；`returned_models` 对坏文件返回空。
+
+全量 pytest（`9b83aff`，未激活 venv）：**850 passed、22 skipped、0 failed**，比 r1 的 840 多 10 个，正好是上面新增的用例。`run_cr2.py --preflight` 通过（56 题，224 条首条消息，1120 个槽位）。
+
+### 11.4 文件
+
+r2 没有改动任何冻结数据文件，第 10.7 节的 sha256 全部不变。
