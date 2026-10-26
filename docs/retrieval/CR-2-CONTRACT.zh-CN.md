@@ -163,13 +163,15 @@ O 组不是一种方法。它回答的是：定位做到完美时，agent 最多
 
 写 `docs/retrieval/CHECKPOINT-CR-2b.md` 后停下。内容：r1 改动与测试；oracle 预取的统计和样例；mock 结果；canary 的 8 个槽位逐个列出（组、模型调用数、费用、停止原因、是否解出、T 组的调用记录、注入核对）；返回的模型名；平均单次费用和全量费用估算；遇到的问题和取舍。
 
+**两种费用都要报。** harness 账本对所有输入 token 都按未命中缓存的价格算，是保守上限。审计时用 A6 的 `events.jsonl` 按命中/未命中分开重算：A6 账本 178.7 元，按缓存价格估算约 63.8 元，缓存命中率 71%。canary 要逐槽位列出 `model.settled` 的 usage 里 `prompt_cache_hit_tokens`、`prompt_cache_miss_tokens`、`completion_tokens` 的合计，再按账本单价（命中 0.04、未命中 2、输出 8 元/百万 token）算"缓存口径费用"，与账本费用并列。另外记录 canary 的开始和结束时间（精确到分钟），供项目作者对照 DeepSeek 控制台的余额和用量。只汇报，不改账本，不改上限逻辑。
+
 ### 7.5 CR-2c 运行前
 
-- 项目作者需要确认 DeepSeek 余额至少 800 元。A6 曾因余额耗尽出现 22 次 HTTP 402。
+- 800 元的上限按账本口径计，账本比实际扣费高（A6 约 2.8 倍）。实际需要的余额由项目作者按 canary 的真实扣费估算后充值，并留出余量。A6 曾因余额耗尽出现 22 次 HTTP 402。
 - 按 A6 的做法，运行期间关闭系统待机，跑完恢复原值。
 - 估算墙钟：A6 的 314 次用了约 5.8 小时，按比例 1112 次约 20 小时。
 
 ### 7.6 CR-2a-r1 + CR-2b 启动文字
 
-> CR-2a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2a.zh-CN.md`。项目作者放开了预算，CR-2 增加第四组 O，并把 R 改为 5。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 7 节，按 7.4 的顺序执行：先做 CR-2a-r1 重新冻结（打 tag `cr2-freeze-r1`，旧 tag 不动），mock 和全量 pytest 都通过后，再用 `--canary --authorized 5,800` 跑 8 个 canary 槽位。项目作者已经授权 R=5、上限 800 元。canary 之外不要启动任何真实槽位。写完 `docs/retrieval/CHECKPOINT-CR-2b.md` 并提交后停下。O 组的标签只能在 `scripts/cr2_oracle_prefetch.py` 里读；O 组的说明文字必须与 P 组逐字相同。任何注入核对失败、harness 工具错误或测试失败，都要停下写检查点，不要绕过。其他规则与前几轮相同。
+> CR-2a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2a.zh-CN.md`。项目作者放开了预算，CR-2 增加第四组 O，并把 R 改为 5。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 7 节，按 7.4 的顺序执行：先做 CR-2a-r1 重新冻结（打 tag `cr2-freeze-r1`，旧 tag 不动），mock 和全量 pytest 都通过后，再用 `--canary --authorized 5,800` 跑 8 个 canary 槽位。项目作者已经授权 R=5、上限 800 元。canary 之外不要启动任何真实槽位。写完 `docs/retrieval/CHECKPOINT-CR-2b.md` 并提交后停下。O 组的标签只能在 `scripts/cr2_oracle_prefetch.py` 里读；O 组的说明文字必须与 P 组逐字相同。任何注入核对失败、harness 工具错误或测试失败，都要停下写检查点，不要绕过。canary 要同时报账本费用和缓存口径费用，并记录开始和结束时间（见 7.4 末段）。其他规则与前几轮相同。
 
