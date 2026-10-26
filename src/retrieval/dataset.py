@@ -7,12 +7,19 @@ is ``labels.py``.
 from __future__ import annotations
 
 import hashlib
+import os
 from dataclasses import dataclass, fields
 from pathlib import Path
 
-PARQUET_PATH = Path(
-    "C:/Users/Administrator/.cache/huggingface/hub/datasets--princeton-nlp--SWE-bench_Verified/"
-    "snapshots/c104f840cc67f8b6eec6f759ebc8b2693d585d4a/data/test-00000-of-00001.parquet"
+_HF_HUB = Path(os.environ.get("HF_HUB_CACHE")
+               or Path.home() / ".cache" / "huggingface" / "hub")
+PARQUET_PATH = (
+    _HF_HUB
+    / "datasets--princeton-nlp--SWE-bench_Verified"
+    / "snapshots"
+    / "c104f840cc67f8b6eec6f759ebc8b2693d585d4a"
+    / "data"
+    / "test-00000-of-00001.parquet"
 )
 
 _QUERY_COLUMNS = ("instance_id", "repo", "base_commit", "problem_statement")
