@@ -224,3 +224,32 @@ C:/Users/Administrator/.cache/huggingface/hub/datasets--princeton-nlp--SWE-bench
 
 > CR-1a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1a.zh-CN.md`。请先读这份审计，再读 `CR-1-CONTRACT.zh-CN.md` 第 5、8 节中 CR-1b 的部分和新增的第 11 节，然后执行 CR-1b。第 11 节与前文冲突时以第 11 节为准。只用 dev，不要对 test 运行任何检索或打分。写完 `docs/retrieval/CR-1-FREEZE.md`、打 tag `cr1-freeze`、写完 `docs/retrieval/CHECKPOINT-CR-1b.md` 并提交后停下，不要开始 CR-1c。吞吐试跑之后如果估算的总耗时超过 6 小时，先写一份简短的检查点停下来问。其他规则与 CR-1a 相同：不改禁改路径，不调用付费 API，取舍写进检查点，涉及答案隔离、划分或主比较的问题先停下来问。torch 和 sentence-transformers 只装进 `D:/crq/src/coding-harness/.venv`，不要修改任何 conda 环境。下载慢的话，可以只在 pip 命令上加 `--proxy http://127.0.0.1:7890`，不要改全局配置。
 
+## 12. CR-1b 审计后的补充（2026-10-26，适用于 CR-1c）
+
+依据 [AUDIT-CR-1b](AUDIT-CR-1b.zh-CN.md)。第 8 节 CR-1c 部分和第 11.3 节的比较全部保留，这里只补充。
+
+### 12.1 开跑前检查（任何一条不满足就停下来问）
+
+- `HF_HUB_CACHE` 未设置，或者 `dataset.parquet_sha256()` 等于 `a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd`。
+- `git diff --stat f1d1b92 -- src/retrieval scripts/cr_index.py scripts/cr_eval.py` 为空，这三个路径在工作区里也没有未提交改动（`docs/` 下的改动不算）。`cr_eval.py frozen` 不得打印 `WARNING: retrieval code differs`。
+- `HF_HUB_OFFLINE=1`。
+
+### 12.2 只跑一次
+
+- 冻结后不再修改 `src/retrieval/`、`scripts/cr_index.py`、`scripts/cr_eval.py`。
+- 新的统计和制表（cluster bootstrap、子集表、例子挑选）写进新脚本 `scripts/cr_report.py`。它只读 `runs/cr/test-frozen-per-instance.jsonl`、排序文件和 `cr1-split.json`，不重新检索。
+- 中途因基础设施问题（磁盘、显存、进程被杀）失败，可以原样重跑同一条命令。一旦需要改检索代码才能跑完，先停下来问。
+- test 结果出来以后，不再改冻结配置，不新增检索器，也不改主比较。
+
+### 12.3 结果文件额外要写的内容
+
+- 主比较（hybrid 对 BM25，文件级 hit@5 和 MRR）放在最前面。按题 paired bootstrap 是主口径，按仓库的 cluster bootstrap 作为稳健性参照，两者都给。
+- embedding 模型的选择接近噪声：dev 上三个模型的 MRR 相差不到 0.04，换成仓库宏平均顺序就变了。这一点照实写，不能说 jina 是"最好的代码 embedding 模型"。
+- embedding 截断：按 issue 是否超过 512 token 分两组，描述 embedding 对 BM25 的差值。只做描述，不检验。
+- 局限一节加两条：dev 指标是在选择用的 100 题上算的，test 才是结果；检索输入只有 issue 正文，不含 `hints_text`。
+- 复现说明写上：clone 可能需要代理（CR-1a 第 7 节第 1 条）；HF 权重是从 ModelScope 和代理下载后核对 sha256 再放入缓存的（CR-1b 第 6 节第 1 条）。
+
+### 12.4 CR-1c 启动文字
+
+> CR-1b 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1b.zh-CN.md`。请先读这份审计，再读 `CR-1-CONTRACT.zh-CN.md` 第 8 节 CR-1c 部分、第 9 节、第 11.3 节和新增的第 12 节，然后执行 CR-1c。第 12 节与前文冲突时以第 12 节为准。先做 12.1 的三项检查，任何一项不满足就停下来问。test 只跑一次冻结配置；冻结后不修改 `src/retrieval/`、`scripts/cr_index.py`、`scripts/cr_eval.py`，新的统计写进 `scripts/cr_report.py`。写完 `docs/retrieval/CR-1-RESULTS.zh-CN.md`、`docs/retrieval/cr1-test-per-instance.jsonl`、`docs/retrieval/CHECKPOINT-CR-1c.md`，跑一次全量 pytest，提交后停下。结果文件严格按第 9 节的表述规则写，不要因为结果好或不好改变写法。其他规则与前两轮相同：不改禁改路径，不调用付费 API，取舍写进检查点。
+
