@@ -8,7 +8,13 @@
 
 - 当前分支 `main`。每完成一步提交一次，提交信息以 `CR-1:` 开头。
 - 不修改：`src/runtime/`、`src/tools/`、`src/harness/`、`scripts/run_*.py`、`docs/sprint/` 以及 A5/A6 相关文件。新代码只放在下面列出的位置。
-- `tests/test_command.py::TestRunCommandToolArgv::test_shell_path_still_works` 在开工前就失败，与本轮无关，不要修它，在检查点里照实写。
+- 开工前的全量 pytest（`515a7e8`，约 25 分钟）是 654 passed、24 skipped、5 failed。这 5 个与本轮无关，不要修，检查点里与这份基线对照，只报告新增失败：
+  - `tests/test_command.py::TestRunCommandToolArgv::test_shell_path_still_works`
+  - `tests/test_compact.py::TestEventBus::test_context_compacted_event_in_agent_loop`
+  - `tests/test_dataset_oracle.py::test_dataset_oracle_script_passes_for_new_tasks`
+  - `tests/test_runner.py::TestEnhancedJudges::test_command_success`
+  - `tests/test_runner.py::TestEnhancedJudges::test_command_output_requires_exit_zero_by_default`
+- 日常验证只跑 `pytest tests/test_retrieval_*.py`；全量测试每个检查点跑一次。
 - 每个检查点写完后**停下**，等审计，不要继续下一步。
 
 ## 1. 文件布局
