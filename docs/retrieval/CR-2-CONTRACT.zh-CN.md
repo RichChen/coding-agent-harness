@@ -116,4 +116,60 @@ gold 文件用 `labels.py` 的文件级标签，只在运行全部结束后由�
 
 > 请阅读 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1c.zh-CN.md`、`PLAN.zh-CN.md` 第 4 节和 `CR-2-CONTRACT.zh-CN.md`，执行 CR-2a。只做 CR-2a，不调用任何付费模型。写完 `docs/retrieval/CR-2-FREEZE.md`、打 tag `cr2-freeze`、写完 `docs/retrieval/CHECKPOINT-CR-2a.md` 并提交后停下。只能按合同第 0 节放开的范围做增量修改，用兼容性测试证明 b0-v2 的默认路径没有变。合同没覆盖的取舍选保守做法并写进检查点；会改变三组定义、主指标或题单的问题，先停下来问。
 
+## 7. CR-2a 审计后的扩大（2026-10-26，适用于 CR-2b 以后）
+
+依据 [AUDIT-CR-2a](AUDIT-CR-2a.zh-CN.md)。项目作者放开预算，并确认了两项改动：加 O 组，R 改为 5。这些都发生在任何真实运行之前，所以重新冻结，新 tag 为 `cr2-freeze-r1`。旧 tag `cr2-freeze` 保留不动。第 7 节与前文冲突时以第 7 节为准。
+
+### 7.1 第四组 O（oracle，诊断用对照）
+
+O 组不是一种方法。它回答的是：定位做到完美时，agent 最多能好多少。
+
+- 与 P 组的唯一区别是列表内容。说明文字、格式、字节上限（1500）都和 P 组逐字相同，经 `prompt_suffix` 追加，配置用 b0-v2。
+- 列表：先放 gold 文件，按 CR-1 冻结 hybrid 的文件排名排序，最多 5 个；不足 5 个时，用 hybrid 排名中非 gold 的文件按顺序补齐到 5 个。gold 文件下列出它的 gold 块（`labels.py` 的函数级标签），按块起始行排序，最多 2 个；补位文件仍用 hybrid 块排名的前 2 个。
+- O 组的文本必须让模型分不出它和 P 组的差别，所以说明文字不能提"正确答案"或"oracle"。
+- **答案隔离的例外**：O 组的预取文本必须读标签。读标签只允许发生在一个新脚本 `scripts/cr2_oracle_prefetch.py` 里，它生成冻结文件 `docs/retrieval/cr2-oracle-prefetch.json`（结构同 `cr2-prefetch.json`，每题加一个字段，记录 gold 文件数与列出的 gold 文件数）。在 `tests/test_retrieval_isolation.py` 的允许名单里加上这个脚本，并写注释说明原因。runner 只读这个冻结文件，不 import `labels.py`。
+- 报告时 O 组只作为上限参照，不与 P/T 一起被描述成"检索方法"。
+
+### 7.2 规模
+
+| 项 | 值 |
+|---|---|
+| 组 | N、P、T、O |
+| R | 5 |
+| 槽位 | 56 × 4 × 5 = 1120 |
+| 种子 | 20261026，按 (题, 组, 重复号) 排序后打乱，四组交错 |
+| 并发 | 3（同 A5/A6） |
+| 总额上限 | 800 元（估算 1120 × 约 0.55 = 约 620 元，留出 infra 重跑的余量） |
+| 授权参数 | `--authorized 5,800` |
+
+### 7.3 指标的补充
+
+- 主指标不变（首次触碰 gold 文件的步数）。配对比较增加 O − N。O 组在这个指标上几乎必然更早，只用来确认注入生效，不作为结论。
+- O 组的核心用途是**修复率**：O − N 与 P − N 的修复率配对差值，都用按题 bootstrap 给区间。这仍然是次要指标，只描述，不当作检验结论。
+- 增加一项分解（只描述）：每组中"前 10 步内触碰了 gold 文件"的运行，与"没有触碰"的运行，分别算修复率。
+- `analyze_cr2.py` 的规则要在 CR-2b 之前改好、加单测，并随 `cr2-freeze-r1` 一起冻结。
+
+### 7.4 CR-2a-r1：重新冻结（不花钱），然后直接做 CR-2b
+
+1. 改 `run_cr2.py`：`GROUPS` 加 `o`，`REPEATS = (1..5)`，`TOTAL_CAP = 800`；O 组的注入核对 = `build_prompt(task, 冻结的 oracle 文本)`，工具列表 = b0-v2，不能有 `retrieval-calls.jsonl`；canary 改为每组最先出现的 2 个槽位，共 8 个。
+2. 写 `scripts/cr2_oracle_prefetch.py`，生成并冻结 `cr2-oracle-prefetch.json`。报告长度分布、3 个样例，以及 gold 文件超过 5 个的题数。
+3. 改 `analyze_cr2.py`（7.3），补单测。
+4. 用 mock 把四组各跑 2 个槽位，确认注入核对通过。
+5. 更新 `CR-2-FREEZE.md`：新增第 10 节"r1 修订"，写清改了什么、为什么改、新的常量和 sha256、代码提交号。前面各节不改。打 tag `cr2-freeze-r1`。
+6. 跑全量 pytest。
+7. 以上全部通过后，运行 canary：`run_cr2.py --canary --authorized 5,800`（`HF_HUB_OFFLINE=1`）。共 8 个槽位，真实模型。
+
+第 4 步或第 6 步有任何失败，就不运行 canary，写检查点停下。
+
+写 `docs/retrieval/CHECKPOINT-CR-2b.md` 后停下。内容：r1 改动与测试；oracle 预取的统计和样例；mock 结果；canary 的 8 个槽位逐个列出（组、模型调用数、费用、停止原因、是否解出、T 组的调用记录、注入核对）；返回的模型名；平均单次费用和全量费用估算；遇到的问题和取舍。
+
+### 7.5 CR-2c 运行前
+
+- 项目作者需要确认 DeepSeek 余额至少 800 元。A6 曾因余额耗尽出现 22 次 HTTP 402。
+- 按 A6 的做法，运行期间关闭系统待机，跑完恢复原值。
+- 估算墙钟：A6 的 314 次用了约 5.8 小时，按比例 1112 次约 20 小时。
+
+### 7.6 CR-2a-r1 + CR-2b 启动文字
+
+> CR-2a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2a.zh-CN.md`。项目作者放开了预算，CR-2 增加第四组 O，并把 R 改为 5。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 7 节，按 7.4 的顺序执行：先做 CR-2a-r1 重新冻结（打 tag `cr2-freeze-r1`，旧 tag 不动），mock 和全量 pytest 都通过后，再用 `--canary --authorized 5,800` 跑 8 个 canary 槽位。项目作者已经授权 R=5、上限 800 元。canary 之外不要启动任何真实槽位。写完 `docs/retrieval/CHECKPOINT-CR-2b.md` 并提交后停下。O 组的标签只能在 `scripts/cr2_oracle_prefetch.py` 里读；O 组的说明文字必须与 P 组逐字相同。任何注入核对失败、harness 工具错误或测试失败，都要停下写检查点，不要绕过。其他规则与前几轮相同。
 
