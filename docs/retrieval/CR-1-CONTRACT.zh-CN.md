@@ -222,5 +222,5 @@ C:/Users/Administrator/.cache/huggingface/hub/datasets--princeton-nlp--SWE-bench
 
 ### 11.6 CR-1b 启动文字
 
-> CR-1a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1a.zh-CN.md`。请先读这份审计，再读 `CR-1-CONTRACT.zh-CN.md` 第 5、8 节中 CR-1b 的部分和新增的第 11 节，然后执行 CR-1b。第 11 节与前文冲突时以第 11 节为准。只用 dev，不要对 test 运行任何检索或打分。写完 `docs/retrieval/CR-1-FREEZE.md`、打 tag `cr1-freeze`、写完 `docs/retrieval/CHECKPOINT-CR-1b.md` 并提交后停下，不要开始 CR-1c。吞吐试跑之后如果估算的总耗时超过 6 小时，先写一份简短的检查点停下来问。其他规则与 CR-1a 相同：不改禁改路径，不调用付费 API，取舍写进检查点，涉及答案隔离、划分或主比较的问题先停下来问。
+> CR-1a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1a.zh-CN.md`。请先读这份审计，再读 `CR-1-CONTRACT.zh-CN.md` 第 5、8 节中 CR-1b 的部分和新增的第 11 节，然后执行 CR-1b。第 11 节与前文冲突时以第 11 节为准。只用 dev，不要对 test 运行任何检索或打分。写完 `docs/retrieval/CR-1-FREEZE.md`、打 tag `cr1-freeze`、写完 `docs/retrieval/CHECKPOINT-CR-1b.md` 并提交后停下，不要开始 CR-1c。吞吐试跑之后如果估算的总耗时超过 6 小时，先写一份简短的检查点停下来问。其他规则与 CR-1a 相同：不改禁改路径，不调用付费 API，取舍写进检查点，涉及答案隔离、划分或主比较的问题先停下来问。torch 和 sentence-transformers 只装进 `D:/crq/src/coding-harness/.venv`，不要修改任何 conda 环境。下载慢的话，可以只在 pip 命令上加 `--proxy http://127.0.0.1:7890`，不要改全局配置。
 
