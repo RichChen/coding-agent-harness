@@ -175,3 +175,39 @@ O 组不是一种方法。它回答的是：定位做到完美时，agent 最多
 
 > CR-2a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2a.zh-CN.md`。项目作者放开了预算，CR-2 增加第四组 O，并把 R 改为 5。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 7 节，按 7.4 的顺序执行：先做 CR-2a-r1 重新冻结（打 tag `cr2-freeze-r1`，旧 tag 不动），mock 和全量 pytest 都通过后，再用 `--canary --authorized 5,800` 跑 8 个 canary 槽位。项目作者已经授权 R=5、上限 800 元。canary 之外不要启动任何真实槽位。写完 `docs/retrieval/CHECKPOINT-CR-2b.md` 并提交后停下。O 组的标签只能在 `scripts/cr2_oracle_prefetch.py` 里读；O 组的说明文字必须与 P 组逐字相同。任何注入核对失败、harness 工具错误或测试失败，都要停下写检查点，不要绕过。canary 要同时报账本费用和缓存口径费用，并记录开始和结束时间（见 7.4 末段）。其他规则与前几轮相同。
 
+
+## 8. CR-2b 审计后（2026-10-27，适用于 CR-2c 以后）
+
+依据 [AUDIT-CR-2b](AUDIT-CR-2b.zh-CN.md)。第 8 节与前文冲突时以第 8 节为准。
+
+### 8.1 r2 修订：只修模型名记录
+
+- 采用 CHECKPOINT-CR-2b 7.1 的第 1 种做法：响应头 `Content-Encoding` 为 gzip 或 deflate 时，另用 `zlib.decompressobj` 解压一份副本来扫描 `"model"`，原始字节照常透传。不改请求头，不改 `src/llm`。
+- 单测：用 `MockTransport` 构造 gzip 和 deflate 压缩的流式与非流式响应，都要记到模型名；透传的字节与不加钩子时相同；HTTP 错误照常抛出。
+- 只允许改 `scripts/run_cr2.py` 和它的测试。在 `CR-2-FREEZE.md` 加第 11 节"r2 修订"，打 tag `cr2-freeze-r2`。旧 tag 不动，canary 的 8 个槽位保留，不重跑；它们的模型名记为缺失，在结果里注明。
+- 跑全量 pytest。
+
+### 8.2 运行中的模型名检查
+
+- runner 在**前 3 个**完成的真实槽位之后检查：如果 3 个都没有 `model-names.json`，或者文件为空，就停止启动新槽位，写检查点停下。这说明记录还是坏的。
+- 运行中返回的模型名出现**一个以上**时，不停止，在报告里按槽位列出。四组是交错运行的，版本变化不会偏向某一组；分析时按模型名分层描述。
+- 这条检查写进 r2，并加单测。
+
+### 8.3 全量运行
+
+- 项目作者确认 DeepSeek 余额（充值加赠送）至少 300 元以后才开始。估算见 AUDIT-CR-2b 第 2 节。
+- 关闭系统待机，跑完恢复原值。保持接电源。
+- 约 23 小时。runner 以可续跑的方式在后台运行，输出写到 `runs/cr2-logs/main.out`。中断后原样重跑同一条命令即可，已完成的槽位会跳过。
+- 命令：`HF_HUB_OFFLINE=1 .venv\Scripts\python.exe scripts/run_cr2.py --authorized 5,800`，在 tag `cr2-freeze-r2` 上运行。
+- 运行期间不改代码。因为余额不足、网络等原因中断时，按冻结的 infra 规则处理。
+
+写 `CHECKPOINT-CR-2c.md` 后停下，不做分析。内容：起止时间（到分钟）；`main-report.json` 摘要；按组的完成数、停止原因、infra 退役和保留；返回的模型名及其分布；账本费用和缓存口径费用（用 `cr2_cost.py`，按组）；按北京时间高峰/非高峰拆开的调用数和缓存口径费用（按 `model.settled` 的时间戳和价格页的时段规则，只做报告）；遇到的问题。
+
+### 8.4 分析阶段要写进结果的版本说明
+
+- 运行期间所用的服务端模型（按 `model-names.json`），以及 DeepSeek 价格页 2026-10-27 关于别名的说明。
+- CR-2 的 N 组是新的基线，不和 A5 的 B0、A6 的 R0/R1 做数值比较。
+
+### 8.5 r2 + CR-2c 启动文字
+
+> CR-2b 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2b.zh-CN.md`。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 8 节，先做 8.1 和 8.2 的 r2 修订：只改 `scripts/run_cr2.py` 和它的测试，补 `CR-2-FREEZE.md` 第 11 节，打 tag `cr2-freeze-r2`，跑全量 pytest。全部通过后，在 `cr2-freeze-r2` 上按 8.3 启动全量运行（`--authorized 5,800`，`HF_HUB_OFFLINE=1`，后台运行，输出写到 `runs/cr2-logs/main.out`）。项目作者已经确认余额并关闭了系统待机。运行期间不改代码；前 3 个真实槽位如果都没有记到模型名，runner 会停下，这时写检查点等审计，不要自行修改后继续。全部槽位跑完后，写 `docs/retrieval/CHECKPOINT-CR-2c.md` 并提交后停下，不做分析。其他规则与前几轮相同。
