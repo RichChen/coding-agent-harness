@@ -1,0 +1,238 @@
+"""CR-2 analysis (contract section 4). Frozen before any real run; reads gold files only here, after the runs.
+
+    analyze_cr2.py                         docs/retrieval/cr2-runs.json -> docs/retrieval/cr2-analysis.json
+    analyze_cr2.py --runs X --out Y        any runs file, e.g. the mock one
+    analyze_cr2.py --gold-in-prefetch      how many tasks have a gold file in the frozen prefetch top 5
+
+Step rules (unit-tested in tests/test_analyze_cr2.py):
+- The step of an event is the number of model.started events before it in events.jsonl, i.e. model calls started
+  so far, counted from 1 and including provider retry attempts (the budget counts calls the same way).
+- A gold touch is a tool.intent for read_file, edit_file, search_replace or write_file whose path argument,
+  normalized, is a gold file. The intent counts whatever the tool result was.
+- Path normalization: backslashes to slashes, a leading /workspace/ and leading ./ removed, posix normpath.
+- Never touched = 41 (one past the 40-call budget).
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import posixpath
+import sys
+from collections import Counter
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+SEED = 20261026
+N_BOOT = 10000
+NEVER = 41
+EARLY = 10
+TOUCH_TOOLS = frozenset({"read_file", "edit_file", "search_replace", "write_file"})
+GROUPS = ("n", "p", "t")
+RUNS = ROOT / "docs" / "retrieval" / "cr2-runs.json"
+OUT = ROOT / "docs" / "retrieval" / "cr2-analysis.json"
+PREFETCH = ROOT / "docs" / "retrieval" / "cr2-prefetch.json"
+CALLS_FILE = "retrieval-calls.jsonl"
+PAIRED_METRICS = ("first_gold_step", "gold_within_10", "solved", "model_calls", "cost_cny", "first_message_bytes")
+
+
+def normalize_path(path) -> str:
+    text = str(path or "").replace("\\", "/").strip()
+    if text.startswith("/workspace/"):
+        text = text[len("/workspace/"):]
+    while text.startswith("./"):
+        text = text[2:]
+    text = posixpath.normpath(text) if text else ""
+    return "" if text == "." else text
+
+
+def _read_jsonl(path: Path) -> list[dict]:
+    if not path.is_file():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def steps(events: list[dict]):
+    """Yield (step, event) with step = model calls started so far."""
+    started = 0
+    for event in events:
+        if event.get("event_type") == "model.started":
+            started += 1
+        yield started, event
+
+
+def _intent(event: dict) -> tuple[str | None, dict]:
+    payload = event.get("payload") or {}
+    return payload.get("name"), payload.get("arguments") or {}
+
+
+def first_gold_step(events: list[dict], gold) -> int:
+    gold = {normalize_path(path) for path in gold}
+    for step, event in steps(events):
+        if event.get("event_type") != "tool.intent":
+            continue
+        name, arguments = _intent(event)
+        if name in TOUCH_TOOLS and normalize_path(arguments.get("path")) in gold:
+            return step
+    return NEVER
+
+
+def retrieve_stats(events: list[dict], calls: list[dict], gold) -> dict:
+    gold = {normalize_path(path) for path in gold}
+    call_steps = [step for step, event in steps(events)
+                  if event.get("event_type") == "tool.intent" and _intent(event)[0] == "retrieve_code"]
+    returned = {normalize_path(item["path"]) for row in calls for item in row.get("files") or []}
+    return {
+        "retrieve_calls": len(call_steps),
+        "first_retrieve_step": call_steps[0] if call_steps else None,
+        "gold_in_retrieval": bool(returned & gold),
+        "retrieval_log_rows": len(calls),
+    }
+
+
+def run_metrics(row: dict, events: list[dict], gold, calls: list[dict] | None = None,
+                first_message: str | None = None) -> dict:
+    step = first_gold_step(events, gold)
+    out = {
+        "task_id": row["task_id"], "group": row["group"], "k": row["k"],
+        "first_gold_step": step,
+        "gold_within_10": step <= EARLY,
+        "solved": bool(row.get("solved")),
+        "model_calls": row.get("model_calls"),
+        "cost_cny": float(row["cost_cny"]) if row.get("cost_cny") is not None else None,
+        "stop_reason": row.get("stop_reason"),
+        "first_message_bytes": len(first_message.encode("utf-8")) if first_message is not None else None,
+    }
+    if row["group"] == "t":
+        out.update(retrieve_stats(events, calls or [], gold))
+    return out
+
+
+def task_means(rows: list[dict], metric: str) -> dict[str, dict[str, float]]:
+    """task -> group -> mean of the metric over that task's repeats (missing values skipped)."""
+    acc: dict[tuple[str, str], list[float]] = {}
+    for row in rows:
+        value = row.get(metric)
+        if value is None:
+            continue
+        acc.setdefault((row["task_id"], row["group"]), []).append(float(value))
+    out: dict[str, dict[str, float]] = {}
+    for (task, group), values in acc.items():
+        out.setdefault(task, {})[group] = sum(values) / len(values)
+    return out
+
+
+def paired(means: dict[str, dict[str, float]], a: str, b: str, tasks=None) -> dict:
+    """Mean per-task a - b with the per-task bootstrap 95% interval (seed 20261026, 10000 resamples)."""
+    from src.retrieval.metrics import paired_bootstrap
+
+    keys = sorted(task for task, groups in means.items() if a in groups and b in groups
+                  and (tasks is None or task in tasks))
+    if not keys:
+        return {"n_tasks": 0, "diff": None, "lo": None, "hi": None}
+    result = paired_bootstrap([means[t][a] for t in keys], [means[t][b] for t in keys], n_boot=N_BOOT, seed=SEED)
+    return {"n_tasks": len(keys), **result}
+
+
+def group_mean(means: dict[str, dict[str, float]], group: str, tasks=None):
+    values = [groups[group] for task, groups in means.items() if group in groups and (tasks is None or task in tasks)]
+    return sum(values) / len(values) if values else None
+
+
+def gold_in_prefetch(prefetch_rows: dict, gold_by_task: dict) -> dict[str, bool]:
+    return {task: bool({normalize_path(f["path"]) for f in row["files"]} & {normalize_path(g) for g in gold_by_task[task]})
+            for task, row in prefetch_rows.items() if task in gold_by_task}
+
+
+def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Path = ROOT, repeats: int = 2) -> dict:
+    from scripts.run_a6_retry import first_user_message
+
+    per_run = []
+    for row in runs:
+        run_dir = root / row["run_dir"]
+        events = _read_jsonl(run_dir / "events.jsonl")
+        calls = _read_jsonl(run_dir / CALLS_FILE) if row["group"] == "t" else None
+        per_run.append(run_metrics(row, events, gold_by_task[row["task_id"]], calls, first_user_message(run_dir)))
+    counts = Counter((r["task_id"], r["group"]) for r in per_run)
+    tasks = sorted({r["task_id"] for r in per_run})
+    report = {
+        "seed": SEED, "n_boot": N_BOOT, "never": NEVER, "early_steps": EARLY,
+        "runs": len(per_run),
+        "tasks": len(tasks),
+        "complete": all(counts.get((t, g)) == repeats for t in tasks for g in GROUPS),
+        "runs_by_group": {g: sum(1 for r in per_run if r["group"] == g) for g in GROUPS},
+        "group_means": {}, "paired": {}, "stop_reasons": {},
+    }
+    for metric in PAIRED_METRICS:
+        means = task_means(per_run, metric)
+        report["group_means"][metric] = {g: group_mean(means, g) for g in GROUPS}
+        report["paired"][metric] = {"p_minus_n": paired(means, "p", "n"), "t_minus_n": paired(means, "t", "n")}
+    for group in GROUPS:
+        report["stop_reasons"][group] = dict(sorted(Counter(r["stop_reason"] for r in per_run if r["group"] == group).items(),
+                                                    key=lambda kv: str(kv[0])))
+    t_runs = [r for r in per_run if r["group"] == "t"]
+    if t_runs:
+        firsts = [r["first_retrieve_step"] for r in t_runs if r["first_retrieve_step"] is not None]
+        report["t_only"] = {
+            "runs": len(t_runs),
+            "share_with_call": sum(1 for r in t_runs if r["retrieve_calls"]) / len(t_runs),
+            "calls_per_run": sum(r["retrieve_calls"] for r in t_runs) / len(t_runs),
+            "first_call_step_mean": sum(firsts) / len(firsts) if firsts else None,
+            "first_call_steps": dict(sorted(Counter(firsts).items())),
+            "share_gold_in_any_result": sum(1 for r in t_runs if r["gold_in_retrieval"]) / len(t_runs),
+        }
+    hit = gold_in_prefetch(prefetch_rows, gold_by_task)
+    steps_means = task_means(per_run, "first_gold_step")
+    split = {}
+    for name, flag in (("gold_in_top5", True), ("gold_not_in_top5", False)):
+        subset = {task for task, value in hit.items() if value is flag}
+        split[name] = {
+            "tasks_in_pool": len(subset),
+            "n_mean": group_mean(steps_means, "n", subset),
+            "p_mean": group_mean(steps_means, "p", subset),
+            "p_minus_n": paired(steps_means, "p", "n", subset),
+        }
+    report["p_only_first_gold_step"] = split
+    report["per_run"] = per_run
+    return report
+
+
+def load_gold(task_ids) -> dict[str, tuple[str, ...]]:
+    from src.retrieval import dataset, labels
+
+    queries = [q for q in dataset.load_query_views() if q.instance_id in set(task_ids)]
+    views = labels.load_label_views(queries)
+    missing = sorted(set(task_ids) - set(views))
+    if missing:
+        raise SystemExit("no labels for " + ", ".join(missing))
+    return {task: views[task].gold_files for task in task_ids}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--runs", type=Path, default=RUNS)
+    parser.add_argument("--out", type=Path, default=OUT)
+    parser.add_argument("--prefetch", type=Path, default=PREFETCH)
+    parser.add_argument("--gold-in-prefetch", action="store_true", help="only count tasks with gold in the prefetch top 5")
+    args = parser.parse_args()
+    prefetch_rows = {row["task"]: row for row in json.loads(args.prefetch.read_text(encoding="utf-8"))["tasks"]}
+    if args.gold_in_prefetch:
+        hit = gold_in_prefetch(prefetch_rows, load_gold(sorted(prefetch_rows)))
+        print(json.dumps({"tasks": len(hit), "gold_in_top5": sum(hit.values())}))
+        return
+    payload = json.loads(args.runs.read_text(encoding="utf-8"))
+    runs = payload["runs"]
+    if any(row.get("rerun_reason") for row in runs):
+        raise SystemExit("runs file still has slots whose final run needs a rerun")
+    gold = load_gold(sorted(prefetch_rows))
+    report = analyze(runs, gold, prefetch_rows, repeats=payload.get("repeats", 2))
+    report["runs_file"] = args.runs.relative_to(ROOT).as_posix() if args.runs.is_relative_to(ROOT) else str(args.runs)
+    report["scope"] = payload.get("scope")
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
+    print(json.dumps({k: v for k, v in report.items() if k != "per_run"}, indent=2))
+
+
+if __name__ == "__main__":
+    main()

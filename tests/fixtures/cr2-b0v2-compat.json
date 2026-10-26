@@ -1,0 +1,244 @@
+{
+  "profile": "configs/sprint/b0-v2.yaml",
+  "agent": {
+    "tool_names": [
+      "read_file",
+      "write_file",
+      "list_dir",
+      "run_command",
+      "search_replace",
+      "edit_file",
+      "search_code"
+    ],
+    "schemas_json": "[{\"type\": \"function\", \"function\": {\"name\": \"read_file\", \"description\": \"Read a file in the workspace. Lines are numbered. Use offset to continue a truncated read.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\", \"description\": \"Relative path to the file within the workspace.\"}, \"offset\": {\"type\": \"integer\", \"description\": \"First line to return, starting at 1.\"}, \"limit\": {\"type\": \"integer\", \"description\": \"Maximum number of lines to return.\"}}, \"required\": [\"path\"], \"additionalProperties\": false}}}, {\"type\": \"function\", \"function\": {\"name\": \"write_file\", \"description\": \"Write content to a file in the workspace. Creates parent directories if needed.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\", \"description\": \"Relative path to the file within the workspace.\"}, \"content\": {\"type\": \"string\", \"description\": \"Content to write to the file.\"}}, \"required\": [\"path\", \"content\"], \"additionalProperties\": false}}}, {\"type\": \"function\", \"function\": {\"name\": \"list_dir\", \"description\": \"List files and directories in the workspace.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\", \"description\": \"Relative path to a directory within the workspace. Use '.' for root.\"}}, \"required\": [\"path\"], \"additionalProperties\": false}}}, {\"type\": \"function\", \"function\": {\"name\": \"run_command\", \"description\": \"Execute a command inside the workspace directory. Provide either `command` (shell string) or `argv` (argument array for non-shell exec).\", \"parameters\": {\"type\": \"object\", \"properties\": {\"command\": {\"type\": \"string\", \"description\": \"Shell command string (mutually exclusive with argv).\"}, \"argv\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}, \"description\": \"Argv list for non-shell execution (mutually exclusive with command).\"}}, \"additionalProperties\": false}}}, {\"type\": \"function\", \"function\": {\"name\": \"search_replace\", \"description\": \"Search for a string in a file and replace it. The search string must match exactly once; use for small targeted edits.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\", \"description\": \"Relative path to the file within the workspace.\"}, \"search\": {\"type\": \"string\", \"description\": \"Exact string to search for (must be unique in file).\"}, \"replace\": {\"type\": \"string\", \"description\": \"Replacement string.\"}}, \"required\": [\"path\", \"search\", \"replace\"], \"additionalProperties\": false}}}, {\"type\": \"function\", \"function\": {\"name\": \"edit_file\", \"description\": \"Replace the first occurrence of old_string with new_string in a file. Does NOT require the match to be unique.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\", \"description\": \"Relative path to the file within the workspace.\"}, \"old_string\": {\"type\": \"string\", \"description\": \"The exact text to replace (first occurrence only).\"}, \"new_string\": {\"type\": \"string\", \"description\": \"The text to insert in place of old_string.\"}}, \"required\": [\"path\", \"old_string\", \"new_string\"], \"additionalProperties\": false}}}, {\"type\": \"function\", \"function\": {\"name\": \"search_code\", \"description\": \"Search the workspace. Returns path:line: text. Read-only.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"pattern\": {\"type\": \"string\", \"description\": \"Regular expression to search for.\"}, \"path\": {\"type\": \"string\", \"description\": \"File or directory relative to the workspace. Default is the workspace root.\"}, \"glob\": {\"type\": \"string\", \"description\": \"Optional glob, for example *.py.\"}, \"max_results\": {\"type\": \"integer\", \"description\": \"Maximum matches to return. Default 50.\"}}, \"required\": [\"pattern\"], \"additionalProperties\": false}}}]",
+    "schemas_sha256": "19be6f6513b9252186be2bf47ddfffecc55cd37d9e0649e273e69b15f72f0abd",
+    "runtime_fingerprint": "4db95abc408e11946ef34dfc0f6c233cab5c7e5f2d765d632b22b2a1b0cbf4c5",
+    "system_prompt_sha256": "e7f17e2f11ab171a7f0646ad550b938fc89394cf26e1cbdd398d157c09ffbfd6"
+  },
+  "prompts": {
+    "django__django-11211": {
+      "sha256": "2d9ce5fd3160d4c7212ad103b05e8e14e5cd0cfa98dbd5b860c4141a5c39c378",
+      "chars": 1426
+    },
+    "django__django-11749": {
+      "sha256": "0d59e0ac5e24403dbcf63890f58bc6fd410ef331301f11c659582489f68077c6",
+      "chars": 1716
+    },
+    "django__django-12276": {
+      "sha256": "daebcb2f12346609b6de372f1538dd9aea999e02b791027b5f23a0e4ce1536b1",
+      "chars": 1071
+    },
+    "django__django-13109": {
+      "sha256": "a4bbf44998a15cd291cb43a15bd4210587770f6fb17c81b9aa2f3fa2bd671819",
+      "chars": 2389
+    },
+    "django__django-13512": {
+      "sha256": "d25396cdba082a69eb4be8561712d8049a57c3c27c3c181f8e4984eb4f663ac3",
+      "chars": 929
+    },
+    "django__django-13964": {
+      "sha256": "68beb8aef7a955f87153230a3019ee835d19d65f70036fe6360b49c90b623f95",
+      "chars": 2337
+    },
+    "django__django-14434": {
+      "sha256": "2a967dedb30934a5f52411ebbbac0c526d0fc69355e0fdde4567187b28789ed5",
+      "chars": 657
+    },
+    "django__django-15022": {
+      "sha256": "b8dc51caeac62c1ee52682aac69a000624020da6f2eed6e376c9d595a5b281e3",
+      "chars": 1691
+    },
+    "django__django-15499": {
+      "sha256": "b0ff68199ccaea7a66f49388e45eb0e77b11ace6bbb620fa7ed6724599535ed9",
+      "chars": 730
+    },
+    "django__django-15973": {
+      "sha256": "6c97614c51541dd771e470bda94d40542e2ba938a12ae1445c0bafb9904c0d98",
+      "chars": 5806
+    },
+    "django__django-16527": {
+      "sha256": "82d60b0234c19b45bac5ea9ca60c45b5690cb6a72a31044ca95ddfcb1daaf2e6",
+      "chars": 960
+    },
+    "pytest-dev__pytest-10081": {
+      "sha256": "c77c8845e664795dee7ca27502d047eefbe30ad8d8af61190ba4e5f233ec21a1",
+      "chars": 3371
+    },
+    "pytest-dev__pytest-5262": {
+      "sha256": "f634864004d72d5672f5c0f92bdb23f576b65fcbe144655f6bdd1bfa26a11847",
+      "chars": 5255
+    },
+    "pytest-dev__pytest-5631": {
+      "sha256": "d48aeff6710fccd68a1f481513932366cb38f22cba939982f77d0add16250c1d",
+      "chars": 2772
+    },
+    "pytest-dev__pytest-5809": {
+      "sha256": "50068a978b4d524e5d2ab0af8f1e649e7b8a4e981c500994126b3d3eee2a8b4a",
+      "chars": 1437
+    },
+    "pytest-dev__pytest-5840": {
+      "sha256": "87202cb2e59acecd0eba6bc0e647eba0dca1e694d3752f5751e9dbdc95030421",
+      "chars": 1091
+    },
+    "pytest-dev__pytest-6202": {
+      "sha256": "94d0274093a46db568de6d59ecd2aaf3b6de9bddca4503d71582dbc980fb0c79",
+      "chars": 2623
+    },
+    "pytest-dev__pytest-7205": {
+      "sha256": "9b6fbbb5ec4fb5de749e9c182cc89093a568ba84deced088badb188ca44bc05a",
+      "chars": 4733
+    },
+    "pytest-dev__pytest-7324": {
+      "sha256": "086daddc7d47c2cfea279b2967a9f66204ec6bedf7f7919a6d3a9f2533019ad5",
+      "chars": 935
+    },
+    "pytest-dev__pytest-7490": {
+      "sha256": "c28788d32e1020cffaa27dbbbcca64118e62755a9c5b6da4a1cff4458d6fa745",
+      "chars": 23244
+    },
+    "pytest-dev__pytest-7521": {
+      "sha256": "de0366f9295aacc0e117a56d04d7bbdaea7ebed2c36eff5c7d65f01405875a22",
+      "chars": 4359
+    },
+    "pytest-dev__pytest-7982": {
+      "sha256": "689b0364f33e194254222e80274ebcd289951d639e908576c9363484caf939a8",
+      "chars": 917
+    },
+    "pytest-dev__pytest-8399": {
+      "sha256": "a5b463145d126a9b46ab84d4068ad00749d431162631b0d9b85fde2ade1a783a",
+      "chars": 1549
+    },
+    "scikit-learn__scikit-learn-10908": {
+      "sha256": "6d9b402b0378b063669b8c5b1b8c8fdd028686326fa4e53a2d3031759c6e820f",
+      "chars": 2509
+    },
+    "scikit-learn__scikit-learn-12585": {
+      "sha256": "cb46c23568d99d3c6314362c4b6704694f320e483136100fda335a38aec5e50e",
+      "chars": 1896
+    },
+    "scikit-learn__scikit-learn-12973": {
+      "sha256": "fe0bb22ff500a7db4683877da5a088e993544b78e6aa687345728f25807cef80",
+      "chars": 2049
+    },
+    "scikit-learn__scikit-learn-13142": {
+      "sha256": "b3b37191aca1e8cead27ea7c74942f028ff63cf8a456e042adb00dd382fa323f",
+      "chars": 2788
+    },
+    "scikit-learn__scikit-learn-13439": {
+      "sha256": "308d70873618a3ee0ed65350661ffd6af1d826cf5adab1aac4c3f0fa43ac7d1e",
+      "chars": 1708
+    },
+    "scikit-learn__scikit-learn-14053": {
+      "sha256": "aa080197d200474986b54bad06a973639affd84abe0c84f204ba6fee2494d009",
+      "chars": 3572
+    },
+    "scikit-learn__scikit-learn-14496": {
+      "sha256": "78ba67e5f52d1bc2bc56ec932be71b12a7545e5732fbc860903ebd2f4f8fe079",
+      "chars": 2764
+    },
+    "scikit-learn__scikit-learn-14710": {
+      "sha256": "797891e60f85a28ada0dd3b432c49a9308bb8224dd1bb05d1c04b7d9a0501fad",
+      "chars": 7103
+    },
+    "scikit-learn__scikit-learn-15100": {
+      "sha256": "d7751f636384b18446be07651fc09f8b57e7c314f1e578ab2c7ee17114db8d01",
+      "chars": 2608
+    },
+    "scikit-learn__scikit-learn-9288": {
+      "sha256": "311b82d5ad683bb4f41d03d107873f6afc73b381e92406675f34e5253ba23f7c",
+      "chars": 3840
+    },
+    "sphinx-doc__sphinx-10323": {
+      "sha256": "61223510921f90923fa0706b12e588b30219732c194ca84868898eb7cf23f1b4",
+      "chars": 3568
+    },
+    "sphinx-doc__sphinx-10614": {
+      "sha256": "d3bdf4d07b0d1859675eb22a72a12226e53b40e86d7ad28f967948986ba460c3",
+      "chars": 3544
+    },
+    "sphinx-doc__sphinx-7440": {
+      "sha256": "9c702dc92346d7c00fbe9248c9b98582ff70c335e5e695500fcf67fb9391f260",
+      "chars": 1371
+    },
+    "sphinx-doc__sphinx-7590": {
+      "sha256": "f0a91b2d2c27f381eea4aa3a0a115e8404adc71e7a8350c44f91e78ba1cfdb8e",
+      "chars": 1066
+    },
+    "sphinx-doc__sphinx-7910": {
+      "sha256": "84d8aa254df38096ab64690c433200ef60a9941c214813f7223001ba1316ffed",
+      "chars": 1605
+    },
+    "sphinx-doc__sphinx-8120": {
+      "sha256": "6619db89911a4af6aaabde3bd018a81074e5661801c12066c23b4f2219681976",
+      "chars": 2321
+    },
+    "sphinx-doc__sphinx-8459": {
+      "sha256": "c1057be61dbe3d00ee0c7f65c111eed9013be2b6ed11defb08113fa24e1c3ace",
+      "chars": 1801
+    },
+    "sphinx-doc__sphinx-8593": {
+      "sha256": "ddb6880cf0ca4e9890bdf2726a85018664444915bc39d65ab47fa8430c7507e7",
+      "chars": 1104
+    },
+    "sphinx-doc__sphinx-9258": {
+      "sha256": "3f05417ddf3dd03f883425e414a7a9da0047ea363ecf66022460c1f13efd7d7c",
+      "chars": 982
+    },
+    "sphinx-doc__sphinx-9461": {
+      "sha256": "86fd9dc1ceb4ab0e2adf018a1a5680c9fa1033030f90d752c597f11a8411a96e",
+      "chars": 2760
+    },
+    "sphinx-doc__sphinx-9673": {
+      "sha256": "79ab2ac0c73763edd1a577b924aa7716d62563c8a29e00f3402df16d62f2e278",
+      "chars": 1879
+    },
+    "sympy__sympy-11618": {
+      "sha256": "e1e51ce42c1f52ce72454507f8630841c8245a31a0f2c6ea887256790860c143",
+      "chars": 712
+    },
+    "sympy__sympy-13091": {
+      "sha256": "21c277d01af4e028fa453ad681ef12983858f010a5591bd80e51ee667230bb40",
+      "chars": 2283
+    },
+    "sympy__sympy-13757": {
+      "sha256": "938b46b64555b653e494c79717ca0e2b91540c992ee8fa84ee0460fad71a0f4a",
+      "chars": 881
+    },
+    "sympy__sympy-14248": {
+      "sha256": "53683fd39626ffbfccfdc699f43241914035c6c04a7d68628acabac76af35897",
+      "chars": 1043
+    },
+    "sympy__sympy-15599": {
+      "sha256": "631f1104d26846a755b317d9b12ee20508622a42efb6597d207b7280275223b3",
+      "chars": 2288
+    },
+    "sympy__sympy-16766": {
+      "sha256": "c7bc7336cc989c87a48242465e794d5fc94a38f5388150e2cccf61445b50e526",
+      "chars": 1059
+    },
+    "sympy__sympy-17655": {
+      "sha256": "fd3bdfc548753cef7aea65c40cb3eb6ed2b48a1b85dee13285a8fa995680bb28",
+      "chars": 2418
+    },
+    "sympy__sympy-19040": {
+      "sha256": "229166ee908829cbcbe9289e2d5a8937ce8a0edbf28b259fde819ee414a1aa2a",
+      "chars": 2345
+    },
+    "sympy__sympy-20428": {
+      "sha256": "89df20df626bf40b4c774d75a744b2447d85a8d6915ef8bd01a98608ea1465cc",
+      "chars": 4170
+    },
+    "sympy__sympy-21596": {
+      "sha256": "4a889edb4f5144666e192d14c1a7a2ba3b8bc2e53083f5874e1fe6fce478c624",
+      "chars": 1028
+    },
+    "sympy__sympy-22714": {
+      "sha256": "80fe52ecff84acffe954d8f466976533b3852dc761e682da3bd34fc60447b90e",
+      "chars": 2120
+    },
+    "sympy__sympy-23950": {
+      "sha256": "c8e1a6f9b1a0b47a580bb624a08ada3b7a6696bac469b04f7537f58dc622d4fb",
+      "chars": 1226
+    }
+  }
+}

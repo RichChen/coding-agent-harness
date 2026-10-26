@@ -1,0 +1,37 @@
+# B0 v2. Same tools, prompt, and timeouts as b0-v1. The runner must use a clean image.
+# max_cost_usd is intentionally non-binding so the USD ledger cannot stop a run
+# that the CNY ledger still allows.
+llm:
+  base_url: "https://api.deepseek.com/v1"
+  api_key: "${LLM_API_KEY}"
+  model: "${DEEPSEEK_MODEL:deepseek-flash}"
+  thinking: disabled
+  max_tokens: 8192
+  trust_env: false
+runtime:
+  system_prompt_path: prompts/swe_b0.md
+  max_steps: 60
+  step_timeout_seconds: 300
+  total_timeout_seconds: 2400
+  context:
+    strategy: masking
+    max_tokens: 96000
+    keep_recent_tool_results: 4
+    plugin: noop
+  budget:
+    max_model_calls: 40
+    max_tokens: 10000000
+policy:
+  command:
+    execution_profile: docker_linux
+    docker_context: desktop-linux
+    docker_network: none
+    timeout_seconds: 120
+    env_whitelist: []
+  file_size_limit_bytes: 1048576
+  tool_output_max_chars: 16000
+tools:
+  enabled: [read_file, write_file, list_dir, edit_file, search_replace, run_command, search_code, retrieve_code]
+tracing:
+  lifecycle_events: true
+  llm_stream_events: true
