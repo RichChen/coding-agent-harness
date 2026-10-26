@@ -1,0 +1,22 @@
+# Offline teaching configuration. The tutorial replaces this client before run().
+# No environment interpolation, API credentials, shell tools or paid calls.
+llm:
+  base_url: http://127.0.0.1:9/v1
+  api_key: tutorial-unused
+  model: tutorial-scripted
+  supports_streaming: false
+  trust_env: false
+runtime:
+  max_steps: 8
+  total_timeout_seconds: 120
+  step_timeout_seconds: 30
+  budget:
+    max_model_calls: 8
+  context:
+    micro_compact: false
+retry:
+  max_retries: 0
+tools:
+  enabled: [read_file, search_replace]
+tracing:
+  lifecycle_events: false
