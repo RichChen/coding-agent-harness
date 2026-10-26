@@ -250,7 +250,8 @@ def test_mock_llm_t_calls_retrieve_code_then_reads_first_hit():
     call = first.tool_calls[0]
     assert call.name == "retrieve_code" and call.arguments == {"query": "The header is wrong.", "k": 5}
     tool_msg = {"role": "tool", "content": TOOL_HEADER + "\n\n1. pkg/http.py\n   - f (lines 1-3)\n2. b.py"}
-    second = _chat(llm, [user, tool_msg], TOOLS["t"])
+    reminder = {"role": "user", "content": "remaining model calls: 38/40"}
+    second = _chat(llm, [user, tool_msg, reminder], TOOLS["t"])
     assert second.tool_calls[0].name == "read_file" and second.tool_calls[0].arguments["path"] == "pkg/http.py"
     assert not _chat(llm, [user, tool_msg], TOOLS["t"]).tool_calls
 
@@ -263,4 +264,5 @@ def test_mock_llm_p_and_n_paths():
     n_user = {"role": "user", "content": "Public issue:\nx"}
     assert _chat(llm, [n_user], TOOLS["n"]).tool_calls[0].name == "list_dir"
     listing = {"role": "tool", "content": "[D] docs\n[F] README.rst\n[F] setup.py"}
-    assert _chat(llm, [n_user, listing], TOOLS["n"]).tool_calls[0].arguments["path"] == "setup.py"
+    reminder = {"role": "user", "content": "remaining model calls: 38/40"}
+    assert _chat(llm, [n_user, listing, reminder], TOOLS["n"]).tool_calls[0].arguments["path"] == "setup.py"

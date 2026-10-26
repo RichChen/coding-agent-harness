@@ -408,7 +408,8 @@ class CR2MockLLM(LLMClient):
         self.calls += 1
         names = {t["function"]["name"] for t in tools or []}
         user = next((m.get("content") or "" for m in messages if m.get("role") == "user"), "")
-        last = messages[-1].get("content") or "" if messages else ""
+        # the loop appends a "remaining model calls" user message after the latest tool result
+        last = next((m.get("content") or "" for m in reversed(messages) if m.get("role") == "tool"), "")
         if step == 0:
             if "retrieve_code" in names:
                 issue = user.split("Public issue:\n", 1)[-1]
