@@ -19,6 +19,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import os
 import random
 import re
 import statistics
@@ -71,6 +72,11 @@ CALLS_FILE = "retrieval-calls.jsonl"
 MODELS_FILE = "model-names.json"
 # Contract 8.2: if none of the first this-many real slots of a run recorded a model name, stop starting slots.
 MODEL_CHECK_SLOTS = 3
+# Contract 9.2: snapshot errors that are task results (see agent_snapshot_failure).
+AGENT_SNAPSHOT_ERRORS = frozenset({"ValueError: delta_too_large",
+                                   "DockerUnavailable: Docker control output quota exceeded"})
+DELTA_STATUS = "delta_too_large"
+LOCK_FILE = "run_cr2.lock"
 # Settlement error kinds that count as provider unavailability (HTTP such as 402, network) and rerun the slot.
 PROVIDER_FAILURE_KINDS = frozenset({"http", "network"})
 
@@ -220,11 +226,12 @@ def expected_tools() -> dict[str, list[str]]:
     return out
 
 
-_MODEL_FIELD = re.compile(rb'"model"\s*:\s*"([^"\\]{1,200})"')
+_MODEL_FIELD = re.compile(rb'"(model|system_fingerprint)"\s*:\s*"([^"\\]{1,200})"')
 
 
 class _ModelTapStream(httpx.AsyncByteStream):
-    """Pass a response body through unchanged while noting every top-level "model" value in it.
+    """Pass a response body through unchanged while noting every "model" and "system_fingerprint" value in it;
+    record(value, field) is called for each.
 
     The stream holds the bytes as sent, before httpx removes the Content-Encoding. For gzip or deflate, a copy is
     decompressed with its own zlib object only for scanning; other encodings are passed through unscanned."""
@@ -261,7 +268,7 @@ class _ModelTapStream(httpx.AsyncByteStream):
     def _scan(self, data: bytes) -> None:
         data = self._tail + data
         for match in _MODEL_FIELD.finditer(data):
-            self._record(match.group(1).decode("utf-8", "replace"))
+            self._record(match.group(2).decode("utf-8", "replace"), match.group(1).decode("ascii"))
         self._tail = data[-256:]
 
     async def __aiter__(self):
@@ -307,12 +314,14 @@ def model_name_tap(llm, record) -> None:
 
 
 def model_recorder(output: Path):
-    seen: set[str] = set()
+    """record(value, field) for the tap: model-names.json holds the distinct model names and system_fingerprints."""
+    seen: dict[str, set[str]] = {"model": set(), "system_fingerprint": set()}
 
-    def record(name: str) -> None:
-        if name not in seen:
-            seen.add(name)
-            (output / MODELS_FILE).write_text(json.dumps(sorted(seen)) + "\n", encoding="utf-8")
+    def record(value: str, field: str = "model") -> None:
+        if field in seen and value not in seen[field]:
+            seen[field].add(value)
+            payload = {"models": sorted(seen["model"]), "system_fingerprints": sorted(seen["system_fingerprint"])}
+            (output / MODELS_FILE).write_text(json.dumps(payload) + "\n", encoding="utf-8")
     return record
 
 
@@ -329,14 +338,28 @@ def tool_recorder(output: Path, *, tap_model: bool = False):
     return record
 
 
-def returned_models(run_dir: Path) -> list[str]:
-    """The model names recorded for a run; a missing, empty or unreadable file counts as none."""
-    path = run_dir / MODELS_FILE
+def _recorded(run_dir: Path, key: str) -> list[str]:
+    """Values recorded under key in model-names.json. Before r3 the file was a plain list of model names.
+    A missing, empty or unreadable file counts as none."""
     try:
-        names = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads((run_dir / MODELS_FILE).read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return []
-    return [name for name in names if isinstance(name, str) and name] if isinstance(names, list) else []
+    if isinstance(data, list):
+        values = data if key == "models" else []
+    elif isinstance(data, dict):
+        values = data.get(key)
+    else:
+        values = None
+    return [value for value in values if isinstance(value, str) and value] if isinstance(values, list) else []
+
+
+def returned_models(run_dir: Path) -> list[str]:
+    return _recorded(run_dir, "models")
+
+
+def returned_fingerprints(run_dir: Path) -> list[str]:
+    return _recorded(run_dir, "system_fingerprints")
 
 
 def model_name_halt(run_dirs) -> str | None:
@@ -348,18 +371,28 @@ def model_name_halt(run_dirs) -> str | None:
             + ", ".join(_display_path(path) for path in run_dirs[:MODEL_CHECK_SLOTS]))
 
 
-def model_slots(out_root: Path, slots) -> dict:
-    """Returned model name -> slot labels, and the slots without one (contract 8.2: list them, do not stop)."""
-    by_model: dict[str, list[str]] = {}
+def _slots_by_value(out_root: Path, slots, read) -> tuple[dict[str, list[str]], list[str]]:
+    by_value: dict[str, list[str]] = {}
     missing = []
     for slot in slots:
-        names = returned_models(slot_dir(out_root, slot))
-        if not names:
+        values = read(slot_dir(out_root, slot))
+        if not values:
             missing.append(slot_label(slot))
-        for name in names:
-            by_model.setdefault(name, []).append(slot_label(slot))
-    return {"by_model": {name: sorted(labels) for name, labels in sorted(by_model.items())},
-            "without_model_name": sorted(missing)}
+        for value in values:
+            by_value.setdefault(value, []).append(slot_label(slot))
+    return {value: sorted(labels) for value, labels in sorted(by_value.items())}, sorted(missing)
+
+
+def model_slots(out_root: Path, slots) -> dict:
+    """Returned model name -> slot labels, and the slots without one (contract 8.2: list them, do not stop)."""
+    by_model, missing = _slots_by_value(out_root, slots, returned_models)
+    return {"by_model": by_model, "without_model_name": missing}
+
+
+def fingerprint_slots(out_root: Path, slots) -> dict:
+    """Returned system_fingerprint -> slot labels (contract 9.2: reported only, never a stop condition)."""
+    by_value, missing = _slots_by_value(out_root, slots, returned_fingerprints)
+    return {"by_fingerprint": by_value, "without_fingerprint": missing}
 
 
 # --- slots ---------------------------------------------------------------------------------------
@@ -448,9 +481,24 @@ def provider_failure(run_dir: Path) -> str | None:
     return None
 
 
+def agent_snapshot_failure(summary: dict) -> bool:
+    """Contract 9.2: the candidate snapshot failed because the workspace delta was too large, which the agent's own
+    commands cause (9.1 replay: a repository test regenerated Cython sources). A task result, not infra.
+
+    snapshot_error is only set by export_delta() inside close(snapshot=True), so the quota error here is the
+    snapshot step's. The infra reason must be that snapshot error, not an earlier failure."""
+    error = summary.get("snapshot_error")
+    return (summary.get("status") == "infra_error" and error in AGENT_SNAPSHOT_ERRORS
+            and summary.get("infra_reason") == "candidate snapshot failed: " + error)
+
+
+def counted_status(summary: dict) -> str | None:
+    return DELTA_STATUS if agent_snapshot_failure(summary) else summary.get("status")
+
+
 def needs_rerun(run_dir: Path, summary: dict) -> str | None:
     """Infra rule (CR-2 contract section 3): chosen by error type only, never by solved."""
-    if summary.get("status") == "infra_error":
+    if counted_status(summary) == "infra_error":
         return "infra_error"
     failure = provider_failure(run_dir)
     return "provider " + failure if failure else None
@@ -501,7 +549,7 @@ def halt_reason(out_root: Path, expected: dict, tools: dict, verified: set | Non
     """Stop conditions checked before every new run. In-flight runs still finish."""
     verified = set() if verified is None else verified
     rows = slot_summaries(out_root)
-    reason = run_checks([summary for _, summary in rows])
+    reason = run_checks([{**summary, "status": counted_status(summary)} for _, summary in rows])
     if reason:
         return reason
     for path, summary in rows:
@@ -594,8 +642,74 @@ def _now() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
+def _pid_alive(pid: int) -> bool:
+    if sys.platform == "win32":
+        import ctypes
+
+        # os.kill(pid, 0) would terminate the process on Windows; ask for its exit code instead.
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(0x1000, False, pid)  # PROCESS_QUERY_LIMITED_INFORMATION
+        if not handle:
+            return False
+        try:
+            code = ctypes.c_ulong()
+            return bool(kernel32.GetExitCodeProcess(handle, ctypes.byref(code))) and code.value == 259  # STILL_ACTIVE
+        finally:
+            kernel32.CloseHandle(handle)
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def acquire_lock(out_root: Path) -> Path:
+    """Contract 9.2: one runner per output root. The lock file holds the owner's pid and start time."""
+    out_root.mkdir(parents=True, exist_ok=True)
+    path = out_root / LOCK_FILE
+    try:
+        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        try:
+            owner = json.loads(path.read_text(encoding="utf-8"))
+            pid = int(owner["pid"])
+        except (OSError, ValueError, KeyError, TypeError):
+            raise SystemExit("unreadable lock " + _display_path(path) + "; check for another runner, then delete it")
+        if _pid_alive(pid):
+            raise SystemExit("another run_cr2.py (pid " + str(pid) + ", started " + str(owner.get("started_at"))
+                             + ") holds " + _display_path(path) + "; not starting")
+        raise SystemExit("stale lock " + _display_path(path) + " (pid " + str(pid) + " is not running, started "
+                         + str(owner.get("started_at")) + "); delete it by hand after checking, then rerun")
+    with os.fdopen(fd, "w", encoding="utf-8") as handle:
+        handle.write(json.dumps({"pid": os.getpid(), "started_at": _now()}) + "\n")
+    return path
+
+
 async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expected: dict, tools: dict,
                     prefetch_sha256: str, label: str, service=None, run=run_task, oracle_sha256: str | None = None) -> dict:
+    lock = acquire_lock(out_root)
+    try:
+        return await _run_slots(slots, mock=mock, out_root=out_root, prepared=prepared, expected=expected, tools=tools,
+                                prefetch_sha256=prefetch_sha256, label=label, service=service, run=run,
+                                oracle_sha256=oracle_sha256)
+    finally:
+        lock.unlink(missing_ok=True)
+
+
+def delta_slots(out_root: Path, slots) -> dict[str, list[str]]:
+    """Group -> slots whose final run is a delta_too_large task result (contract 9.2)."""
+    out: dict[str, list[str]] = {group: [] for group in GROUPS}
+    for slot in slots:
+        path = slot_dir(out_root, slot) / "summary.json"
+        if path.is_file() and agent_snapshot_failure(json.loads(path.read_text(encoding="utf-8"))):
+            out[slot[1]].append(slot_label(slot))
+    return {group: sorted(labels) for group, labels in out.items()}
+
+
+async def _run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expected: dict, tools: dict,
+                     prefetch_sha256: str, label: str, service, run, oracle_sha256: str | None) -> dict:
     from src.tools.retrieve import TaskRetrieval
 
     started_at = _now()
@@ -688,6 +802,8 @@ async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expect
         "oracle_sha256": oracle_sha256,
         "returned_models": models,
         "returned_model_slots": None if mock else model_slots(out_root, [slot for slot, _ in started]),
+        "returned_fingerprint_slots": None if mock else fingerprint_slots(out_root, [slot for slot, _ in started]),
+        "delta_too_large_by_group": delta_slots(out_root, slots),
         "slots": [slot_label(slot) for slot in slots],
         "halt_reason": state["halt"],
         "started": len(started),
@@ -719,13 +835,17 @@ def write_runs(*, task_ids, repo_of: dict, mock: bool, prefetch_sha256: str, out
         problem = resumable(summary, group, mock=mock)
         if problem:
             raise SystemExit("refusing to hand off " + _display_path(path) + ": " + problem)
+        no_candidate = agent_snapshot_failure(summary)
         runs.append({
             "task_id": task, "repo": repo_of[task], "group": group, "k": k,
             "run_dir": _display_path(run_dir), "mock": summary["mock"], "profile": summary["profile"],
-            "status": summary.get("status"), "solved": summary.get("solved"), "model_calls": summary.get("model_calls"),
+            "status": counted_status(summary), "solved": False if no_candidate else summary.get("solved"),
+            "no_candidate": no_candidate, "snapshot_error": summary.get("snapshot_error"),
+            "model_calls": summary.get("model_calls"),
             "cost_cny": summary.get("cost_cny"), "stop_reason": summary.get("stop_reason"),
             "prompt_sha256": summary.get("prompt_sha256"), "rerun_reason": needs_rerun(run_dir, summary),
             "returned_models": returned_models(run_dir),
+            "system_fingerprints": returned_fingerprints(run_dir),
         })
     payload = {"schema": RUNS_SCHEMA, "scope": "mock" if mock else "cr2", "seed": SEED, "repeats": len(REPEATS),
                "groups": list(GROUPS), "prefetch_sha256": prefetch_sha256, "oracle_sha256": oracle_sha256,

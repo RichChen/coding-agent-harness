@@ -136,3 +136,14 @@ def test_analyze_end_to_end(tmp_path):
     assert split["gold_in_top5"]["tasks_in_pool"] == 1 and split["gold_in_top5"]["p_minus_n"]["diff"] == pytest.approx(-3)
     assert split["gold_not_in_top5"]["p_mean"] == 41
     assert report["stop_reasons"]["n"] == {"completed": 4}
+    assert report["delta_too_large_by_group"] == {"n": 0, "p": 0, "t": 0, "o": 0}
+
+    # r3: a delta_too_large run keeps its step metrics, counts as unsolved even if a summary said solved, and is
+    # reported per group.
+    runs[-1] = {**runs[-1], "status": "delta_too_large", "solved": True, "stop_reason": "candidate_snapshot_failed"}
+    report = an.analyze(runs, gold, prefetch, root=tmp_path, repeats=2)
+    assert report["complete"] and report["runs"] == 16
+    assert report["delta_too_large_by_group"] == {"n": 0, "p": 0, "t": 0, "o": 1}
+    assert report["group_means"]["first_gold_step"]["o"] == 1
+    assert report["solve_by_early_touch"]["o"]["touched_within_10"] == {"runs": 4, "solved": 3, "rate": 0.75}
+    assert report["group_means"]["solved"]["o"] == pytest.approx((1.0 + 0.5) / 2)
