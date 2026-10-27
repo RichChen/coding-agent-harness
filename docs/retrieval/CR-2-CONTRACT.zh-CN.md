@@ -211,3 +211,21 @@ O 组不是一种方法。它回答的是：定位做到完美时，agent 最多
 ### 8.5 r2 + CR-2c 启动文字
 
 > CR-2b 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2b.zh-CN.md`。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 8 节，先做 8.1 和 8.2 的 r2 修订：只改 `scripts/run_cr2.py` 和它的测试，补 `CR-2-FREEZE.md` 第 11 节，打 tag `cr2-freeze-r2`，跑全量 pytest。全部通过后，在 `cr2-freeze-r2` 上按 8.3 启动全量运行（`--authorized 5,800`，`HF_HUB_OFFLINE=1`，后台运行，输出写到 `runs/cr2-logs/main.out`）。项目作者已经确认余额并关闭了系统待机。运行期间不改代码；前 3 个真实槽位如果都没有记到模型名，runner 会停下，这时写检查点等审计，不要自行修改后继续。全部槽位跑完后，写 `docs/retrieval/CHECKPOINT-CR-2c.md` 并提交后停下，不做分析。其他规则与前几轮相同。
+
+## 9. 绗竴娆″仠姝㈠悗锛?026-10-27锛岄€傜敤浜?CR-2c 缁窇锛?
+渚濇嵁 [AUDIT-CR-2c-halt1](AUDIT-CR-2c-halt1.zh-CN.md)銆傜 9 鑺備笌鍓嶆枃鍐茬獊鏃朵互绗?9 鑺備负鍑嗐€?
+### 9.1 鍏堟牳瀹烇紙涓嶈姳閽憋紝涓嶆敼鍐荤粨浠ｇ爜锛?
+鍐欎竴涓柊鑴氭湰 `scripts/cr2_replay_snapshot.py`锛氱敤鍚屼竴涓共鍑€闀滃儚璧峰鍣紝鎸?`scikit-learn__scikit-learn-12585/n/r4` 鐨?`events.jsonl` 渚濇閲嶆斁 agent 鐨勫啓鎿嶄綔鍜?`run_command`锛堝寘鎷偅鏉¤秴鏃剁殑 pytest锛岃秴鏃舵椂闂寸浉鍚岋級锛屼笉璋冪敤妯″瀷銆傜劧鍚庡湪瀹瑰櫒閲屽垪鍑?`/workspace` 鐩稿 `/opt/repo` 鐨勬敼鍔細鏂囦欢鏁般€佹€诲瓧鑺傛暟銆佹寜鐩綍姹囨€荤殑鍓?20 椤癸紝浠ュ強鏄摢涓€姝ヤ骇鐢熺殑銆?
+鍒ゆ柇锛堝啓杩涙鏌ョ偣锛夛細
+
+- 鏀瑰姩鏉ヨ嚜 agent 鐨勫啓鎿嶄綔鎴栧畠鐨勫懡浠や骇鐢熺殑鏂囦欢锛堟祴璇曠紦瀛樸€佷复鏃舵暟鎹€佷笅杞界殑鏁版嵁闆嗙瓑锛夛細**agent 閫犳垚**锛屾寜 9.2 澶勭悊銆?- 鏀瑰姩鏉ヨ嚜 harness 鑷繁鍐欒繘宸ヤ綔鍖虹殑涓滆タ锛堝伐鍏疯秴鏃跺鐞嗐€佽緭鍑鸿惤鐩樼瓑锛夛細**harness 閫犳垚**锛屾寜 infra 澶勭悊銆傝繖鏃朵笉鍋?9.2锛屽啓妫€鏌ョ偣鍋滀笅銆?- 閲嶆斁澶嶇幇涓嶅嚭鏉ワ細鍐欐鏌ョ偣鍋滀笅銆?
+### 9.2 r3 淇锛堜粎鍦?9.1 鍒ゅ畾涓?agent 閫犳垚鏃讹級
+
+鍙厑璁告敼 `scripts/run_cr2.py` 鍜屽畠鐨勬祴璇曪紝`run_swe_task.py`銆乣src/` 閮戒笉鏀癸紝A5/A6 鐨勫垽瀹氫篃涓嶅彈褰卞搷銆?
+- **閲嶆柊鍒嗙被銆?* 涓€涓Ы浣嶇殑鏈€缁堣繍琛屽鏋?status 涓?`infra_error`锛屽苟涓?`snapshot_error` 鏄?`ValueError: delta_too_large`锛屾垨鑰呮槸 `DockerUnavailable: Docker control output quota exceeded` 涓斿彂鐢熷湪蹇収杩欎竴姝ワ紙`op` 涓?`snapshot`锛夛紝灏辫涓?*浠诲姟缁撴灉**锛氫笉閫€褰广€佷笉閲嶈窇锛屼笉璁″叆 infra 鍋滄鏉′欢銆傚湪 `cr2-runs.json` 閲岃繖鏍疯锛?  - `status: "delta_too_large"`锛宍solved: false`锛宍no_candidate: true`锛?  - 涓绘寚鏍囧拰 T 缁勬寚鏍囩収甯镐粠 `events.jsonl` 璁＄畻銆?  鍏朵粬 `snapshot_error`锛堝鍣ㄦ彁鍓嶆秷澶便€丱OM 绛夛級浠嶆寜 infra 澶勭悊锛岃鍒欎笉鍙樸€?- **宸叉湁鐨勯偅涓Ы浣嶃€?* `scikit-learn__scikit-learn-12585/n/r4` 淇濈暀鐨勯偅娆¤繍琛屾寜鏂拌鍒欓噸鏂板垎绫汇€備袱娆￠€€褰硅繍琛屼繚鐣欏師鐩綍锛岃垂鐢ㄧ収璁★紝涓嶅弬涓庡垎鏋愩€?- **鍗曞疄渚嬮攣銆?* runner 鍚姩鏃跺湪 `runs/cr2-main/` 涓嬬嫭鍗犲垱寤洪攣鏂囦欢锛屽啓鍏?PID 鍜屽惎鍔ㄦ椂闂达紝閫€鍑烘椂鍒犻櫎銆傞攣宸插瓨鍦ㄤ笖 PID 浠嶅湪杩愯灏辨嫆缁濆惎鍔紱PID 宸蹭笉瀛樺湪灏辨姤鍛婃槸闄堟棫閿佸苟鎷掔粷鍚姩锛岀瓑浜哄伐鍒犻櫎銆?- **璁板綍 `system_fingerprint`銆?* 澶嶇敤妯″瀷鍚嶇殑閽╁瓙锛屽悓鏃舵壂鎻?`system_fingerprint`锛屽啓杩?`model-names.json`锛屾姤鍛婇噷鎸夊€煎垪鍑烘Ы浣嶃€傚彧鍋氭姤鍛婏紝涓嶄綔涓哄仠姝㈡潯浠躲€?- **鍒嗘瀽鑴氭湰銆?* `analyze_cr2.py` 鎺ュ彈 `delta_too_large` 妲戒綅锛氫富鎸囨爣鐓у父璁″叆锛屼慨澶嶇巼璁颁负鏈В鍑猴紝骞舵寜缁勬姤鍛婅繖绫绘Ы浣嶇殑鏁伴噺銆?- 鍗曟祴瑕嗙洊锛氫袱绉?`snapshot_error` 閮芥敼鍒や负浠诲姟缁撴灉锛涘叾浠?`snapshot_error` 浠嶆槸 infra锛涘仠姝㈡潯浠朵笉璁″叆鏀瑰垽鐨勬Ы浣嶏紱閿佹枃浠剁殑涓夌鎯呭喌銆?- 鍦?`CR-2-FREEZE.md` 鍔犵 12 鑺?r3 淇"锛屾墦 tag `cr2-freeze-r3`锛岃窇鍏ㄩ噺 pytest銆?
+### 9.3 缁窇
+
+- 寮€璺戝墠锛氱‘璁ょ郴缁熷緟鏈哄凡缁忓叧闂紙`powercfg` 鏄剧ず鎺ョ數婧愪负 0锛夛紝Docker 鍦ㄧ嚎锛屾病鏈夊叾浠?`run_cr2.py` 杩涚▼鍦ㄨ繍琛屻€?- 鍦?`cr2-freeze-r3` 涓婄敤鍚屼竴鏉″懡浠ょ画璺戙€傚凡鏈夌殑 26 涓Ы浣嶈烦杩囷紱12585/n/r4 鎸夋柊瑙勫垯瑙嗕负宸插畬鎴愩€?- 涓嶅啀鍥犱负杩欎竴绫诲け璐ュ仠涓嬨€傚叾浠栧仠姝㈡潯浠朵笉鍙樸€?- 鍏ㄩ儴璺戝畬鍚庯紝鍐?`CHECKPOINT-CR-2c.md` 鐨勭画绡囷細鍦ㄥ師鏂囦欢鍚庤拷鍔?缁窇"涓€鑺傦紝鍓嶆枃涓嶆敼銆傚唴瀹规寜鍚堝悓 8.3锛屽彟鍔狅細鎸夌粍缁熻 `delta_too_large` 妲戒綅鐨勬暟閲忥紝浠ュ強 `system_fingerprint` 鐨勫垎甯冦€?
+### 9.4 鍚姩鏂囧瓧
+
+> CR-2c 鐨勭涓€娆″仠姝㈠凡瀹¤锛屽璁¤褰曞湪 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2c-halt1.zh-CN.md`銆傝璇诲璁″拰 `CR-2-CONTRACT.zh-CN.md` 绗?9 鑺傘€傚厛鍋?9.1 鐨勯噸鏀炬牳瀹烇紝涓嶈皟鐢ㄦā鍨嬨€佷笉鏀瑰喕缁撲唬鐮併€傚彧鏈夊垽瀹氫负"agent 閫犳垚"鏃讹紝鎵嶅仛 9.2 鐨?r3 淇锛氬彧鏀?`scripts/run_cr2.py`銆乣scripts/analyze_cr2.py` 鍜屽畠浠殑娴嬭瘯锛岃ˉ `CR-2-FREEZE.md` 绗?12 鑺傦紝鎵?tag `cr2-freeze-r3`锛岃窇鍏ㄩ噺 pytest銆傚鏋滃垽瀹氫负"harness 閫犳垚"锛屾垨鑰呴噸鏀惧鐜颁笉鍑烘潵锛屽氨鍐欐鏌ョ偣鍋滀笅銆俽3 鍏ㄩ儴閫氳繃鍚庯紝鎸?9.3 缁窇锛氬紑璺戝墠纭绯荤粺寰呮満宸插叧闂€丏ocker 鍦ㄧ嚎銆佹病鏈夊叾浠?`run_cr2.py` 杩涚▼銆傚叏閮ㄦЫ浣嶈窇瀹屽悗锛屽湪 `CHECKPOINT-CR-2c.md` 鏈熬杩藉姞"缁窇"涓€鑺傚苟鎻愪氦锛岀劧鍚庡仠涓嬶紝涓嶅仛鍒嗘瀽銆傚叾浠栬鍒欎笌鍓嶅嚑杞浉鍚屻€?
