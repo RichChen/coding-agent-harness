@@ -156,3 +156,180 @@ set HF_HUB_OFFLINE=1&& .venv\Scripts\python.exe -u scripts\run_cr2.py --authoriz
 - 本检查点。
 
 按要求停下，等审计。
+
+## 续跑
+
+日期：2026-10-29。依据：[AUDIT-CR-2c-halt1](AUDIT-CR-2c-halt1.zh-CN.md)、[CR-2 合同](CR-2-CONTRACT.zh-CN.md)第 9 节、[CR-2-FREEZE.md](CR-2-FREEZE.md)第 12 节。上文保持原样，本节只追加。
+
+**结论：1120 个槽位全部跑完，runner 没有停止（`halt_reason` 为 null），已写出 `docs/retrieval/cr2-runs.json`。按要求没有做分析。** 有两件事需要审计：
+
+- 6 个槽位的最终运行仍带重跑原因，`analyze_cr2.py` 会拒绝读取这份文件，见第 7 小节第 1 条；
+- runner 正常退出后，又出现一次来源不明的同命令启动。它没有启动槽位，但覆盖了日志和报告，见第 2 小节。
+
+### 1. 9.1 和 r3
+
+- **9.1 重放**：脚本 `scripts/cr2_replay_snapshot.py`，提交 `a37002c`。在干净容器里按顺序重放 `scikit-learn__scikit-learn-12585/n/r4` 的工具调用，复现了 `ValueError: delta_too_large`。
+  - 改动共 6 个文件、4,056,963 字节。其中 5 个是 agent 跑 `test_common.py::test_configure` 时重新生成的 Cython 源文件，1 个是 agent 修改的 `sklearn/base.py`。
+  - harness 没有往工作区写任何文件。
+  - 判定为 **agent 造成**，证据详见 FREEZE 12.1。
+- **r3 修订**：代码提交 `231dc9f`，只改了 `run_cr2.py`、`analyze_cr2.py` 和它们的测试。FREEZE 第 12 节和 tag `cr2-freeze-r3` 在 `0d0ac45`。
+  - 全量 pytest 在 `231dc9f` 和 tag 上各跑一次，都是 862 passed、22 skipped、0 failed。preflight 通过。
+  - 旧 tag 都没有动。
+  - 合同第 9 节在仓库里的文本是乱码，按 GBK 再按 UTF-8 还原后阅读，没有改动合同文件。
+
+### 2. 开跑前和运行经过
+
+- **开跑前**
+  - HEAD 正好是 `cr2-freeze-r3`（`0d0ac45`）；
+  - Docker 29.8.2 在线，没有残留容器；
+  - 没有 `run_cr2` 进程，也没有锁文件。
+- **系统待机**：开跑前 `powercfg` 显示接电源 7200 秒、电池 900 秒，是上次停止后我恢复的原值。我把两项改为 0，确认接电源为 0 后才开跑；跑完已恢复为 7200 / 900 秒。
+- **保留旧文件**：被来源不明的那次启动覆盖的 `main.out` 和 `main-report.json`，先复制为 `runs/cr2-logs/main-halt1-overwritten.out` 和 `runs/cr2-main/main-report-halt1-overwritten.json`。
+- **启动**：2026-10-27 **12:21** 启动，命令和上次相同，见第 2 节。runner 的 `started_at` 是 12:21:59，锁文件记录的 PID 是 20556。
+  - 整个运行期间只有这一条进程链：`cmd` 启动 venv 的 python 启动器，启动器再启动实际运行的 python。没有再出现第二次启动。
+- **结束**：2026-10-29 **07:07** 跑完最后一个槽位（`finished_at` 07:07:57）。07:10:49 写完 `cr2-runs.json` 后进程退出，锁文件已删除。总用时约 42 小时 46 分。
+- **又一次来源不明的启动**：07:12:33 又有一次同样的命令启动了。这是它在报告里的 `started_at`，进程本身更早启动，因为要先加载检索模型。
+  - 它跑到 07:12:53 结束：`started` 0、`skipped_finished` 1120、`halt_reason` null，没有调用模型，`spent_cny` 仍是 547.394。
+  - 运行目录没有变化：退役目录还是 159 个，最终运行还是 1120 个。6 个 `infra_kept` 槽位的退役次数已经用完，没有被再次退役。
+  - 它覆盖了 `runs/cr2-logs/main.out`、`runs/cr2-main/main-report.json`，并重写了 `docs/retrieval/cr2-runs.json`。runner 输出的 sha256 是 `bb6171cf…`；文件由同样的 summary 生成，所以内容应当与第一次相同。
+  - 单实例锁防不住这种情况：它是在第一次运行退出、锁已经删除之后才启动的。
+  - 来源仍然找不到：IDE 终端记录里没有这条命令；这台机器没有开启进程创建审计（Security 4688），事件日志里查不到。
+  - 两次都发生在 runner 正常退出后不久，上次是退出后约 4 秒。
+
+  第 3 小节的报告数字，是我在 07:10 进程退出后、被覆盖之前读到的第一次运行的报告。
+
+### 3. `main-report.json` 摘要
+
+| 字段 | 值 |
+|---|---|
+| `halt_reason` | null |
+| `started` / `not_started` / `skipped_finished` | 1094 / 0 / 26 |
+| `started_by_group` | N 273、P 274、T 270、O 277 |
+| `injection_verified_runs` | 1114 |
+| `infra_kept` | 6 |
+| `infra_retired` | 159（含上一轮的 2 个） |
+| `delta_too_large_by_group` | N 5、P 1、T 3、O 3 |
+| `returned_models` | `["deepseek-flash"]` |
+| `spent_cny`（账本） | 547.394 |
+
+`skipped_finished` 26 个是 8 个 canary 槽位，加上上一轮跑完的 18 个，其中 `12585/n/r4` 按新规则算作已完成。
+
+`injection_verified_runs` 比 1120 少 6 个，就是 6 个 `infra_kept` 槽位：runner 跳过还需要重跑的运行，不做注入核对。我用同一个冻结函数 `injection_problem` 离线核对了这 6 个，全部通过，没有调用模型。
+
+harness 工具错误：全部 1279 次运行都是 0。
+
+### 4. 按组统计（最终运行，含 canary 和上一轮）
+
+| 组 | 槽位 | 本次新跑 | 停止原因 | 退役 | 保留的 infra |
+|---|---|---|---|---|---|
+| N | 280 | 273 | max_model_calls 163、completed 104、step_deadline 5、candidate_snapshot_failed 5、model_parse_error 2、context_overflow 1 | 41（含上一轮 2 个） | 2 |
+| P | 280 | 274 | max_model_calls 161、completed 114、step_deadline 4、candidate_snapshot_failed 1 | 39 | 0 |
+| T | 280 | 270 | max_model_calls 152、completed 112、step_deadline 10、candidate_snapshot_failed 3、model_parse_error 3 | 39 | 2 |
+| O | 280 | 277 | max_model_calls 160、completed 106、step_deadline 11、candidate_snapshot_failed 3 | 40 | 2 |
+| 合计 | 1120 | 1094 | max_model_calls 636、completed 436、step_deadline 30、candidate_snapshot_failed 12、model_parse_error 5、context_overflow 1 | 159 | 6 |
+
+**`delta_too_large`（r3 改判的任务结果）**：共 12 个槽位。在 `cr2-runs.json` 里都记为 `status: "delta_too_large"`、`solved: false`、`no_candidate: true`，对应上表里 `candidate_snapshot_failed` 的 12 个。
+
+| 组 | 数量 | 槽位 |
+|---|---|---|
+| N | 5 | `scikit-learn__scikit-learn-12585/n/r1`–`r5` |
+| P | 1 | `12585/p/r3` |
+| T | 3 | `12585/t/r1`、`12585/t/r5`、`scikit-learn__scikit-learn-10908/t/r4` |
+| O | 3 | `12585/o/r1`、`12585/o/r2`、`12585/o/r5` |
+
+`12585` 的 20 个槽位里有 11 个没有候选补丁。
+
+另有 2 个 T 组槽位的 status 是 `delta_lost`：`pytest-dev__pytest-7490/t/r1` 和 `sympy__sympy-17655/t/r4`。这是 `run_swe_task.py` 原有的任务结果状态，含义是用过编辑工具但最终改动为空。它们没有快照错误，不是 infra。
+
+**退役的 159 次运行，按原因**
+
+| 原因 | 次数 |
+|---|---|
+| 模型服务商网络失败（`provider network`） | 103 |
+| `candidate snapshot failed: container_gone_before_snapshot` | 25 |
+| `container cleanup failed` | 24 |
+| `candidate snapshot failed: DockerUnavailable: Docker snapshot failed after 3 retries …` | 3 |
+| `container start failed: Docker create failed after 3 retries …` | 1 |
+| `grader failed before test execution: DockerUnavailable: Docker create failed …` | 1 |
+| 上一轮的 `12585/n/r4.infra1`、`.infra2`（r3 后属于 `delta_too_large` 一类） | 2 |
+
+停止条件统计到的 `infra_error` 共 54 次，都在上表的 Docker 类原因里，占全部 1279 次运行的 4.2%，没有达到 10%。Docker 类失败都在重跑后恢复，没有一个被保留。
+
+### 5. 返回的模型名和 system_fingerprint
+
+- **模型名**：本次新跑的 1094 个槽位全部只记到 `deepseek-flash`，没有缺失，也没有第二个名字。上一轮的 18 个槽位也是 `deepseek-flash`；canary 的 8 个按合同 8.1 记为缺失。
+- **system_fingerprint**（`returned_fingerprint_slots`，只做报告）：本次新跑的 1094 个槽位都记到了，共出现两个值。
+
+| fingerprint | 槽位 | 只有这个值 | 涉及运行的启动时间（北京时间） | 按组 |
+|---|---|---|---|---|
+| `e72d3c7f663d3e1383b00b3884cb4501` | 298 | 261 | 10-27 12:22 – 10-27 19:00 | N 81、P 82、T 72、O 63 |
+| `bc19ba97cbe016479903222bb1578db6` | 833 | 796 | 10-27 17:55 – 10-29 07:01 | N 207、P 203、T 205、O 218 |
+
+- 37 个槽位两个值都出现了，都是 10-27 17:55 到 19:00 之间启动的运行。也就是说，服务端大约在 10-27 18 点前后切换了 fingerprint，之后没有再变。
+- 两段时间里四组的槽位都有，没有集中在某一组。模型名在切换前后都是 `deepseek-flash`，所以服务端是否在同一个别名下换了版本，只能从 fingerprint 看出来。
+- 续跑前的 26 个槽位用的是 r2 的文件格式，没有 fingerprint。
+
+### 6. 费用
+
+`scripts/cr2_cost.py --report runs/cr2-main/main-report.json --out runs/cr2-logs/main-cost.json` 统计了 1279 次运行（1120 个最终运行加 159 次退役运行），共 37,718 次结算。全部结算都带缓存命中/未命中拆分，缓存命中率 65.2%，账本是缓存口径的 2.58 倍。按组的数字由 `runs/cr2-logs/resume_stats.py` 统计，结果在 `resume-stats.json`。
+
+| 范围 | 账本（元） | 缓存口径，高峰价（元） |
+|---|---|---|
+| N 最终运行（280） | 118.205 | 47.979 |
+| P 最终运行（280） | 114.569 | 45.137 |
+| T 最终运行（280） | 120.700 | 47.708 |
+| O 最终运行（280） | 114.560 | 44.496 |
+| 退役运行（N 41、P 39、T 39、O 40） | 79.360（N 18.618、P 20.231、T 21.358、O 19.153） | 26.597 |
+| **合计** | **547.394** | **211.916** |
+
+- 本次续跑新增：账本 535.819 元（N 132.677、P 131.225、T 138.918、O 132.999，含退役运行），缓存口径 207.159 元。
+- 退役运行的费用占账本总额的 14.5%。
+- 账本总额 547.394 元，低于 800 元上限。
+
+**高峰/非高峰**（按 `model.settled` 时间戳，北京时间；高峰是工作日 9–12 点和 14–18 点，10-27 至 10-29 都是工作日，没有节假日。只做报告）：
+
+| 范围 | 时段 | 结算次数 | 缓存口径，高峰价（元） | 按时段价估算（元） |
+|---|---|---|---|---|
+| 本次续跑 | 高峰 | 11,023 | 63.854 | 63.854 |
+| 本次续跑 | 非高峰 | 25,882 | 143.305 | 71.653（半价） |
+| 本次续跑 | 合计 | 36,905 | 207.159 | **约 135.51** |
+| CR-2 全部（含 canary 和上一轮） | 高峰 / 非高峰 | 11,023 / 26,695 | 63.854 / 148.062 | **约 137.89** |
+
+续跑里的高峰结算有两段：10-27 14–18 点和 10-28 9–12 点、14–18 点。canary 和上一轮的结算都在非高峰。按时段价估算的前提是非高峰所有单价都是高峰价的一半；实际扣费以 DeepSeek 账单为准。
+
+### 7. 遇到的问题
+
+1. **6 个保留的槽位带着重跑原因，`analyze_cr2.py` 会拒绝运行。**
+   - 涉及的槽位：`pytest-dev__pytest-7205/o/r2`、`scikit-learn__scikit-learn-10908/o/r1`、`sphinx-doc__sphinx-10323/n/r1`、`sphinx-doc__sphinx-9461/n/r2`、`sphinx-doc__sphinx-9461/t/r3`、`sympy__sympy-11618/t/r4`。
+   - 这 6 个槽位的三次运行里都出现了模型服务商的网络失败（客户端重试后仍失败的结算）。它们都跑满了 40 次模型调用，status 是正常的 fail 或 partial，不是 `infra_error`。
+   - 退役次数用完后，runner 按冻结规则保留，记为 `infra_kept`。它们在 `cr2-runs.json` 里的 `rerun_reason` 是 `provider network None`。
+   - 而 `analyze_cr2.py` 的 `main()` 遇到任何 `rerun_reason` 都会退出，提示 "runs file still has slots whose final run needs a rerun"。
+   - 这 6 个运行的注入核对已离线通过（见第 3 小节）。怎么处理需要审计决定：再给这几个槽位重跑，还是把带中途网络失败的运行按任务结果计入。我没有改动。
+2. **模型服务商网络失败很多。**
+   - 共 103 次退役，加上上面 6 个槽位。
+   - 全部运行的 `events.jsonl` 里，客户端重试后仍失败的结算有 187 次：`network` 161、`DeadlineExceeded` 21、`timeout` 5。只有 `network` 会触发重跑。
+   - events 只记录错误类型，不记录具体信息。具体信息原本在 `main.out` 里，已被第 2 小节那次启动覆盖。10-28 18:25 我读过一次 `main.out` 的末尾，当时看到了三种：
+     - "Server disconnected without sending a response"；
+     - 空的网络错误信息；
+     - DNS 解析失败（`getaddrinfo failed`）。
+   - 按退役运行的结束时间看，失败分布在整个运行期间，两天的 15–16 点最多。
+   - 这些失败都按冻结规则重跑，不计入 infra 停止条件。
+3. **runner 退出后又出现一次来源不明的启动**，覆盖了 `main.out` 和 `main-report.json`，见第 2 小节。没有造成费用或数据变化，但这已经是第二次了，来源仍然不明。
+4. **Docker 类 infra 54 次**：容器在快照前消失 25 次，容器清理失败 24 次，其他 5 次。全部在重跑后恢复。
+5. **`delta_too_large` 集中在 `scikit-learn__scikit-learn-12585`**：20 个槽位里 11 个没有候选补丁。这与 9.1 重放的结论一致：这道题的仓库测试会重新生成 Cython 源文件。
+6. **system_fingerprint 在运行中切换了一次**（10-27 18 点前后），见第 5 小节。只做报告。
+7. **运行期间**：10-28 晚上，系统的进程查询（WMI）和递归列目录一度很慢，但 runner 没有受影响。我在 10-28 有一次长时间等待被中断，对运行也没有影响。
+
+### 8. 文件
+
+- `docs/retrieval/cr2-runs.json`：随本节提交，1120 行，sha256 `bb6171cfe2cdf862135c4c41a22be2821157acc63c7c8c4899e8f961a1d7cabc`，与 runner 输出一致。
+- 运行目录 `runs/cr2-main/`（包括 `main-report.json`）和日志目录 `runs/cr2-logs/` 不入库：
+  - `main.out`、`main-report.json`：已被 07:12 那次来源不明的启动覆盖，现在是那次空运行的输出；
+  - `main-wall.txt`：两次的开始和结束时间；
+  - `main-cost.json`：费用；
+  - `resume_stats.py`、`resume-stats.json`：按组统计和高峰拆分；
+  - `failed_settled.py`：按错误类型统计失败的结算；
+  - `replay-scikit-learn__scikit-learn-12585-n-r4.json`、`replay-12585-n-r4.out`：9.1 重放；
+  - `main-halt1-overwritten.out`、`runs/cr2-main/main-report-halt1-overwritten.json`：上一轮被覆盖文件的副本。
+
+按要求停下，不做分析，等审计。
