@@ -171,7 +171,7 @@ mock 接线检查花费 0。没有 infra 退役运行，所以没有额外的费
 
 ## 7. 全量 pytest
 
-`.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider`（后台运行一次，输出写到 `runs/cr2e-pytest.out`）：**903 passed、22 skipped、0 failed**，用时 99 秒。CR-2d 时是 871 个，加上本次新增的 32 个测试。这次没有出现重复执行。
+`.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider`（后台运行一次，输出写到 `runs/cr2e-pytest.out`）：**903 passed、22 skipped、0 failed**，用时 99 秒。CR-2d 时是 871 个。本次新增 32 个：`tests/test_cr2e.py` 30 个，另外 `test_retrieval_isolation.py` 对新文件 `cr_demo.py` 自动参数化出 2 个扫描用例。这次没有出现重复执行。
 
 ## 8. 遇到的问题
 
