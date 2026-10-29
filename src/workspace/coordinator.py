@@ -30,9 +30,28 @@ class WorkspaceCoordinator:
             self.cleanup_ok = False
 
     @asynccontextmanager
-    async def operation(self, control, *, starting=False):
-        await control.wait(self._lock.acquire())
+    async def _locked(self, control):
+        acquired = False
+
+        async def acquire():
+            nonlocal acquired
+            await self._lock.acquire()
+            # No suspension between successful acquisition and recording ownership.
+            acquired = True
+
         try:
+            await control.wait(acquire(), maximum=None)
+            # Cancellation/deadline can coincide with a successful acquisition.
+            # Reject work before entering, while still releasing our own lock.
+            control.remaining(None)
+            yield
+        finally:
+            if acquired:
+                self._lock.release()
+
+    @asynccontextmanager
+    async def operation(self, control, *, starting=False):
+        async with self._locked(control):
             if self.state != ("new" if starting else "active"):
                 raise CaptureError("workspace_unavailable")
             try:
@@ -46,8 +65,6 @@ class WorkspaceCoordinator:
                     raise CaptureError("workspace_operation_failed", evidence={
                         "exception_type": type(exc).__name__, "cleanup_ok": self.cleanup_ok}) from exc
                 raise
-        finally:
-            self._lock.release()
 
     async def start(self, control):
         async with self.operation(control, starting=True) as transport:
@@ -61,10 +78,7 @@ class WorkspaceCoordinator:
     async def close(self, control=None):
         # The ongoing operation is bounded by its own control; close never races it.
         control = control or CaptureControl("owned-close", time.monotonic() + 15)
-        await control.wait(self._lock.acquire())
-        try:
+        async with self._locked(control):
             await self._cleanup()
             self.state = "closed"
             return self.cleanup_ok
-        finally:
-            self._lock.release()

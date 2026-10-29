@@ -30,15 +30,23 @@ class CaptureControl:
             raise ValueError("positive byte quotas required")
 
     def remaining(self, maximum=30.0):
+        """Remaining deadline, optionally capped for a management RPC.
+
+        ``None`` removes only the internal cap, never the absolute deadline.
+        """
         if self.cancel is not None and self.cancel.is_set():
             raise CaptureError("cancelled")
         remaining = self.deadline - time.monotonic()
         if remaining <= 0:
             raise CaptureError("deadline")
-        return min(maximum, remaining)
+        return remaining if maximum is None else min(maximum, remaining)
 
     async def wait(self, awaitable, maximum=30.0):
-        """Bound lock acquisition and every control call; settle cancelled tasks."""
+        """Wait with cancellation priority when both waiter tasks finish together.
+
+        Settle the work even when its result is discarded. Resource-acquiring
+        callers must track ownership inside that work and release it on rejection.
+        """
         task = asyncio.ensure_future(awaitable)
         cancelled = None
         try:

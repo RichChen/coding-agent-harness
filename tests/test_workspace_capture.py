@@ -246,3 +246,112 @@ async def test_cancel_event_during_command_is_not_cli_completion(tmp_path):
     with pytest.raises(CaptureError, match="cancelled"):
         await task
     assert coordinator.state == "failed" and coordinator.cleanup_ok and transport.active_calls == 0
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("entry", ["execute", "close"])
+async def test_cancel_and_successful_lock_acquire_together_release_ownership(tmp_path, entry):
+    _, coordinator, transport = await started(tmp_path)
+    event = asyncio.Event()
+
+    class CancelOnAcquire(asyncio.Lock):
+        async def acquire(self):
+            acquired = await super().acquire()
+            event.set()  # Both acquisition and the cancel watcher finish this turn.
+            return acquired
+
+    coordinator._lock = CancelOnAcquire()
+    with pytest.raises(CaptureError, match="cancelled"):
+        if entry == "execute":
+            await coordinator.execute(["true"], control(cancel=event))
+        else:
+            await coordinator.close(control(cancel=event))
+    assert not coordinator._lock.locked()
+    assert coordinator.state == "active" and transport.maximum_calls == 0
+    assert not transport.closed  # Rejected before any container operation began.
+    assert await asyncio.wait_for(coordinator.close(), 1)
+    assert coordinator.state == "closed" and transport.closed and coordinator.cleanup_ok
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("entry", ["execute", "close"])
+@pytest.mark.parametrize("stop", ["cancelled", "deadline"])
+async def test_stopped_waiter_never_releases_another_operations_lock(tmp_path, entry, stop):
+    _, coordinator, transport = await started(tmp_path)
+    event, waiting = asyncio.Event(), asyncio.Event()
+
+    class ObserveWait(asyncio.Lock):
+        async def acquire(self):
+            waiting.set()
+            return await super().acquire()
+
+    coordinator._lock = ObserveWait()
+    await coordinator._lock.acquire()  # A separate operation owns the lock.
+    waiting.clear()
+    stop_control = CaptureControl("waiting", time.monotonic() + (.02 if stop == "deadline" else 10), event)
+    command = (coordinator.execute(["true"], stop_control) if entry == "execute"
+               else coordinator.close(stop_control))
+    task = asyncio.create_task(command)
+    await asyncio.wait_for(waiting.wait(), 1)
+    if stop == "cancelled":
+        event.set()
+    with pytest.raises(CaptureError, match=stop):
+        await task
+    assert coordinator._lock.locked() and not transport.closed
+    assert transport.maximum_calls == 0
+    coordinator._lock.release()
+    assert await coordinator.close() and transport.closed
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("entry", ["execute", "close"])
+async def test_deadline_at_successful_acquisition_releases_before_any_work(tmp_path, entry, monkeypatch):
+    import src.workspace.control as control_module
+    from types import SimpleNamespace
+
+    _, coordinator, transport = await started(tmp_path)
+    clock = SimpleNamespace(now=time.monotonic())
+    monkeypatch.setattr(control_module, "time", SimpleNamespace(monotonic=lambda: clock.now))
+    expired = CaptureControl("acquire-boundary", clock.now + 1)
+
+    class ExpireOnAcquire(asyncio.Lock):
+        async def acquire(self):
+            acquired = await super().acquire()
+            clock.now += 2
+            return acquired
+
+    coordinator._lock = ExpireOnAcquire()
+    with pytest.raises(CaptureError, match="deadline"):
+        if entry == "execute":
+            await coordinator.execute(["true"], expired)
+        else:
+            await coordinator.close(expired)
+    assert not coordinator._lock.locked()
+    assert coordinator.state == "active" and transport.maximum_calls == 0
+    assert await coordinator.close() and transport.closed
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("entry", ["execute", "close"])
+async def test_async_task_cancellation_at_successful_acquisition_releases(tmp_path, entry):
+    _, coordinator, transport = await started(tmp_path)
+    task = None
+
+    class CancelOwnerOnAcquire(asyncio.Lock):
+        triggered = False
+
+        async def acquire(self):
+            acquired = await super().acquire()
+            if not self.triggered:
+                self.triggered = True
+                task.cancel()
+            return acquired
+
+    lock = CancelOwnerOnAcquire()
+    coordinator._lock = lock
+    command = coordinator.execute(["true"], control()) if entry == "execute" else coordinator.close()
+    task = asyncio.create_task(command)
+    with pytest.raises(asyncio.CancelledError):
+        await task
+    assert not lock.locked() and transport.maximum_calls == 0
+    assert await coordinator.close() and transport.closed

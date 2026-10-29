@@ -56,7 +56,8 @@ class DockerWorkspace:
                             workspace_bytes=workspace_bytes, tmp_bytes=tmp_bytes, pids_limit=pids_limit)
         self.image_id = None
 
-    async def cli(self, control, *args, data=None, limit=None):
+    async def cli(self, control, *args, data=None, limit=None, timeout=30.0):
+        """Management RPCs are capped; timeout=None uses the caller's deadline."""
         maximum = min(limit or control.wire_limit, control.wire_limit)
         if data is not None and len(data) > control.wire_limit:
             raise CaptureError("wire_quota")
@@ -86,10 +87,10 @@ class DockerWorkspace:
                 process.stdin.close()
 
         try:
-            process = await control.wait(asyncio.shield(spawn))
+            process = await control.wait(asyncio.shield(spawn), maximum=timeout)
             tasks = [asyncio.create_task(read(process.stdout)), asyncio.create_task(read(process.stderr)),
                      asyncio.create_task(write()), asyncio.create_task(process.wait())]
-            out, err, _, code = await control.wait(asyncio.gather(*tasks))
+            out, err, _, code = await control.wait(asyncio.gather(*tasks), maximum=timeout)
             return CommandResult(code, out, err)
         except (OSError, BrokenPipeError) as exc:
             raise CaptureError("docker_unavailable") from exc
@@ -173,7 +174,8 @@ class DockerWorkspace:
                        or "\0" in v for k, v in variables.items())):
             raise CaptureError("invalid_command")
         return await self.cli(control, "exec", *(["-i"] if stdin is not None else []), self.container_id,
-                              "/usr/bin/env", "-i", *[f"{k}={v}" for k, v in variables.items()], *argv, data=stdin)
+                              "/usr/bin/env", "-i", *[f"{k}={v}" for k, v in variables.items()], *argv,
+                              data=stdin, timeout=None)
 
     async def close(self, control):
         if not self.reserved:

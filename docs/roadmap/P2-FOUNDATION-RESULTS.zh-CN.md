@@ -63,7 +63,7 @@ await materialize(capture, reader, replica_provider, control)  # -> tuple[FileEn
 - 默认候选 200 文件/4 MiB；完整受检树 10,000 文件/64 MiB；Python 8 MiB，单文件 1 MiB；元数据遍历另限 100,000 节点。所有限额与路径/排除/拒绝/mode/辅助程序版本规则进入 `rules_id`。Python 超单文件限额明确记录排除，A 负责编码/AST 语义处理。
 - capture 在实际调用共享 `validate_against_base`、`validate_blobs` 并落盘全部 blob 后，才原子提交 capture JSON；发布前失败可留下无引用 blob，绝不会替换 `last_capture` 或发布半份 capture。store 有独立总磁盘配额。
 - 未支持的普通文件或 mode 修改保存真实完整身份和 delta，`admissible=False`；后台进程、捕获不完整、超限、非法类型/路径等抛稳定 `CaptureError.reason`，不伪造空 delta。
-- 每个内部控制调用与锁获取受 `min(30 秒, 剩余绝对期限)` 约束，支持取消事件和 asyncio cancellation。超时/取消/未知工具状态使会话 failed，结算 CLI 后清理整个 owned 容器。仅清理可在取消/总期限后继续，使用独立的最多 10 秒窗口；失败明确保留 `cleanup_ok=False`。不尝试杀后台进程后继续求解。
+- 管理 RPC 的等待保留 `min(30 秒, 剩余绝对期限)` 上限；普通命令/公开检查及协调锁等待使用调用者的剩余绝对期限，不再暗中截断为 30 秒（修正见 §6）。支持取消事件和 asyncio cancellation。在途容器操作超时/取消/状态未知使会话 failed，结算 CLI 后清理整个 owned 容器。尚未进入操作的等待者被取消时不操作容器，也不释放其他操作持有的锁。仅清理可在取消/总期限后继续，使用独立的最多 10 秒窗口；失败明确保留 `cleanup_ok=False`。不尝试杀后台进程后继续求解。
 - 清理核对唯一标签和精确容器 ID，移除后再次查询确认；不扫描或删除其他会话的容器。不会拉取镜像或挂载宿主目录。
 
 这是 P1 定义的受控静止点机制，不是面对蓄意规避 `/proc` 或篡改解释器的恶意程序的形式化快照保证。身份描述 regular-file 验证视图；不声称复现编辑容器缓存、`/tmp` 或任意后台状态。
@@ -139,3 +139,26 @@ docker --context desktop-linux ps -a --filter label=coding-harness.workspace-v1 
 ```
 
 合计覆盖 14 个不同真实 Docker 场景，按上述三批运行；不是声称最后一次命令同时执行全部 14 项。无捕获失败被当作空补丁成功，无失败路径覆盖此前封存候选。最终代码没有修改共享纯契约或任何既有执行/运行入口。
+
+## 6. 对 3cf237d 独立审查的定向修正
+
+独立 Astra 审查发现两项先前测试未覆盖的真实缺陷。以上 84 项单元与 14 个 Docker 场景保留为历史证据，不能据此声称这两项缺陷原本已通过。
+
+1. **锁获取/停止竞态。** 原先在 `try/finally` 外等待 `lock.acquire()`；`CaptureControl.wait` 在工作和取消同时完成时优先抛取消，可能丢弃已经获取的锁。`execute` 和 `close` 都能稳定复现。现在统一使用私有 `_locked` 上下文：获取协程在成功返回后立即记录自己的所有权，覆盖获取全过程的 `finally` 仅释放该协程实际取得的锁；停止或取消的等待者不会释放现有持有者的锁。取得锁后再次检查取消/绝对期限，边界到期时不执行新工作。取消优先策略保留，asyncio cancellation 仍向上传递。
+2. **普通命令错误的内部 30 秒上限。** 原先管理调用和命令共享 `wait` 默认上限，会提前终止合法的 90 秒公开检查。现在普通命令显式使用 `maximum=None`，保留调用方的绝对 deadline；管理调用继续使用原内部上限。创建子进程和执行/I/O 阶段都重新读取同一个 deadline，不另加时长。
+
+API 变化仅在基础层：`CaptureControl.remaining/wait` 的 `maximum` 参数新增接受 `None` 的语义；`DockerWorkspace.cli` 新增关键字 `timeout=30.0`，其中 `None` 表示只有调用方绝对期限。coordinator 的公共方法签名、共享 `contracts.py` 和 capture 身份规则未改。
+
+回归覆盖 `execute/close` 两个入口：获取与取消同时完成、获取边界到期、获取时 asyncio cancellation，以及排队等待取消/超时时不得释放别人的锁；每项都检查后续 `close` 能执行清理。新本地子进程测试将管理上限缩为 20ms，在 90 秒调用期限内运行实际 150ms 子进程，证明普通命令成功且 coordinator 保持 active；另验证管理调用仍超时、短绝对期限仍终止命令并清理。没有等待 31 秒或重跑 Docker 场景。
+
+新增回归先在旧实现上观察到两个漏锁失败和普通命令 `operation_timeout` 失败；修正后：
+
+```powershell
+.venv/Scripts/python.exe -m pytest tests/test_workspace_contracts.py tests/test_workspace_capture.py tests/test_workspace_capture_transport.py -q
+# 97 passed in 1.07s（原 84 项 + 本轮 13 项回归）
+
+git diff --check -- src/workspace/control.py src/workspace/coordinator.py src/workspace/docker_transport.py tests/test_workspace_capture.py docs/roadmap/P2-FOUNDATION-RESULTS.zh-CN.md
+# exit 0，无空白错误；只有仓库 LF/CRLF 提示。
+```
+
+本轮修改 `control.py`、`coordinator.py`、`docker_transport.py`、`tests/test_workspace_capture.py` 和本报告，新增 `tests/test_workspace_capture_transport.py`；未运行 Docker。P3 仍需薄适配新 `CommandResult` 与旧 `ExecutionRequest` 后端接口；所有编辑、文件 RPC、捕获和关闭必须共用 coordinator，当前未接入这些入口。本轮不修改 EXECUTION-STATUS 或 A/B 模块，不 commit/push，等待根会话二次定向审查。
