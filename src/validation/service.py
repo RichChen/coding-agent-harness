@@ -47,6 +47,7 @@ class ValidationService:
         self.base_entries = tuple(base_entries)
         self.blobs, self.artifacts, self.executor, self.events = blobs, artifacts, executor, events
         self._operations, self._cache = {}, {}
+        self._records_by_id = {}  # Durable historical records, never replaced by replay refusals.
         self._pending = dict(pending or {})  # operation_id -> validation key; never replay.
         self._lock = asyncio.Lock()
         self._unsettled = set()
@@ -55,6 +56,7 @@ class ValidationService:
                 raise ContractError("invalid committed record set")
             self._operations[record.operation_id] = (record.key, record)
             self._cache[record.key] = record
+            self._records_by_id[record.record_id] = record
 
     @staticmethod
     def _check_id(spec, environment, baseline):
@@ -79,12 +81,10 @@ class ValidationService:
         check_id = self._check_id(spec, environment, baseline)
         key = (validation_key(candidate_id=capture.candidate_id, check_id=check_id,
                               environment_id=environment.environment_id) if capture else None)
-        if operation_id in self._operations:
-            old_key, record = self._operations[operation_id]
-            if old_key != key:
-                raise ContractError("operation_id reused for different validation identity")
-            return record
-        if operation_id in self._pending or operation_id in control.ledger.operations:
+        previous_result = self._operations.get(operation_id)
+        if previous_result is not None and previous_result[0] != key:
+            raise ContractError("operation_id reused for different validation identity")
+        if previous_result is None and (operation_id in self._pending or operation_id in control.ledger.operations):
             previous = self._pending.get(operation_id)
             if previous is not None and previous != key:
                 raise ContractError("pending operation identity changed")
@@ -96,8 +96,13 @@ class ValidationService:
             value = ValidationAttempt(operation_id, trigger, reason,
                 capture.candidate_id if capture else None, check_id if capture else None,
                 environment.environment_id, control.ledger.snapshot())
-            self.events.emit("validation.not_run", value.to_dict())
-            self._operations[operation_id] = (key, value)
+            payload = value.to_dict()
+            if previous_result is not None and isinstance(previous_result[1], ValidationRecord):
+                payload["source_record_id"] = previous_result[1].record_id
+            self.events.emit("validation.not_run", payload)
+            # A refusal describes current eligibility; it does not erase the
+            # original outcome or authorize retrying the same operation.
+            self._operations.setdefault(operation_id, (key, value))
             return value
 
         if control.cancelled(): return attempt("cancelled")
@@ -140,12 +145,31 @@ class ValidationService:
                 base_manifest_id=capture.base_manifest_id, manifest_id=capture.base_manifest_id,
                 rules_id=capture.rules_id):
             return attempt("baseline_policy_mismatch")
+        if baseline is not None:
+            baseline_record = self._records_by_id.get(baseline.record_id)
+            if baseline_record is None or baseline_record.trigger != "baseline":
+                return attempt("baseline_unavailable")
+            try:
+                rebuilt = self.bind_baseline(spec, environment, baseline_record)
+            except (ContractError, KeyError, OSError):
+                return attempt("baseline_evidence_unavailable")
+            if rebuilt != baseline:
+                return attempt("baseline_mismatch")
+        # Operation replay and key reuse share all current capture/spec/baseline
+        # checks above and the same evidence verification below. No early pass.
+        if previous_result is not None:
+            record = previous_result[1]
+            if isinstance(record, ValidationRecord):
+                try:
+                    self._verify_record_evidence(record)
+                except (ContractError, KeyError, OSError):
+                    return attempt("evidence_unavailable")
+            return record
         if key in self._cache:
             record = self._cache[key]
             if record.complete and record.status in ("passed", "behavior_failed"):
                 try:
-                    for ref in record.evidence:
-                        read_verified_blob(self.blobs, ref)
+                    self._verify_record_evidence(record)
                 except (ContractError, KeyError, OSError):
                     return attempt("evidence_unavailable")
                 self.events.emit("validation.reused", dict(operation_id=operation_id,
@@ -178,27 +202,32 @@ class ValidationService:
         started_at = None
         started_once = False
         replica_identity = None
+        request_deadline = min(latest, control.clock() + spec.limits.total_seconds)
         def started(replica_id):
             nonlocal started_at, started_once, replica_identity
             if started_once: raise ContractError("executor attempted duplicate replica start")
             if not isinstance(replica_id, str) or not replica_id or len(replica_id) > 512:
                 raise ContractError("executor must identify its owned replica")
-            if control.cancelled() or control.clock() >= latest:
+            if control.cancelled() or control.clock() >= request_deadline:
                 raise BudgetRefusal("cancelled" if control.cancelled() else "deadline")
             self.events.emit("validation.started", dict(operation_id=operation_id, replica_id=replica_id,
                 validation_key=key, environment_id=environment.environment_id,
                 spec_id=spec.spec_id, runner_id=spec.runner_id, parser_id=spec.parser_id))
+            if control.cancelled() or control.clock() >= request_deadline:
+                raise BudgetRefusal("cancelled" if control.cancelled() else "deadline")
             control.ledger.start(operation_id)
             started_once = True
             replica_identity = replica_id
             started_at = datetime.now(timezone.utc).isoformat()
         request = ReplicaRequest(capture, spec, environment, operation_id,
-            min(latest, control.clock() + spec.limits.total_seconds), control.cancelled)
+            request_deadline, control.cancelled)
         execution = await self._execute_bounded(request, started, control)
         if not started_once:
             control.ledger.settle(operation_id)
             control.artifacts.settle(operation_id, 0)
-            reason = "cancelled" if control.cancelled() or execution.execution_status == "cancelled" else "executor_not_started"
+            reason = ("cancelled" if control.cancelled() or execution.execution_status == "cancelled" else
+                      "deadline" if execution.execution_status == "timed_out" or control.clock() >= request_deadline
+                      else "executor_not_started")
             value = ValidationAttempt(operation_id, trigger, reason, capture.candidate_id,
                                       check_id, environment.environment_id, control.ledger.snapshot())
             self.events.emit("validation.committed", dict(attempt=value.to_dict(),
@@ -221,7 +250,7 @@ class ValidationService:
         elif not execution.runner_unchanged:
             override = "runner_mutated"
         elif control.cancelled(): override = "cancelled"
-        elif control.clock() > latest: override = "timeout"
+        elif control.clock() >= request.deadline_mono: override = "timeout"
         status, reason, complete = (("inconclusive", override, False) if override else
                                     (parsed.status, parsed.reason, parsed.complete))
         refs, node_ref, used = [], None, 0
@@ -252,6 +281,10 @@ class ValidationService:
             # A failed publication may have written bytes before raising. Keep the
             # whole reservation charged rather than grant free repeated output.
             used = spec.limits.evidence_bytes
+        if control.cancelled():
+            status, reason, complete = "inconclusive", "cancelled", False
+        elif control.clock() >= request.deadline_mono:
+            status, reason, complete = "inconclusive", "timeout", False
         control.artifacts.settle(operation_id, used)
         control.ledger.settle(operation_id)
         record = ValidationRecord(operation_id, trigger, capture.candidate_id, check_id,
@@ -266,8 +299,17 @@ class ValidationService:
             budget=control.ledger.snapshot(), artifacts=control.artifacts.snapshot()))
         self._operations[operation_id] = (key, record)
         self._cache[key] = record
+        self._records_by_id[record.record_id] = record
         del self._pending[operation_id]
         return record
+
+    def _verify_record_evidence(self, record: ValidationRecord) -> bytes | None:
+        report = None
+        for ref in record.evidence:
+            data = read_verified_blob(self.blobs, ref)
+            if ref == record.node_report:
+                report = data
+        return report
 
     def bind_baseline(self, spec: PublicValidationSpec, environment: ValidationEnvironment,
                       record: ValidationRecord) -> BaselineBinding:
@@ -276,10 +318,14 @@ class ValidationService:
                 or record.environment_id != environment.environment_id or not record.complete
                 or record.status not in ("passed", "behavior_failed")):
             raise ContractError("baseline is not a complete public execution")
-        committed = self._operations.get(record.operation_id)
-        if committed is None or committed[1] != record:
+        if self._records_by_id.get(record.record_id) != record:
             raise ContractError("baseline must be committed by this service or restored store")
-        report = read_verified_blob(self.blobs, record.node_report)
+        report = self._verify_record_evidence(record)
+        parsed = classify(report, operation_id=record.operation_id, runner_sha256=RUNNER_SHA256,
+            spec=spec, environment=environment, execution_status=record.execution_status,
+            exit_code=record.exit_code, cleanup_state=record.cleanup_state)
+        if (not parsed.complete or parsed.status != record.status or parsed.counts != record.counts):
+            raise ContractError("baseline evidence contradicts its committed record")
         import json
         parsed_report = json.loads(report)
         failures = {p["nodeid"] for p in parsed_report["phases"]
@@ -306,6 +352,13 @@ class ValidationService:
                 await asyncio.wait({task}, timeout=0.02)
         except asyncio.CancelledError:
             stopped = "cancelled"
+        # The executor may finish without yielding after crossing its own
+        # deadline. Recheck even when task.done() was already true.
+        if stopped is None:
+            if control.cancelled():
+                stopped = "cancelled"
+            elif control.clock() >= request.deadline_mono:
+                stopped = "timed_out"
         if stopped:
             task.cancel()
             try:

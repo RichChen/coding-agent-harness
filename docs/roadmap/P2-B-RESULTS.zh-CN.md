@@ -104,3 +104,25 @@ pytest8-v1 与 pytest45-v1 在此只验证了**合成协议 receipt**的版本/�
 4. 该设计针对正常开发错误及显式覆盖绕过做保守验证；同一个 Python 解释器内的任意恶意候选仍可能操纵 pytest hooks。runner_is_candidate 保留在记录中；它不是隐藏评分器的替代品，也不声称抗恶意评分证明。
 
 这些是接线和生产环境验收待办，不影响模块的注入式接口和人工 fixture 机制检查；真实仓库修复收益仍无新证据。
+
+
+## 7. c72d7c7 独立审查后的定向修正
+
+本节保留上文首次交付的历史 141 项结果，记录独立审查发现及后续修正。后续提交仅修改 B 服务、相关回归与本报告，不接生产 Docker；提交 SHA 见本会话本次最终回执。
+
+审查指出两项 P1 和一项 P2：候选只信任声明的 BaselineBinding；相同 operation 快速重放跳过当前资格/证据检查；执行器已完成时可能漏掉其单次期限。先在未修改的 `c72d7c7` 上运行新增审查回归，**11 failed in 0.33s**，复现无真实基线却通过、篡改 outcomes/nodeids/record_id、基线证据损坏、同 operation 的证据/资格/正文失效，以及完成/启动越过单次期限等行为。
+
+修正如下：
+
+- 新增按 record_id 索引的已提交历史记录。候选执行、operation 重放和 key 复用前，均按 binding.record_id 查找已提交 baseline，验证其全部 evidence，并重新用 parser 核对基线的完整性、状态/计数。随后从真实 record 重建绑定并完整比较，缺失、损坏或矛盾分别拒绝为 baseline_unavailable、baseline_evidence_unavailable、baseline_mismatch，不启动副本。
+- operation 重放移至共享当前 capture/spec/基线资格检查之后，并与 key 复用使用同一证据验证函数。不同 validation key 仍拒绝复用同一 operation ID；同 key 也不能绕过 admissible、blob、取消/期限或基线来源等当前条件。拒绝返回新的 not_run attempt，但通过 source_record_id 引用历史，原 operation outcome/record 不被覆盖。不自动重跑、不重复扣次；原 not_run 也不会因更换 trigger 自动变成新执行。
+- 仅恢复候选 record 不足以复用：调用者必须同时恢复其真正的基线 record。更新原恢复用例以明确这一新约束，另有“缺基线时同 operation/新 operation 都拒绝”回归。
+- 一次计算 request_deadline，started 回调在其前后持久事件边界核对该期限；超时启动被拒绝且不产生副本副作用。执行监控在 task 已完成后仍检查 request deadline，服务在结果处理及证据提交前再次核对。到达/越过期限的结果只能 inconclusive/timeout，不因任务总 deadline 仍有余量而通过。未启动的超时尝试释放槽位，已启动的超时仍占一次。
+
+本次最终定向命令：
+
+```powershell
+D:/crq/src/coding-harness/.venv/Scripts/python.exe -B -m pytest tests/test_public_validation_review.py tests/test_public_validation_service.py tests/test_public_validation_fixture_executor.py -q -p no:cacheprovider --basetemp=.tmp-p2-b-review
+```
+
+结果：**47 passed in 7.16s**（新增审查 14 项、原服务 27 项、真实本地 fixture 6 项）。其中正常同 key 不同 operation 并发仍只执行一次，原计数/取消/证据失效检查仍通过。新 [审查回归](../../tests/test_public_validation_review.py) 保留旧错复现；没有无变化重跑全部 141 项，也没有把旧总数当作本次新提交的完整复验。Python 3.13.9 / pytest 9.1.1 与首次交付相同，Docker/pytest8/pytest4.5/生产接线边界仍按第 6 节保留。

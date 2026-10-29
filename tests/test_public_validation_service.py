@@ -121,7 +121,7 @@ async def test_pending_restored_committed_and_concurrent_idempotency():
     requests=[svc.validate(c['C2'],s,e,trigger='natural_end',operation_id='same',control=ctl,baseline=b) for _ in range(2)]
     a,z=await asyncio.gather(*requests); assert a is z and ex.calls==2
     restored=ValidationService(base_entries=c['C0'].entries,blobs=store,artifacts=store,executor=ex,
-                              events=ev,committed=[a],pending={'pending':a.key})
+                              events=ev,committed=[svc._operations["baseline"][1],a],pending={'pending':a.key})
     result=await restored.validate(c['C2'],s,e,trigger='hard_stop',operation_id='new',control=ctl,baseline=b)
     assert result is a
     unknown=await restored.validate(c['C2'],s,e,trigger='hard_stop',operation_id='pending',control=ctl,baseline=b)
