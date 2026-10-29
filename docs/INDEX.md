@@ -11,6 +11,8 @@
 | [PROJECT-HISTORY.zh-CN.md](PROJECT-HISTORY.zh-CN.md) | 按轮次记录做了什么、哪里做错了、怎么发现的 |
 | [LEARNING.zh-CN.md](LEARNING.zh-CN.md) | 按调用顺序读代码的路线和自测题 |
 | [CONTAMINATION-NOTES.zh-CN.md](CONTAMINATION-NOTES.zh-CN.md) | 评测污染和答案隔离的处理 |
+| [下一阶段纲领](roadmap/HARNESS-NEXT-CHARTER.zh-CN.md) / [阶段拆解](roadmap/HARNESS-NEXT-PLAN.zh-CN.md) | 工作区检索与修复验证的目标、阶段验收与并行分工；实际进度见执行状态 |
+| [下一阶段执行状态](roadmap/EXECUTION-STATUS.zh-CN.md) | 实际进度、可见工作会话、P0 证据和 P1 接口的统一入口；功能是否完成以阶段验收为准 |
 
 ## 2. 实现说明（当前有效）
 
