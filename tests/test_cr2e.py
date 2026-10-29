@@ -228,6 +228,41 @@ def test_injection_flags_missing_record_and_crashed_retrieval(tmp_path):
     assert "prompt_sha256" in run_cr2e.injection_problem(run_dir, {}, "PROMPT", WANT)
 
 
+# --- answer isolation and demo ---------------------------------------------------------------------
+
+def test_cr2e_scripts_read_gold_only_through_analyze_cr2():
+    from tests.test_retrieval_isolation import LABELS_IMPORT
+
+    for name in ("run_cr2e.py", "analyze_cr2e.py", "cr_demo.py"):
+        text = (ROOT / "scripts" / name).read_text(encoding="utf-8")
+        assert LABELS_IMPORT.search(text) is None, name
+    assert "load_gold" not in (ROOT / "scripts" / "run_cr2e.py").read_text(encoding="utf-8")
+
+
+def test_demo_argument_summaries():
+    from scripts import cr_demo
+
+    assert cr_demo._arg_summary("run_command", {"command": "x" * 200}) == "x" * 80
+    assert cr_demo._arg_summary("retrieve_code", {"query": "q", "k": 3}) == "query: q，k=3"
+    assert cr_demo._arg_summary("read_file", {"path": "a.py", "offset": 5}) == "a.py (offset=5)"
+    assert cr_demo._arg_summary("search_code", {"pattern": "p", "path": "src"}) == "pattern: p in src"
+
+
+def test_demo_trajectory_and_issue_fence(tmp_path):
+    from types import SimpleNamespace
+
+    from scripts import cr_demo
+
+    events = _events([("read_file", {"path": "a.py"}, "r1")], [("run_command", {"command": "ls"}, "c1")])
+    events.append({"event_type": "tool.result", "payload": {"call_id": "r1", "success": True}})
+    (tmp_path / "events.jsonl").write_text("".join(json.dumps(e) + "\n" for e in events), encoding="utf-8")
+    rows = cr_demo.trajectory(tmp_path)
+    assert [(r["step"], r["tool"], r["path"], r["success"]) for r in rows] == [(1, "read_file", "a.py", True), (2, "run_command", None, None)]
+    q = SimpleNamespace(instance_id="i", repo="r", base_commit="b", problem_statement="see ```py\nx\n```")
+    lines = cr_demo.issue_section(q)
+    assert lines[6] == "````text" and lines[8] == "````"
+
+
 # --- analysis definitions --------------------------------------------------------------------------
 
 def _events(*calls):

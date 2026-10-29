@@ -316,5 +316,17 @@
     }
   ],
   "round": 1,
-  "runs_file": "docs/retrieval/cr2e-runs-round1.json"
+  "runs_file": "docs/retrieval/cr2e-runs-round1.json",
+  "cost": {
+    "settled": 420,
+    "with_usage": 420,
+    "no_split": 0,
+    "hit": 2171516,
+    "miss": 1157471,
+    "completion": 52029,
+    "ledger_cny": "7.070",
+    "cache_priced_cny": "2.818035",
+    "cache_hit_rate": 0.6523053409340439,
+    "ledger_over_cache_priced": 2.5088407004109787
+  }
 }

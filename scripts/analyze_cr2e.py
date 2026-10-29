@@ -114,6 +114,17 @@ def analyze(runs: list[dict], gold_by_task: dict, root: Path = ROOT) -> dict:
     return {"threshold": threshold(per_run), "per_run": per_run}
 
 
+def cost(runs: list[dict], round_report: Path) -> dict:
+    """Ledger next to cache-priced cost (cr2_cost.py prices), counting retired infra attempts too."""
+    from scripts.cr2_cost import cost_rows
+
+    run_dirs = [ROOT / row["run_dir"] for row in runs]
+    if round_report.is_file():
+        retired = json.loads(round_report.read_text(encoding="utf-8")).get("infra_retired") or []
+        run_dirs += [ROOT / path for path in retired if (ROOT / path / "summary.json").is_file()]
+    return cost_rows(run_dirs)["total"]
+
+
 def main():
     from scripts.analyze_cr2 import load_gold
 
@@ -125,7 +136,8 @@ def main():
     if len(runs) != payload["slots_expected"] or any(row.get("rerun_reason") for row in runs):
         raise SystemExit("the round is not complete; gold files are read only after every run has finished")
     report = analyze(runs, load_gold(sorted({row["task_id"] for row in runs})))
-    report.update(round=args.round, runs_file=runs_path(args.round).relative_to(ROOT).as_posix())
+    report.update(round=args.round, runs_file=runs_path(args.round).relative_to(ROOT).as_posix(),
+                  cost=cost(runs, ROOT / "runs" / "cr2e" / f"round{args.round}" / "report.json"))
     out = out_path(args.round)
     out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(report["threshold"], indent=2))
