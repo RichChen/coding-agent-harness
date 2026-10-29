@@ -1,0 +1,509 @@
+{
+  "schema_version": "workspace-retrieval-demo-v1",
+  "status": "passed",
+  "started_at": "2026-10-29T18:20:42.729750+00:00",
+  "mode": "bm25",
+  "scope": "module_integration_only",
+  "validation_run": false,
+  "model_calls": 0,
+  "image": "coding-harness-a5-clean@sha256:1a6e20fb4b37194f8596111bc3658261cc40dbd85dc09a0e5be6d6690220b4e2",
+  "base_revision": "82ef497a8c88f0f6e50d84520e7276bfbf65025d",
+  "probe_path": "sphinx/_workspace_retrieval_mechanism_probe.py",
+  "stages": [
+    {
+      "phase": "baseline",
+      "capture_id": "55efd021-432e-467f-96c1-04adcb98c2fd",
+      "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+      "manifest_id": "tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928",
+      "corpus_id": "corpus-v1:b40309966bd23ba56fd4ba5b9f5a55ef9a65c257d5e7ff98ded228519ce09715",
+      "index_id": "index-v1:c8070999f9b6a25ba0fe00d410d5d7094568555b151b0d5a8b935f3e0968fc7a",
+      "tree_files": 1480,
+      "tree_bytes": 16531532,
+      "transferred_python_files": 534,
+      "indexed_files": 534,
+      "chunks": 7116,
+      "rebuilt": 534,
+      "reused": 0,
+      "deleted_from_index": 0,
+      "encoded": 0,
+      "exclusions": [],
+      "warning_count": 0,
+      "changed": [],
+      "deleted": [],
+      "duration_ms": {
+        "capture": 14334,
+        "index": 2002,
+        "query": 23
+      },
+      "queries": [
+        {
+          "query": "docname_join",
+          "inspected_hits": 5,
+          "probe_present": false,
+          "hits": [
+            {
+              "path": "sphinx/util/__init__.py",
+              "file_sha256": "5e91cb5cd9a6f07a4b4f8ae16e3ae1752d74a0fbd0295310428ab178de3beb6c",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "docname_join",
+                  "start_line": 63,
+                  "end_line": 65
+                },
+                {
+                  "symbol": "UnicodeDecodeErrorHandler.__init__",
+                  "start_line": 398,
+                  "end_line": 399
+                }
+              ]
+            },
+            {
+              "path": "sphinx/domains/std.py",
+              "file_sha256": "84b3d4c914cb27036799071691e37d64102023d8bc682eee43b394b64563d33e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "StandardDomain._resolve_doc_xref",
+                  "start_line": 909,
+                  "end_line": 924
+                },
+                {
+                  "symbol": "StandardDomain._resolve_option_xref",
+                  "start_line": 926,
+                  "end_line": 946
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "query": "workspaceprobequasarsignal",
+          "inspected_hits": 5,
+          "probe_present": false,
+          "hits": [
+            {
+              "path": "doc/conf.py",
+              "file_sha256": "002e61061e5d9d0cc49d4d56745e8742822da317aff3b80db8cee1616869b49e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 165
+                },
+                {
+                  "symbol": "parse_event",
+                  "start_line": 130,
+                  "end_line": 142
+                }
+              ]
+            },
+            {
+              "path": "doc/development/tutorials/examples/helloworld.py",
+              "file_sha256": "01533ff65b329fd6d3a9b4cede080dc7a1cf86805d508d9180cabf201c1936f7",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 19
+                },
+                {
+                  "symbol": "HelloWorld",
+                  "start_line": 5,
+                  "end_line": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "unchanged",
+      "capture_id": "3165331a-e16e-4d9a-9840-e56cb2099515",
+      "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+      "manifest_id": "tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928",
+      "corpus_id": "corpus-v1:b40309966bd23ba56fd4ba5b9f5a55ef9a65c257d5e7ff98ded228519ce09715",
+      "index_id": "index-v1:c8070999f9b6a25ba0fe00d410d5d7094568555b151b0d5a8b935f3e0968fc7a",
+      "tree_files": 1480,
+      "tree_bytes": 16531532,
+      "transferred_python_files": 534,
+      "indexed_files": 534,
+      "chunks": 7116,
+      "rebuilt": 0,
+      "reused": 534,
+      "deleted_from_index": 0,
+      "encoded": 0,
+      "exclusions": [],
+      "warning_count": 0,
+      "changed": [],
+      "deleted": [],
+      "duration_ms": {
+        "capture": 1157,
+        "index": 1017,
+        "query": 11
+      },
+      "queries": [
+        {
+          "query": "workspaceprobequasarsignal",
+          "inspected_hits": 5,
+          "probe_present": false,
+          "hits": [
+            {
+              "path": "doc/conf.py",
+              "file_sha256": "002e61061e5d9d0cc49d4d56745e8742822da317aff3b80db8cee1616869b49e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 165
+                },
+                {
+                  "symbol": "parse_event",
+                  "start_line": 130,
+                  "end_line": 142
+                }
+              ]
+            },
+            {
+              "path": "doc/development/tutorials/examples/helloworld.py",
+              "file_sha256": "01533ff65b329fd6d3a9b4cede080dc7a1cf86805d508d9180cabf201c1936f7",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 19
+                },
+                {
+                  "symbol": "HelloWorld",
+                  "start_line": 5,
+                  "end_line": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "added",
+      "capture_id": "d000da3d-6ca0-468b-b9ac-a0e0cd7382a5",
+      "candidate_id": "candidate-v1:4fcf05487e602d2e3b321ec7b651f08554ffd9425465aeb6c359f63257f0c9fc",
+      "manifest_id": "tree-v1:c7b4edb0cadf6af185a75f010dff578b20f74e7f92525ae4c8df2f619d052ae3",
+      "corpus_id": "corpus-v1:e020a374401ba6e096f8ea24d686af2053cade2cea1a840374b43d000e8ecb5b",
+      "index_id": "index-v1:3418eff645da4ab97ea26e3735afafba649c5b49b6c73bed55d43310b807b2be",
+      "tree_files": 1481,
+      "tree_bytes": 16531648,
+      "transferred_python_files": 535,
+      "indexed_files": 535,
+      "chunks": 7118,
+      "rebuilt": 1,
+      "reused": 534,
+      "deleted_from_index": 0,
+      "encoded": 0,
+      "exclusions": [],
+      "warning_count": 0,
+      "changed": [
+        "sphinx/_workspace_retrieval_mechanism_probe.py"
+      ],
+      "deleted": [],
+      "duration_ms": {
+        "capture": 1207,
+        "index": 1009,
+        "query": 11
+      },
+      "queries": [
+        {
+          "query": "workspaceprobequasarsignal",
+          "inspected_hits": 5,
+          "probe_present": true,
+          "hits": [
+            {
+              "path": "sphinx/_workspace_retrieval_mechanism_probe.py",
+              "file_sha256": "141b3d49b70a69cb545e2ccff9c221a0b684e5b2366733122dc8790470a9a387",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "workspaceprobequasarsignal",
+                  "start_line": 3,
+                  "end_line": 4
+                },
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 4
+                }
+              ]
+            },
+            {
+              "path": "doc/conf.py",
+              "file_sha256": "002e61061e5d9d0cc49d4d56745e8742822da317aff3b80db8cee1616869b49e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 165
+                },
+                {
+                  "symbol": "parse_event",
+                  "start_line": 130,
+                  "end_line": 142
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "modified",
+      "capture_id": "675a047c-5a44-4400-ab44-4112d08b08b5",
+      "candidate_id": "candidate-v1:ed6947d61c4a642a527771de20d3d9c272f736f4c7285a5e364d2e03e6bcf083",
+      "manifest_id": "tree-v1:604e9019719398f167773bec15751bb46a6950ac068aebb39b13f81ea74e8ebd",
+      "corpus_id": "corpus-v1:30e4375310d04f2d8d222a6071550f6c8856aaf29027b3f6c7eb74c8dee0752b",
+      "index_id": "index-v1:59da2c886555a318da7b63c2e05a31b5924afe122c9606997025a42283831335",
+      "tree_files": 1481,
+      "tree_bytes": 16531650,
+      "transferred_python_files": 535,
+      "indexed_files": 535,
+      "chunks": 7118,
+      "rebuilt": 1,
+      "reused": 534,
+      "deleted_from_index": 0,
+      "encoded": 0,
+      "exclusions": [],
+      "warning_count": 0,
+      "changed": [
+        "sphinx/_workspace_retrieval_mechanism_probe.py"
+      ],
+      "deleted": [],
+      "duration_ms": {
+        "capture": 1209,
+        "index": 1015,
+        "query": 22
+      },
+      "queries": [
+        {
+          "query": "workspaceprobequasarsignal",
+          "inspected_hits": 5,
+          "probe_present": false,
+          "hits": [
+            {
+              "path": "doc/conf.py",
+              "file_sha256": "002e61061e5d9d0cc49d4d56745e8742822da317aff3b80db8cee1616869b49e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 165
+                },
+                {
+                  "symbol": "parse_event",
+                  "start_line": 130,
+                  "end_line": 142
+                }
+              ]
+            },
+            {
+              "path": "doc/development/tutorials/examples/helloworld.py",
+              "file_sha256": "01533ff65b329fd6d3a9b4cede080dc7a1cf86805d508d9180cabf201c1936f7",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 19
+                },
+                {
+                  "symbol": "HelloWorld",
+                  "start_line": 5,
+                  "end_line": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "query": "workspaceprobeorbitsignal",
+          "inspected_hits": 5,
+          "probe_present": true,
+          "hits": [
+            {
+              "path": "sphinx/_workspace_retrieval_mechanism_probe.py",
+              "file_sha256": "01c1a794473a3bd704efd3e665e228ffbda07fd37c6671ebe0b3fd3004354a60",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "workspaceprobeorbitsignal",
+                  "start_line": 6,
+                  "end_line": 7
+                },
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 7
+                }
+              ]
+            },
+            {
+              "path": "doc/conf.py",
+              "file_sha256": "002e61061e5d9d0cc49d4d56745e8742822da317aff3b80db8cee1616869b49e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 165
+                },
+                {
+                  "symbol": "parse_event",
+                  "start_line": 130,
+                  "end_line": 142
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "deleted",
+      "capture_id": "97537c18-742c-4a82-8155-a95b32741697",
+      "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+      "manifest_id": "tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928",
+      "corpus_id": "corpus-v1:b40309966bd23ba56fd4ba5b9f5a55ef9a65c257d5e7ff98ded228519ce09715",
+      "index_id": "index-v1:c8070999f9b6a25ba0fe00d410d5d7094568555b151b0d5a8b935f3e0968fc7a",
+      "tree_files": 1480,
+      "tree_bytes": 16531532,
+      "transferred_python_files": 534,
+      "indexed_files": 534,
+      "chunks": 7116,
+      "rebuilt": 0,
+      "reused": 534,
+      "deleted_from_index": 1,
+      "encoded": 0,
+      "exclusions": [],
+      "warning_count": 0,
+      "changed": [],
+      "deleted": [],
+      "duration_ms": {
+        "capture": 1166,
+        "index": 1031,
+        "query": 960
+      },
+      "queries": [
+        {
+          "query": "workspaceprobequasarsignal",
+          "inspected_hits": 534,
+          "probe_present": false,
+          "hits": [
+            {
+              "path": "doc/conf.py",
+              "file_sha256": "002e61061e5d9d0cc49d4d56745e8742822da317aff3b80db8cee1616869b49e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 165
+                },
+                {
+                  "symbol": "parse_event",
+                  "start_line": 130,
+                  "end_line": 142
+                }
+              ]
+            },
+            {
+              "path": "doc/development/tutorials/examples/helloworld.py",
+              "file_sha256": "01533ff65b329fd6d3a9b4cede080dc7a1cf86805d508d9180cabf201c1936f7",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 19
+                },
+                {
+                  "symbol": "HelloWorld",
+                  "start_line": 5,
+                  "end_line": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "query": "workspaceprobeorbitsignal",
+          "inspected_hits": 534,
+          "probe_present": false,
+          "hits": [
+            {
+              "path": "doc/conf.py",
+              "file_sha256": "002e61061e5d9d0cc49d4d56745e8742822da317aff3b80db8cee1616869b49e",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 165
+                },
+                {
+                  "symbol": "parse_event",
+                  "start_line": 130,
+                  "end_line": 142
+                }
+              ]
+            },
+            {
+              "path": "doc/development/tutorials/examples/helloworld.py",
+              "file_sha256": "01533ff65b329fd6d3a9b4cede080dc7a1cf86805d508d9180cabf201c1936f7",
+              "material_kind": "source",
+              "chunks": [
+                {
+                  "symbol": "<module>",
+                  "start_line": 1,
+                  "end_line": 19
+                },
+                {
+                  "symbol": "HelloWorld",
+                  "start_line": 5,
+                  "end_line": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "artifact_store": "artifacts",
+  "result_file": "result.json",
+  "container": {
+    "container_id": "50ff7f6ec0734321502ebd4703fd808a3d53c97c17ac73a4fed48600c0f983bf",
+    "container_name": "workspace-v1-607122751a4d466ebcd4ae2f474b7e2b",
+    "context": "desktop-linux",
+    "image_digest": "sha256:1a6e20fb4b37194f8596111bc3658261cc40dbd85dc09a0e5be6d6690220b4e2",
+    "image_id": "sha256:1a6e20fb4b37194f8596111bc3658261cc40dbd85dc09a0e5be6d6690220b4e2",
+    "workspace": "/workspace"
+  },
+  "checks": {
+    "full_container_tree": true,
+    "unchanged_reuse": true,
+    "added_symbol_current_sha": true,
+    "modified_symbol_current_sha_and_line": true,
+    "deleted_probe_absent_from_all_hits": true,
+    "original_tree_restored": true
+  },
+  "cleanup": {
+    "ok": true,
+    "duration_ms": 993
+  },
+  "elapsed_ms": 30958
+}

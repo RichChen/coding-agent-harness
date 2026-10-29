@@ -162,3 +162,47 @@ git diff --check -- src/workspace/control.py src/workspace/coordinator.py src/wo
 ```
 
 本轮修改 `control.py`、`coordinator.py`、`docker_transport.py`、`tests/test_workspace_capture.py` 和本报告，新增 `tests/test_workspace_capture_transport.py`；未运行 Docker。P3 仍需薄适配新 `CommandResult` 与旧 `ExecutionRequest` 后端接口；所有编辑、文件 RPC、捕获和关闭必须共用 coordinator，当前未接入这些入口。本轮不修改 EXECUTION-STATUS 或 A/B 模块，不 commit/push，等待根会话二次定向审查。
+
+## 7. 真实 Sphinx 捕获 → BM25 检索的首个模块演示
+
+在基础层 `ceedd05` 与 A 模块 `f4873b5/51bac37/f05db7b` 集成后，新增薄脚本 `scripts/demo_workspace_retrieval.py`，直接调用 `CaptureProvider`、`WorkspaceIndex(IndexConfig(mode="bm25"))` 和同一个 coordinator。没有新增扫描器、身份算法或检索实现，没有修改 A 的生产代码；没有接入 runtime/factory/session 或完成循环。
+
+从仓库根目录可用以下一条 PowerShell 命令重现；每次选择新的临时输出目录，拒绝覆盖任何已有路径，无需硬编码宿主缓存或私密目录：
+
+```powershell
+.venv/Scripts/python.exe scripts/demo_workspace_retrieval.py --output-dir (Join-Path ([System.IO.Path]::GetTempPath()) ('workspace-retrieval-' + [guid]::NewGuid().ToString('N')))
+```
+
+脚本使用已有 Sphinx digest/`desktop-linux`，总绝对期限默认 300 秒。只在新 owned 容器内新增、修改、删除 `sphinx/_workspace_retrieval_mechanism_probe.py`，不改任何基础真实文件；原树由删除后完整 `entries == baseline.entries` 再确认。所有编辑、捕获和关闭经过同一个 coordinator。输出目录保存 `result.json`、捕获清单及受控 blob；异常记录清楚的 reason，最终 `finally` 确认容器清理。
+
+本次只运行一次真实演示，耗时 **30.958 秒**，清理占 **0.993 秒**。初始真实工作区含 **1,480 个 regular 文件 / 16,531,532 字节**，534 个 Python 文件全部进入 BM25，生成 **7,116 chunks**；正文来自实际容器及受控 store，没有使用宿主仓库或历史检索缓存。
+
+| 阶段 | Python 文件/chunks | rebuilt / reused / deleted | 观察 |
+| --- | --- | --- | --- |
+| baseline | 534 / 7116 | 534 / 0 / 0 | 基础查询 `docname_join` 返回带真实 SHA 的位置；probe 尚不存在 |
+| unchanged | 534 / 7116 | 0 / 534 / 0 | 新 capture_id，candidate/corpus/index 身份不变，响应关联新 capture |
+| added | 535 / 7118 | 1 / 534 / 0 | `workspaceprobequasarsignal` 命中 probe 第 3 行，SHA 与当次完整 manifest/原始写入 bytes 一致 |
+| modified | 535 / 7118 | 1 / 534 / 0 | `workspaceprobeorbitsignal` 命中第 6 行与新 SHA；candidate/corpus/index 均变化 |
+| deleted | 534 / 7116 | 0 / 534 / 1 | 对两个 probe 查询分别检查全部 534 条文件结果，无 probe 残留；完整树及 candidate/corpus/index 恢复 baseline 身份 |
+
+新增后再删除的 probe 不属于 base，因此最终 capture 的 base-relative delta 为空；索引的 `deleted=1` 则是相对前一次索引。两种语义都由实际接口提供，没有伪造墓碑或改写身份。所有阶段 `encoded=0`；不变阶段复用文件正文/切块，仍重建 BM25 统计，不声称没有任何索引计算。
+
+实际 JSON 证据：[`evidence/p2-workspace/retrieval-docker-01.json`](evidence/p2-workspace/retrieval-docker-01.json)，约 17 KiB，保存五阶段 capture/candidate/manifest/corpus/index ID、有限命中、完整检查数量、耗时及清理结果，不包含正文或宿主私密路径。完整 blob/capture 仅留在本次 pytest 临时输出目录。
+
+```powershell
+$env:WORKSPACE_DOCKER_TESTS='1'
+.venv/Scripts/python.exe -m pytest tests/test_workspace_retrieval_integration.py -v -rP -x
+# 当时的 2 项：已有输出目录拒绝 + 唯一一次真实 Docker 演示，2 passed in 31.61s。
+
+docker --context desktop-linux ps -a --filter label=coding-harness.workspace-v1 --format '{{.ID}} {{.Names}} {{.Status}}'
+# 演示进程退出后输出为空，无 owned 容器残留。
+```
+
+另有默认不启动 Docker 的输出目录保护和启动失败报告/清理回归。真实 Docker 测试默认 opt-in，普通测试运行无 Docker 开销。最后只补跑这两项本地检查，未重复真实演示：
+
+```powershell
+.venv/Scripts/python.exe -m pytest tests/test_workspace_retrieval_integration.py -q
+# 2 passed, 1 skipped in 0.26s；skip 是默认关闭的 Docker 演示。
+```
+
+这里的 passed 仅指模块演示断言满足；**没有运行 Sphinx 公开回归验证、B 的验证服务、agent 完成循环或任何修复效果实验**，不构成 regression_only 的测试通过证据，更不代表解题。没有 GPU/模型调用、网络下载或安装，没有重跑此前 14 项 Docker 验收；EXECUTION-STATUS 和已发表的历史结果未改。
