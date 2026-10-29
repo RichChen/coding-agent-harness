@@ -13,11 +13,13 @@
 | [CONTAMINATION-NOTES.zh-CN.md](CONTAMINATION-NOTES.zh-CN.md) | 评测污染和答案隔离的处理 |
 | [下一阶段纲领](roadmap/HARNESS-NEXT-CHARTER.zh-CN.md) / [阶段拆解](roadmap/HARNESS-NEXT-PLAN.zh-CN.md) | 工作区检索与修复验证的目标、阶段验收与并行分工；实际进度见执行状态 |
 | [下一阶段执行状态](roadmap/EXECUTION-STATUS.zh-CN.md) | 实际进度、可见工作会话、P0 证据和 P1 接口的统一入口；功能是否完成以阶段验收为准 |
+| [P2 检查点与两条运行命令](roadmap/EXECUTION-STATUS.zh-CN.md#从这里上手) | 真实工作区修改→检索更新，以及新副本→固定公开验证；脚本驱动，尚未接入 agent 主循环 |
 
 ## 2. 实现说明（当前有效）
 
 | 文档 | 内容 |
 | --- | --- |
+| [P2 捕获基础](roadmap/P2-FOUNDATION-RESULTS.zh-CN.md) / [工作区检索](roadmap/P2-A-RESULTS.zh-CN.md) / [公开验证](roadmap/P2-B-RESULTS.zh-CN.md) | 新增模块的实际 API、独立审查修正、真实机制证据与当前限制；旧实验入口保持原样 |
 | [upgrade/H3-IMPLEMENTATION.zh-CN.md](upgrade/H3-IMPLEMENTATION.zh-CN.md) | Docker 执行、干净镜像、宿主机判分 |
 | [upgrade/H4-IMPLEMENTATION.zh-CN.md](upgrade/H4-IMPLEMENTATION.zh-CN.md) | 上下文窗口、模型视图、插件接口 |
 | [upgrade/H5-DEEPSEEK.zh-CN.md](upgrade/H5-DEEPSEEK.zh-CN.md) | 真实 DeepSeek 接入和预算 |
