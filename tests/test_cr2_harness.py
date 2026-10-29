@@ -51,7 +51,7 @@ def test_cr2_t_is_b0v2_plus_retrieve_code():
 
 def test_no_existing_config_enables_retrieve_code():
     for path in (ROOT / "configs").rglob("*.yaml"):
-        if path != T:
+        if path not in (T, ROOT / "configs" / "retrieval" / "cr2e-t2.yaml"):
             assert "retrieve_code" not in path.read_text(encoding="utf-8"), path
 
 

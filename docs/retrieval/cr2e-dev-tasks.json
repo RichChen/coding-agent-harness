@@ -1,0 +1,38 @@
+{
+  "schema": "cr2e.dev-tasks.v1",
+  "seed": 20261029,
+  "source": "docs/retrieval/cr2-analysis.json",
+  "source_sha256": "f592dcc512c1546ddb686d358908808d8d475708fa77191ac4015e14d8a8a68c",
+  "rule": "4 largest CR-2 N mean first gold step (ties by instance_id); 2 by random.Random(20261029).sample from the other 52 sorted by instance_id",
+  "use": "CR-2e development check only; never used in a later comparison",
+  "hardest": [
+    {
+      "task_id": "django__django-15973",
+      "n_mean_first_gold_step": 41.0
+    },
+    {
+      "task_id": "sympy__sympy-20428",
+      "n_mean_first_gold_step": 41.0
+    },
+    {
+      "task_id": "sympy__sympy-19040",
+      "n_mean_first_gold_step": 23.0
+    },
+    {
+      "task_id": "sympy__sympy-13091",
+      "n_mean_first_gold_step": 18.8
+    }
+  ],
+  "random": [
+    "sphinx-doc__sphinx-7440",
+    "scikit-learn__scikit-learn-14496"
+  ],
+  "tasks": [
+    "django__django-15973",
+    "sympy__sympy-20428",
+    "sympy__sympy-19040",
+    "sympy__sympy-13091",
+    "sphinx-doc__sphinx-7440",
+    "scikit-learn__scikit-learn-14496"
+  ]
+}
