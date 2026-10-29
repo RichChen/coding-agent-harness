@@ -1,0 +1,70 @@
+"""Single per-container lock for edits, helper calls, capture, and close."""
+from __future__ import annotations
+
+import asyncio
+import time
+from contextlib import asynccontextmanager
+
+from src.workspace.control import CaptureControl, CaptureError
+
+
+class WorkspaceCoordinator:
+    def __init__(self, transport):
+        self._transport = transport
+        self._lock = asyncio.Lock()
+        self.state = "new"
+        self.cleanup_ok = None
+
+    @property
+    def transport_identity(self):
+        t = self._transport
+        return dict(container_id=t.container_id, container_name=t.name, context=t.context,
+                    image_digest=t.image_digest, image_id=t.image_id, workspace="/workspace")
+
+    async def _cleanup(self):
+        # Cleanup is the sole bounded operation allowed after cancellation/deadline.
+        cleanup = CaptureControl("owned-cleanup", time.monotonic() + 10)
+        try:
+            self.cleanup_ok = await self._transport.close(cleanup)
+        except (Exception, asyncio.CancelledError):
+            self.cleanup_ok = False
+
+    @asynccontextmanager
+    async def operation(self, control, *, starting=False):
+        await control.wait(self._lock.acquire())
+        try:
+            if self.state != ("new" if starting else "active"):
+                raise CaptureError("workspace_unavailable")
+            try:
+                yield self._transport
+            except BaseException as exc:
+                self.state = "failed"
+                await self._cleanup()
+                if isinstance(exc, CaptureError):
+                    exc.evidence["cleanup_ok"] = self.cleanup_ok
+                elif isinstance(exc, Exception):
+                    raise CaptureError("workspace_operation_failed", evidence={
+                        "exception_type": type(exc).__name__, "cleanup_ok": self.cleanup_ok}) from exc
+                raise
+        finally:
+            self._lock.release()
+
+    async def start(self, control):
+        async with self.operation(control, starting=True) as transport:
+            await transport.start(control)
+            self.state = "active"
+
+    async def execute(self, argv, control, *, stdin=None, env=None):
+        async with self.operation(control) as transport:
+            return await transport.execute(argv, control, stdin=stdin, env=env)
+
+    async def close(self, control=None):
+        # The ongoing operation is bounded by its own control; close never races it.
+        control = control or CaptureControl("owned-close", time.monotonic() + 15)
+        await control.wait(self._lock.acquire())
+        try:
+            await self._cleanup()
+            self.state = "closed"
+            return self.cleanup_ok
+        finally:
+            self._lock.release()
