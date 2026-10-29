@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 B0 = ROOT / "configs" / "sprint" / "b0-v2.yaml"
 T = ROOT / "configs" / "retrieval" / "cr2-t.yaml"
 T2 = ROOT / "configs" / "retrieval" / "cr2e-t2.yaml"
+T2_R2 = ROOT / "configs" / "retrieval" / "cr2e-t2-r2.yaml"
 CR2_T_SCHEMAS_SHA256 = "77adc36ffa19019d9b922f1b116631f7d183bf5548826b8cfc83bf69595f5b63"
 DEFAULT_DESCRIPTION = (
     "Search the original repository at the base revision (before any edits made in this session) "
@@ -101,8 +102,26 @@ def test_expected_t2_agent_is_b0v2_plus_retrieve_code_with_t2_prompt():
 
 def test_no_config_other_than_t_and_t2_enables_retrieve_code():
     for path in (ROOT / "configs").rglob("*.yaml"):
-        if path not in (T, T2):
+        if path not in (T, T2, T2_R2):
             assert "retrieve_code" not in path.read_text(encoding="utf-8"), path
+
+
+def test_round2_changes_only_the_retrieve_code_line_of_the_prompt():
+    r1 = (ROOT / "prompts" / "swe_cr2e.md").read_text(encoding="utf-8").splitlines()
+    r2 = (ROOT / "prompts" / "swe_cr2e-r2.md").read_text(encoding="utf-8").splitlines()
+    diff = [(a, b) for a, b in zip(r1, r2) if a != b]
+    assert len(r1) == len(r2) and len(diff) == 1
+    assert diff[0][0].startswith("- retrieve_code ") and diff[0][1].startswith("- retrieve_code ")
+    assert run_cr2e.ROUNDS[2]["description"] == run_cr2e.ROUNDS[1]["description"] == run_cr2e.DESCRIPTION_V2
+
+
+def test_round2_config_differs_from_t2_only_in_system_prompt():
+    t2, r2 = T2.read_text(encoding="utf-8").splitlines(), T2_R2.read_text(encoding="utf-8").splitlines()
+    diff = [(a, b) for a, b in zip(t2, r2) if a != b]
+    assert len(t2) == len(r2) and diff == [("  system_prompt_path: prompts/swe_cr2e.md", "  system_prompt_path: prompts/swe_cr2e-r2.md")]
+    want = run_cr2e.expected_agent(run_cr2e.ROUNDS[2])
+    assert want["tools"] == run_cr2e.expected_agent(run_cr2e.ROUNDS[1])["tools"]
+    assert want["system_prompt"] == (ROOT / "prompts" / "swe_cr2e-r2.md").read_text(encoding="utf-8").strip()
 
 
 # --- task selection --------------------------------------------------------------------------------

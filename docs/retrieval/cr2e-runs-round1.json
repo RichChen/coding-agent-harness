@@ -1,0 +1,288 @@
+{
+  "schema": "cr2e.runs.v1",
+  "round": 1,
+  "mock": false,
+  "variant": "CR2E-T2",
+  "profile": "configs/retrieval/cr2e-t2.yaml",
+  "system_prompt": "prompts/swe_cr2e.md",
+  "description_sha256": "7c8700d7c7a497eb74c31cb4e8178656ec336d79f5dd7acf4abeb5dd765a2172",
+  "slots_expected": 12,
+  "runs": [
+    {
+      "task_id": "django__django-15973",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/django__django-15973/r1",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.723",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "6c97614c51541dd771e470bda94d40542e2ba938a12ae1445c0bafb9904c0d98",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "scikit-learn__scikit-learn-14496",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/scikit-learn__scikit-learn-14496/r1",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "pass",
+      "solved": true,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 7,
+      "cost_cny": "0.061",
+      "stop_reason": "completed",
+      "prompt_sha256": "78ba67e5f52d1bc2bc56ec932be71b12a7545e5732fbc860903ebd2f4f8fe079",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sphinx-doc__sphinx-7440",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sphinx-doc__sphinx-7440/r1",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.646",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "9c702dc92346d7c00fbe9248c9b98582ff70c335e5e695500fcf67fb9391f260",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sympy__sympy-13091",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-13091/r1",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.768",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "21c277d01af4e028fa453ad681ef12983858f010a5591bd80e51ee667230bb40",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sympy__sympy-19040",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-19040/r1",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.899",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "229166ee908829cbcbe9289e2d5a8937ce8a0edbf28b259fde819ee414a1aa2a",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sympy__sympy-20428",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-20428/r1",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.659",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "89df20df626bf40b4c774d75a744b2447d85a8d6915ef8bd01a98608ea1465cc",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "django__django-15973",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/django__django-15973/r2",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.821",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "6c97614c51541dd771e470bda94d40542e2ba938a12ae1445c0bafb9904c0d98",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "scikit-learn__scikit-learn-14496",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/scikit-learn__scikit-learn-14496/r2",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "pass",
+      "solved": true,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 13,
+      "cost_cny": "0.124",
+      "stop_reason": "completed",
+      "prompt_sha256": "78ba67e5f52d1bc2bc56ec932be71b12a7545e5732fbc860903ebd2f4f8fe079",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sphinx-doc__sphinx-7440",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sphinx-doc__sphinx-7440/r2",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.543",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "9c702dc92346d7c00fbe9248c9b98582ff70c335e5e695500fcf67fb9391f260",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sympy__sympy-13091",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-13091/r2",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.591",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "21c277d01af4e028fa453ad681ef12983858f010a5591bd80e51ee667230bb40",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sympy__sympy-19040",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-19040/r2",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.572",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "229166ee908829cbcbe9289e2d5a8937ce8a0edbf28b259fde819ee414a1aa2a",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    },
+    {
+      "task_id": "sympy__sympy-20428",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-20428/r2",
+      "mock": false,
+      "profile": "cr2e-t2",
+      "variant": "CR2E-T2",
+      "status": "fail",
+      "solved": false,
+      "no_candidate": false,
+      "snapshot_error": null,
+      "model_calls": 40,
+      "cost_cny": "0.663",
+      "stop_reason": "max_model_calls",
+      "prompt_sha256": "89df20df626bf40b4c774d75a744b2447d85a8d6915ef8bd01a98608ea1465cc",
+      "rerun_reason": null,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "system_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ]
+    }
+  ]
+}

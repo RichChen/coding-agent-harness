@@ -7,6 +7,7 @@ Six development tasks x 2 repeats. These tasks are for this check only, never fo
     run_cr2e.py --select                    write the task list docs/retrieval/cr2e-dev-tasks.json (no model calls)
     run_cr2e.py --mock                      wiring check with a scripted model under runs/cr2e-mock (not counted)
     run_cr2e.py --authorized dev,20         the 12 real runs of round 1 under runs/cr2e/round1
+    run_cr2e.py --round 2 --authorized dev,20   round 2 (the one allowed change), runs/cr2e/round2, its own 20 CNY cap
     run_cr2e.py --runs-file                 rewrite the round's runs file from existing summaries
 
 The functions of run_cr2.py are imported, not copied or changed. Infra rule: CR-2-FREEZE section 6 and r3.
@@ -75,8 +76,11 @@ DESCRIPTION_V2 = (
     "listed ranges with read_file."
 )
 # One entry per round. Contract 2: if round 1 misses the threshold, one change is allowed and runs as round 2.
+# Round 2 changes only the retrieve_code line of the system prompt; the description stays v2.
 ROUNDS = {
     1: {"profile": T2_PROFILE, "prompt": T2_PROMPT, "description": DESCRIPTION_V2},
+    2: {"profile": ROOT / "configs" / "retrieval" / "cr2e-t2-r2.yaml", "prompt": ROOT / "prompts" / "swe_cr2e-r2.md",
+        "description": DESCRIPTION_V2},
 }
 
 
