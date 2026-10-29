@@ -212,20 +212,93 @@ O 组不是一种方法。它回答的是：定位做到完美时，agent 最多
 
 > CR-2b 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2b.zh-CN.md`。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 8 节，先做 8.1 和 8.2 的 r2 修订：只改 `scripts/run_cr2.py` 和它的测试，补 `CR-2-FREEZE.md` 第 11 节，打 tag `cr2-freeze-r2`，跑全量 pytest。全部通过后，在 `cr2-freeze-r2` 上按 8.3 启动全量运行（`--authorized 5,800`，`HF_HUB_OFFLINE=1`，后台运行，输出写到 `runs/cr2-logs/main.out`）。项目作者已经确认余额并关闭了系统待机。运行期间不改代码；前 3 个真实槽位如果都没有记到模型名，runner 会停下，这时写检查点等审计，不要自行修改后继续。全部槽位跑完后，写 `docs/retrieval/CHECKPOINT-CR-2c.md` 并提交后停下，不做分析。其他规则与前几轮相同。
 
-## 9. 绗竴娆″仠姝㈠悗锛?026-10-27锛岄€傜敤浜?CR-2c 缁窇锛?
-渚濇嵁 [AUDIT-CR-2c-halt1](AUDIT-CR-2c-halt1.zh-CN.md)銆傜 9 鑺備笌鍓嶆枃鍐茬獊鏃朵互绗?9 鑺備负鍑嗐€?
-### 9.1 鍏堟牳瀹烇紙涓嶈姳閽憋紝涓嶆敼鍐荤粨浠ｇ爜锛?
-鍐欎竴涓柊鑴氭湰 `scripts/cr2_replay_snapshot.py`锛氱敤鍚屼竴涓共鍑€闀滃儚璧峰鍣紝鎸?`scikit-learn__scikit-learn-12585/n/r4` 鐨?`events.jsonl` 渚濇閲嶆斁 agent 鐨勫啓鎿嶄綔鍜?`run_command`锛堝寘鎷偅鏉¤秴鏃剁殑 pytest锛岃秴鏃舵椂闂寸浉鍚岋級锛屼笉璋冪敤妯″瀷銆傜劧鍚庡湪瀹瑰櫒閲屽垪鍑?`/workspace` 鐩稿 `/opt/repo` 鐨勬敼鍔細鏂囦欢鏁般€佹€诲瓧鑺傛暟銆佹寜鐩綍姹囨€荤殑鍓?20 椤癸紝浠ュ強鏄摢涓€姝ヤ骇鐢熺殑銆?
-鍒ゆ柇锛堝啓杩涙鏌ョ偣锛夛細
+## 9. 第一次停止后（2026-10-27，适用于 CR-2c 续跑）
 
-- 鏀瑰姩鏉ヨ嚜 agent 鐨勫啓鎿嶄綔鎴栧畠鐨勫懡浠や骇鐢熺殑鏂囦欢锛堟祴璇曠紦瀛樸€佷复鏃舵暟鎹€佷笅杞界殑鏁版嵁闆嗙瓑锛夛細**agent 閫犳垚**锛屾寜 9.2 澶勭悊銆?- 鏀瑰姩鏉ヨ嚜 harness 鑷繁鍐欒繘宸ヤ綔鍖虹殑涓滆タ锛堝伐鍏疯秴鏃跺鐞嗐€佽緭鍑鸿惤鐩樼瓑锛夛細**harness 閫犳垚**锛屾寜 infra 澶勭悊銆傝繖鏃朵笉鍋?9.2锛屽啓妫€鏌ョ偣鍋滀笅銆?- 閲嶆斁澶嶇幇涓嶅嚭鏉ワ細鍐欐鏌ョ偣鍋滀笅銆?
-### 9.2 r3 淇锛堜粎鍦?9.1 鍒ゅ畾涓?agent 閫犳垚鏃讹級
+（2026-10-29 恢复：本节最初追加时被按 GBK 写入，成了乱码。下面是原文，内容没有改动。Cursor 当时是按 GBK 再按 UTF-8 还原后阅读的。）
 
-鍙厑璁告敼 `scripts/run_cr2.py` 鍜屽畠鐨勬祴璇曪紝`run_swe_task.py`銆乣src/` 閮戒笉鏀癸紝A5/A6 鐨勫垽瀹氫篃涓嶅彈褰卞搷銆?
-- **閲嶆柊鍒嗙被銆?* 涓€涓Ы浣嶇殑鏈€缁堣繍琛屽鏋?status 涓?`infra_error`锛屽苟涓?`snapshot_error` 鏄?`ValueError: delta_too_large`锛屾垨鑰呮槸 `DockerUnavailable: Docker control output quota exceeded` 涓斿彂鐢熷湪蹇収杩欎竴姝ワ紙`op` 涓?`snapshot`锛夛紝灏辫涓?*浠诲姟缁撴灉**锛氫笉閫€褰广€佷笉閲嶈窇锛屼笉璁″叆 infra 鍋滄鏉′欢銆傚湪 `cr2-runs.json` 閲岃繖鏍疯锛?  - `status: "delta_too_large"`锛宍solved: false`锛宍no_candidate: true`锛?  - 涓绘寚鏍囧拰 T 缁勬寚鏍囩収甯镐粠 `events.jsonl` 璁＄畻銆?  鍏朵粬 `snapshot_error`锛堝鍣ㄦ彁鍓嶆秷澶便€丱OM 绛夛級浠嶆寜 infra 澶勭悊锛岃鍒欎笉鍙樸€?- **宸叉湁鐨勯偅涓Ы浣嶃€?* `scikit-learn__scikit-learn-12585/n/r4` 淇濈暀鐨勯偅娆¤繍琛屾寜鏂拌鍒欓噸鏂板垎绫汇€備袱娆￠€€褰硅繍琛屼繚鐣欏師鐩綍锛岃垂鐢ㄧ収璁★紝涓嶅弬涓庡垎鏋愩€?- **鍗曞疄渚嬮攣銆?* runner 鍚姩鏃跺湪 `runs/cr2-main/` 涓嬬嫭鍗犲垱寤洪攣鏂囦欢锛屽啓鍏?PID 鍜屽惎鍔ㄦ椂闂达紝閫€鍑烘椂鍒犻櫎銆傞攣宸插瓨鍦ㄤ笖 PID 浠嶅湪杩愯灏辨嫆缁濆惎鍔紱PID 宸蹭笉瀛樺湪灏辨姤鍛婃槸闄堟棫閿佸苟鎷掔粷鍚姩锛岀瓑浜哄伐鍒犻櫎銆?- **璁板綍 `system_fingerprint`銆?* 澶嶇敤妯″瀷鍚嶇殑閽╁瓙锛屽悓鏃舵壂鎻?`system_fingerprint`锛屽啓杩?`model-names.json`锛屾姤鍛婇噷鎸夊€煎垪鍑烘Ы浣嶃€傚彧鍋氭姤鍛婏紝涓嶄綔涓哄仠姝㈡潯浠躲€?- **鍒嗘瀽鑴氭湰銆?* `analyze_cr2.py` 鎺ュ彈 `delta_too_large` 妲戒綅锛氫富鎸囨爣鐓у父璁″叆锛屼慨澶嶇巼璁颁负鏈В鍑猴紝骞舵寜缁勬姤鍛婅繖绫绘Ы浣嶇殑鏁伴噺銆?- 鍗曟祴瑕嗙洊锛氫袱绉?`snapshot_error` 閮芥敼鍒や负浠诲姟缁撴灉锛涘叾浠?`snapshot_error` 浠嶆槸 infra锛涘仠姝㈡潯浠朵笉璁″叆鏀瑰垽鐨勬Ы浣嶏紱閿佹枃浠剁殑涓夌鎯呭喌銆?- 鍦?`CR-2-FREEZE.md` 鍔犵 12 鑺?r3 淇"锛屾墦 tag `cr2-freeze-r3`锛岃窇鍏ㄩ噺 pytest銆?
-### 9.3 缁窇
+依据 [AUDIT-CR-2c-halt1](AUDIT-CR-2c-halt1.zh-CN.md)。第 9 节与前文冲突时以第 9 节为准。
 
-- 寮€璺戝墠锛氱‘璁ょ郴缁熷緟鏈哄凡缁忓叧闂紙`powercfg` 鏄剧ず鎺ョ數婧愪负 0锛夛紝Docker 鍦ㄧ嚎锛屾病鏈夊叾浠?`run_cr2.py` 杩涚▼鍦ㄨ繍琛屻€?- 鍦?`cr2-freeze-r3` 涓婄敤鍚屼竴鏉″懡浠ょ画璺戙€傚凡鏈夌殑 26 涓Ы浣嶈烦杩囷紱12585/n/r4 鎸夋柊瑙勫垯瑙嗕负宸插畬鎴愩€?- 涓嶅啀鍥犱负杩欎竴绫诲け璐ュ仠涓嬨€傚叾浠栧仠姝㈡潯浠朵笉鍙樸€?- 鍏ㄩ儴璺戝畬鍚庯紝鍐?`CHECKPOINT-CR-2c.md` 鐨勭画绡囷細鍦ㄥ師鏂囦欢鍚庤拷鍔?缁窇"涓€鑺傦紝鍓嶆枃涓嶆敼銆傚唴瀹规寜鍚堝悓 8.3锛屽彟鍔狅細鎸夌粍缁熻 `delta_too_large` 妲戒綅鐨勬暟閲忥紝浠ュ強 `system_fingerprint` 鐨勫垎甯冦€?
-### 9.4 鍚姩鏂囧瓧
+### 9.1 先核实（不花钱，不改冻结代码）
 
-> CR-2c 鐨勭涓€娆″仠姝㈠凡瀹¤锛屽璁¤褰曞湪 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2c-halt1.zh-CN.md`銆傝璇诲璁″拰 `CR-2-CONTRACT.zh-CN.md` 绗?9 鑺傘€傚厛鍋?9.1 鐨勯噸鏀炬牳瀹烇紝涓嶈皟鐢ㄦā鍨嬨€佷笉鏀瑰喕缁撲唬鐮併€傚彧鏈夊垽瀹氫负"agent 閫犳垚"鏃讹紝鎵嶅仛 9.2 鐨?r3 淇锛氬彧鏀?`scripts/run_cr2.py`銆乣scripts/analyze_cr2.py` 鍜屽畠浠殑娴嬭瘯锛岃ˉ `CR-2-FREEZE.md` 绗?12 鑺傦紝鎵?tag `cr2-freeze-r3`锛岃窇鍏ㄩ噺 pytest銆傚鏋滃垽瀹氫负"harness 閫犳垚"锛屾垨鑰呴噸鏀惧鐜颁笉鍑烘潵锛屽氨鍐欐鏌ョ偣鍋滀笅銆俽3 鍏ㄩ儴閫氳繃鍚庯紝鎸?9.3 缁窇锛氬紑璺戝墠纭绯荤粺寰呮満宸插叧闂€丏ocker 鍦ㄧ嚎銆佹病鏈夊叾浠?`run_cr2.py` 杩涚▼銆傚叏閮ㄦЫ浣嶈窇瀹屽悗锛屽湪 `CHECKPOINT-CR-2c.md` 鏈熬杩藉姞"缁窇"涓€鑺傚苟鎻愪氦锛岀劧鍚庡仠涓嬶紝涓嶅仛鍒嗘瀽銆傚叾浠栬鍒欎笌鍓嶅嚑杞浉鍚屻€?
+写一个新脚本 `scripts/cr2_replay_snapshot.py`：用同一个干净镜像起容器，按 `scikit-learn__scikit-learn-12585/n/r4` 的 `events.jsonl` 依次重放 agent 的写操作和 `run_command`（包括那条超时的 pytest，超时时间相同），不调用模型。然后在容器里列出 `/workspace` 相对 `/opt/repo` 的改动：文件数、总字节数、按目录汇总的前 20 项，以及是哪一步产生的。
+
+判断（写进检查点）：
+
+- 改动来自 agent 的写操作或它的命令产生的文件（测试缓存、临时数据、下载的数据集等）：**agent 造成**，按 9.2 处理。
+- 改动来自 harness 自己写进工作区的东西（工具超时处理、输出落盘等）：**harness 造成**，按 infra 处理。这时不做 9.2，写检查点停下。
+- 重放复现不出来：写检查点停下。
+
+### 9.2 r3 修订（仅在 9.1 判定为 agent 造成时）
+
+只允许改 `scripts/run_cr2.py` 和它的测试，`run_swe_task.py`、`src/` 都不改，A5/A6 的判定也不受影响。
+
+- **重新分类。** 一个槽位的最终运行如果 status 为 `infra_error`，并且 `snapshot_error` 是 `ValueError: delta_too_large`，或者是 `DockerUnavailable: Docker control output quota exceeded` 且发生在快照这一步（`op` 为 `snapshot`），就记为**任务结果**：不退役、不重跑，不计入 infra 停止条件。在 `cr2-runs.json` 里这样记：
+  - `status: "delta_too_large"`，`solved: false`，`no_candidate: true`；
+  - 主指标和 T 组指标照常从 `events.jsonl` 计算。
+  其他 `snapshot_error`（容器提前消失、OOM 等）仍按 infra 处理，规则不变。
+- **已有的那个槽位。** `scikit-learn__scikit-learn-12585/n/r4` 保留的那次运行按新规则重新分类。两次退役运行保留原目录，费用照计，不参与分析。
+- **单实例锁。** runner 启动时在 `runs/cr2-main/` 下独占创建锁文件，写入 PID 和启动时间，退出时删除。锁已存在且 PID 仍在运行就拒绝启动；PID 已不存在就报告是陈旧锁并拒绝启动，等人工删除。
+- **记录 `system_fingerprint`。** 复用模型名的钩子，同时扫描 `system_fingerprint`，写进 `model-names.json`，报告里按值列出槽位。只做报告，不作为停止条件。
+- **分析脚本。** `analyze_cr2.py` 接受 `delta_too_large` 槽位：主指标照常计入，修复率记为未解出，并按组报告这类槽位的数量。
+- 单测覆盖：两种 `snapshot_error` 都改判为任务结果；其他 `snapshot_error` 仍是 infra；停止条件不计入改判的槽位；锁文件的三种情况。
+- 在 `CR-2-FREEZE.md` 加第 12 节"r3 修订"，打 tag `cr2-freeze-r3`，跑全量 pytest。
+
+### 9.3 续跑
+
+- 开跑前：确认系统待机已经关闭（`powercfg` 显示接电源为 0），Docker 在线，没有其他 `run_cr2.py` 进程在运行。
+- 在 `cr2-freeze-r3` 上用同一条命令续跑。已有的 26 个槽位跳过；12585/n/r4 按新规则视为已完成。
+- 不再因为这一类失败停下。其他停止条件不变。
+- 全部跑完后，写 `CHECKPOINT-CR-2c.md` 的续篇：在原文件后追加"续跑"一节，前文不改。内容按合同 8.3，另加：按组统计 `delta_too_large` 槽位的数量，以及 `system_fingerprint` 的分布。
+
+### 9.4 启动文字
+
+> CR-2c 的第一次停止已审计，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2c-halt1.zh-CN.md`。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 9 节。先做 9.1 的重放核实，不调用模型、不改冻结代码。只有判定为"agent 造成"时，才做 9.2 的 r3 修订：只改 `scripts/run_cr2.py`、`scripts/analyze_cr2.py` 和它们的测试，补 `CR-2-FREEZE.md` 第 12 节，打 tag `cr2-freeze-r3`，跑全量 pytest。如果判定为"harness 造成"，或者重放复现不出来，就写检查点停下。r3 全部通过后，按 9.3 续跑：开跑前确认系统待机已关闭、Docker 在线、没有其他 `run_cr2.py` 进程。全部槽位跑完后，在 `CHECKPOINT-CR-2c.md` 末尾追加"续跑"一节并提交，然后停下，不做分析。其他规则与前几轮相同。
+
+## 10. CR-2c 审计后：分析（2026-10-29，适用于 CR-2d）
+
+依据 [AUDIT-CR-2c](AUDIT-CR-2c.zh-CN.md)。本节在任何人看过 solved、触碰步数等结果之前写定。第 10 节与前文冲突时以第 10 节为准。
+
+### 10.1 r4：只改分析的读入规则
+
+只改 `scripts/analyze_cr2.py` 和它的测试。runner、`src/`、运行目录都不改，也不重跑任何槽位。
+
+- **6 个 `infra_kept` 槽位作为任务结果计入主分析。** `main()` 现在遇到 `rerun_reason` 就退出。改为：只有当 `rerun_reason` 非空、并且这个槽位不在 runner 报告的 `infra_kept` 名单里时才退出。`infra_kept` 名单从 `cr2-runs.json` 读，没有这个字段时从报告文件读，命令行用 `--report` 传入。
+  - 理由：这 6 次运行都跑满了 40 次模型调用，只是中途有一次模型调用在客户端重试后仍然网络失败，status 是正常的 fail/partial。冻结规则（FREEZE 第 6 节）写的是退役次数用完后"保留最后一次运行"。
+- 主分析的其他定义一律不变：最终运行；第 4 节和 7.3 的指标；种子；bootstrap。
+
+### 10.2 预先写定的敏感性分析（只描述，不检验）
+
+每一项都按主分析的方法（先对每题的重复取平均，再按题配对、bootstrap）重算 P−N、T−N、O−N 的主指标和修复率。某一组在某题上没有剩下的运行时，这道题从这一组的比较里去掉，并报告剩下的题数。
+
+| 编号 | 改动 | 回答的问题 |
+|---|---|---|
+| S1 | 去掉 6 个 `infra_kept` 运行 | 中途网络失败的运行会不会影响结论 |
+| S2 | 去掉 `scikit-learn__scikit-learn-12585` 整道题 | 这道题有 11/20 个槽位没有候选补丁，而且各组分布不均（N 5、P 1、T 2、O 3），它会不会主导修复率的差值 |
+| S3 | 只用 `system_fingerprint` 只有 `bc19ba97…` 的运行 | 运行中途服务端切换后，结论是否还成立 |
+| S4 | 每个槽位改用**第一次不是 `infra_error` 的运行**（包括因网络失败退役的运行），而不是最终运行 | 退役重跑会不会偏向短运行。运行越长，碰到网络失败的机会越大，越容易被退役重跑，所以最终保留的运行会偏短 |
+
+S4 要从运行目录读取退役运行的 summary 和 `events.jsonl`。退役运行的 `status` 不是 `infra_error` 时，按和最终运行相同的方法计算指标。S4 需要的读取逻辑写在 `analyze_cr2.py` 里（它已经在读标签的白名单中），并加单测。
+
+### 10.3 其他要先做的
+
+- 用 runner 已有的离线方式（只读 summary，不跑槽位），从运行目录重新生成一份 runs 文件，写到 `runs/cr2-logs/cr2-runs.regen.json`，核对与 `docs/retrieval/cr2-runs.json` 内容相同（sha256 或逐行）。不同就停下。
+- 不要再运行 `run_cr2.py` 的正式模式。runner 两次正常退出后不久，都出现了一次来源不明的同命令启动，在检查点里如实记录即可。
+
+### 10.4 CR-2d 输出
+
+`docs/retrieval/CR-2-RESULTS.zh-CN.md` 和 `docs/retrieval/cr2-analysis.json`。表述规则同 CR-1 合同第 9 节和本合同 5 节 CR-2d，并且：
+
+- 最前面放预先确定的主指标：P−N、T−N（首次触碰 gold 文件的步数）。O−N 放在后面，作为上限参照。
+- 修复率：四组的数值，P−N、T−N、O−N 的配对差值和区间。修复率是次要指标，只描述。
+- 7.3 的分解：每组"前 10 步内是否触碰 gold 文件"与修复率的关系。
+- T 组：工具调用率、首次调用步数、gold 文件是否出现在返回结果里。
+- S1–S4 的表。哪项结论随敏感性分析改变了，要明确写出。
+- 版本说明（8.4）：返回的模型名、两个 `system_fingerprint` 和切换时间、四组在两段时间里的分布；N 组是新基线，不和 A5/A6 比。
+- 运行质量：退役 159 次（按原因）、`delta_too_large` 12 个、`delta_lost` 2 个、6 个 `infra_kept`、全部 harness 工具错误为 0、墙钟时间，以及它为什么比估算的 23 小时长。
+- 费用：账本 547.394 元，缓存口径 211.916 元，按时段价估算约 137.89 元；项目作者报告的实际扣费由审计补上。
+
+全量 pytest 跑一次。写 `CHECKPOINT-CR-2d.md` 后停下。
+
+### 10.5 启动文字
+
+> CR-2c 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2c.zh-CN.md`。合同第 9 节之前是乱码，已经恢复成原文。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 10 节，执行 CR-2d：先做 10.3 的 runs 文件核对，再做 10.1 的 r4 修订（只改 `scripts/analyze_cr2.py` 和它的测试）和 10.2 的 S1–S4，然后运行分析，写 `docs/retrieval/CR-2-RESULTS.zh-CN.md`、`docs/retrieval/cr2-analysis.json`、`docs/retrieval/CHECKPOINT-CR-2d.md`，跑全量 pytest，提交后停下。不要运行 `run_cr2.py` 的正式模式，不调用任何模型。主分析和敏感性分析的定义在本节已经写定，看到结果后不能改；如果某项定义无法执行，写进检查点，并说明你是怎样处理的。结果严格按表述规则写，不要因为结果好或不好改变写法。
