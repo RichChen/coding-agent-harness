@@ -126,3 +126,53 @@ D:/crq/src/coding-harness/.venv/Scripts/python.exe -B -m pytest tests/test_publi
 ```
 
 结果：**47 passed in 7.16s**（新增审查 14 项、原服务 27 项、真实本地 fixture 6 项）。其中正常同 key 不同 operation 并发仍只执行一次，原计数/取消/证据失效检查仍通过。新 [审查回归](../../tests/test_public_validation_review.py) 保留旧错复现；没有无变化重跑全部 141 项，也没有把旧总数当作本次新提交的完整复验。Python 3.13.9 / pytest 9.1.1 与首次交付相同，Docker/pytest8/pytest4.5/生产接线边界仍按第 6 节保留。
+
+
+## 8. 首条生产 Docker 公开验证验收
+
+本节在已放行的 B 核心 `9c5096e` 上新增 adapter/profile/demo，不改 service/contracts/parser、workspace 基础实现或 runtime/factory/session。先按委派单独 cherry-pick 两笔已审查基础提交：原 `3cf237ddc83b97ea45076d8d6534db07b14e9724` → 本分支 `735590f`；原 `ceedd05b9a273f210bfe8ad6abfae76f1ace4305` → `dc19e79`。**集成时仅 cherry-pick 本节新增 adapter 提交，不重复这两笔基础提交。** 新提交 SHA 见最终回执。
+
+新增文件和 API：
+
+- [docker_replica.py](../../src/validation/docker_replica.py)：`DockerReplicaExecutor(store=WorkspaceBlobStore, profile=SphinxProfile())` 实现已有 ReplicaExecutor。每个操作先 durable started、再创建唯一 owned 容器；使用共享 coordinator/provider/materialize；实际 seed 基础树→安全应用 delta→重新计算 before_manifest_id；探测实际环境；上传 RUNNER_BYTES 和固定请求到独立 `/tmp/public-validation-*`；固定 argv/env 执行；取回完整有界协议/双流；共享捕获检查 post manifest；复核环境及控制文件 hash；finally 清理 owned 容器并确认。before/after/environment ID 来自实际观测，不复制请求身份。
+- [sphinx_profile.py](../../src/validation/sphinx_profile.py)：`SphinxProfile.new_workspace/probe_environment/build_spec`。固定已有 Sphinx 镜像与源码；来自实际镜像 inspect、解释器/pytest/Sphinx 路径及 distribution 探针的 environment_id。保护所有非源码基础材料及 sphinx/testing 支持代码；公开选择器只为 tests/test_util.py，基线节点由真实 runner 收集后绑定。`ValidationArtifacts` 仅桥接 WorkspaceBlobStore 的 put/read 与 B 的 publish/ContractError 语义，不复制存储、扫描或 hash 算法。
+- [demo_public_validation.py](../../scripts/demo_public_validation.py)：一条命令组装上述组件。新输出目录强制 exist_ok=False；原始 capture/blob/record/event 证据写到该目录，拒绝覆盖已有结果；没有任务循环、模型、grader 或新配置 schema。
+- [adapter 测试](../../tests/test_public_validation_docker.py)：探针版本/来源/依赖身份、产物损坏类型桥接、创建前意图、失败清理/无法确认清理、实际观测身份而非请求回显、不支持 pytest4.5、取消启动及输出覆盖拒绝。fake 仅用于失败分支单测，不作为真实 Docker 成功证据。
+
+实际验收环境：Windows 宿主现有 Python 3.13.9 / pytest 9.1.1；Docker desktop-linux；镜像和实际 image ID 均为 `sha256:1a6e20fb4b37194f8596111bc3658261cc40dbd85dc09a0e5be6d6690220b4e2`；容器 `/usr/local/bin/python` 3.9.25、安装的 pytest 8.4.2，目标 sphinx 从 `/workspace/sphinx/__init__.py` 导入。实际列举 49 个 distribution，依赖指纹 `dependencies-v1:4cb45fc99e387680c334c9ffc70a95159ee8dc6e052d7397c1aa448be2c0fefb`。CPU=1、内存1GiB、workspace256MiB、tmp64MiB、pids128；其余沿用基础层检查过的非 root/只读镜像层/无网络无挂载 profile。
+
+运行过一次有限、串行的真实演示：
+
+```powershell
+D:/crq/src/coding-harness/.venv/Scripts/python.exe -B scripts/demo_public_validation.py --output .tmp-p2-validation-01
+# exit 0；run=completed；development_validation=passed/regression_only；independent_evaluation=not_evaluated
+```
+
+可换一个不存在的新目录重复执行。完整本地运行产物仍在本 worktree 的 `.tmp-p2-validation-01`，未提交全树/日志大包。提交的小证据为 [run summary](evidence/p2-validation/sphinx-public-run.json)（16738 bytes）和 [结构化 receipts](evidence/p2-validation/sphinx-public-receipts.json)（26735 bytes）。后者保存四次真实执行的完整 nodeid/phase/outcome，按 runner 的 ASCII JSON 规则重序列化后逐项核对 wire SHA256，与 summary 的 node_report 引用相符；没有用写死的八个 nodeid 代替收集。
+
+| 真实步骤 | 实际结果 |
+| --- | --- |
+| 初始实际基础树、公开基线 | collected=8，passed=8，skip/error/xfail/xpass=0，complete=true |
+| 源码追加机制注释的合法候选 | 8 passed，独立 candidate_id 与完整记录 |
+| 同合法候选 natural_end 复用 | 相同 record_id，未增加真实执行次数 |
+| 人为重定义 sphinx.util.display_chunk 返回固定错误文本 | 7 passed / 1 failed，behavior_failed/test_failure，节点/phase 完整；与合法候选身份不同，未复用旧通过 |
+| 恢复原行为并追加不同机制注释 | 新版本 8 passed，使用第三个候选 finalization 槽 |
+| 修改冻结 tests/test_util.py | not_run/protected_change；未创建验证副本；随后恢复测试 |
+| 最终版本再次查询 | 复用恢复版本记录，未增加执行 |
+| 每一步验证前后编辑工作区 | 编辑容器 manifest 均与该步候选一致，无验证副作用回灌 |
+| 最终 owned 资源 | 4 个真实验证副本全部 cleanup_ok=true；编辑容器 cleanup_ok=true；owned_containers_remaining=[] |
+
+实际候选验证账本为 baseline 1 + candidate 3（legal/fault/restored），两次复用和一次冻结拒绝均不再扣槽。环境身份 `environment-v1:495792f1db316b881b428f5cc6ab1ca1355d359df700ccdd307ce316b911ea8f`；最终 check_id 为 `check-v1:8e877987fec4295575407334b7b98f52fd5147af7f6c09c0457a67806f085567`。原始基树仍为 `tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928`，与基础层实查一致。最终源码版本为 `candidate-v1:2a593ca7d2ac5b74cebbc876070d9b70d00a5b9fd93161a0277aecf81cbd1a79`。
+
+另作真实 daemon 只读确认：
+
+```powershell
+docker --context desktop-linux ps -a --filter label=coding-harness.workspace-v1 --format '{{.ID}} {{.Names}} {{.Status}}'
+# 输出为空。
+D:/crq/src/coding-harness/.venv/Scripts/python.exe -B -m pytest tests/test_public_validation_docker.py -q -p no:cacheprovider --basetemp=.tmp-p2-validation-unit
+# 13 passed in 0.19s（失败分支和输出拒绝单测，无额外 Docker 执行）
+```
+
+本轮未重跑旧 141/47 项；B 核心和已放行基础层未改。真实通过证据现在覆盖 Sphinx pytest8.4.2，但仅这一个固定 profile/公开模块。pytest4.5、其他仓库、模型主动工具、全退出完成 gate、session 事件/恢复/总预算接线仍未实施。验证镜像/runner与同 uid Python 代码之间仍采用 P1 的普通开发可信边界，不宣称抗恶意评分。编辑树不污染的证据只覆盖规则定义的工作区验证视图，不扩张为任意缓存或 /tmp 状态的完全复现。
+
+上述失败和恢复是**人为源码故障注入的机制演示，不是 Sphinx-8721 的问题修复**；公开覆盖仍是 regression_only，独立判分未运行且 solved=null。没有 solver/API/GPU、下载安装、拉镜像或私有评分材料访问。
