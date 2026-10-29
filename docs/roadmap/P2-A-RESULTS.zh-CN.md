@@ -1,6 +1,6 @@
 # P2-A：工作区代码检索模块结果
 
-日期：2026-10-30（Asia/Shanghai）。工作基点：`d0bdf6f`。分支：`codex/p2-workspace-retrieval`。实现及测试提交：`38efd6c69e09627dcfd1ea9f24b0c2f7e60a5caa`；本报告另一个文档提交收尾，最终提交号由会话返回。
+日期：2026-10-30（Asia/Shanghai）。工作基点：`d0bdf6f`。分支：`codex/p2-workspace-retrieval`。实现及测试提交：`38efd6c69e09627dcfd1ea9f24b0c2f7e60a5caa`；原报告提交 `89159d3`。GPU smoke 在该提交上完成，新增专属 fixture runner、JSON 与本报告修订另行提交，最终提交号由会话返回。
 
 工作区仅为 `C:/Users/Administrator/.codex/worktrees/57b9/coding-harness`。已阅读根 AGENTS、P1 §2/4/9–11、共享 contracts/fixture，以及指定参考项目的 s01/s12 中文文档。没有修改主工作区、共享契约、旧检索实现/缓存或运行入口；没有使用 research-workflow，没有另行委派。
 
@@ -69,11 +69,11 @@ Qwen 的模型及 query prefix 取自既有 `embed.MODELS['qwen3-0.6b']`：
 | 本地提示配置 | config_sentence_transformers.json 的 default_prompt_name=null；wrapper 显式使用既有 code-retrieval query prefix，文档 prefix 为空 |
 | 运行依赖 metadata | numpy 2.5.3；torch 2.14.1+cu126；sentence-transformers 5.7.0；transformers 4.57.6；tokenizers 0.22.2 |
 
-加载器要求 snapshot 目录名等于固定 revision，显式 local_files_only=True、trust_remote_code=False、device、dtype、max_seq_length，并校验当前库版本与 encoder 身份一致。此次仅核对文件存在、大小与配置，**未读入权重、未重新哈希整个模型、未证明实际编码成功**；本地 snapshot 的供应/内容可信性仍属已准备模型资产的前提。该适配器拒绝不存在路径，不回退到 Hub 名称下载。
+加载器要求 snapshot 目录名等于固定 revision，显式 local_files_only=True、trust_remote_code=False、device、dtype、max_seq_length，并校验当前库版本与 encoder 身份一致。首次提交仅核对文件存在、大小与配置；随后另获授权，已完成第 6 节真实加载/编码。没有重新哈希整个模型；本地 snapshot 的供应/内容可信性仍属已准备模型资产的前提。该适配器拒绝不存在路径，不回退到 Hub 名称下载。
 
 ## 5. 验证结果
 
-最终确定性与兼容检查 **243 passed**（3.96s），包含新增索引/编码器测试、共享契约测试和旧纯函数、缓存隔离与 CR-2 serve 测试。没有新增 skip 来模拟完成，也没有运行原实验数据集或真实模型。
+最终确定性与兼容检查 **243 passed**（3.96s），包含新增索引/编码器测试、共享契约测试和旧纯函数、缓存隔离与 CR-2 serve 测试。该 pytest 检查没有新增 skip、没有运行原实验数据集或真实模型。后续 GPU smoke 没有修改生产模块，因此未无变化重复这 243 项。
 
 ```powershell
 Set-Location C:/Users/Administrator/.codex/worktrees/57b9/coding-harness
@@ -86,25 +86,48 @@ New-Item -ItemType Directory -Path .pytest_cache -Force | Out-Null
 
 首次 pytest 因 `.pytest_cache` 父目录尚不存在而出现 tmp_path setup errors；补建本 worktree 内目录后消除。随后一项向量复用测试把新增空行后的模块文本误当作不变，修正为两个实际输入变化，并补纯行号移动时函数文本复用的断言。最终以上命令全部通过，没有更改共享测试或旧测试来适应实现。
 
-已验证实际解释器为 `D:/crq/src/coding-harness/.venv/Scripts/python.exe`，两个新模块的 `__file__` 均位于本 worktree；新模块独立导入后 torch/sentence_transformers 均不在 sys.modules。只读检查已安装 SentenceTransformer 源码确认 local_files_only/model_kwargs/encode 参数存在；没有调用模型构造器。
+已验证实际解释器为 `D:/crq/src/coding-harness/.venv/Scripts/python.exe`，两个新模块的 `__file__` 均位于本 worktree；新模块独立导入检查时 torch/sentence_transformers 均不在 sys.modules。最初只读检查了已安装 SentenceTransformer 源码中的 local_files_only/model_kwargs/encode 参数；后续 GPU smoke 则实际调用该构造器。
 
-## 6. 下一阶段真实 smoke：命令已准备，尚未执行
+## 6. 已授权的真实 GPU 离线 smoke
 
-以下是现有资产可定位的命令，等待主会话另行授权真实 GPU 检查；本轮没有执行。命令仅编码两份人工源码/测试文本和一个查询，检查维数、finite/unit vectors、相同文本复用与 cache 路径；不调用 solver/API，不是检索质量或修复收益实验。需要 CPU 时将 device 改为 cpu、precision 改为 float32，仍属于另一项真实模型检查。
+主会话收到首次结果后，明确授权一次现有本地 Qwen GPU 检查，并允许注入 WorkspaceIndex 检查共享 C0/C1。已执行一次，exit 0；实际时间为 2026-10-30 02:04:39–02:07:50（Asia/Shanghai；JSON 保留 UTC 时间）。未下载/安装，没有 solver API、Docker 或旧 CR 缓存访问。
+
+小证据为 [qwen-gpu-smoke-01.json](evidence/p2-a/qwen-gpu-smoke-01.json)；可复现 runner 为 [gpu_smoke.py](../../tests/fixtures/workspace_retrieval/gpu_smoke.py)。runner 不会被 pytest 自动收集，且在导入模型栈前要求两个 offline 标记；缓存、输出限定在当前 worktree。JSON 仅保存配置、输入 hash、计时、范数和两版检索记录，未存巨大权重/向量缓存或绝对主机路径。执行时 runner 的原始字节 SHA256 为 `5960499b44a5ca85bcba83b8c447e276dcccfedcbe48d1956532db0f57c3e2f7`；生产代码基点与 runner hash 同记在 JSON。
+
+| 实际观察 | 结果 |
+| --- | --- |
+| GPU | NVIDIA GeForce RTX 2080 Ti，compute capability 7.5，显存 11,810,701,312 bytes |
+| 模型/精度 | 上列固定 Qwen revision；实际参数均为 torch.float16，device=cuda，max_length=512；wrapper 输出/缓存为 float32 |
+| 加载耗时 | 148.386332 s，含首次 SentenceTransformer 加载及权重到 GPU；不含最外层 torch 导入 |
+| 第一次文档编码 | 2 inputs，1024 维；backend 编码 41.861899 s；含加载的整个 encode 调用 190.438549 s |
+| 后续 backend 编码 | 单独查询 0.077332 s；C0 的 4 个 chunk 0.120791 s；索引查询 0.076771 s；C1 的 1 个新 chunk 0.077879 s |
+| finite/unit | 独立文档、查询及 C1 的 4×1024 矩阵全部 finite，归一化范数通过 atol=1e-5；具体范数见 JSON |
+| 内存及磁盘复用 | 两文档内存重查 encoded=0/reused=2，0.000559 s；关闭后重开 SQLite，同样 0/2，0.001238 s，向量逐元素完全一致且禁止加载 backend 的工厂未触发 |
+| GPU 峰值 | allocated 1,217,067,008 bytes，reserved 1,235,222,528 bytes；仅本次单进程测量 |
+| 警告/修正 | 出现 torch_dtype 参数弃用提示，执行成功；没有为此修改生产模块或扩大支持模型 |
+
+首次编码有明显冷启动开销；只有一次小运行，不能将后续小批次耗时写成稳定吞吐、服务延迟承诺或性能对照。
+
+真实 encoder 注入 hybrid WorkspaceIndex 后：C0 是两文件/四 chunk，encoded=4；C1 修改 calc 的函数正文，rebuilt=1/reused=1、encoded=1/vectors_reused=3。两次响应均 ready，capture_id/candidate_id 与相应共享 fixture 一致，所有 hit.file_sha256 匹配该版清单；candidate/corpus/index 三种内容身份均随该修改变化。再次提交同一 C1 则 rebuilt=0/reused=2、encoded=0/vectors_reused=4，查询也命中缓存，没有额外 backend 调用。
+
+这两版是人工 C0/C1，C1 返回 a-b 而非成功修复。此处没有执行其测试，也没有给候选颁发验证通过；这里只验证版本关联与真实向量缓存更新。JSON 中的命中顺序/相似分数不能作为排名提升证据。
+
+实际命令如下。缓存目录当次为空；再次复现必须换新的 cache-root 编号，不能复用 01 后仍期待首次 encoded=2。
 
 ```powershell
 Set-Location C:/Users/Administrator/.codex/worktrees/57b9/coding-harness
 $env:HF_HUB_OFFLINE = '1'
 $env:TRANSFORMERS_OFFLINE = '1'
+$env:HF_HUB_DISABLE_TELEMETRY = '1'
 $env:HF_HOME = "$PWD/.pytest_cache/p2-a-hf"
 $env:TORCH_HOME = "$PWD/.pytest_cache/p2-a-torch"
-& D:/crq/src/coding-harness/.venv/Scripts/python.exe -m src.retrieval.workspace_encoder --snapshot C:/Users/Administrator/.cache/huggingface/hub/models--Qwen--Qwen3-Embedding-0.6B/snapshots/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3 --cache-root .pytest_cache/p2-a-real-encoder --device cuda --precision float16
+& D:/crq/src/coding-harness/.venv/Scripts/python.exe tests/fixtures/workspace_retrieval/gpu_smoke.py --snapshot C:/Users/Administrator/.cache/huggingface/hub/models--Qwen--Qwen3-Embedding-0.6B/snapshots/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3 --cache-root .pytest_cache/p2-a-gpu-smoke-01 --output docs/roadmap/evidence/p2-a/qwen-gpu-smoke-01.json
 ```
 
-CLI 打印完整配置、缓存路径、矩阵形状、实际文本 hash、编码/复用数和示例相似分数。成功后仍应由后续阶段把该 encoder 注入 `WorkspaceIndex`，配合真实 CaptureProvider 做一次新增/修改后的集成检查；本报告不把单纯编码 smoke 当成该检查。
+离线标记从进程启动前设置，loader 仍显式 local_files_only。snapshot 读取使用已存在的绝对目录，工作缓存写入 `.pytest_cache`，不写入历史 CR 向量库。进程已退出并释放模型；没有留下常驻 GPU 服务。
 
 ## 7. 集成前未验证项
 
-真实模型载入/显存/速度、真实容器捕获、完整副作用隔离、入口/factory/工具接线、运行中查询前捕获和失败处理、容器路径身份、P3 完成控制与恢复均未在此模块阶段验收。基线测试/隐藏 grader 不属于 A。未做检索质量比较，不能把新 hybrid 排名或 Qwen 选择写成效果提升。
+真实模型在一台 GPU 上的单次小输入加载/编码、共享 fixture 索引关联已证实；稳定性能、规模资源、真实容器捕获、完整副作用隔离、入口/factory/工具接线、运行中查询前捕获和失败处理、容器路径身份、P3 完成控制与恢复仍未验收。基线测试/隐藏 grader 不属于 A。没有真实 CaptureProvider 或 agent E2E；未做检索质量比较，不能把新 hybrid 排名或 Qwen 选择写成效果提升。Qwen 与冻结 CR Jina 的模型差异仍保留。
 
 主会话可按实现提交加本报告提交集成；无需修改共享 contracts。全新工作区实例的首份 capture 应提供完整入选 Python blobs；持续查询必须由共享捕获层取得新 capture 后调用 update。共享 BlobReader 的权限/资产生命周期、捕获静止性与真实文件完整性，由基础层负责。本分支未 merge/push。
