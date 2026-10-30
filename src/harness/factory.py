@@ -141,6 +141,7 @@ def build_agent(
         max_keepalive_connections=llm_cfg.get("max_keepalive_connections", 5),
         trust_env=llm_cfg.get("trust_env", True),
         thinking=llm_cfg.get("thinking"),
+        audit_metadata=retry_cfg.get("stop_on_unknown_usage", False),
     )
 
     sandbox = Sandbox(
@@ -170,6 +171,7 @@ def build_agent(
     )
 
     retry = RetryConfig(
+        stop_on_unknown_usage=retry_cfg.get("stop_on_unknown_usage", False),
         max_retries=retry_cfg.get("max_retries", 2),
         backoff_base_seconds=retry_cfg.get("backoff_base_seconds", 1.0),
         backoff_factor=retry_cfg.get("backoff_factor", 2.0),

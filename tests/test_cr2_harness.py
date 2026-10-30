@@ -50,9 +50,12 @@ def test_cr2_t_is_b0v2_plus_retrieve_code():
 
 
 def test_no_existing_config_enables_retrieve_code():
-    workspace_profile = ROOT / "configs" / "workspace" / "sphinx-bm25.yaml"
+    workspace_profiles = (
+        ROOT / "configs" / "workspace" / "sphinx-bm25.yaml",
+        ROOT / "configs" / "workspace" / "p4-sphinx-deepseek.yaml",
+    )
     for path in (ROOT / "configs").rglob("*.yaml"):
-        if path == workspace_profile:
+        if path in workspace_profiles:
             config = load_config(path)
             assert config["workspace"]["enabled"] is True
             assert config["workspace"]["profile"] == "sphinx8721"

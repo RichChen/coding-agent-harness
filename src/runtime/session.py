@@ -71,10 +71,14 @@ def runtime_fingerprint(loop):
             hook['window'] = loop.hooks.fingerprint()
             if getattr(loop.hooks, 'dispatcher', None) is not None:
                 hook['dispatcher'] = loop.hooks.dispatcher.fingerprint()
+    retry = plain(loop._retry_config)
+    # Keep recorded legacy fingerprints stable; enabled audit remains resume-critical.
+    if not retry.get('stop_on_unknown_usage'):
+        retry.pop('stop_on_unknown_usage', None)
     spec = dict(tools=tools, prompt=loop.system_prompt, hooks=hook,
         budget={k: getattr(loop.budget, k) for k in ("max_steps", "total_timeout_seconds", "step_timeout_seconds")},
         model={k: getattr(loop.llm, k, None) for k in ("model", "base_url", "temperature", "max_tokens", "thinking")},
-        retry=plain(loop._retry_config), streaming=loop.use_llm_stream,
+        retry=retry, streaming=loop.use_llm_stream,
         price_table=loop.model_ledger.price_table,
         limits={k: getattr(loop, k) for k in ("file_size_limit_bytes", "tool_output_max_chars", "read_file_max_lines", "max_tool_argument_bytes")},
         output_limit=loop.run_output_meter.limit_bytes)

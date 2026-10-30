@@ -38,7 +38,7 @@ from src.runtime.hooks import HookContext, LoopHooks
 from src.runtime.window import (ContextWindowError, WindowPolicyHooks, DEFAULT_WINDOW,
                                 admit, view_hash)
 from src.runtime.planner import Plan, SimplePlanner
-from src.runtime.retry import AttemptSink, RetryConfig, RetryPolicy
+from src.runtime.retry import AttemptSink, RetryConfig, RetryPolicy, PaidCallStopped
 from src.runtime.state import AgentState, LoopPhase
 from src.runtime.session import decode_response, decode_result, plain
 from src.runtime.summary import summary_totals
@@ -277,6 +277,8 @@ class AgentLoop:
                 "elapsed_ms": a.elapsed_ms,
                 "usage": a.usage,
                 "usage_provenance": a.usage_provenance,
+                **({"provider_metadata": a.provider_metadata, "billing_stop_reason": a.billing_stop_reason}
+                   if a.provider_metadata is not None else {}),
             }
             for a in self.attempt_sink.attempts
         ]
@@ -701,6 +703,12 @@ class AgentLoop:
                         start_time=start_time,
                         termination_kind=de.kind.value,
                     )
+                except PaidCallStopped as stop:
+                    return self._result(task_id=task_id, success=False,
+                        failure_reason=FailureReason.MODEL_PARSE_ERROR, steps=steps,
+                        total_tokens=total_tokens, tool_failures=tool_failures, policy_blocks=policy_blocks,
+                        total_tool_invocations=total_tool_invocations, context_events=context_events,
+                        start_time=start_time, termination_kind=stop.reason)
                 except BudgetLedgerError as be:
                     if self.event_bus:
                         self.event_bus.emit("run_end", success=False, reason=be.reason.value)

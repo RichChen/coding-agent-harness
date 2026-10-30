@@ -135,6 +135,7 @@ class OpenAIStreamAggregator:
         self._saw_done_marker = False
         self._fail: StreamFail | None = None
         self._started = False
+        self.provider_fields = {}
 
     def _mark_first_chunk(self) -> None:
         if self._first_chunk_monotonic is None:
@@ -317,7 +318,11 @@ class OpenAIStreamAggregator:
             )
             return observations
 
+        for key in ('id', 'model', 'system_fingerprint', 'request_id'):
+            if key in obj: self.provider_fields[key] = obj[key]
         usage = obj.get("usage")
+        if "usage" in obj:
+            self.provider_fields['usage'] = usage
         if isinstance(usage, dict) and usage:
             self._usage = usage
 
@@ -335,6 +340,7 @@ class OpenAIStreamAggregator:
             fr = choice.get("finish_reason")
             if fr is not None:
                 self._finish_reason = fr
+                self.provider_fields['choices'] = [{'finish_reason': fr}]
             delta = choice.get("delta") or {}
             if not isinstance(delta, dict):
                 continue

@@ -7,6 +7,9 @@ reusable connection pool, owning/borrowed lifecycle, and usage provenance.
 from __future__ import annotations
 
 import enum
+import copy
+import math
+from datetime import datetime, timezone
 import logging
 from dataclasses import dataclass, field
 from typing import Any, AsyncIterator, Protocol
@@ -49,6 +52,7 @@ class LLMResponse:
     capability: StreamCapability | None = None
     first_chunk_monotonic: float | None = None
     complete_monotonic: float | None = None
+    provider_metadata: dict[str, Any] = field(default_factory=dict)
 
     @property
     def has_tool_calls(self) -> bool:
@@ -76,7 +80,9 @@ class LLMError(Exception):
         message: str,
         kind: LLMErrorKind = LLMErrorKind.UNKNOWN,
         status_code: int | None = None,
+        provider_metadata: dict | None = None,
     ):
+        self.provider_metadata = provider_metadata or {}
         self.kind = kind
         self.status_code = status_code
         super().__init__(message)
@@ -152,6 +158,41 @@ def normalize_usage(raw: dict[str, Any] | None) -> dict[str, Any]:
     return normalized
 
 
+def _audit_copy(value):
+    """Copy usage only, excluding credential-shaped fields; never capture headers/body."""
+    if isinstance(value, dict):
+        return {str(k): ("[REDACTED]" if any(x in str(k).lower() for x in
+                ("api_key", "apikey", "authorization", "credential", "password", "secret", "access_token", "refresh_token", "headers")) else _audit_copy(v))
+                for k, v in value.items()}
+    if isinstance(value, list): return [_audit_copy(v) for v in value]
+    if type(value) is float and not math.isfinite(value): return "[nonfinite]"
+    if value is None or type(value) in (str, int, float, bool): return value
+    return "[unsupported]"
+
+
+def provider_metadata(request_model, data=None, *, headers=None, started_at=None):
+    """A small whitelist. Missing provider fields stay null, never use requested model as returned model."""
+    data = data if isinstance(data, dict) else {}
+    def identifier(v):
+        if not isinstance(v, str) or len(v) > 256: return None
+        return v if all(c.isascii() and (c.isalnum() or c in '._:/-') for c in v) else None
+    header_id = None
+    if headers:
+        header_id = headers.get('x-request-id') or headers.get('request-id')
+    choices = data.get('choices') or []
+    finish = choices[0].get('finish_reason') if choices and isinstance(choices[0], dict) else None
+    raw_usage = _audit_copy(data.get('usage'))
+    import json, hashlib
+    raw_bytes = json.dumps(raw_usage, ensure_ascii=False).encode('utf-8')
+    omitted = len(raw_bytes) > 65536
+    return dict(request_model=identifier(request_model), response_model=identifier(data.get('model')),
+        system_fingerprint=identifier(data.get('system_fingerprint')), response_id=identifier(data.get('id')),
+        provider_request_id=identifier(header_id or data.get('request_id')),
+        started_at=started_at, finished_at=datetime.now(timezone.utc).isoformat(),
+        raw_usage=None if omitted else raw_usage, finish_reason=finish,
+        raw_usage_omitted='size_limit' if omitted else None, raw_usage_sha256=hashlib.sha256(raw_bytes).hexdigest())
+
+
 @dataclass(frozen=True)
 class OpenAICompatibleAdapter:
     """Provider adapter for OpenAI-compatible chat completions."""
@@ -225,7 +266,10 @@ class LLMClient:
         max_keepalive_connections: int = 5,
         trust_env: bool = True,
         thinking: str | None = None,
+        audit_metadata: bool = False,
     ):
+        self.audit_metadata = audit_metadata
+        self.last_provider_metadata = {}
         if thinking not in (None, "disabled"):
             raise ValueError("only thinking='disabled' is supported; reasoning replay is not implemented")
         self.base_url = base_url.rstrip("/")
@@ -330,6 +374,9 @@ class LLMClient:
         )
         payload.pop("stream", None)
 
+        started_at = datetime.now(timezone.utc).isoformat()
+        if self.audit_metadata:
+            self.last_provider_metadata = provider_metadata(self.model, started_at=started_at)
         client = await self._ensure_client()
         try:
             resp = await client.post(
@@ -337,6 +384,8 @@ class LLMClient:
                 json=payload,
                 headers=self.adapter.headers(self.api_key),
             )
+            if self.audit_metadata:
+                self.last_provider_metadata = provider_metadata(self.model, headers=resp.headers, started_at=started_at)
             resp.raise_for_status()
         except httpx.TimeoutException:
             raise LLMError(
@@ -359,7 +408,11 @@ class LLMClient:
         except Exception as e:
             raise LLMError(f"Unable to decode LLM JSON body: {e}", kind=LLMErrorKind.PARSE)
 
+        if self.audit_metadata:
+            self.last_provider_metadata = provider_metadata(self.model, data, headers=resp.headers, started_at=started_at)
         response = self._parse_response(data)
+        if self.audit_metadata:
+            response.provider_metadata = copy.deepcopy(self.last_provider_metadata)
         response.capability = StreamCapability.NON_STREAMING
         return response
 
@@ -383,7 +436,7 @@ class LLMClient:
                     "llm_error",
                     {
                         "kind": e.kind.value,
-                        "message": str(e),
+                        "message": type(e).__name__ if self.audit_metadata else str(e),
                         "status_code": e.status_code,
                         "capability": StreamCapability.NON_STREAMING.value,
                     },
@@ -419,6 +472,9 @@ class LLMClient:
         aggregator = OpenAIStreamAggregator(
             max_tool_argument_bytes=self.max_tool_argument_bytes
         )
+        started_at = datetime.now(timezone.utc).isoformat()
+        if self.audit_metadata:
+            self.last_provider_metadata = provider_metadata(self.model, started_at=started_at)
         response_cm = None
         try:
             request = client.build_request(
@@ -429,6 +485,8 @@ class LLMClient:
             )
             response_cm = await client.send(request, stream=True)
             self._active_response = response_cm
+            if self.audit_metadata:
+                self.last_provider_metadata = provider_metadata(self.model, headers=response_cm.headers, started_at=started_at)
             try:
                 response_cm.raise_for_status()
             except httpx.HTTPStatusError as e:
@@ -441,10 +499,17 @@ class LLMClient:
                 )
 
             async for chunk in response_cm.aiter_bytes():
-                for obs in aggregator.feed_bytes(chunk):
+                observations = aggregator.feed_bytes(chunk)
+                if self.audit_metadata:
+                    self.last_provider_metadata = provider_metadata(self.model, aggregator.provider_fields,
+                        headers=response_cm.headers, started_at=started_at)
+                for obs in observations:
                     yield LLMStreamEvent(obs["event"], {k: v for k, v in obs.items() if k != "event"})
 
             result = aggregator.finish()
+            if self.audit_metadata:
+                self.last_provider_metadata = provider_metadata(self.model, aggregator.provider_fields,
+                    headers=response_cm.headers, started_at=started_at)
         except _CancelledError:
             # Ensure active response is cleared via finally, then propagate cancellation.
             raise
@@ -453,7 +518,7 @@ class LLMClient:
                 "llm_error",
                 {
                     "kind": e.kind.value,
-                    "message": str(e),
+                    "message": type(e).__name__ if self.audit_metadata else str(e),
                     "status_code": e.status_code,
                     "capability": StreamCapability.STREAMING.value,
                 },
@@ -474,7 +539,7 @@ class LLMClient:
                 "llm_error",
                 {
                     "kind": LLMErrorKind.NETWORK.value,
-                    "message": f"LLM network error: {e}",
+                    "message": "network" if self.audit_metadata else f"LLM network error: {e}",
                     "capability": StreamCapability.STREAMING.value,
                 },
             )
@@ -484,7 +549,7 @@ class LLMClient:
                 "llm_error",
                 {
                     "kind": LLMErrorKind.UNKNOWN.value,
-                    "message": str(e),
+                    "message": type(e).__name__ if self.audit_metadata else str(e),
                     "capability": StreamCapability.STREAMING.value,
                 },
             )
@@ -509,7 +574,7 @@ class LLMClient:
                 "llm_error",
                 {
                     "kind": kind_map[result.fail.kind].value,
-                    "message": result.fail.message,
+                    "message": result.fail.kind.value if self.audit_metadata else result.fail.message,
                     "capability": StreamCapability.STREAMING.value,
                     "first_chunk_monotonic": result.first_chunk_monotonic,
                     "complete_monotonic": result.complete_monotonic,
@@ -535,6 +600,7 @@ class LLMClient:
             capability=StreamCapability.STREAMING,
             first_chunk_monotonic=result.first_chunk_monotonic,
             complete_monotonic=result.complete_monotonic,
+            provider_metadata=copy.deepcopy(self.last_provider_metadata) if self.audit_metadata else {},
         )
         yield LLMStreamEvent(
             "llm_stream_done",
@@ -620,4 +686,5 @@ class LLMClient:
             finish_reason=choice.get("finish_reason"),
             usage=normalize_usage(data.get("usage") if isinstance(data.get("usage"), dict) else None),
             capability=StreamCapability.NON_STREAMING,
+            provider_metadata=provider_metadata(self.model, data) if self.audit_metadata else {},
         )

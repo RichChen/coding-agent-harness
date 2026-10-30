@@ -33,6 +33,8 @@ class LLMConfig(BaseModel):
 class RetryConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    stop_on_unknown_usage: bool = False
+
     max_retries: int = 2
     backoff_base_seconds: float = 1.0
     backoff_factor: float = 2.0
