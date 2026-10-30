@@ -16,6 +16,7 @@
 | [P3 统一入口与检查点](roadmap/P3-INTEGRATION-RESULTS.zh-CN.md) / [运行命令](roadmap/EXECUTION-STATUS.zh-CN.md#从这里上手) | 当前工作区检索→公开验证→有界反馈→候选与证据交付；脚本回复结合真实 Docker 的机制演示，尚无自主修复收益结论 |
 | [P4 首轮任务清单与预算](roadmap/P4-TASKS-AND-BUDGET.zh-CN.md) | 一个 Sphinx 真实开发任务；公开目标验收、接入准备、分工与已批准的 5 元首轮预算；实际执行情况见执行状态 |
 | [P4 公开目标检查与预检](roadmap/P4-01-02-RESULTS.zh-CN.md) | 真实基点复现、四个公开场景、终态候选检查入口及读取配额审查修正；不是自主修复结果 |
+| [P4 首轮真实任务结果](roadmap/P4-FIRST-RUN-RESULTS.zh-CN.md) | 最终候选通过四项公开目标检查，运行触及 24 步上限；实际轨迹、费用估算、交付证据与后续讨论点 |
 
 ## 2. 实现说明（当前有效）
 
