@@ -8,6 +8,10 @@ from pathlib import Path
 from src.tracing.store import StoreError, digest
 
 
+class ArtifactQuotaError(StoreError):
+    """A declared capacity refusal; the store itself is still usable."""
+
+
 def atomic_replace(path: Path, content: bytes):
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix=".publish-", dir=path.parent)
@@ -37,6 +41,7 @@ class ArtifactStore:
         self.run_id = run_id
         self.limit_bytes, self.item_limit_bytes = limit_bytes, item_limit_bytes
         self.readonly = readonly
+        self.reserve_bytes = 0  # Opt-in workspace finalization; legacy default is zero.
         if not readonly:
             self.root.mkdir(mode=0o700, exist_ok=True)
 
@@ -44,7 +49,7 @@ class ArtifactStore:
         if self.readonly:
             raise StoreError("read-only artifact store")
         if len(content) > self.item_limit_bytes:
-            raise StoreError("artifact item quota exceeded")
+            raise ArtifactQuotaError("artifact item quota exceeded")
         checksum = digest(content)
         path = self.root / checksum
         ref = dict(logical_id=checksum, sha256=checksum, size_bytes=len(content),
@@ -53,8 +58,8 @@ class ArtifactStore:
             self.read(ref)
             return ref
         # Include orphaned objects AND interrupted publications; never delete evidence automatically.
-        if self.used_bytes() + len(content) > self.limit_bytes:
-            raise StoreError("artifact disk quota exceeded (including orphans)")
+        if self.used_bytes() + len(content) + self.reserve_bytes > self.limit_bytes:
+            raise ArtifactQuotaError("artifact disk quota exceeded (including orphans)")
         atomic_replace(path, content)
         return ref
 

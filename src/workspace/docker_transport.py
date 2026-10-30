@@ -51,6 +51,7 @@ class DockerWorkspace:
         self.name = "workspace-v1-" + self.owner
         self.container_id = None
         self.reserved = False
+        self.create_pending = False
         self.cleanup_ok = None
         self.profile = dict(cpus=cpus, nanocpus=int(nano), memory_bytes=memory_bytes,
                             workspace_bytes=workspace_bytes, tmp_bytes=tmp_bytes, pids_limit=pids_limit)
@@ -132,6 +133,7 @@ class DockerWorkspace:
                                       "--format", "{{.Id}}", limit=4096)).decode().strip()
         p = self.profile
         self.reserved = True  # Record the unique owned name before create.
+        self.create_pending = True
         await self.ok(control, "create", "--pull=never", "--name", self.name,
             "--label", OWNER_LABEL + "=" + self.owner, "--read-only", "--network", "none",
             "--cpus", p["cpus"], "--memory", str(p["memory_bytes"]), "--memory-swap", str(p["memory_bytes"]),
@@ -140,6 +142,7 @@ class DockerWorkspace:
             "--tmpfs", f'/workspace:rw,nosuid,nodev,size={p["workspace_bytes"]},mode=1777',
             "--tmpfs", f'/tmp:rw,noexec,nosuid,nodev,size={p["tmp_bytes"]},mode=1777',
             "--entrypoint", self.python, self.image, "-I", "-S", "-c", SLEEP_CODE, limit=4096)
+        self.create_pending = False
         await self.ok(control, "start", self.name, limit=4096)
         item = json.loads(await self.ok(control, "inspect", self.name, limit=256 * 1024))[0]
         host = item["HostConfig"]
@@ -159,7 +162,7 @@ class DockerWorkspace:
     async def helper(self, request, control):
         request = dict(request, python=self.python)
         result = await self.cli(control, "exec", "-i", self.container_id, self.python, "-I", "-S", "-c",
-                                HELPER_SOURCE, data=canonical_json(request))
+                                HELPER_SOURCE, data=canonical_json(request), timeout=None)
         # The helper's stable error record is parsed by CaptureProvider even on exit 2.
         if result.exit_code not in (0, 2) or result.stderr:
             raise CaptureError("helper_failed")
@@ -182,12 +185,19 @@ class DockerWorkspace:
             self.cleanup_ok = True
             return True
         found = await self.ok(control, "ps", "-aq", "--no-trunc", "--filter", "name=^/" + self.name + "$", limit=4096)
+        # Killing `docker create` does not cancel the daemon's create request.
+        # Wait only within the caller's cleanup grace for an uncertain late create.
+        # An absent name alone cannot certify that an in-flight create is settled.
+        while not found.strip() and self.create_pending:
+            await control.wait(asyncio.sleep(0.1), maximum=None)
+            found = await self.ok(control, "ps", "-aq", "--no-trunc", "--filter", "name=^/" + self.name + "$", limit=4096)
         if found.strip():
             item = json.loads(await self.ok(control, "inspect", self.name, limit=256 * 1024))[0]
             if (item["Config"].get("Labels", {}).get(OWNER_LABEL) != self.owner
                     or self.container_id is not None and item["Id"] != self.container_id):
                 raise CaptureError("cleanup_ownership_mismatch")
             await self.ok(control, "rm", "-f", item["Id"], limit=4096)
+            self.create_pending = False
         left = await self.ok(control, "ps", "-aq", "--filter", "name=^/" + self.name + "$", limit=4096)
         self.cleanup_ok = not left.strip()
         if not self.cleanup_ok:

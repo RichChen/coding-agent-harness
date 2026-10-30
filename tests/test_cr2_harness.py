@@ -50,7 +50,17 @@ def test_cr2_t_is_b0v2_plus_retrieve_code():
 
 
 def test_no_existing_config_enables_retrieve_code():
+    workspace_profile = ROOT / "configs" / "workspace" / "sphinx-bm25.yaml"
     for path in (ROOT / "configs").rglob("*.yaml"):
+        if path == workspace_profile:
+            config = load_config(path)
+            assert config["workspace"]["enabled"] is True
+            assert config["workspace"]["profile"] == "sphinx8721"
+            assert config["workspace"]["retrieval_mode"] == "bm25"
+            assert config["runtime"]["mode"] == "react"
+            assert config["policy"]["command"]["execution_profile"] == "docker_linux"
+            assert "retrieve_code" in config["tools"]["enabled"]
+            continue
         if path not in (T, ROOT / "configs" / "retrieval" / "cr2e-t2.yaml", ROOT / "configs" / "retrieval" / "cr2e-t2-r2.yaml"):
             assert "retrieve_code" not in path.read_text(encoding="utf-8"), path
 

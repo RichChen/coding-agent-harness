@@ -6,22 +6,36 @@
 
 ## 当前阶段
 
-**已到 P2 阶段检查点：首批工作区检索、真实候选捕获、公开验证服务和 Sphinx Docker 适配均已完成独立审查并合入本地 main。两条真实模块演示可重复运行。** 功能代码最终集成提交为 `1caf4fc`；本页是之后的状态整理。
+**已到 P3 检查点：正常入口、工作区检索、公开验证与有界反馈、候选交付及只读检查/导出均已实现，通过独立技术审查。** P3 从 `5e33b40` 开始；真实 Sphinx 机制演示见 [P3 报告](P3-INTEGRATION-RESULTS.zh-CN.md)。首版默认关闭，仅支持固定 Sphinx profile、react 和持久会话。
 
-主会话仍统一调度和集成，Astra 负责独立审查，无需更换项目主持人。按作者授权停在这一可检查节点；所有执行会话本轮任务已结束。P3 的主循环、工具、全退出完成控制和 session 接线尚未开始，当前不是完整求解 agent 的新入口。没有启动付费求解模型评测。
+主会话统一调度和集成，基础层会话使用 6.1 Sol / xhigh 作为 P3 唯一生产代码写入者，Astra / high 完成独立范围检查与代码审查。复用原可见会话，没有重复创建自动 worktree；没有调用付费求解模型或启动修复率实验。
+
+本轮范围复核：不因尚未证明修复率增益而回滚候选版本、工作区检索和公开验证模块；同样不把模块测试通过当成复杂度必要性的证明。A 冻结功能扩展，首个正常入口采用 BM25；B 接通当前补丁、公开验证、有界反馈和候选交付。保留现有可选编码器，未做完整仓库 embedding 性能实验；首版只支持 Sphinx，没有新增记忆平台、第二环境或 Docker 中断续跑。现有文件/命令工具通过薄适配共用新 coordinator，模型账本、session 和 ArtifactStore 均复用原机制。
+
+本轮检查点是通过同一正常入口运行的完整流程和可核查交付物。第 07 次真实 Sphinx 演示成功，约 67.52 秒：基线 8 通过 → 故障候选 6 通过/2 失败 → 一次宿主反馈 → 修正候选 8 通过；6 次脚本回复、0 次求解模型 API 调用。脚本化故障与修复只能证明控制流程，不能作为模型自主修复或修复率收益证据。
+
+接线前独立范围检查已完成：Astra 未发现应整块回滚的 P2 实现；后续聚焦单一编辑环境、统一完成控制、封存一致性、共享预算/事件及检索失败不可返回旧结果。主会话接线前运行旧 recovery/model_budget/execution_limits/config_dotenv 四个测试文件，37 项通过（14.16s），作为兼容基线。
+
+P3 预算算术修正：P2 验证操作上限已是 162 秒，最终编辑树捕获另需最多 20 秒，因此新模式最终预留至少 182 秒，从同一任务总时限扣除。此项替代 P1 的拟议 162 秒组合值，不延长总期限或修改旧实验预算。
+
+本轮机器蓝屏使执行和审查会话中断，作者授权后从保留的代码续做；中断前的 47 passed 只是恢复点。Docker Desktop 恢复后，01–04 初始化失败、05 演示语句导致导入错误、06 故障未被固定公开测试检出，均未算作闭环成功。01 的清理成功标记后来被延迟 create 证伪，精确 owner 残留已清理，并补上未知 create 不得报清理成功的修正；原始失败记录保留，详情见 P3 报告。
+
+初稿审查的三项问题均已修正：业务预算/基线失败与 journal 故障区分，导出包含验证依赖闭包，初始化容量失败保留准确原因。Astra 最终复核 39 项关键测试通过，导出追加修正后另跑 3 项通过；这些集合有重叠，不累加。独立核验 63 条事件、4 次 capture、494 个 blob 及包内基线身份：无 pending、唯一 run.finished 位于最后，最终候选与验证/交付一致。主会话对 [审阅文件哈希清单](evidence/p3-integration/reviewed-files.json) 的 118 个文件逐一比对，无审查后变更；规范化清单 SHA-256 为 `ecc1a13b79a90fcc4605f8acb39644ca1ce59415c2a7c0974f8fd55795d3eb32`。
+
+执行者冻结代码后的联合检查为 82 passed（22.91s），随后新增过期只读边界单独 1 passed（1.28s）；不是一次 83 项联合运行。主会话额外旧入口兼容组原为 75 passed、1 个新配置白名单失败；精确放行新 opt-in 配置后，该文件 7 项均通过并包含于上述联合检查。没有修改冻结 CR 配置/结果。主会话已核对最终报告，源代码指纹与执行者冻结清单相符；本轮全部仅本地交付，不 push。
 
 | 可见会话 | 模型 | 任务与交付 | 状态 |
 | --- | --- | --- | --- |
 | Harness P2-A：工作区代码检索（含 P0 轨迹） | 6.1 Sol / high→xhigh | A 与 GPU smoke 完成；独立审查 B，修正后复审放行 | 当前任务完成 |
 | Harness P2-B：公开验证服务（含 P0 环境） | 6.1 Sol / xhigh | 核心修正、生产 Docker executor、公开 profile 与 Sphinx 演示 | 已审查并合入 |
-| Harness P1：接口设计与独立审查 | Astra / high | [接口契约](P1-INTERFACES.zh-CN.md)，捕获、A、Docker 验证适配及修正的独立审查 | 本轮审查完成 |
-| Harness 基础层：版本契约与捕获 | 6.1 Sol / xhigh | 捕获、物化与审查修正；真实捕获→BM25 检索演示 | 已审查并合入 |
+| Harness P1：接口设计与独立审查 | Astra / high | P3 范围、代码修正、transport 差异及 07 原始证据独立复核 | 已放行 |
+| Harness 基础层：版本契约与捕获 | 6.1 Sol / xhigh | P3 factory/config/loop/session、工具与正常入口串行接线 | 已实现并审查通过 |
 
 会话标识分别为 `01a18899-334d-7711-a875-80da957b1140`、`01a18899-9ff6-7882-8256-9932c8b54330`，主机均为 local，关联 coding-harness 项目。
 
 P1 会话标识：`01a188a4-1ab1-7e31-9bdd-4335e2ffebf9`，主机 local。主会话保持统一调度；独立 Astra 会话承担接口设计与技术审查，没有并行接管项目指挥。
 
-基础层会话标识：`01a188b5-63e8-78d0-b271-2f136db157a5`，主机 local。本轮独占主工作区新增 workspace 捕获、协调、物化及对应测试，没有修改已有执行/运行时文件。
+基础层会话标识：`01a188b5-63e8-78d0-b271-2f136db157a5`，主机 local。P2 独占主工作区新增 workspace 文件；本轮是 P3 共享运行时文件的唯一生产代码写入者，主会话只维护执行状态与集成。
 
 共享基点：`d0bdf6f`，由独立 Astra 审查并实际运行 73 项相关测试通过；前序文档与 P0/P1 证据提交为 `15a040c`。全部仅本地提交，没有 push。A/B 从该共同基点独立开发。
 
@@ -35,11 +49,11 @@ P0 关键结论：固定抽样18条，3条非空候选没有检查，1条只有�
 
 ## 检查点之后
 
-1. 作者可先运行下面两条演示，并从摘要打开候选版本、测试收据与事件，检查功能是否符合预期；无需先读整个实现。
-2. 下一项是 P3 串行接线：一个负责人统一改 factory/config/loop/session，接入当前工作区检索与 validate_patch、自然结束检查、硬停止结算和时间/产物预留。新模式默认关闭，旧路径保持兼容。
-3. 首版 Docker 中断续跑继续明确拒绝。P3 的只读 inspect/export 与恢复事件接线尚未实现；当前磁盘产物可检查不等于已完成恢复入口。
-4. 尚未验收 pytest 4.5 第二适配、完整 Sphinx 语料的真实 hybrid 性能、求解模型主动使用工具或修复率收益。当前 Qwen 冷启动较慢，普通入口采用何种默认检索配置应结合后续使用检查决定。
-5. 付费小对照及更大的受支持范围继续留到机制/使用性完成之后；本检查点不据模块通过修改简历的效果数字。
+1. 作者可先查看第 07 次现成结果与导出包，或运行下面的统一入口；无需先读完整实现。
+2. 下一阶段再讨论少量真实任务、模型版本和预算，检查模型是否会使用检索与反馈，然后决定是否做同期对照。当前未批准或启动付费求解调用。
+3. Docker 中断续跑仍明确拒绝；只读 inspect/export 已实现，可核验过期/中断会话的已提交证据，不恢复未知执行。
+4. 未验收 pytest 4.5 第二适配、完整仓库 hybrid 性能、真实求解模型主动使用工具或修复率收益。普通入口明确采用 BM25，后续不自动扩展这些范围。
+5. 本检查点只支持工程机制结论，不据此修改简历中的修复效果数字。
 
 代码起点：`76388a59116c415267f8923a14c28c1104a89ef6`。原实验产物及冻结文件保持原样。
 
@@ -60,6 +74,18 @@ P0 关键结论：固定抽样18条，3条非空候选没有检查，1条只有�
 
 ## 从这里上手
 
+P3 优先入口（在仓库根目录的 PowerShell 中）：
+
+```powershell
+$harnessP3Output = Join-Path $env:TEMP ('harness-p3-' + [guid]::NewGuid().ToString('N'))
+.\.venv\Scripts\python.exe scripts/run_workspace.py --scripted-demo --output-dir $harnessP3Output
+.\.venv\Scripts\python.exe scripts/run_workspace.py --inspect (Join-Path $harnessP3Output 'session')
+```
+
+现成结果位于 `D:/crq/artifacts/p3-sphinx-20261030-07/result.json`，完整导出在同目录 `delivery/`。查看 `scripted_sequence_complete`、三个验证 record、候选身份和 `regression_only` 覆盖范围；普通任务接入和只读 export 命令见 P3 报告。需要现有固定镜像；脚本演示不调用模型服务。
+
+以下保留 P2 的两条独立模块演示：
+
 在 `D:/crq/src/coding-harness` 的 PowerShell 中，使用现有 `.venv` 和 `desktop-linux` 的固定 Sphinx 镜像：
 
 ```powershell
@@ -74,4 +100,4 @@ $harnessP2DemoRoot = Join-Path $env:TEMP ('harness-p2-' + [guid]::NewGuid().ToSt
 2. 验证演示先看 `validation/summary.json`，再看同目录每个阶段的记录和 `events.jsonl`。对照合法候选、故障候选、恢复候选各自的 `candidate_id`、节点报告与计数，确认复用没有新增执行。
 3. 不运行也可查看已提交的小证据：[真实检索](evidence/p2-workspace/retrieval-docker-01.json)、[公开验证摘要](evidence/p2-validation/sphinx-public-run.json)、[四次结构化测试收据](evidence/p2-validation/sphinx-public-receipts.json)、[Qwen GPU 小检查](evidence/p2-a/qwen-gpu-smoke-01.json)。
 
-这里的两条链路由脚本驱动，没有求解模型、自动修改决策或完成 gate。它们是进入 P3 前可独立复核的模块成果。
+上述两条 P2 脚本仍是独立模块演示；P3 统一入口已经接入主循环和完成控制。两者均不能替代真实模型任务的使用性与效果检验。

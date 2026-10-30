@@ -25,6 +25,7 @@ class RecoveredState:
     runtime_hash: str | None = None
     execution: dict = field(default_factory=dict)
     context: dict = field(default_factory=dict)
+    workspace: dict = field(default_factory=dict)
 
 
 def reduce_events(events) -> RecoveredState:
@@ -72,6 +73,8 @@ def reduce_events(events) -> RecoveredState:
                 raise StoreError("duplicate operation intent")
             state.operations[op] = dict(intent=p, result=None, attempt_id=event["attempt_id"],
                                         tool_call_id=event["tool_call_id"])
+            if state.workspace and p.get("side_effect") != "read_only":
+                state.workspace["current_unknown"] = True
         elif kind == "tool.result":
             op = event["operation_id"]
             if op not in state.operations or state.operations[op]["result"] is not None:
@@ -115,6 +118,65 @@ def reduce_events(events) -> RecoveredState:
             if not state.execution or 'snapshot' in state.execution:
                 raise StoreError('snapshot without unique container session')
             state.execution['snapshot'] = p
+        elif kind == "workspace.started":
+            if state.workspace:
+                raise StoreError("duplicate workspace start; Docker continuation is unsupported")
+            state.workspace = dict(started=p, captures={}, records={}, pending_validation={}, observations=[], feedback=[])
+        elif kind.startswith("workspace.capture."):
+            if not state.workspace or state.workspace.get("sealed"):
+                raise StoreError("capture outside active workspace")
+            if kind == "workspace.capture.committed":
+                state.workspace["captures"][p["capture_id"]] = p
+                state.workspace["last_capture_ref"] = p["capture_ref"]
+                state.workspace["current_unknown"] = False
+            elif kind == "workspace.capture.failed":
+                state.workspace["current_unknown"] = True
+                state.workspace["last_capture_failure"] = p
+            elif kind not in ("workspace.capture.started", "workspace.capture.failed"):
+                raise StoreError("unsupported workspace capture event")
+        elif kind.startswith("validation."):
+            if not state.workspace or state.workspace.get("sealed"):
+                raise StoreError("validation outside active workspace")
+            pending = state.workspace["pending_validation"]
+            if kind == "validation.reserved":
+                if p["operation_id"] in pending:
+                    raise StoreError("duplicate validation reservation")
+                pending[p["operation_id"]] = p
+            elif kind == "validation.started":
+                if p["operation_id"] not in pending:
+                    raise StoreError("validation start without reservation")
+                pending[p["operation_id"]].update(p)
+            elif kind == "validation.committed":
+                value = p.get("record") or p.get("attempt")
+                if value["operation_id"] not in pending:
+                    raise StoreError("validation commit without reservation")
+                del pending[value["operation_id"]]
+                if p.get("record"):
+                    state.workspace["records"][value["record_id"]] = p
+            elif kind not in ("validation.reused", "validation.not_run"):
+                raise StoreError("unsupported validation event")
+            if "budget" in p:
+                state.workspace["validation_budget"] = p["budget"]
+            if "artifacts" in p:
+                state.workspace["validation_artifacts"] = p["artifacts"]
+        elif kind == "workspace.baseline":
+            if not state.workspace or "baseline" in state.workspace:
+                raise StoreError("baseline without unique workspace")
+            state.workspace["baseline"] = p
+        elif kind in ("completion.feedback", "completion.observed"):
+            if not state.workspace or state.workspace.get("sealed"):
+                raise StoreError("observation outside active workspace")
+            key = "feedback" if kind == "completion.feedback" else "observations"
+            if p["record_id"] in state.workspace["feedback"] + state.workspace["observations"]:
+                raise StoreError("validation observation already delivered")
+            state.workspace[key].append(p["record_id"])
+            if kind == "completion.feedback":
+                state.messages.append(p["message"])
+                state.workspace["validation_budget"] = p["budget"]
+        elif kind == "completion.sealed":
+            if not state.workspace or state.workspace.get("sealed"):
+                raise StoreError("workspace already sealed")
+            state.workspace["sealed"] = p
         elif kind == "run.finished":
             if state.terminal is not None:
                 raise StoreError("duplicate terminal event")

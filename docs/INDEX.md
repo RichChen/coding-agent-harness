@@ -13,7 +13,7 @@
 | [CONTAMINATION-NOTES.zh-CN.md](CONTAMINATION-NOTES.zh-CN.md) | 评测污染和答案隔离的处理 |
 | [下一阶段纲领](roadmap/HARNESS-NEXT-CHARTER.zh-CN.md) / [阶段拆解](roadmap/HARNESS-NEXT-PLAN.zh-CN.md) | 工作区检索与修复验证的目标、阶段验收与并行分工；实际进度见执行状态 |
 | [下一阶段执行状态](roadmap/EXECUTION-STATUS.zh-CN.md) | 实际进度、可见工作会话、P0 证据和 P1 接口的统一入口；功能是否完成以阶段验收为准 |
-| [P2 检查点与两条运行命令](roadmap/EXECUTION-STATUS.zh-CN.md#从这里上手) | 真实工作区修改→检索更新，以及新副本→固定公开验证；脚本驱动，尚未接入 agent 主循环 |
+| [P3 统一入口与检查点](roadmap/P3-INTEGRATION-RESULTS.zh-CN.md) / [运行命令](roadmap/EXECUTION-STATUS.zh-CN.md#从这里上手) | 当前工作区检索→公开验证→有界反馈→候选与证据交付；脚本回复结合真实 Docker 的机制演示，尚无自主修复收益结论 |
 
 ## 2. 实现说明（当前有效）
 
