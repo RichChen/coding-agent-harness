@@ -1,0 +1,52 @@
+# P4 opt-in only. No account-level CNY cap; probes have a separate budget.
+llm:
+  base_url: https://api.deepseek.com/v1
+  api_key: "${LLM_API_KEY:}"
+  model: deepseek-flash
+  thinking: disabled
+  temperature: 0
+  trust_env: false
+  supports_streaming: false
+  max_tokens: 4096
+runtime:
+  mode: react
+  max_steps: 24
+  step_timeout_seconds: 240
+  total_timeout_seconds: 1200
+  budget:
+    max_model_calls: 24
+    max_tokens: 1600000
+    max_cost_usd: 0.60
+    price_table:
+      prompt_per_1k: 0.0003
+      completion_per_1k: 0.0012
+  context:
+    strategy: masking
+    max_tokens: 64000
+    keep_recent_tool_results: 4
+    compact_token_threshold: 11000
+retry:
+  stop_on_unknown_usage: true
+  max_retries: 0
+policy:
+  file_size_limit_bytes: 1048576
+  tool_output_max_chars: 12000
+  read_file_max_lines: 100
+  command:
+    execution_profile: docker_linux
+    docker_context: desktop-linux
+    allow_all: true
+    timeout_seconds: 30
+    run_output_limit_bytes: 16777216
+    artifact_per_tool_bytes: 1048576
+tools:
+  enabled: [read_file, write_file, search_replace, list_dir, run_command, retrieve_code, validate_patch]
+workspace:
+  enabled: true
+  profile: sphinx8721
+  retrieval_mode: bm25
+  capture_timeout_seconds: 20
+  startup_timeout_seconds: 60
+  finalization_reserve_seconds: 182
+  final_artifact_reserve_bytes: 16777216
+  final_output_reserve_bytes: 4194304

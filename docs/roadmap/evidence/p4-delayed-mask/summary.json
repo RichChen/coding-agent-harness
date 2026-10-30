@@ -1,0 +1,151 @@
+{
+  "schema": "p4-delayed-mask-summary-v1",
+  "date": "2026-10-30",
+  "status": "checkpoint_complete_no_more_calls",
+  "only_semantic_delta": {
+    "runtime.context.compact_token_threshold": {
+      "baseline": null,
+      "new": 11000
+    }
+  },
+  "source_fingerprint": "7cbc503ff081b010268d47fb70bd07da135fcaf5ae89b19f86782c54f552b6ae",
+  "input_sha256": "2d1bbdd9404cb463b3f6ba407a3f3086c68167c5c02dd70f8d22b75f2ebe1196",
+  "check_id": "public-target-v1:586c07f4bb300d01eb18dbf75cdb34fba69b8589d45bf3b4f6efc00f43569e61",
+  "candidate_id": "candidate-v1:40070069778b06d7b6580117e1d6dac54ed1cd106079c4e4ceb3dcbdcb12c785",
+  "baseline": {
+    "model_calls": 24,
+    "tokens": {
+      "prompt_tokens": 203289,
+      "completion_tokens": 2283,
+      "total_tokens": 205572
+    },
+    "peak_uncached_cny_estimate": 0.424842,
+    "exact_repeat_run_command": 2,
+    "exact_repeat_read_file": 0,
+    "reading_tool_calls": 22,
+    "first_effective_edit_call": 23,
+    "first_masking_call": 5,
+    "natural_completion": false,
+    "termination": "step_limit",
+    "target_cases": [
+      {
+        "name": "fresh_default",
+        "status": "passed"
+      },
+      {
+        "name": "html_epub_default",
+        "status": "passed"
+      },
+      {
+        "name": "html_epub_false",
+        "status": "passed"
+      },
+      {
+        "name": "epub_true",
+        "status": "passed"
+      }
+    ]
+  },
+  "delayed_mask": {
+    "model_calls": 24,
+    "tokens": {
+      "prompt_tokens": 206552,
+      "completion_tokens": 2287,
+      "total_tokens": 208839
+    },
+    "peak_uncached_cny_estimate": 0.4314,
+    "exact_repeat_run_command": 0,
+    "exact_repeat_read_file": 0,
+    "reading_tool_calls": 23,
+    "first_effective_edit_call": 24,
+    "first_masking_call": 8,
+    "natural_completion": false,
+    "termination": "step_limit",
+    "target_cases": [
+      {
+        "name": "fresh_default",
+        "status": "passed"
+      },
+      {
+        "name": "html_epub_default",
+        "status": "passed"
+      },
+      {
+        "name": "html_epub_false",
+        "status": "passed"
+      },
+      {
+        "name": "epub_true",
+        "status": "passed"
+      }
+    ]
+  },
+  "mechanism": {
+    "model_call": 1,
+    "baseline": [
+      "run_command(cat sphinx/ext/viewcode.py)",
+      "list_dir(.)"
+    ],
+    "delayed_mask": [
+      "list_dir(.)",
+      "read_file(sphinx/ext/viewcode.py)"
+    ],
+    "before_any_masking": true,
+    "same_initial_context_hash": true
+  },
+  "verification": {
+    "config_guard": "1 passed in 8.56s",
+    "context_compact": "33 passed in 1.45s",
+    "independent_audit": {
+      "unique_terminal_last": true,
+      "no_pending": true,
+      "target_candidate_bound": true,
+      "target_manifest_unchanged": true,
+      "frozen_check_id": true,
+      "frozen_package": true,
+      "target_controls_bound": true,
+      "target_report_bound": true,
+      "target_status_recomputed": true,
+      "target_cleanup_recorded": true,
+      "task_frozen": true,
+      "source_frozen": true,
+      "config_bytes_frozen": true,
+      "only_delayed_mask_config_delta": true,
+      "all_usage_complete": true,
+      "model_attempts_bound": true,
+      "no_extra_probe": true,
+      "models_match_baseline": true,
+      "fingerprints_match_baseline": true,
+      "owned_containers_absent": true
+    },
+    "owned_containers_remaining": []
+  },
+  "new_peak_uncached_cny_estimate": 0.4314,
+  "combined_peak_uncached_cny_estimate": 0.858064,
+  "invoice_verified": false,
+  "model": [
+    "deepseek-flash"
+  ],
+  "fingerprints": [
+    "bc19ba97cbe016479903222bb1578db6"
+  ],
+  "independent_evaluation": "not_evaluated",
+  "solved": null,
+  "limitations": [
+    "One attempt per condition; divergence at call 1 precedes masking, so differences cannot establish a masking-threshold causal effect.",
+    "Reading the eventual modified file does not show the model already understood the repair location. No visible reasoning text does not prove no internal reasoning.",
+    "Exact-repeat reduction does not imply no rereading: different-range reads and overlapping reads are excluded by the frozen definition.",
+    "Final candidates are identical; natural completion did not occur in either run. No added attempts, tasks, models or repeats."
+  ],
+  "artifact_root": "D:\\crq\\artifacts\\p4-delayed-mask-20261030-01",
+  "artifact_sha256": {
+    "run-manifest.json": "167248b2a46e25eb0d3601d30d825543cb9503fedb0adeac5bde36920de7db67",
+    "config-template.yaml": "d21f20ee8bc144359b82a88e81a088cf921f5a91cda77985ca094eab34eb104c",
+    "task.txt": "2d1bbdd9404cb463b3f6ba407a3f3086c68167c5c02dd70f8d22b75f2ebe1196",
+    "metrics-comparison.json": "fbe9ffa086844004a550628b89bb8babd12dbab03ce8eed1f5dbf47008a7ea45",
+    "audit.json": "6c6a9c174e4fd8934e818c9720c2295e8f08ff556a3c9a42fb947c3e842d7450",
+    "solve/result.json": "7fe1e168c8f56574229ea69c0913e6aca8ad655ad3d6fc5f77587ad74e9710fb",
+    "solve/session/events.sqlite3": "71ecea73906c41673c297b9cefccb02e44114ed8b7181a2d8cdc193d9b5b6ebb",
+    "target/result.json": "054d1e9593ef29a81ac6b0d92a4f1d763e3f60d466e31cf7637d83ae1ed81228"
+  }
+}

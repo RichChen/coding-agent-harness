@@ -53,6 +53,7 @@ def test_no_existing_config_enables_retrieve_code():
     workspace_profiles = (
         ROOT / "configs" / "workspace" / "sphinx-bm25.yaml",
         ROOT / "configs" / "workspace" / "p4-sphinx-deepseek.yaml",
+        ROOT / "configs" / "workspace" / "p4-sphinx-deepseek-delayed-mask.yaml",
     )
     for path in (ROOT / "configs").rglob("*.yaml"):
         if path in workspace_profiles:
