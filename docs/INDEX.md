@@ -19,6 +19,7 @@
 | [P4 首轮真实任务结果](roadmap/P4-FIRST-RUN-RESULTS.zh-CN.md) | 最终候选通过四项公开目标检查，运行触及 24 步上限；实际轨迹、费用估算、交付证据与后续讨论点 |
 | [P4 延后遮蔽诊断](roadmap/P4-DELAYED-MASK-RESULTS.zh-CN.md) | 单次新增对照未观察到修改或自然收尾效率改善；保留结果与限制，不扩建上下文功能 |
 | [P4 同一历史下的动作诊断](roadmap/P4-ACTION-DIAGNOSTICS.zh-CN.md) | 12 次固定历史动作采样与 6 次工具顺序校准：恢复正文改变读取位置，倒计时促使修改尚无稳定支持 |
+| [P4 短续跑与行动指令敏感性](roadmap/P4-CONTINUATION-AND-ACTIONABILITY.zh-CN.md) | 24 次短续跑响应仍读取；另四次同历史采样中，行动指令触发两份通过公开检查的补丁，含额外改动风险与宿主回放边界 |
 
 ## 2. 实现说明（当前有效）
 

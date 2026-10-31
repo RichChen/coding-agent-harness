@@ -1,0 +1,252 @@
+{
+  "schema": "p4-continuation-actionability-v1",
+  "date": "2026-10-31",
+  "source_fingerprint": "7cbc503ff081b010268d47fb70bd07da135fcaf5ae89b19f86782c54f552b6ae",
+  "model": "deepseek-flash",
+  "thinking": "disabled",
+  "temperature": 0,
+  "m8": {
+    "artifact_root": "D:\\crq\\artifacts\\p4-m8-continuation-20261031-01",
+    "manifest_sha256": "536594c3598c13e2f61ac56ee6075f122916a042a87c5eb31f87bd52f62916cb",
+    "protocol": "AB then budget-gated BA; six actual new responses per branch; fixed four historical bodies only",
+    "common_changes": [
+      "admission120000",
+      "max_feedback0",
+      "six-response diagnostic horizon with17/24..12/24 hints"
+    ],
+    "branches": [
+      {
+        "branch_id": "AB-1-A",
+        "arm": "A",
+        "actual_calls": 6,
+        "termination_kind": "step_limit",
+        "final_candidate_has_no_delta": true,
+        "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+        "usage": {
+          "prompt_tokens": 45564,
+          "completion_tokens": 396,
+          "total_tokens": 45960
+        },
+        "peak_uncached_cny": "0.094296",
+        "cleanup_ok": true
+      },
+      {
+        "branch_id": "AB-2-B",
+        "arm": "B",
+        "actual_calls": 6,
+        "termination_kind": "step_limit",
+        "final_candidate_has_no_delta": true,
+        "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+        "usage": {
+          "prompt_tokens": 71960,
+          "completion_tokens": 428,
+          "total_tokens": 72388
+        },
+        "peak_uncached_cny": "0.147344",
+        "cleanup_ok": true
+      },
+      {
+        "branch_id": "BA-1-B",
+        "arm": "B",
+        "actual_calls": 6,
+        "termination_kind": "step_limit",
+        "final_candidate_has_no_delta": true,
+        "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+        "usage": {
+          "prompt_tokens": 70134,
+          "completion_tokens": 392,
+          "total_tokens": 70526
+        },
+        "peak_uncached_cny": "0.143404",
+        "cleanup_ok": true
+      },
+      {
+        "branch_id": "BA-2-A",
+        "arm": "A",
+        "actual_calls": 6,
+        "termination_kind": "step_limit",
+        "final_candidate_has_no_delta": true,
+        "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+        "usage": {
+          "prompt_tokens": 47460,
+          "completion_tokens": 423,
+          "total_tokens": 47883
+        },
+        "peak_uncached_cny": "0.098304",
+        "cleanup_ok": true
+      }
+    ],
+    "all_new_model_actions_reading": true,
+    "new_cost_cny": "0.483348",
+    "audit_sha256": "a5aeed52b8054797b863c71c2f8824e5104c996ac738eaa04dfc27f234533366"
+  },
+  "actionability": {
+    "artifact_root": "D:\\crq\\artifacts\\p4-actionability-20261031-01",
+    "manifest_sha256": "9a54377979ae2e1fe10904eab3f9d46f33b051250e52e52b979c219f71a181e0",
+    "protocol": "T23 original input versus appended generic action instruction; AB/BA;2new single responses per condition",
+    "instruction": "Using only the information already available, submit the smallest change you can justify and verify. If the evidence is insufficient, state the specific missing evidence rather than guessing.",
+    "actions": [
+      {
+        "sample": "01-T23-actionability-1-A",
+        "response_sha256": "7211d474ac7721f0ba2180a4789b3f6832a98b4bd2818b2b5c74a9a43033d765",
+        "tool_names": [
+          "run_command"
+        ],
+        "usage": {
+          "prompt_tokens": 11928,
+          "completion_tokens": 62,
+          "total_tokens": 11990,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 11776,
+          "prompt_cache_miss_tokens": 152
+        },
+        "model": "deepseek-flash",
+        "fingerprint": "bc19ba97cbe016479903222bb1578db6"
+      },
+      {
+        "sample": "02-T23-actionability-1-B",
+        "response_sha256": "0180b2a0d12682c818f989502f3bb5a97058e2bac581d16f68b2119425caaac6",
+        "tool_names": [
+          "search_replace",
+          "search_replace"
+        ],
+        "usage": {
+          "prompt_tokens": 11961,
+          "completion_tokens": 576,
+          "total_tokens": 12537,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 11776,
+          "prompt_cache_miss_tokens": 185
+        },
+        "model": "deepseek-flash",
+        "fingerprint": "bc19ba97cbe016479903222bb1578db6"
+      },
+      {
+        "sample": "03-T23-actionability-2-B",
+        "response_sha256": "d18274f49a232ad14a9eec8646840472023063510a561fd6a1a358071c6fdf7a",
+        "tool_names": [
+          "search_replace"
+        ],
+        "usage": {
+          "prompt_tokens": 11961,
+          "completion_tokens": 310,
+          "total_tokens": 12271,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 11776,
+          "prompt_cache_miss_tokens": 185
+        },
+        "model": "deepseek-flash",
+        "fingerprint": "bc19ba97cbe016479903222bb1578db6"
+      },
+      {
+        "sample": "04-T23-actionability-2-A",
+        "response_sha256": "4806600bd3b1b5447854ec9c6ed7a224178ced110063f35d7fc479517eeb04f6",
+        "tool_names": [
+          "run_command"
+        ],
+        "usage": {
+          "prompt_tokens": 11928,
+          "completion_tokens": 50,
+          "total_tokens": 11978,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 11776,
+          "prompt_cache_miss_tokens": 152
+        },
+        "model": "deepseek-flash",
+        "fingerprint": "bc19ba97cbe016479903222bb1578db6"
+      }
+    ],
+    "replays": [
+      {
+        "sample": "02-T23-actionability-1-B",
+        "all_edits_applied": true,
+        "edit_count": 2,
+        "candidate_id": "candidate-v1:4ead05c32d3a160fcdba946f18d1d62169d25618ea8656fa719c83b28a486d01",
+        "check_id": "public-target-v1:586c07f4bb300d01eb18dbf75cdb34fba69b8589d45bf3b4f6efc00f43569e61",
+        "target_status": "passed",
+        "cases": [
+          {
+            "name": "fresh_default",
+            "status": "passed"
+          },
+          {
+            "name": "html_epub_default",
+            "status": "passed"
+          },
+          {
+            "name": "html_epub_false",
+            "status": "passed"
+          },
+          {
+            "name": "epub_true",
+            "status": "passed"
+          }
+        ],
+        "editor_cleanup_ok": true,
+        "target_cleanup_ok": true,
+        "autonomous_completion": false,
+        "host_scripted_responses": 2,
+        "target_result_sha256": "70887b54abddb18f19476607571d607b74abe21c661f9b554b9f25839c596f76"
+      },
+      {
+        "sample": "03-T23-actionability-2-B",
+        "all_edits_applied": true,
+        "edit_count": 1,
+        "candidate_id": "candidate-v1:40070069778b06d7b6580117e1d6dac54ed1cd106079c4e4ceb3dcbdcb12c785",
+        "check_id": "public-target-v1:586c07f4bb300d01eb18dbf75cdb34fba69b8589d45bf3b4f6efc00f43569e61",
+        "target_status": "passed",
+        "cases": [
+          {
+            "name": "fresh_default",
+            "status": "passed"
+          },
+          {
+            "name": "html_epub_default",
+            "status": "passed"
+          },
+          {
+            "name": "html_epub_false",
+            "status": "passed"
+          },
+          {
+            "name": "epub_true",
+            "status": "passed"
+          }
+        ],
+        "editor_cleanup_ok": true,
+        "target_cleanup_ok": true,
+        "autonomous_completion": false,
+        "host_scripted_responses": 2,
+        "target_result_sha256": "d8f9a7bf376e3dec7c1c86e8b6b3b203bffb9688fd3763d0aa288cdb2346f3e3"
+      }
+    ],
+    "new_cost_cny": "0.103540",
+    "audit_sha256": "a182ee99597639608d6ffe0ed742f178d8483f7a7e659923f4790b46f6646cff",
+    "extra_edit_caveat": "First intervention proposal also bypasses EPUB page timestamp reuse; current checks do not establish this addition is necessary or preserves incremental behavior. Second proposal has only the config guard.",
+    "replay_audit_sha256": "d65bace49b463a02fa45e3100e283c9fabba00a5bbdc3c4a47d83e2f0cf39225",
+    "owned_container_count": 8,
+    "all_owned_containers_absent": true
+  },
+  "budget": {
+    "prior_cny": "1.250684",
+    "current_round_cny": "0.586888",
+    "cumulative_cny": "1.837572",
+    "original_allowance_cny": 5,
+    "unknown_usage": 0,
+    "invoice_verified": false,
+    "basis": "fixed peak uncached input2/output8 CNY per million provider tokens; excludes developer chats"
+  },
+  "interpretation": {
+    "supported": "Restored M8 bodies change exploration direction without edits within6 responses. At fixed T23,2 original responses read while2 instruction responses propose patches that pass4 frozen public cases after exact host replay.",
+    "not_supported": [
+      "internal prior awareness",
+      "deadline as established cause",
+      "general model inability",
+      "general repair-rate gain",
+      "automatic production prompt adoption",
+      "autonomous solver testing or natural completion from host replay"
+    ]
+  },
+  "production_changed": false,
+  "paid_sampling_stopped": true
+}
