@@ -109,10 +109,16 @@ def _expected(ids):
     return out
 
 
+class FakeLLM:
+    async def _ensure_client(self):
+        raise AssertionError("the fake run never calls the model")
+
+
 class FakeAgent:
     def __init__(self, names):
         self.enabled_tools = names
         self.tools = self
+        self.llm = FakeLLM()
 
     def schemas(self, enabled):
         return [{"type": "function", "function": {"name": n}} for n in enabled]
@@ -136,7 +142,8 @@ class FakeService:
 
 
 def make_fake_run(behaviour=None, calls=None):
-    """behaviour(task, group, attempt) -> dict of overrides: status, events, prompt, tools, crash_log."""
+    """behaviour(task, group, attempt) -> dict of overrides: status, events, prompt, tools, crash_log, models
+    (text written to model-names.json)."""
     behaviour = behaviour or (lambda task, group, attempt: {})
     attempts = {}
 
@@ -155,6 +162,8 @@ def make_fake_run(behaviour=None, calls=None):
         _write_events(output, events)
         if retrieval is not None:
             retrieval.log({"call_id": "c1", "query": "q", "k": 5, **({"traceback": "boom"} if over.get("crash_log") else {})})
+        if "models" in over:
+            (output / run_cr2.MODELS_FILE).write_text(over["models"], encoding="utf-8")
         summary = {"task_id": task["id"], "mock": mock, "profile": Path(profile).stem, "variant": variant,
                    "status": over.get("status", "failed"), "solved": False, "cost_cny": "0", "harness_tool_errors": 0,
                    "prompt_sha256": run_cr2._sha(prompt), "model": {"name": "mock-model", "base_url_host": None}}
@@ -164,10 +173,10 @@ def make_fake_run(behaviour=None, calls=None):
     return run
 
 
-def _run(tmp_path, slots, run, service=None, ids=None):
+def _run(tmp_path, slots, run, service=None, ids=None, mock=True):
     ids = ids or sorted({s[0] for s in slots})
     prepared = {task: {"id": task, "repo": "o/r", "base_commit": "abc", "prompt": "prompt for " + task} for task in ids}
-    return asyncio.run(run_cr2.run_slots(slots, mock=True, out_root=tmp_path / "out", prepared=prepared,
+    return asyncio.run(run_cr2.run_slots(slots, mock=mock, out_root=tmp_path / "out", prepared=prepared,
                                          expected=_expected(ids), tools=TOOLS, prefetch_sha256="x", label="t",
                                          service=service or FakeService(), run=run))
 
@@ -239,16 +248,42 @@ def _sse(*chunks):
     return b"".join(b"data: " + json.dumps(c).encode() + b"\n\n" for c in chunks) + b"data: [DONE]\n\n"
 
 
-def _network_response(status, body: bytes, content_type="application/json"):
+class _Pieces:
+    def __init__(self, body):
+        self.body = body
+
+    async def __aiter__(self):
+        for i in range(0, len(self.body), 7):
+            yield self.body[i:i + 7]
+
+    async def aclose(self):
+        pass
+
+
+def _encode(body: bytes, encoding):
+    """encoding: None, "gzip", "deflate" (zlib wrapped, as HTTP specifies) or "deflate-raw" (no zlib header)."""
+    import gzip
+    import zlib
+
+    if encoding is None:
+        return body, {}
+    if encoding == "gzip":
+        return gzip.compress(body), {"content-encoding": "gzip"}
+    if encoding == "deflate":
+        return zlib.compress(body), {"content-encoding": "deflate"}
+    raw = zlib.compressobj(wbits=-zlib.MAX_WBITS)
+    return raw.compress(body) + raw.flush(), {"content-encoding": "deflate"}
+
+
+def _network_response(status, body: bytes, content_type="application/json", encoding=None):
     """A response whose body arrives in small pieces, like a real connection (content= would preload it)."""
     import httpx
 
-    class Pieces(httpx.AsyncByteStream):
-        async def __aiter__(self):
-            for i in range(0, len(body), 7):
-                yield body[i:i + 7]
+    class Pieces(_Pieces, httpx.AsyncByteStream):
+        pass
 
-    return httpx.Response(status, stream=Pieces(), headers={"content-type": content_type})
+    body, headers = _encode(body, encoding)
+    return httpx.Response(status, stream=Pieces(body), headers={"content-type": content_type, **headers})
 
 
 def _client(handler):
@@ -260,41 +295,61 @@ def _client(handler):
                      http_client=httpx.AsyncClient(transport=httpx.MockTransport(handler)))
 
 
-def test_model_name_tap_records_streamed_and_plain_responses(tmp_path):
-    import httpx
-
+def _model_handler(encoding=None):
     def handler(request):
         body = json.loads(request.content)
         if body.get("stream"):
             chunks = [{"id": "1", "model": "served-v4", "choices": [{"index": 0, "delta": {"content": "he said \"model\": \"x\""}}]},
                       {"id": "1", "model": "served-v4", "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
                        "usage": {"prompt_tokens": 3, "completion_tokens": 2}}]
-            return _network_response(200, _sse(*chunks), "text/event-stream")
+            return _network_response(200, _sse(*chunks), "text/event-stream", encoding)
         return _network_response(200, json.dumps({"id": "2", "model": "served-plain", "choices": [
             {"index": 0, "message": {"role": "assistant", "content": "ok"}, "finish_reason": "stop"}],
-            "usage": {"prompt_tokens": 1, "completion_tokens": 1}}).encode())
+            "usage": {"prompt_tokens": 1, "completion_tokens": 1}}).encode(), encoding=encoding)
+    return handler
 
-    async def go(tap):
-        llm = _client(handler)
+
+def _tap_round(output, encoding, tap):
+    async def go():
+        llm = _client(_model_handler(encoding))
         if tap:
-            run_cr2.model_name_tap(llm, run_cr2.model_recorder(tmp_path))
+            run_cr2.model_name_tap(llm, run_cr2.model_recorder(output))
         events = [e async for e in llm.stream_chat([{"role": "user", "content": "hi"}])]
         plain = await llm.chat([{"role": "user", "content": "hi"}])
         await llm.aclose()
         done = [e for e in events if e.event == "llm_stream_done"][0].data["response"]
         return done.text, done.usage, plain.text
+    return asyncio.run(go())
 
-    assert asyncio.run(go(True)) == asyncio.run(go(False))
+
+@pytest.mark.parametrize("encoding", [None, "gzip", "deflate", "deflate-raw"])
+def test_model_name_tap_records_streamed_and_plain_responses(tmp_path, encoding):
+    tapped = _tap_round(tmp_path, encoding, tap=True)
+    assert tapped == _tap_round(tmp_path / "untapped", encoding, tap=False) == _tap_round(tmp_path / "x", None, tap=False)
     assert run_cr2.returned_models(tmp_path) == ["served-plain", "served-v4"]
 
 
-def test_model_name_tap_never_breaks_errors(tmp_path):
-    import httpx
+@pytest.mark.parametrize("encoding,body", [
+    ("br", b'{"model":"hidden"}'),            # not decodable here: passed through, not scanned
+    ("gzip", b'not gzip {"model":"bad"}'),    # broken body: passed through, scanning stops quietly
+])
+def test_model_tap_stream_passes_other_bodies_through(encoding, body):
+    seen = []
 
+    async def go():
+        stream = run_cr2._ModelTapStream(_Pieces(body), seen.append, encoding)
+        return b"".join([chunk async for chunk in stream])
+
+    assert asyncio.run(go()) == body and seen == []
+
+
+@pytest.mark.parametrize("encoding", [None, "gzip"])
+def test_model_name_tap_never_breaks_errors(tmp_path, encoding):
     from src.llm.client import LLMError
 
     def handler(request):
-        return _network_response(402, json.dumps({"error": {"message": "Insufficient Balance"}}).encode())
+        return _network_response(402, json.dumps({"error": {"message": "Insufficient Balance"}}).encode(),
+                                 encoding=encoding)
 
     async def go():
         llm = _client(handler)
@@ -307,7 +362,53 @@ def test_model_name_tap_never_breaks_errors(tmp_path):
 
     with pytest.raises(LLMError) as err:
         asyncio.run(go())
-    assert err.value.status_code == 402 and run_cr2.returned_models(tmp_path) == []
+    assert err.value.status_code == 402 and "Insufficient Balance" in str(err.value)
+    assert run_cr2.returned_models(tmp_path) == []
+
+
+FIVE = [("a", "n", 1), ("b", "p", 1), ("c", "t", 1), ("d", "o", 1), ("e", "n", 1)]
+
+
+def test_real_run_stops_when_first_three_slots_record_no_model_name(tmp_path):
+    missing = {"a": "[]", "b": ""}  # c writes nothing; an empty list or an empty file counts as missing
+
+    def behaviour(task, group, attempt):
+        return {"models": missing[task]} if task in missing else {}
+
+    report = _run(tmp_path, FIVE, make_fake_run(behaviour), mock=False)
+    assert "no returned model name recorded in the first 3 real slots" in report["halt_reason"]
+    # slots already running when the check fires finish; no new slot starts
+    assert 3 <= report["started"] <= 4 and report["not_started"] == 5 - report["started"]
+    assert len(report["returned_model_slots"]["without_model_name"]) == report["started"]
+
+
+def test_real_run_continues_and_lists_slots_per_model(tmp_path):
+    names = {"b": '["deepseek-v4.1-flash"]', "d": '["deepseek-v4.1-flash", "deepseek-v4.2-flash"]',
+             "e": '["deepseek-v4.2-flash"]'}
+
+    def behaviour(task, group, attempt):
+        return {"models": names[task]} if task in names else {}
+
+    report = _run(tmp_path, FIVE, make_fake_run(behaviour), mock=False)
+    assert report["halt_reason"] is None and report["started"] == 5
+    assert report["returned_models"] == ["deepseek-v4.1-flash", "deepseek-v4.2-flash"]
+    assert report["returned_model_slots"] == {
+        "by_model": {"deepseek-v4.1-flash": ["b/p/r1", "d/o/r1"], "deepseek-v4.2-flash": ["d/o/r1", "e/n/r1"]},
+        "without_model_name": ["a/n/r1", "c/t/r1"]}
+
+
+def test_model_name_check_skips_mock_and_short_runs(tmp_path):
+    assert _run(tmp_path, FIVE, make_fake_run())["halt_reason"] is None
+    report = _run(tmp_path / "2", FIVE[:2], make_fake_run(), mock=False)
+    assert report["halt_reason"] is None and report["started"] == 2
+    assert run_cr2.model_name_halt([]) is None
+
+
+def test_returned_models_tolerates_bad_files(tmp_path):
+    path = tmp_path / run_cr2.MODELS_FILE
+    for text, want in (("", []), ("{", []), ('{"a": 1}', []), ('["x", "", 3]', ["x"]), ('["m"]', ["m"])):
+        path.write_text(text, encoding="utf-8")
+        assert run_cr2.returned_models(tmp_path) == want
 
 
 def test_run_slots_reruns_provider_failures_and_keeps_directory(tmp_path):

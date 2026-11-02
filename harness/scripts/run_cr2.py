@@ -24,6 +24,7 @@ import re
 import statistics
 import subprocess
 import sys
+import zlib
 from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
@@ -68,6 +69,8 @@ LOGS = ROOT / "runs" / "cr2-logs"
 TOOLS_FILE = "agent-tools.json"
 CALLS_FILE = "retrieval-calls.jsonl"
 MODELS_FILE = "model-names.json"
+# Contract 8.2: if none of the first this-many real slots of a run recorded a model name, stop starting slots.
+MODEL_CHECK_SLOTS = 3
 # Settlement error kinds that count as provider unavailability (HTTP such as 402, network) and rerun the slot.
 PROVIDER_FAILURE_KINDS = frozenset({"http", "network"})
 
@@ -221,23 +224,58 @@ _MODEL_FIELD = re.compile(rb'"model"\s*:\s*"([^"\\]{1,200})"')
 
 
 class _ModelTapStream(httpx.AsyncByteStream):
-    """Pass a response body through unchanged while noting every top-level "model" value in it."""
+    """Pass a response body through unchanged while noting every top-level "model" value in it.
 
-    def __init__(self, stream, record):
+    The stream holds the bytes as sent, before httpx removes the Content-Encoding. For gzip or deflate, a copy is
+    decompressed with its own zlib object only for scanning; other encodings are passed through unscanned."""
+
+    def __init__(self, stream, record, encoding: str = ""):
         self._stream = stream
         self._record = record
         self._tail = b""
+        encoding = encoding.strip().lower()
+        self._plain = encoding in ("", "identity")
+        # MAX_WBITS | 32 accepts both the zlib and the gzip header.
+        self._decoder = zlib.decompressobj(zlib.MAX_WBITS | 32) if encoding in ("gzip", "deflate") else None
+        self._raw_deflate_fallback = encoding == "deflate"  # some servers send deflate without the zlib header
+        self._undecoded = b""
+
+    def _decode(self, chunk: bytes) -> bytes:
+        if self._plain:
+            return chunk
+        if self._decoder is None:
+            return b""
+        try:
+            out = self._decoder.decompress(chunk)
+        except zlib.error:
+            if not self._raw_deflate_fallback:
+                raise
+            self._raw_deflate_fallback = False
+            self._decoder = zlib.decompressobj(-zlib.MAX_WBITS)
+            out = self._decoder.decompress(self._undecoded + chunk)
+        if self._raw_deflate_fallback:
+            self._undecoded = b"" if out else self._undecoded + chunk
+            self._raw_deflate_fallback = not out
+        return out
+
+    def _scan(self, data: bytes) -> None:
+        data = self._tail + data
+        for match in _MODEL_FIELD.finditer(data):
+            self._record(match.group(1).decode("utf-8", "replace"))
+        self._tail = data[-256:]
 
     async def __aiter__(self):
         async for chunk in self._stream:
             try:
-                data = self._tail + chunk
-                for match in _MODEL_FIELD.finditer(data):
-                    self._record(match.group(1).decode("utf-8", "replace"))
-                self._tail = data[-256:]
+                self._scan(self._decode(chunk))
             except Exception:  # noqa: BLE001 - observation must never break the response
-                pass
+                self._plain, self._decoder = False, None
             yield chunk
+        try:
+            if self._decoder is not None:
+                self._scan(self._decoder.flush())
+        except Exception:  # noqa: BLE001
+            pass
 
     async def aclose(self):
         await self._stream.aclose()
@@ -253,7 +291,8 @@ def model_name_tap(llm, record) -> None:
     async def hook(response):
         try:
             if response.request.url.path.endswith("/chat/completions"):
-                response.stream = _ModelTapStream(response.stream, record)
+                response.stream = _ModelTapStream(response.stream, record,
+                                                  response.headers.get("content-encoding", ""))
         except Exception:  # noqa: BLE001
             pass
 
@@ -291,8 +330,36 @@ def tool_recorder(output: Path, *, tap_model: bool = False):
 
 
 def returned_models(run_dir: Path) -> list[str]:
+    """The model names recorded for a run; a missing, empty or unreadable file counts as none."""
     path = run_dir / MODELS_FILE
-    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else []
+    try:
+        names = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    return [name for name in names if isinstance(name, str) and name] if isinstance(names, list) else []
+
+
+def model_name_halt(run_dirs) -> str | None:
+    """Contract 8.2: the recording is broken if none of the first MODEL_CHECK_SLOTS real slots has a model name."""
+    run_dirs = list(run_dirs)
+    if len(run_dirs) < MODEL_CHECK_SLOTS or any(returned_models(path) for path in run_dirs[:MODEL_CHECK_SLOTS]):
+        return None
+    return ("no returned model name recorded in the first " + str(MODEL_CHECK_SLOTS) + " real slots: "
+            + ", ".join(_display_path(path) for path in run_dirs[:MODEL_CHECK_SLOTS]))
+
+
+def model_slots(out_root: Path, slots) -> dict:
+    """Returned model name -> slot labels, and the slots without one (contract 8.2: list them, do not stop)."""
+    by_model: dict[str, list[str]] = {}
+    missing = []
+    for slot in slots:
+        names = returned_models(slot_dir(out_root, slot))
+        if not names:
+            missing.append(slot_label(slot))
+        for name in names:
+            by_model.setdefault(name, []).append(slot_label(slot))
+    return {"by_model": {name: sorted(labels) for name, labels in sorted(by_model.items())},
+            "without_model_name": sorted(missing)}
 
 
 # --- slots ---------------------------------------------------------------------------------------
@@ -561,6 +628,14 @@ async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expect
         await asyncio.to_thread(service.warm)
     state = {"halt": halt_reason(out_root, expected, tools, verified)}
     semaphore = asyncio.Semaphore(PARALLEL)
+    finished_real: list[Path] = []
+
+    def check_models(output: Path) -> None:
+        if mock or len(finished_real) >= MODEL_CHECK_SLOTS:
+            return
+        finished_real.append(output)
+        if len(finished_real) == MODEL_CHECK_SLOTS:
+            state["halt"] = state["halt"] or model_name_halt(finished_real)
 
     async def one(slot, output):
         task, group, _ = slot
@@ -588,10 +663,12 @@ async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expect
                 state["halt"] = state["halt"] or halt_reason(out_root, expected, tools, verified)
                 why = needs_rerun(output, summary)
                 if not why:
+                    check_models(output)
                     return summary
                 print("rerun " + slot_label(slot) + ": " + why, flush=True)
                 if state["halt"] or not retire_infra(output):
                     kept_infra.append(_display_path(output))
+                    check_models(output)
                     return summary
 
     results = await asyncio.gather(*(one(*item) for item in pending))
@@ -610,6 +687,7 @@ async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expect
         "prefetch_sha256": prefetch_sha256,
         "oracle_sha256": oracle_sha256,
         "returned_models": models,
+        "returned_model_slots": None if mock else model_slots(out_root, [slot for slot, _ in started]),
         "slots": [slot_label(slot) for slot in slots],
         "halt_reason": state["halt"],
         "started": len(started),
