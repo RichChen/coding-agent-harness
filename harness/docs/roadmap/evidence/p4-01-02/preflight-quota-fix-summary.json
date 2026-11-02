@@ -1,0 +1,101 @@
+{
+  "schema": "p4-public-target-quota-fix-v1",
+  "previous_check_id": "public-target-v1:808126f84fcb32127d42b3af332a8ad4c21073c7bb880270e90d6b974157dd5e",
+  "check_id": "public-target-v1:586c07f4bb300d01eb18dbf75cdb34fba69b8589d45bf3b4f6efc00f43569e61",
+  "acceptance_materials_unchanged": true,
+  "public_task_sha256": "2d1bbdd9404cb463b3f6ba407a3f3086c68167c5c02dd70f8d22b75f2ebe1196",
+  "public_task_bytes": 11103,
+  "unit_tests": {
+    "passed": 26,
+    "seconds": "6.58",
+    "baseline_before_fix_failed": 2,
+    "baseline_before_fix_passed": 4
+  },
+  "astra_session_read": {
+    "accepted": true,
+    "source_bytes": 2097156
+  },
+  "declared_item_limits_tested": [
+    3145728,
+    8388608
+  ],
+  "source_sizes_tested": [
+    2097152,
+    2097156
+  ],
+  "preserved_rejections": [
+    "above_declared_item_limit",
+    "byte_length_mismatch",
+    "sha256_mismatch"
+  ],
+  "results": [
+    {
+      "check_id": "public-target-v1:586c07f4bb300d01eb18dbf75cdb34fba69b8589d45bf3b4f6efc00f43569e61",
+      "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+      "manifest_id": "tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928",
+      "after_manifest_id": "tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928",
+      "capture_sha256": "fefe6de2eecff9b54ea5eecbef0533aabdf0eb7900016ae709d29d84c19811e5",
+      "environment_id": "environment-v1:495792f1db316b881b428f5cc6ab1ca1355d359df700ccdd307ce316b911ea8f",
+      "status": "behavior_failed",
+      "cleanup_ok": true,
+      "elapsed_ms": 40764,
+      "report_sha256": "1aee7eb06fbb3e824201753656510d3406fef338db18a8961b75500c8f8a651d",
+      "raw_directory": "D:\\crq\\artifacts\\p4-sphinx8721-preflight-20261030-02",
+      "container_id": "e3de5bbc30c7651de0b99cf7c0c7e4ba3089d7a2e6142c5c8cc3228914a0de65",
+      "container_absent": true,
+      "cases": [
+        {
+          "name": "fresh_default",
+          "status": "passed"
+        },
+        {
+          "name": "html_epub_default",
+          "status": "behavior_failed"
+        },
+        {
+          "name": "html_epub_false",
+          "status": "behavior_failed"
+        },
+        {
+          "name": "epub_true",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "check_id": "public-target-v1:586c07f4bb300d01eb18dbf75cdb34fba69b8589d45bf3b4f6efc00f43569e61",
+      "candidate_id": "candidate-v1:8a58fbf0ef47f4b99fa69eb7af8d19b467c33439f55e1cda13dfac677b352a30",
+      "manifest_id": "tree-v1:ed0c6b2a17b81e42ece9e56f3999905f8f363193f71fbb73e05711f0d94f9189",
+      "after_manifest_id": "tree-v1:ed0c6b2a17b81e42ece9e56f3999905f8f363193f71fbb73e05711f0d94f9189",
+      "capture_sha256": "bb2cd5879f8ef61592b64f027711085584e12a79d8e0e3c72089def8e64b010c",
+      "environment_id": "environment-v1:495792f1db316b881b428f5cc6ab1ca1355d359df700ccdd307ce316b911ea8f",
+      "status": "behavior_failed",
+      "cleanup_ok": true,
+      "elapsed_ms": 34946,
+      "report_sha256": "ba553395ebb94c4a020cdc8eb26efb30488e58e9cd0e5786c80ad1e49933fcd1",
+      "raw_directory": "D:\\crq\\artifacts\\p4-sphinx8721-preflight-sealed-path-20261030-02",
+      "container_id": "e96fd1807cde0344750cf131d7b4dbf61d2339cbcd3550e09301ce1f67692a18",
+      "container_absent": true,
+      "cases": [
+        {
+          "name": "fresh_default",
+          "status": "passed"
+        },
+        {
+          "name": "html_epub_default",
+          "status": "behavior_failed"
+        },
+        {
+          "name": "html_epub_false",
+          "status": "behavior_failed"
+        },
+        {
+          "name": "epub_true",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "b_regression_rerun": false,
+  "solver_api_calls": 0
+}

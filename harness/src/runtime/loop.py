@@ -38,7 +38,7 @@ from src.runtime.hooks import HookContext, LoopHooks
 from src.runtime.window import (ContextWindowError, WindowPolicyHooks, DEFAULT_WINDOW,
                                 admit, view_hash)
 from src.runtime.planner import Plan, SimplePlanner
-from src.runtime.retry import AttemptSink, RetryConfig, RetryPolicy
+from src.runtime.retry import AttemptSink, RetryConfig, RetryPolicy, PaidCallStopped
 from src.runtime.state import AgentState, LoopPhase
 from src.runtime.session import decode_response, decode_result, plain
 from src.runtime.summary import summary_totals
@@ -113,6 +113,7 @@ class AgentRunResult:
     run_output: dict | None = None
     execution: dict | None = None
     summary: dict | None = None
+    workspace_v1: dict | None = None
 
 
 class AgentLoop:
@@ -174,6 +175,7 @@ class AgentLoop:
         self._cleanup_elapsed_s: float | None = None
         self.session = None
         self.execution_backend = None
+        self.workspace_controller = None
 
     def _result(
         self,
@@ -275,6 +277,8 @@ class AgentLoop:
                 "elapsed_ms": a.elapsed_ms,
                 "usage": a.usage,
                 "usage_provenance": a.usage_provenance,
+                **({"provider_metadata": a.provider_metadata, "billing_stop_reason": a.billing_stop_reason}
+                   if a.provider_metadata is not None else {}),
             }
             for a in self.attempt_sink.attempts
         ]
@@ -415,6 +419,8 @@ class AgentLoop:
         return final
 
     async def run(self, task_description: str, task_id: str = "unknown") -> AgentRunResult:
+        if self.workspace_controller is not None:
+            return await self.workspace_controller.run(self, task_description, task_id)
         backend = self.execution_backend
         if backend is None:
             return await self._run_loop(task_description, task_id)
@@ -547,7 +553,8 @@ class AgentLoop:
             self.deadline.run_deadline_mono = min(
                 self.deadline.run_deadline_mono, prior_run_deadline
             )
-        self.run_output_meter = RunOutputMeter(limit_bytes=self.run_output_meter.limit_bytes)
+        if self.workspace_controller is None:
+            self.run_output_meter = RunOutputMeter(limit_bytes=self.run_output_meter.limit_bytes)
 
         saved = self.session.state.loop if self.session else {}
         if self.session:
@@ -696,6 +703,12 @@ class AgentLoop:
                         start_time=start_time,
                         termination_kind=de.kind.value,
                     )
+                except PaidCallStopped as stop:
+                    return self._result(task_id=task_id, success=False,
+                        failure_reason=FailureReason.MODEL_PARSE_ERROR, steps=steps,
+                        total_tokens=total_tokens, tool_failures=tool_failures, policy_blocks=policy_blocks,
+                        total_tool_invocations=total_tool_invocations, context_events=context_events,
+                        start_time=start_time, termination_kind=stop.reason)
                 except BudgetLedgerError as be:
                     if self.event_bus:
                         self.event_bus.emit("run_end", success=False, reason=be.reason.value)
@@ -771,6 +784,18 @@ class AgentLoop:
 
                 # ---- 无 tool_calls：视为最终自然语言答案 ----
                 if not response.has_tool_calls:
+                    if self.workspace_controller is not None:
+                        feedback = await self.workspace_controller.check(messages)
+                        if feedback is not None:
+                            messages.append({"role": "assistant", "content": response.text})
+                            messages.append(feedback)
+                            state.transition(LoopPhase.OBSERVING)
+                            steps.append(StepRecord(step=state.step_number, phase=LoopPhase.OBSERVING,
+                                messages_snapshot=len(messages), llm_text=response.text,
+                                tool_calls=[], tool_results=[], elapsed_ms=step_elapsed))
+                            state.step_number += 1
+                            persist_boundary()
+                            continue
                     state.transition(LoopPhase.DONE)
                     if plan:
                         plan.mark_done()
@@ -1008,6 +1033,8 @@ class AgentLoop:
 
                         if self.session and previous is None:
                             self.session.record_result(op_safe, tr, self.run_output_meter.snapshot())
+                            if self.workspace_controller is not None and validated.name == "validate_patch":
+                                self.workspace_controller.observed_tool(tr)
 
                         if tr.status == ToolStatus.OUTCOME_UNKNOWN or tr.error_kind in (
                             "cleanup_failed",

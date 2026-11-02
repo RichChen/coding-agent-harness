@@ -1,0 +1,332 @@
+{
+  "threshold": {
+    "runs": 12,
+    "calling_runs": 4,
+    "reading_runs": 4,
+    "min_calling_runs": 6,
+    "calls_ok": false,
+    "reads_ok": true,
+    "pass": false
+  },
+  "per_run": [
+    {
+      "task_id": "django__django-15973",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/django__django-15973/r1",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 5,
+      "first_gold_step": 41,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.723"
+    },
+    {
+      "task_id": "scikit-learn__scikit-learn-14496",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/scikit-learn__scikit-learn-14496/r1",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 2,
+      "first_gold_step": 2,
+      "solved": true,
+      "status": "pass",
+      "stop_reason": "completed",
+      "model_calls": 7,
+      "cost_cny": "0.061"
+    },
+    {
+      "task_id": "sphinx-doc__sphinx-7440",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sphinx-doc__sphinx-7440/r1",
+      "called": true,
+      "calls": 1,
+      "first_call_step": 1,
+      "call_rows": [
+        {
+          "step": 1,
+          "call_id": "call_01_MIvAsxH8ELLaV0QVVpoQ9180",
+          "query": "glossary duplicate term case-insensitive duplicate term description",
+          "k": 5,
+          "returned": [
+            "sphinx/domains/std.py",
+            "sphinx/writers/html.py",
+            "sphinx/writers/text.py",
+            "sphinx/writers/texinfo.py",
+            "sphinx/writers/html5.py"
+          ],
+          "gold_in_result": true,
+          "read_within_2": [
+            "sphinx/domains/std.py"
+          ],
+          "repeated_without_new_info": false
+        }
+      ],
+      "gold_in_any_result": true,
+      "read_after_retrieval": true,
+      "repeated_calls": 0,
+      "search_code_calls": 3,
+      "first_gold_step": 2,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.646"
+    },
+    {
+      "task_id": "sympy__sympy-13091",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-13091/r1",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 3,
+      "first_gold_step": 1,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.768"
+    },
+    {
+      "task_id": "sympy__sympy-19040",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-19040/r1",
+      "called": true,
+      "calls": 1,
+      "first_call_step": 1,
+      "call_rows": [
+        {
+          "step": 1,
+          "call_id": "call_00_aavQYFMVfbJyyPd9Zq578920",
+          "query": "factor with extension=True drops a factor, multivariate factorization over extension",
+          "k": 5,
+          "returned": [
+            "sympy/polys/factortools.py",
+            "sympy/polys/polytools.py",
+            "sympy/ntheory/factor_.py",
+            "sympy/integrals/rubi/utility_function.py",
+            "sympy/polys/polyclasses.py"
+          ],
+          "gold_in_result": true,
+          "read_within_2": [
+            "sympy/polys/factortools.py"
+          ],
+          "repeated_without_new_info": false
+        }
+      ],
+      "gold_in_any_result": true,
+      "read_after_retrieval": true,
+      "repeated_calls": 0,
+      "search_code_calls": 3,
+      "first_gold_step": 2,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.899"
+    },
+    {
+      "task_id": "sympy__sympy-20428",
+      "k": 1,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-20428/r1",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 6,
+      "first_gold_step": 41,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.659"
+    },
+    {
+      "task_id": "django__django-15973",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/django__django-15973/r2",
+      "called": true,
+      "calls": 1,
+      "first_call_step": 1,
+      "call_rows": [
+        {
+          "step": 1,
+          "call_id": "call_01_TqNef3MkysxPQ9cbDvZp0782",
+          "query": "migration state resolve many-to-many through string reference to model in another app",
+          "k": 5,
+          "returned": [
+            "django/db/migrations/autodetector.py",
+            "django/db/migrations/state.py",
+            "django/db/models/fields/related.py",
+            "django/db/migrations/operations/models.py",
+            "django/db/backends/base/schema.py"
+          ],
+          "gold_in_result": true,
+          "read_within_2": [
+            "django/db/migrations/autodetector.py",
+            "django/db/migrations/state.py"
+          ],
+          "repeated_without_new_info": false
+        }
+      ],
+      "gold_in_any_result": true,
+      "read_after_retrieval": true,
+      "repeated_calls": 0,
+      "search_code_calls": 4,
+      "first_gold_step": 2,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.821"
+    },
+    {
+      "task_id": "scikit-learn__scikit-learn-14496",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/scikit-learn__scikit-learn-14496/r2",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 4,
+      "first_gold_step": 2,
+      "solved": true,
+      "status": "pass",
+      "stop_reason": "completed",
+      "model_calls": 13,
+      "cost_cny": "0.124"
+    },
+    {
+      "task_id": "sphinx-doc__sphinx-7440",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sphinx-doc__sphinx-7440/r2",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 6,
+      "first_gold_step": 4,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.543"
+    },
+    {
+      "task_id": "sympy__sympy-13091",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-13091/r2",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 4,
+      "first_gold_step": 4,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.591"
+    },
+    {
+      "task_id": "sympy__sympy-19040",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-19040/r2",
+      "called": true,
+      "calls": 1,
+      "first_call_step": 1,
+      "call_rows": [
+        {
+          "step": 1,
+          "call_id": "call_00_tGjNZotzPr7inmVfWh9F5471",
+          "query": "factor with extension=True drops a factor, multivariate factor over extension",
+          "k": 5,
+          "returned": [
+            "sympy/polys/factortools.py",
+            "sympy/polys/polytools.py",
+            "sympy/core/expr.py",
+            "sympy/polys/polyclasses.py",
+            "sympy/integrals/risch.py"
+          ],
+          "gold_in_result": true,
+          "read_within_2": [
+            "sympy/polys/factortools.py"
+          ],
+          "repeated_without_new_info": false
+        }
+      ],
+      "gold_in_any_result": true,
+      "read_after_retrieval": true,
+      "repeated_calls": 0,
+      "search_code_calls": 4,
+      "first_gold_step": 2,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.572"
+    },
+    {
+      "task_id": "sympy__sympy-20428",
+      "k": 2,
+      "run_dir": "runs/cr2e/round1/sympy__sympy-20428/r2",
+      "called": false,
+      "calls": 0,
+      "first_call_step": null,
+      "call_rows": [],
+      "gold_in_any_result": false,
+      "read_after_retrieval": false,
+      "repeated_calls": 0,
+      "search_code_calls": 24,
+      "first_gold_step": 41,
+      "solved": false,
+      "status": "fail",
+      "stop_reason": "max_model_calls",
+      "model_calls": 40,
+      "cost_cny": "0.663"
+    }
+  ],
+  "round": 1,
+  "runs_file": "docs/retrieval/cr2e-runs-round1.json",
+  "cost": {
+    "settled": 420,
+    "with_usage": 420,
+    "no_split": 0,
+    "hit": 2171516,
+    "miss": 1157471,
+    "completion": 52029,
+    "ledger_cny": "7.070",
+    "cache_priced_cny": "2.818035",
+    "cache_hit_rate": 0.6523053409340439,
+    "ledger_over_cache_priced": 2.5088407004109787
+  }
+}

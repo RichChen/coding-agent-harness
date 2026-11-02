@@ -1,0 +1,370 @@
+{
+  "schema": "p2-a-local-gpu-smoke-v1",
+  "status": "passed",
+  "started_at": "2026-10-29T18:04:39.392712+00:00",
+  "code_commit": "89159d3b7a028fba7d16725ff7601f5cfb0740ef",
+  "runner_sha256": "5960499b44a5ca85bcba83b8c447e276dcccfedcbe48d1956532db0f57c3e2f7",
+  "fixture": "tests/fixtures/workspace_contracts/fixture.py:C0/C1",
+  "offline": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "no_solver_api": true,
+  "no_docker": true,
+  "no_old_cr_cache": true,
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 2080 Ti",
+    "total_memory_bytes": 11810701312,
+    "capability": [
+      7,
+      5
+    ],
+    "peak_allocated_bytes": 1217067008,
+    "peak_reserved_bytes": 1235222528
+  },
+  "encoder_config": {
+    "model": "Qwen/Qwen3-Embedding-0.6B",
+    "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+    "device": "cuda",
+    "precision": "float16",
+    "max_length": 512,
+    "query_prefix": "Instruct: Given a GitHub issue, retrieve the source code that must be modified to resolve it\nQuery:",
+    "document_prefix": "",
+    "preprocessing": "prefix-utf8-no-normalization-v1",
+    "adapter": "workspace-encoder-v1",
+    "output": "unit-float32",
+    "cache_precision": "little-endian-float32",
+    "runtime_versions": [
+      [
+        "numpy",
+        "2.5.3"
+      ],
+      [
+        "sentence-transformers",
+        "5.7.0"
+      ],
+      [
+        "tokenizers",
+        "0.22.2"
+      ],
+      [
+        "torch",
+        "2.14.1+cu126"
+      ],
+      [
+        "transformers",
+        "4.57.6"
+      ]
+    ]
+  },
+  "snapshot": {
+    "model": "Qwen/Qwen3-Embedding-0.6B",
+    "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+    "weights_bytes": 1191586416
+  },
+  "cache_root": ".pytest_cache/p2-a-gpu-smoke-01",
+  "backend_batches": [
+    {
+      "phase": "standalone_documents",
+      "inputs": 2,
+      "seconds": 41.861899,
+      "actual_text_sha256": [
+        "fa7af373aa7918aa0d6cacf5aeb3bdbd861aa85fc99ead5eecb6eca7f8bd9a66",
+        "cbf184196423f686f69bb3176b3e4b6c4f8620d1e597d2945e5caccc4890aa05"
+      ]
+    },
+    {
+      "phase": "standalone_query",
+      "inputs": 1,
+      "seconds": 0.077332,
+      "actual_text_sha256": [
+        "891dd302592c78c94325ba58a82df16814cb6bd18e2060b4d2581fc0b972f44e"
+      ]
+    },
+    {
+      "phase": "index_update_C0",
+      "inputs": 4,
+      "seconds": 0.120791,
+      "actual_text_sha256": [
+        "df29ba7ed8727b89eb3b2f183cec9a95398a897175d194f1776c251b57e1b376",
+        "847eb4ac5cdb9f09ac0d7051dd58627b89ba7d79760978de542cfd896e528614",
+        "2718e9e909aa9bbb8ec2daad95402b15a463761c3b35dc2f43c048ecad74ecbd",
+        "42f238eff169b8df271c8832c33353d92c7e49adfa2133a006c260e65a06eb89"
+      ]
+    },
+    {
+      "phase": "index_query_C0",
+      "inputs": 1,
+      "seconds": 0.076771,
+      "actual_text_sha256": [
+        "ccd2b5fa32eb36930e85243bbe277924e3ca43eccd4da9cd9b4283eb18c57c20"
+      ]
+    },
+    {
+      "phase": "index_update_C1",
+      "inputs": 1,
+      "seconds": 0.077879,
+      "actual_text_sha256": [
+        "7d7cb8bba67bfec8af68e5ca590796d1a1e41198e1d5508f24db59376c8e2c2f"
+      ]
+    }
+  ],
+  "load_seconds": 148.386332,
+  "observed_parameter_dtypes": [
+    "torch.float16"
+  ],
+  "standalone": {
+    "first": {
+      "shape": [
+        2,
+        1024
+      ],
+      "dtype": "float32",
+      "finite": true,
+      "unit_norm": true,
+      "norms": [
+        1.0000000016518331,
+        0.9999999985302108
+      ],
+      "encoded": 2,
+      "reused": 0,
+      "seconds": 190.438549,
+      "actual_text_sha256": [
+        "fa7af373aa7918aa0d6cacf5aeb3bdbd861aa85fc99ead5eecb6eca7f8bd9a66",
+        "cbf184196423f686f69bb3176b3e4b6c4f8620d1e597d2945e5caccc4890aa05"
+      ]
+    },
+    "replay": {
+      "shape": [
+        2,
+        1024
+      ],
+      "dtype": "float32",
+      "finite": true,
+      "unit_norm": true,
+      "norms": [
+        1.0000000016518331,
+        0.9999999985302108
+      ],
+      "encoded": 0,
+      "reused": 2,
+      "seconds": 0.000559,
+      "actual_text_sha256": [
+        "fa7af373aa7918aa0d6cacf5aeb3bdbd861aa85fc99ead5eecb6eca7f8bd9a66",
+        "cbf184196423f686f69bb3176b3e4b6c4f8620d1e597d2945e5caccc4890aa05"
+      ]
+    },
+    "query": {
+      "shape": [
+        1,
+        1024
+      ],
+      "dtype": "float32",
+      "finite": true,
+      "unit_norm": true,
+      "norms": [
+        1.0000000002818774
+      ],
+      "encoded": 1,
+      "reused": 0,
+      "seconds": 0.081224,
+      "actual_text_sha256": [
+        "891dd302592c78c94325ba58a82df16814cb6bd18e2060b4d2581fc0b972f44e"
+      ]
+    },
+    "replay_exact": true,
+    "similarity_scores": [
+      0.622014045715332,
+      0.6191794872283936
+    ]
+  },
+  "workspace_index": {
+    "versions": [
+      {
+        "name": "C0",
+        "receipt": {
+          "status": "ready",
+          "capture_id": "00000000-0000-4000-8000-000000000000",
+          "candidate_id": "candidate-v1:2e4f2f55628b3356468d9ee1355df055d2eb18c87a5af2a60cf06a5965b112db",
+          "corpus_id": "corpus-v1:33c5b817e12095100c748bbb614cc3f9a3b4c1102333354d4976f1672ef54f86",
+          "index_id": "index-v1:e181bdf73092a1b616266824a2a767bbf9dc2aa4a1e55eb36f6047c3f2e9103a",
+          "mode": "hybrid",
+          "files": 2,
+          "chunks": 4,
+          "rebuilt": 2,
+          "reused": 0,
+          "encoded": 4,
+          "vectors_reused": 0,
+          "deleted": 0,
+          "exclusions": [],
+          "warnings": [],
+          "reason": null
+        },
+        "update_seconds": 0.170782,
+        "search_seconds": 0.082086,
+        "hits": [
+          {
+            "path": "tests/test_calc.py",
+            "file_sha256": "a4bb6457928013461c98e175ad748b30d1cb0b447141c15086910c0002f7a57e",
+            "material_kind": "test",
+            "chunks": [
+              {
+                "symbol": "test_add",
+                "start_line": 3,
+                "end_line": 4
+              },
+              {
+                "symbol": "<module>",
+                "start_line": 1,
+                "end_line": 4
+              }
+            ],
+            "score": 0.04918032786885246
+          },
+          {
+            "path": "pkg/calc.py",
+            "file_sha256": "16e9674dd718bb76ef2a6dbcb36cc7e7ae0f0966108c1d8bc42c4298524375d4",
+            "material_kind": "source",
+            "chunks": [
+              {
+                "symbol": "<module>",
+                "start_line": 1,
+                "end_line": 2
+              },
+              {
+                "symbol": "add",
+                "start_line": 1,
+                "end_line": 2
+              }
+            ],
+            "score": 0.04838709677419355
+          }
+        ]
+      },
+      {
+        "name": "C1",
+        "receipt": {
+          "status": "ready",
+          "capture_id": "00000000-0000-4000-8000-000000000001",
+          "candidate_id": "candidate-v1:c727b6c2d055d20d36708dde0c4495fe62cb292f52304e70212d3dc6d975cad1",
+          "corpus_id": "corpus-v1:7a275bbd9fe0692ca29340b025c3bbb377b44caeec5a63bcf30f67da3688a7c4",
+          "index_id": "index-v1:d81a5da7cff8f62b44a6cd364e6d829fc6ff03d00dee488ad73633b6b7bf7691",
+          "mode": "hybrid",
+          "files": 2,
+          "chunks": 4,
+          "rebuilt": 1,
+          "reused": 1,
+          "encoded": 1,
+          "vectors_reused": 3,
+          "deleted": 0,
+          "exclusions": [],
+          "warnings": [],
+          "reason": null
+        },
+        "update_seconds": 0.081824,
+        "search_seconds": 0.000258,
+        "hits": [
+          {
+            "path": "tests/test_calc.py",
+            "file_sha256": "a4bb6457928013461c98e175ad748b30d1cb0b447141c15086910c0002f7a57e",
+            "material_kind": "test",
+            "chunks": [
+              {
+                "symbol": "test_add",
+                "start_line": 3,
+                "end_line": 4
+              },
+              {
+                "symbol": "<module>",
+                "start_line": 1,
+                "end_line": 4
+              }
+            ],
+            "score": 0.04918032786885246
+          },
+          {
+            "path": "pkg/calc.py",
+            "file_sha256": "e1a894022d1a082987b87adecb623438c9e386d86b2b621cff4a5fe7fdf7edc8",
+            "material_kind": "source",
+            "chunks": [
+              {
+                "symbol": "<module>",
+                "start_line": 1,
+                "end_line": 2
+              },
+              {
+                "symbol": "add",
+                "start_line": 1,
+                "end_line": 2
+              }
+            ],
+            "score": 0.04838709677419355
+          }
+        ]
+      }
+    ],
+    "candidate_and_index_changed": true,
+    "replay_receipt": {
+      "status": "ready",
+      "capture_id": "00000000-0000-4000-8000-000000000001",
+      "candidate_id": "candidate-v1:c727b6c2d055d20d36708dde0c4495fe62cb292f52304e70212d3dc6d975cad1",
+      "corpus_id": "corpus-v1:7a275bbd9fe0692ca29340b025c3bbb377b44caeec5a63bcf30f67da3688a7c4",
+      "index_id": "index-v1:d81a5da7cff8f62b44a6cd364e6d829fc6ff03d00dee488ad73633b6b7bf7691",
+      "mode": "hybrid",
+      "files": 2,
+      "chunks": 4,
+      "rebuilt": 0,
+      "reused": 2,
+      "encoded": 0,
+      "vectors_reused": 4,
+      "deleted": 0,
+      "exclusions": [],
+      "warnings": [],
+      "reason": null
+    },
+    "replay_seconds": 0.000604,
+    "replay_search_seconds": 0.000355,
+    "replay_backend_calls": 0,
+    "matrix": {
+      "shape": [
+        4,
+        1024
+      ],
+      "dtype": "float32",
+      "finite": true,
+      "unit_norm": true,
+      "norms": [
+        1.0000000005923453,
+        0.9999999968917446,
+        1.0000000002593186,
+        0.9999999965048366
+      ],
+      "encoded": 0,
+      "reused": 0,
+      "seconds": 0,
+      "actual_text_sha256": []
+    }
+  },
+  "disk_reopen": {
+    "shape": [
+      2,
+      1024
+    ],
+    "dtype": "float32",
+    "finite": true,
+    "unit_norm": true,
+    "norms": [
+      1.0000000016518331,
+      0.9999999985302108
+    ],
+    "encoded": 0,
+    "reused": 2,
+    "seconds": 0.001238,
+    "actual_text_sha256": [
+      "fa7af373aa7918aa0d6cacf5aeb3bdbd861aa85fc99ead5eecb6eca7f8bd9a66",
+      "cbf184196423f686f69bb3176b3e4b6c4f8620d1e597d2945e5caccc4890aa05"
+    ],
+    "exact_match": true
+  },
+  "finished_at": "2026-10-29T18:07:50.728164+00:00"
+}

@@ -1,0 +1,246 @@
+{
+  "schema": "p4-01-02-preflight-summary-v1",
+  "base": {
+    "check_id": "public-target-v1:808126f84fcb32127d42b3af332a8ad4c21073c7bb880270e90d6b974157dd5e",
+    "status": "behavior_failed",
+    "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+    "manifest_id": "tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928",
+    "after_manifest_id": "tree-v1:58a43a82c35f2f1ec34a83629d87a7562c282eb44ce7a671ab24beaff4b54928",
+    "capture_sha256": "203448c01bb3c563e94a0548e4e0c5ad78b3db30961310200b7757c7246de23b",
+    "environment_id": "environment-v1:495792f1db316b881b428f5cc6ab1ca1355d359df700ccdd307ce316b911ea8f",
+    "cleanup_ok": true,
+    "elapsed_ms": 39407,
+    "report_sha256": "1a513b61fbc1d0cf32ae8ee186b1b14fc6f7b6f55837fb391e7ae95f0b31caf4",
+    "cases": [
+      {
+        "name": "fresh_default",
+        "status": "passed",
+        "reason": "expected_public_behavior",
+        "disk_module_pages": [],
+        "archive_module_pages": [],
+        "archive_bytes": 11152,
+        "builds": [
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 2649
+          }
+        ]
+      },
+      {
+        "name": "html_epub_default",
+        "status": "behavior_failed",
+        "reason": "module_page_behavior",
+        "disk_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_bytes": 12426,
+        "builds": [
+          {
+            "builder": "html",
+            "exit_code": 0,
+            "elapsed_ms": 930
+          },
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 829
+          }
+        ]
+      },
+      {
+        "name": "html_epub_false",
+        "status": "behavior_failed",
+        "reason": "module_page_behavior",
+        "disk_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_bytes": 12425,
+        "builds": [
+          {
+            "builder": "html",
+            "exit_code": 0,
+            "elapsed_ms": 869
+          },
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 869
+          }
+        ]
+      },
+      {
+        "name": "epub_true",
+        "status": "passed",
+        "reason": "expected_public_behavior",
+        "disk_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_bytes": 12426,
+        "builds": [
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 849
+          }
+        ]
+      }
+    ]
+  },
+  "sealed_path": {
+    "check_id": "public-target-v1:808126f84fcb32127d42b3af332a8ad4c21073c7bb880270e90d6b974157dd5e",
+    "status": "behavior_failed",
+    "candidate_id": "candidate-v1:8a58fbf0ef47f4b99fa69eb7af8d19b467c33439f55e1cda13dfac677b352a30",
+    "manifest_id": "tree-v1:ed0c6b2a17b81e42ece9e56f3999905f8f363193f71fbb73e05711f0d94f9189",
+    "after_manifest_id": "tree-v1:ed0c6b2a17b81e42ece9e56f3999905f8f363193f71fbb73e05711f0d94f9189",
+    "capture_sha256": "bb2cd5879f8ef61592b64f027711085584e12a79d8e0e3c72089def8e64b010c",
+    "environment_id": "environment-v1:495792f1db316b881b428f5cc6ab1ca1355d359df700ccdd307ce316b911ea8f",
+    "cleanup_ok": true,
+    "elapsed_ms": 33834,
+    "report_sha256": "eae270247079501ffc5fdfe2436a0e087cbc462313c56cc30a16894855619194",
+    "cases": [
+      {
+        "name": "fresh_default",
+        "status": "passed",
+        "reason": "expected_public_behavior",
+        "disk_module_pages": [],
+        "archive_module_pages": [],
+        "archive_bytes": 11152,
+        "builds": [
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 1114
+          }
+        ]
+      },
+      {
+        "name": "html_epub_default",
+        "status": "behavior_failed",
+        "reason": "module_page_behavior",
+        "disk_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_bytes": 12426,
+        "builds": [
+          {
+            "builder": "html",
+            "exit_code": 0,
+            "elapsed_ms": 911
+          },
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 849
+          }
+        ]
+      },
+      {
+        "name": "html_epub_false",
+        "status": "behavior_failed",
+        "reason": "module_page_behavior",
+        "disk_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_bytes": 12426,
+        "builds": [
+          {
+            "builder": "html",
+            "exit_code": 0,
+            "elapsed_ms": 910
+          },
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 869
+          }
+        ]
+      },
+      {
+        "name": "epub_true",
+        "status": "passed",
+        "reason": "expected_public_behavior",
+        "disk_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_module_pages": [
+          "_modules/index.xhtml",
+          "_modules/p4_example.xhtml"
+        ],
+        "archive_bytes": 12426,
+        "builds": [
+          {
+            "builder": "epub",
+            "exit_code": 0,
+            "elapsed_ms": 1133
+          }
+        ]
+      }
+    ]
+  },
+  "sealed_path_note": "P3 scripted terminal candidate; source/materialization plumbing only, not autonomous repair",
+  "regression": {
+    "status": "passed",
+    "counts": {
+      "collected": 8,
+      "passed": 8,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xfailed": 0,
+      "xpassed": 0
+    },
+    "record_id": "validation-record-v1:c05b7ad4164d135ef4c3d525931cac00040b9dce707caad36d4a47842f47a231",
+    "candidate_id": "candidate-v1:70e83bcd6a2e4a6a52d74bec174bb2c31348dcfb59213092573f5891dfbf9f3f",
+    "cleanup_state": "cleaned"
+  },
+  "owned_containers_absent": [
+    {
+      "container_id": "640c27da8179a89d615a71ed8b5d554c1b0a72ae4b08fefd4da77eb7cf538b66",
+      "absent": true,
+      "exit_code": 1
+    },
+    {
+      "container_id": "7e09160c6822223a01373117479e92a5a1fa00b15eda05b71f6c9085c75bbfa5",
+      "absent": true,
+      "exit_code": 1
+    },
+    {
+      "container_id": "c77b9492f4cb8358056311b20bc28118a8960afb81da74ef65ea652b8e7fb1ef",
+      "absent": true,
+      "exit_code": 1
+    }
+  ],
+  "raw_directories": [
+    "D:\\crq\\artifacts\\p4-sphinx8721-preflight-20261030-01",
+    "D:\\crq\\artifacts\\p4-sphinx8721-preflight-sealed-path-20261030-01",
+    "D:\\crq\\artifacts\\p4-sphinx8721-preflight-regression-20261030-01"
+  ],
+  "task_sha256": "d3098b501ddcf1f5446607638564c17784586661b2daa997876f249098cc5d14"
+}

@@ -33,6 +33,8 @@ class LLMConfig(BaseModel):
 class RetryConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    stop_on_unknown_usage: bool = False
+
     max_retries: int = 2
     backoff_base_seconds: float = 1.0
     backoff_factor: float = 2.0
@@ -171,6 +173,19 @@ class TracingConfig(BaseModel):
     llm_stream_events: bool = False
 
 
+class WorkspaceConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    enabled: bool = False
+    profile: Literal["sphinx8721"] = "sphinx8721"
+    retrieval_mode: Literal["bm25"] = "bm25"
+    finalization_reserve_seconds: int = Field(default=182, ge=182)
+    capture_timeout_seconds: int = Field(default=20, ge=1, le=20)
+    startup_timeout_seconds: int = Field(default=60, ge=1, le=60)
+    final_artifact_reserve_bytes: int = Field(default=16 * 1024 * 1024, ge=16 * 1024 * 1024)
+    final_output_reserve_bytes: int = Field(default=4 * 1024 * 1024, ge=4 * 1024 * 1024)
+
+
 class HarnessConfig(BaseModel):
     """Top-level harness configuration with validation."""
 
@@ -182,3 +197,4 @@ class HarnessConfig(BaseModel):
     policy: PolicyConfig = Field(default_factory=PolicyConfig)
     tools: ToolsConfig = Field(default_factory=ToolsConfig)
     tracing: TracingConfig = Field(default_factory=TracingConfig)
+    workspace: WorkspaceConfig | None = None

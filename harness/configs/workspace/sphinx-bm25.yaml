@@ -1,0 +1,37 @@
+llm:
+  base_url: http://127.0.0.1:8000/v1
+  model: user-configured-model
+  max_tokens: 1024
+runtime:
+  mode: react
+  max_steps: 10
+  step_timeout_seconds: 240
+  total_timeout_seconds: 600
+  budget:
+    max_model_calls: 10
+  context:
+    strategy: none
+retry:
+  max_retries: 0
+policy:
+  file_size_limit_bytes: 1048576
+  tool_output_max_chars: 12000
+  read_file_max_lines: 100
+  command:
+    execution_profile: docker_linux
+    docker_context: desktop-linux
+    allow_all: true
+    timeout_seconds: 30
+    run_output_limit_bytes: 16777216
+    artifact_per_tool_bytes: 1048576
+tools:
+  enabled: [read_file, write_file, search_replace, list_dir, run_command, retrieve_code, validate_patch]
+workspace:
+  enabled: true
+  profile: sphinx8721
+  retrieval_mode: bm25
+  capture_timeout_seconds: 20
+  startup_timeout_seconds: 60
+  finalization_reserve_seconds: 182
+  final_artifact_reserve_bytes: 16777216
+  final_output_reserve_bytes: 4194304

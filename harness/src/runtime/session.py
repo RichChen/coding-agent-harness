@@ -16,7 +16,7 @@ from pathlib import Path
 from src.runtime.recovery import (file_hash, reconcile_file, reduce_events,
                                   validate_resume, workspace_identity)
 from src.tools.base import ToolResult
-from src.tracing.artifacts import ArtifactStore
+from src.tracing.artifacts import ArtifactStore, ArtifactQuotaError
 from src.tracing.store import EventStore, StoreError, canonical, digest, utc_now
 
 
@@ -71,13 +71,19 @@ def runtime_fingerprint(loop):
             hook['window'] = loop.hooks.fingerprint()
             if getattr(loop.hooks, 'dispatcher', None) is not None:
                 hook['dispatcher'] = loop.hooks.dispatcher.fingerprint()
+    retry = plain(loop._retry_config)
+    # Keep recorded legacy fingerprints stable; enabled audit remains resume-critical.
+    if not retry.get('stop_on_unknown_usage'):
+        retry.pop('stop_on_unknown_usage', None)
     spec = dict(tools=tools, prompt=loop.system_prompt, hooks=hook,
         budget={k: getattr(loop.budget, k) for k in ("max_steps", "total_timeout_seconds", "step_timeout_seconds")},
         model={k: getattr(loop.llm, k, None) for k in ("model", "base_url", "temperature", "max_tokens", "thinking")},
-        retry=plain(loop._retry_config), streaming=loop.use_llm_stream,
+        retry=retry, streaming=loop.use_llm_stream,
         price_table=loop.model_ledger.price_table,
         limits={k: getattr(loop, k) for k in ("file_size_limit_bytes", "tool_output_max_chars", "read_file_max_lines", "max_tool_argument_bytes")},
         output_limit=loop.run_output_meter.limit_bytes)
+    if getattr(loop, "workspace_controller", None) is not None:
+        spec["workspace_v1"] = loop.workspace_controller.fingerprint()
     return digest(canonical(spec).encode())
 
 
@@ -114,7 +120,8 @@ class RunSession:
         self.refresh()
 
     @classmethod
-    def create(cls, directory: Path, *, task_id, expected, timeout_seconds=600):
+    def create(cls, directory: Path, *, task_id, expected, timeout_seconds=600,
+               artifact_item_limit_bytes=2 * 1024 * 1024):
         directory = Path(directory).resolve()
         workspace = Path(expected["workspace"]["path"])
         if directory.is_relative_to(workspace) or workspace.is_relative_to(directory):
@@ -123,7 +130,8 @@ class RunSession:
             raise StoreError("session timeout must be positive")
         store = EventStore(directory, create=True, run_id=uuid.uuid4().hex, task_id=task_id)
         try:
-            artifacts = ArtifactStore(directory / "artifacts", store.run_id, limit_bytes=64 * 1024 * 1024)
+            artifacts = ArtifactStore(directory / "artifacts", store.run_id, limit_bytes=64 * 1024 * 1024,
+                                      item_limit_bytes=artifact_item_limit_bytes)
             manifest = dict(expected, started_at=utc_now(),
                             expires_at=(datetime.now(timezone.utc) + timedelta(seconds=timeout_seconds)).isoformat(),
                             quotas=dict(event_payload_bytes=store.max_event_bytes,
@@ -140,6 +148,8 @@ class RunSession:
         store = EventStore(directory)
         try:
             session = cls(store, ArtifactStore(store.directory / "artifacts", store.run_id))
+            if session.state.workspace and session.state.terminal is None:
+                raise StoreError("workspace-v1 Docker continuation is unsupported; use read-only inspect/export")
             validate_resume(session.state.manifest, expected, session.artifacts)
             session.reconcile()
             return session
@@ -154,6 +164,11 @@ class RunSession:
 
     def refresh(self):
         events = self.store.read_events()
+        backend = events[0]["payload"].get("backend") if events else None
+        if isinstance(backend, dict) and backend.get("transport") == "workspace-v1":
+            quotas = events[0]["payload"]["quotas"]
+            self.artifacts.item_limit_bytes = quotas["artifact_item_bytes"]
+            self.artifacts.limit_bytes = quotas["artifact_bytes"]
         for event in events:
             payload = event["payload"]
             if set(payload) == {"artifact_ref"}:
@@ -271,7 +286,7 @@ class RunSession:
             # Reserve space for both bounded collection and atomic publication.
             required = 2 * (validated.tool.output_quotas.artifact_per_tool_bytes if isinstance(validated.tool, RunCommandTool) else 1024*1024)
             if self.artifacts.used_bytes() + required > self.artifacts.limit_bytes:
-                raise StoreError("artifact quota cannot reserve command output; refusing producer")
+                raise ArtifactQuotaError("artifact quota cannot reserve command output; refusing producer")
         # Exact builtin only; a plugin named write_file must not inherit its proof.
         from src.tools.files import WriteFileTool
         if type(validated.tool) is WriteFileTool:
@@ -306,6 +321,8 @@ class RunSession:
     async def _run_impl(self, loop, task_description: str):
         if self.state.terminal is not None:
             return decode_result(self.state.terminal)
+        if getattr(loop, "workspace_controller", None) is not None and self.state.workspace:
+            raise StoreError("workspace-v1 interrupted Docker session cannot continue; inspect/export only")
         from src.runtime.compact import MicroCompactHooks
         from src.runtime.hooks import LoopHooks
         from src.runtime.window import WindowPolicyHooks

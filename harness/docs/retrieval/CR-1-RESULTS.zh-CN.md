@@ -1,6 +1,6 @@
 # CR-1 结果：SWE-bench Verified 离线代码检索（test 400 题）
 
-日期：2026-10-26。合同：[CR-1-CONTRACT](CR-1-CONTRACT.zh-CN.md)。冻结配置：[CR-1-FREEZE](CR-1-FREEZE.md)（tag `cr1-freeze` = `4faaa53`，检索代码提交 `f1d1b92`）。过程记录：[CHECKPOINT-CR-1c](CHECKPOINT-CR-1c.md)。
+日期：2026-10-26。合同：CR-1-CONTRACT。冻结配置：[CR-1-FREEZE](CR-1-FREEZE.md)（tag `cr1-freeze` = `4faaa53`，检索代码提交 `f1d1b92`）。过程记录：CHECKPOINT-CR-1c。
 
 本文所有数字都来自 test 划分的 400 题，冻结配置只跑了一次。dev 上的数字只出现在第 9 节（说明 embedding 是怎么选出来的），不是结果。
 

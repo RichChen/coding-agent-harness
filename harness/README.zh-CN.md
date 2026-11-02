@@ -129,6 +129,35 @@ python scripts/run_a6_retry.py --preflight
 
 去掉 `--mock` / `--preflight` 就是付费运行。冻结的输入和停止规则在 `docs/sprint/`。
 
+## 代码检索（CR）
+
+`src/retrieval/` 给 SWE-bench 题目做文件定位，只读 base_commit 的代码，不读答案。组成：
+
+- 快照读取：`repo_cache.py`（裸 git 克隆，不检出就能列树、读 blob）；
+- AST 切块：`chunking.py`（按函数/类切块，其余按行窗口），切块结果按 blob sha 存进 sqlite 缓存；
+- BM25：`bm25.py`、`tokenize.py`；embedding：`embed.py`（jina-code）；RRF 融合：`fusion.py`；
+- 对 agent 提供服务：`serve.py` 和工具 `src/tools/retrieve.py`（`retrieve_code`，只返回路径、符号和行号，不返回代码）。
+
+结果（表述规则：区间跨 0 写"未检出差异"）：
+
+- CR-1，400 道测试题：文件级 Hit@5 从 67.5%（BM25）到 85.8%（hybrid），MRR 从 0.520 到 0.684。这是文件定位指标，不是修复率。文件级上 hybrid 对 embedding 未检出差异；函数级 Hit@5 hybrid 高 7.5 个百分点。
+- CR-2，56 道题：预取检索结果没有让定位更早；直接给出正确文件后，修复率未检出变化；原 system prompt 下 `retrieve_code` 在 280 次运行里被调用 0 次。
+- CR-2e 开发检查（6 道题 × 2 次，不是修复率对照）：新 prompt 加工具描述 v2，第一轮 12 次中 4 次调用，未达门槛（≥6）；只改 prompt 里 `retrieve_code` 一行后，第二轮 12 次中 6 次调用，刚到门槛。调用了的运行都在 2 步内读了返回的文件；所有调用都在第 1 步，且集中在同 3 道题。
+
+复现和演示：
+
+```bash
+python scripts/cr_index.py --embed jina-code --split test --allow-test   # CR-1 索引
+python scripts/cr_eval.py frozen --split test --allow-test               # CR-1 冻结配置评测
+python scripts/analyze_cr2.py                                            # CR-2 分析（读已有运行）
+python scripts/run_cr2e.py --mock                                        # CR-2e 接线检查，不调用模型
+python scripts/analyze_cr2e.py --round 2                                 # CR-2e 逐次报告和门槛
+python scripts/cr_demo.py sympy__sympy-19040 --show-gold                 # 离线演示：三种排序和 gold 名次
+python scripts/cr_demo.py sympy__sympy-19040 --run runs/cr2e/round2/sympy__sympy-19040/r1 --show-gold
+```
+
+结果文件：[CR-1 结果](docs/retrieval/CR-1-RESULTS.zh-CN.md)、[CR-2 结果](docs/retrieval/CR-2-RESULTS.zh-CN.md)、[演示示例](docs/retrieval/demo/)。
+
 ## 配置说明
 
 下表三套是 mini 任务评测的参考配置。`configs/` 下其余文件各打开一项功能（Docker 后端、仅 argv 命令、plan-act、上下文压缩、只读子 agent、DeepSeek 演示）；`configs/sprint/b0-v2.yaml` 是 A5 和 A6-R 用的配置。

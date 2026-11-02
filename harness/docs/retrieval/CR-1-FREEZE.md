@@ -1,6 +1,6 @@
 # CR-1 冻结配置
 
-日期：2026-10-26。依据：[CR-1-CONTRACT.zh-CN.md](CR-1-CONTRACT.zh-CN.md) 第 5、8 节和第 11 节。机器可读版本：[cr1-freeze.json](cr1-freeze.json)（`scripts/cr_eval.py frozen` 直接读取它）。
+日期：2026-10-26。依据：CR-1-CONTRACT.zh-CN.md 第 5、8 节和第 11 节。机器可读版本：[cr1-freeze.json](cr1-freeze.json)（`scripts/cr_eval.py frozen` 直接读取它）。
 
 所有选择只用了 dev（100 题）。test 没有跑过任何检索或打分。
 

@@ -1,0 +1,910 @@
+{
+  "baseline": {
+    "wire_sha256": "a2a7eaf3e4272acd36175107d9943c490f92f1aff6bc7fc658a97c8f4fef9480",
+    "wire_size": 3834,
+    "report": {
+      "protocol": "public-pytest-v1",
+      "operation_id": "baseline",
+      "runner_sha256": "3a3ac30b88de5256ac6bdab03e426cbd41ca47e080cf5e2c22f769a4ceb08753",
+      "complete": true,
+      "collection_finished": true,
+      "nodeids": [
+        "tests/test_util.py::test_encode_uri",
+        "tests/test_util.py::test_ensuredir",
+        "tests/test_util.py::test_display_chunk",
+        "tests/test_util.py::test_import_object",
+        "tests/test_util.py::test_status_iterator",
+        "tests/test_util.py::test_parselinenos",
+        "tests/test_util.py::test_progress_message",
+        "tests/test_util.py::test_xmlname_check"
+      ],
+      "phases": [
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        }
+      ],
+      "collection_errors": [],
+      "deselected": [],
+      "sessionfinish": true,
+      "exitstatus": 0,
+      "returned_exitstatus": 0,
+      "runner_error": null,
+      "python_version": "3.9.25",
+      "pytest_version": "8.4.2",
+      "origins": {
+        "pytest": "installed",
+        "sphinx": "workspace"
+      }
+    }
+  },
+  "legal": {
+    "wire_sha256": "a870ac28afa834e10701b47df90f2e8bfdcc92b65dbaa52a0ec25b42a456122d",
+    "wire_size": 3831,
+    "report": {
+      "protocol": "public-pytest-v1",
+      "operation_id": "legal",
+      "runner_sha256": "3a3ac30b88de5256ac6bdab03e426cbd41ca47e080cf5e2c22f769a4ceb08753",
+      "complete": true,
+      "collection_finished": true,
+      "nodeids": [
+        "tests/test_util.py::test_encode_uri",
+        "tests/test_util.py::test_ensuredir",
+        "tests/test_util.py::test_display_chunk",
+        "tests/test_util.py::test_import_object",
+        "tests/test_util.py::test_status_iterator",
+        "tests/test_util.py::test_parselinenos",
+        "tests/test_util.py::test_progress_message",
+        "tests/test_util.py::test_xmlname_check"
+      ],
+      "phases": [
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        }
+      ],
+      "collection_errors": [],
+      "deselected": [],
+      "sessionfinish": true,
+      "exitstatus": 0,
+      "returned_exitstatus": 0,
+      "runner_error": null,
+      "python_version": "3.9.25",
+      "pytest_version": "8.4.2",
+      "origins": {
+        "pytest": "installed",
+        "sphinx": "workspace"
+      }
+    }
+  },
+  "fault": {
+    "wire_sha256": "32f5f66634991df7af45eff1f47c26e589220eb41097babe66fd828951324169",
+    "wire_size": 4121,
+    "report": {
+      "protocol": "public-pytest-v1",
+      "operation_id": "fault",
+      "runner_sha256": "3a3ac30b88de5256ac6bdab03e426cbd41ca47e080cf5e2c22f769a4ceb08753",
+      "complete": true,
+      "collection_finished": true,
+      "nodeids": [
+        "tests/test_util.py::test_encode_uri",
+        "tests/test_util.py::test_ensuredir",
+        "tests/test_util.py::test_display_chunk",
+        "tests/test_util.py::test_import_object",
+        "tests/test_util.py::test_status_iterator",
+        "tests/test_util.py::test_parselinenos",
+        "tests/test_util.py::test_progress_message",
+        "tests/test_util.py::test_xmlname_check"
+      ],
+      "phases": [
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "call",
+          "outcome": "failed",
+          "xfail": null,
+          "exception": "builtins.AssertionError",
+          "detail": "def test_display_chunk():\n>       assert display_chunk('hello') == 'hello'\nE       AssertionError: assert 'PUBLIC_VALID...ECTED_FAILURE' == 'hello'\nE         \nE         - hello\nE         + PUBLIC_VALIDATION_INJECTED_FAILURE\n\ntests/test_util.py:54: AssertionError"
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        }
+      ],
+      "collection_errors": [],
+      "deselected": [],
+      "sessionfinish": true,
+      "exitstatus": 1,
+      "returned_exitstatus": 1,
+      "runner_error": null,
+      "python_version": "3.9.25",
+      "pytest_version": "8.4.2",
+      "origins": {
+        "pytest": "installed",
+        "sphinx": "workspace"
+      }
+    }
+  },
+  "restored": {
+    "wire_sha256": "f7653e6ed95ff390ff7e0208694d7863a24ddf324b1e6631798fbdb733251e65",
+    "wire_size": 3834,
+    "report": {
+      "protocol": "public-pytest-v1",
+      "operation_id": "restored",
+      "runner_sha256": "3a3ac30b88de5256ac6bdab03e426cbd41ca47e080cf5e2c22f769a4ceb08753",
+      "complete": true,
+      "collection_finished": true,
+      "nodeids": [
+        "tests/test_util.py::test_encode_uri",
+        "tests/test_util.py::test_ensuredir",
+        "tests/test_util.py::test_display_chunk",
+        "tests/test_util.py::test_import_object",
+        "tests/test_util.py::test_status_iterator",
+        "tests/test_util.py::test_parselinenos",
+        "tests/test_util.py::test_progress_message",
+        "tests/test_util.py::test_xmlname_check"
+      ],
+      "phases": [
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_encode_uri",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_ensuredir",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_display_chunk",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_import_object",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_status_iterator",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_parselinenos",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_progress_message",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "setup",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "call",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/test_util.py::test_xmlname_check",
+          "when": "teardown",
+          "outcome": "passed",
+          "xfail": null,
+          "exception": null,
+          "detail": ""
+        }
+      ],
+      "collection_errors": [],
+      "deselected": [],
+      "sessionfinish": true,
+      "exitstatus": 0,
+      "returned_exitstatus": 0,
+      "runner_error": null,
+      "python_version": "3.9.25",
+      "pytest_version": "8.4.2",
+      "origins": {
+        "pytest": "installed",
+        "sphinx": "workspace"
+      }
+    }
+  }
+}

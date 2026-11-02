@@ -18,6 +18,16 @@ within the first 10 steps.
 
 r3 (contract 9.2): runs with status delta_too_large (the candidate snapshot failed on the workspace delta size) are
 task results: their step metrics count, solved counts as false, and delta_too_large_by_group reports them.
+
+r4 (contract 10.1, 10.2):
+- A final run whose rerun_reason is set counts as a task result when the runner kept it after its retirements ran
+  out (infra_kept). The list comes from the runs file, or else from the runner report given with --report. Any
+  other final run with a rerun_reason still stops the analysis.
+- Sensitivity analyses, fixed before any result was read, each redo the paired P - N, T - N and O - N for the
+  first gold step and solved with the main method: S1 without the infra_kept runs; S2 without
+  scikit-learn__scikit-learn-12585; S3 only runs whose system_fingerprints are exactly [bc19ba97...]; S4 per slot
+  the first attempt (retired r<k>.infra<n> in order, then the final run) whose status is not infra_error, with the
+  runner's frozen counted_status, so a delta_too_large attempt is a task result as in the main analysis.
 """
 from __future__ import annotations
 
@@ -44,6 +54,10 @@ PREFETCH = ROOT / "docs" / "retrieval" / "cr2-prefetch.json"
 CALLS_FILE = "retrieval-calls.jsonl"
 DELTA_STATUS = "delta_too_large"
 PAIRED_METRICS = ("first_gold_step", "gold_within_10", "solved", "model_calls", "cost_cny", "first_message_bytes")
+SENSITIVITY_METRICS = ("first_gold_step", "solved")
+S2_TASK = "scikit-learn__scikit-learn-12585"
+S3_FINGERPRINT = "bc19ba97cbe016479903222bb1578db6"
+INFRA_STATUS = "infra_error"
 
 
 def normalize_path(path) -> str:
@@ -169,7 +183,101 @@ def solve_by_early_touch(per_run: list[dict]) -> dict:
     return out
 
 
-def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Path = ROOT, repeats: int = 5) -> dict:
+def infra_kept_runs(payload: dict, report: Path | None = None) -> set[str]:
+    """run_dir of the slots the runner kept after their retirements ran out (r4, contract 10.1)."""
+    if "infra_kept" in payload:
+        kept = payload["infra_kept"]
+    elif report is not None:
+        kept = json.loads(report.read_text(encoding="utf-8"))["infra_kept"]
+    else:
+        kept = []
+    return {str(path).replace("\\", "/") for path in kept}
+
+
+def blocking_reruns(runs: list[dict], kept: set[str]) -> list[str]:
+    return sorted(row["run_dir"] for row in runs if row.get("rerun_reason") and row["run_dir"] not in kept)
+
+
+def attempt_dirs(final_dir: Path) -> list[Path]:
+    """Retired r<k>.infra<n> directories in retirement order, then the final r<k>."""
+    retired = [path for path in final_dir.parent.glob(final_dir.name + ".infra*")
+               if path.name[len(final_dir.name + ".infra"):].isdigit()]
+    retired.sort(key=lambda path: int(path.name[len(final_dir.name + ".infra"):]))
+    return retired + [final_dir]
+
+
+def attempt_row(final_row: dict, run_dir: Path, root: Path) -> dict | None:
+    """The runs-file row write_runs() would give this attempt, or None without a summary."""
+    from scripts.run_cr2 import agent_snapshot_failure, counted_status
+
+    path = run_dir / "summary.json"
+    if not path.is_file():
+        return None
+    summary = json.loads(path.read_text(encoding="utf-8"))
+    no_candidate = agent_snapshot_failure(summary)
+    return {
+        "task_id": final_row["task_id"], "group": final_row["group"], "k": final_row["k"],
+        "run_dir": run_dir.relative_to(root).as_posix(), "status": counted_status(summary),
+        "solved": False if no_candidate else summary.get("solved"), "no_candidate": no_candidate,
+        "model_calls": summary.get("model_calls"), "cost_cny": summary.get("cost_cny"),
+        "stop_reason": summary.get("stop_reason"),
+    }
+
+
+def first_non_infra_runs(runs: list[dict], per_run: list[dict], gold_by_task: dict, root: Path) -> tuple[list[dict], dict]:
+    """S4: per slot the first attempt whose status is not infra_error, scored like a final run."""
+    final_metrics = {row["run_dir"]: metrics for row, metrics in zip(runs, per_run)}
+    chosen, from_retired, dropped = [], Counter(), []
+    for row in runs:
+        final_dir = root / row["run_dir"]
+        pick = None
+        for run_dir in attempt_dirs(final_dir):
+            candidate = row if run_dir == final_dir else attempt_row(row, run_dir, root)
+            if candidate is not None and candidate.get("status") != INFRA_STATUS:
+                pick = (run_dir, candidate)
+                break
+        if pick is None:
+            dropped.append(row["run_dir"])
+            continue
+        run_dir, candidate = pick
+        if run_dir == final_dir:
+            chosen.append(final_metrics[row["run_dir"]])
+            continue
+        from_retired[row["group"]] += 1
+        calls = _read_jsonl(run_dir / CALLS_FILE) if row["group"] == "t" else None
+        metrics = run_metrics(candidate, _read_jsonl(run_dir / "events.jsonl"), gold_by_task[row["task_id"]], calls)
+        chosen.append({**metrics, "run_dir": candidate["run_dir"]})
+    info = {"slots_from_retired_run": {g: from_retired.get(g, 0) for g in GROUPS},
+            "slots_without_non_infra_run": sorted(dropped)}
+    return chosen, info
+
+
+def compare(per_run: list[dict]) -> dict:
+    """The main paired method on a subset of runs. A task without runs left in a group drops out of that pair."""
+    out = {
+        "runs": len(per_run),
+        "runs_by_group": {g: sum(1 for r in per_run if r["group"] == g) for g in GROUPS},
+        "tasks": len({r["task_id"] for r in per_run}),
+    }
+    for metric in SENSITIVITY_METRICS:
+        means = task_means(per_run, metric)
+        out[metric] = {"group_means": {g: group_mean(means, g) for g in GROUPS},
+                       "paired": {name: paired(means, a, b) for name, a, b in PAIRS}}
+    return out
+
+
+def sensitivity(runs: list[dict], per_run: list[dict], gold_by_task: dict, root: Path) -> dict:
+    s4_runs, s4_info = first_non_infra_runs(runs, per_run, gold_by_task, root)
+    return {
+        "s1_without_infra_kept": compare([r for r in per_run if not r["infra_kept"]]),
+        "s2_without_" + S2_TASK: compare([r for r in per_run if r["task_id"] != S2_TASK]),
+        "s3_only_fingerprint_" + S3_FINGERPRINT: compare([r for r in per_run if r["system_fingerprints"] == [S3_FINGERPRINT]]),
+        "s4_first_non_infra_attempt": {**compare(s4_runs), **s4_info},
+    }
+
+
+def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Path = ROOT, repeats: int = 5,
+            infra_kept: set[str] | frozenset = frozenset()) -> dict:
     from scripts.run_a6_retry import first_user_message
 
     per_run = []
@@ -177,7 +285,10 @@ def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Pat
         run_dir = root / row["run_dir"]
         events = _read_jsonl(run_dir / "events.jsonl")
         calls = _read_jsonl(run_dir / CALLS_FILE) if row["group"] == "t" else None
-        per_run.append(run_metrics(row, events, gold_by_task[row["task_id"]], calls, first_user_message(run_dir)))
+        metrics = run_metrics(row, events, gold_by_task[row["task_id"]], calls, first_user_message(run_dir))
+        metrics.update(run_dir=row["run_dir"], infra_kept=row["run_dir"] in infra_kept,
+                       system_fingerprints=list(row.get("system_fingerprints") or []))
+        per_run.append(metrics)
     counts = Counter((r["task_id"], r["group"]) for r in per_run)
     tasks = sorted({r["task_id"] for r in per_run})
     report = {
@@ -187,6 +298,7 @@ def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Pat
         "complete": all(counts.get((t, g)) == repeats for t in tasks for g in GROUPS),
         "runs_by_group": {g: sum(1 for r in per_run if r["group"] == g) for g in GROUPS},
         "delta_too_large_by_group": {g: sum(1 for r in per_run if r["group"] == g and r["delta_too_large"]) for g in GROUPS},
+        "infra_kept": sorted(r["run_dir"] for r in per_run if r["infra_kept"]),
         "group_means": {}, "paired": {}, "stop_reasons": {},
     }
     for metric in PAIRED_METRICS:
@@ -220,6 +332,7 @@ def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Pat
         }
     report["p_only_first_gold_step"] = split
     report["solve_by_early_touch"] = solve_by_early_touch(per_run)
+    report["sensitivity"] = sensitivity(runs, per_run, gold_by_task, root)
     report["per_run"] = per_run
     return report
 
@@ -241,6 +354,7 @@ def main():
     parser.add_argument("--out", type=Path, default=OUT)
     parser.add_argument("--prefetch", type=Path, default=PREFETCH)
     parser.add_argument("--gold-in-prefetch", action="store_true", help="only count tasks with gold in the prefetch top 5")
+    parser.add_argument("--report", type=Path, help="runner report with infra_kept, used when the runs file has none")
     args = parser.parse_args()
     prefetch_rows = {row["task"]: row for row in json.loads(args.prefetch.read_text(encoding="utf-8"))["tasks"]}
     if args.gold_in_prefetch:
@@ -249,10 +363,14 @@ def main():
         return
     payload = json.loads(args.runs.read_text(encoding="utf-8"))
     runs = payload["runs"]
-    if any(row.get("rerun_reason") for row in runs):
-        raise SystemExit("runs file still has slots whose final run needs a rerun")
+    kept = infra_kept_runs(payload, args.report)
+    blocking = blocking_reruns(runs, kept)
+    if blocking:
+        raise SystemExit("runs file still has slots whose final run needs a rerun: " + ", ".join(blocking))
     gold = load_gold(sorted(prefetch_rows))
-    report = analyze(runs, gold, prefetch_rows, repeats=payload.get("repeats", 5))
+    report = analyze(runs, gold, prefetch_rows, repeats=payload.get("repeats", 5), infra_kept=kept)
+    if args.report is not None:
+        report["report_file"] = args.report.relative_to(ROOT).as_posix() if args.report.is_relative_to(ROOT) else str(args.report)
     report["runs_file"] = args.runs.relative_to(ROOT).as_posix() if args.runs.is_relative_to(ROOT) else str(args.runs)
     report["scope"] = payload.get("scope")
     args.out.parent.mkdir(parents=True, exist_ok=True)

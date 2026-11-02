@@ -136,6 +136,35 @@ python scripts/run_a6_retry.py --preflight
 
 Paid runs use the same scripts without `--mock` / `--preflight`. The frozen inputs and stop rules are in `docs/sprint/`.
 
+## Code Retrieval (CR)
+
+`src/retrieval/` localizes files for SWE-bench tasks. It reads only the code at base_commit, never the answers. Parts:
+
+- Snapshot reading: `repo_cache.py` (bare git clones; lists trees and reads blobs without a checkout);
+- AST chunking: `chunking.py` (functions and classes, line windows for the rest), cached in sqlite by blob sha;
+- BM25: `bm25.py`, `tokenize.py`; embedding: `embed.py` (jina-code); RRF fusion: `fusion.py`;
+- Serving the agent: `serve.py` and the tool `src/tools/retrieve.py` (`retrieve_code`: paths, symbols and line ranges, no code).
+
+Results (an interval that crosses 0 is reported as "no difference detected"):
+
+- CR-1, 400 test tasks: file-level Hit@5 from 67.5% (BM25) to 85.8% (hybrid), MRR from 0.520 to 0.684. This is a file-localization metric, not a solve rate. At file level, hybrid vs embedding: no difference detected; function-level Hit@5 is 7.5 points higher for hybrid.
+- CR-2, 56 tasks: prefetched retrieval results did not make localization earlier; giving the correct files changed the solve rate by no detected amount; under the original system prompt `retrieve_code` was called in 0 of 280 runs.
+- CR-2e development check (6 tasks x 2 runs, not a solve-rate comparison): with a new prompt and tool description v2, round 1 called the tool in 4 of 12 runs, below the threshold of 6. After changing only the `retrieve_code` line of the prompt, round 2 called it in 6 of 12, exactly at the threshold. Every calling run read a returned file within 2 steps; all calls were at step 1 and came from the same 3 tasks.
+
+Reproduce and demo:
+
+```bash
+python scripts/cr_index.py --embed jina-code --split test --allow-test   # CR-1 index
+python scripts/cr_eval.py frozen --split test --allow-test               # CR-1 frozen-config evaluation
+python scripts/analyze_cr2.py                                            # CR-2 analysis (existing runs)
+python scripts/run_cr2e.py --mock                                        # CR-2e wiring check, no model calls
+python scripts/analyze_cr2e.py --round 2                                 # CR-2e per-run report and threshold
+python scripts/cr_demo.py sympy__sympy-19040 --show-gold                 # offline demo: three rankings, gold ranks
+python scripts/cr_demo.py sympy__sympy-19040 --run runs/cr2e/round2/sympy__sympy-19040/r1 --show-gold
+```
+
+Result files: [CR-1 results](docs/retrieval/CR-1-RESULTS.zh-CN.md), [CR-2 results](docs/retrieval/CR-2-RESULTS.zh-CN.md), [demo examples](docs/retrieval/demo/).
+
 ## Configuration
 
 Three reference configs are provided for the mini-task eval. The other files in `configs/` turn on single features (Docker backend, argv-only commands, plan-act, context compaction, read-only subagent, DeepSeek demo); `configs/sprint/b0-v2.yaml` is the profile used for A5 and A6-R.

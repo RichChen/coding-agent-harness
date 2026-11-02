@@ -1,0 +1,76 @@
+{
+  "probe_requests": 2,
+  "task_requests": 24,
+  "input_tokens": 203968,
+  "output_tokens": 2341,
+  "total_tokens": 206309,
+  "peak_uncached_cny_estimate": 0.426664,
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "fingerprints": [
+    "bc19ba97cbe016479903222bb1578db6"
+  ],
+  "all_usage_complete": true,
+  "run_finished_count": 1,
+  "last_event": "run.finished",
+  "pending_model": false,
+  "pending_tools": [],
+  "pending_validation": {},
+  "event_count": 186,
+  "candidate_id": "candidate-v1:40070069778b06d7b6580117e1d6dac54ed1cd106079c4e4ceb3dcbdcb12c785",
+  "task_elapsed_ms": 123037.99530000106,
+  "runtime_success": false,
+  "failure_reason": "step_limit",
+  "tools": {
+    "run_command": 23,
+    "list_dir": 1,
+    "search_replace": 1
+  },
+  "tool_failures": 2,
+  "policy_blocks": 0,
+  "development_validation": "passed",
+  "cleanup_ok": true,
+  "host_feedback_count": 0,
+  "schema": "p4-first-run-summary-v1",
+  "code_commit": "1e9a3c22599beb6e3347b280e67fe2b5bbf6c5d0",
+  "source_fingerprint": "7cbc503ff081b010268d47fb70bd07da135fcaf5ae89b19f86782c54f552b6ae",
+  "check_id": "public-target-v1:586c07f4bb300d01eb18dbf75cdb34fba69b8589d45bf3b4f6efc00f43569e61",
+  "public_target_status": "passed",
+  "public_target_elapsed_ms": 33546,
+  "target_cases": [
+    {
+      "name": "fresh_default",
+      "status": "passed"
+    },
+    {
+      "name": "html_epub_default",
+      "status": "passed"
+    },
+    {
+      "name": "html_epub_false",
+      "status": "passed"
+    },
+    {
+      "name": "epub_true",
+      "status": "passed"
+    }
+  ],
+  "target_manifest_unchanged": true,
+  "independent_swe_evaluation": "not_evaluated",
+  "solved": null,
+  "account_invoice_verified": false,
+  "cost_basis": "official peak uncached rates; provider token usage; excludes development chats",
+  "changed_paths": [
+    "sphinx/ext/viewcode.py"
+  ],
+  "raw_root": "D:\\crq\\artifacts\\p4-sphinx8721-20261030-01",
+  "artifact_sha256": {
+    "task.txt": "2d1bbdd9404cb463b3f6ba407a3f3086c68167c5c02dd70f8d22b75f2ebe1196",
+    "config-template.yaml": "9be4df8655be0cd4c25890e3a0fe7fec187cf54763d149b5dcc3a85c11710a5d",
+    "model.patch": "225135e68074da4f562c4f612cbac5d7c7a9009fb0aacb119a2006ec3ebf7786",
+    "reviewed-files.json": "be4e9a9950c9afd04a6f7a61c82c5902b8fd834124473969c42874d3174d5867",
+    "target/target-report.json": "d0d4c5a28edfcbc4fae384394ee71b240da99a84307bdf1384a31d492d18448e",
+    "solve/result.json": "8d41ee1f3054e53a497db64c84c7c6e8e501934a7fe871dba16cff99b50f1b75"
+  }
+}

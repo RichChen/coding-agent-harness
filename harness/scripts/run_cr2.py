@@ -1,4 +1,4 @@
-"""CR-2: run the N / P / T / O groups on the 56-task A5/A6 pool (docs/retrieval/CR-2-CONTRACT.zh-CN.md).
+"""CR-2: run the N / P / T / O groups on the 56-task A5/A6 pool (docs/retrieval/CR-2-FREEZE.md).
 
 N is b0-v2 unchanged. P appends the frozen prefetch text (docs/retrieval/cr2-prefetch.json) to the first user
 message. T uses configs/retrieval/cr2-t.yaml, which adds the read-only retrieve_code tool. O appends the frozen

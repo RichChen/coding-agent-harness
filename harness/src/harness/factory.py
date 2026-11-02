@@ -101,6 +101,7 @@ def build_agent(
     plugin_registry=None,
     execution_backend=None,
     retrieval=None,
+    llm_client=None,
 ) -> AgentLoop:
     """Assemble an AgentLoop from a config dict and workspace.
 
@@ -113,8 +114,22 @@ def build_agent(
     retry_cfg = config.get("retry", {})
     policy_cfg = config.get("policy", {})
     tools_cfg = config.get("tools", {})
+    workspace_cfg = config.get("workspace") or {}
+    workspace_controller = None
+    if workspace_cfg.get("enabled"):
+        from src.config.schema import WorkspaceConfig
+        from src.runtime.completion import CompletionController
+        from src.validation.sphinx_profile import SphinxProfile
+        workspace_cfg = WorkspaceConfig(**workspace_cfg).model_dump()
+        if (rt_cfg.get("mode", "react") != "react" or execution_backend is not None or retrieval is not None
+                or rt_cfg.get("subagents", {}).get("enabled")
+                or rt_cfg.get("context", {}).get("summary_provider") == "llm"
+                or rt_cfg.get("context", {}).get("dispatcher", "disabled") != "disabled"):
+            raise ValueError("workspace-v1 supports react, fixed public profile, BM25, no injected legacy backend/CR retrieval/paid auxiliary loop")
+        workspace_controller = CompletionController(workspace_cfg,
+            profile=SphinxProfile(context=policy_cfg.get("command", {}).get("docker_context", "desktop-linux")))
 
-    llm = LLMClient(
+    llm = llm_client or LLMClient(
         base_url=llm_cfg["base_url"],
         api_key=llm_cfg["api_key"],
         model=llm_cfg["model"],
@@ -126,6 +141,7 @@ def build_agent(
         max_keepalive_connections=llm_cfg.get("max_keepalive_connections", 5),
         trust_env=llm_cfg.get("trust_env", True),
         thinking=llm_cfg.get("thinking"),
+        audit_metadata=retry_cfg.get("stop_on_unknown_usage", False),
     )
 
     sandbox = Sandbox(
@@ -155,6 +171,7 @@ def build_agent(
     )
 
     retry = RetryConfig(
+        stop_on_unknown_usage=retry_cfg.get("stop_on_unknown_usage", False),
         max_retries=retry_cfg.get("max_retries", 2),
         backoff_base_seconds=retry_cfg.get("backoff_base_seconds", 1.0),
         backoff_factor=retry_cfg.get("backoff_factor", 2.0),
@@ -169,9 +186,12 @@ def build_agent(
     if exec_profile == "docker_linux":
         # retrieve_code is the one host-side tool allowed here: it reads only the CR cache, never the workspace.
         if set(enabled) - {"read_file", "write_file", "list_dir", "edit_file", "search_replace", "run_command", "search_code",
-                           "retrieve_code"}:
+                           "retrieve_code", *( ["validate_patch"] if workspace_controller else [])}:
             raise ValueError("Docker profile rejects host-only/debug/subagent tools")
-        if execution_backend is not None:
+        if workspace_controller is not None:
+            from src.execution.workspace import WorkspaceExecutionBackend
+            docker_backend = WorkspaceExecutionBackend(workspace_controller)
+        elif execution_backend is not None:
             docker_backend = execution_backend
         else:
             docker_backend = DockerExecutionBackend(
@@ -184,7 +204,7 @@ def build_agent(
                 tmpfs_bytes=cmd_cfg.get("docker_tmpfs_bytes", 16*1024*1024),
                 workspace_bytes=cmd_cfg.get("docker_workspace_bytes", 64*1024*1024))
     def file_tool(tool):
-        return ContainerFileTool(tool, docker_backend) if docker_backend else tool
+        return ContainerFileTool(tool, docker_backend, preserve_mode=workspace_controller is not None) if docker_backend else tool
     if "read_file" in enabled:
         tools.register(file_tool(ReadFileTool()))
     if "write_file" in enabled:
@@ -222,10 +242,21 @@ def build_agent(
     if "search_code" in enabled:
         tools.register(SearchCodeTool(execution_backend=docker_backend))
     if "retrieve_code" in enabled:
-        if retrieval is None:
+        if workspace_controller is not None:
+            from src.tools.workspace import WorkspaceRetrieveTool
+            tools.register(WorkspaceRetrieveTool(workspace_controller))
+        elif retrieval is None:
             raise ValueError("tools.enabled includes retrieve_code but build_agent got no retrieval service")
-        from src.tools.retrieve import RetrieveCodeTool
-        tools.register(RetrieveCodeTool(retrieval))
+        else:
+            from src.tools.retrieve import RetrieveCodeTool
+            tools.register(RetrieveCodeTool(retrieval))
+    if "validate_patch" in enabled:
+        if workspace_controller is None:
+            raise ValueError("validate_patch requires opt-in workspace-v1")
+        from src.tools.workspace import ValidatePatchTool
+        tools.register(ValidatePatchTool(workspace_controller))
+    if workspace_controller is not None and docker_backend is None:
+        raise ValueError("workspace-v1 requires docker_linux execution profile")
 
     subagent_cfg = rt_cfg.get("subagents", {})
     if subagent_cfg.get("enabled"):
@@ -338,4 +369,5 @@ def build_agent(
         estimated_input_tokens=budget_cfg.get("estimated_input_tokens", 512),
     )
     agent.execution_backend = docker_backend
+    agent.workspace_controller = workspace_controller
     return agent

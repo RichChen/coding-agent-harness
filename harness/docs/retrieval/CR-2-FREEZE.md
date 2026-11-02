@@ -1,6 +1,6 @@
 # CR-2 冻结清单
 
-日期：2026-10-26。依据：[CR-2 合同](CR-2-CONTRACT.zh-CN.md)。本文件在任何真实运行之前写定，随 tag `cr2-freeze` 一起冻结。之后的 CR-2b/2c/2d 只能按这里的定义执行。
+日期：2026-10-26。依据：CR-2 合同。本文件在任何真实运行之前写定，随 tag `cr2-freeze` 一起冻结。之后的 CR-2b/2c/2d 只能按这里的定义执行。
 
 **代码提交：`7af873e`**（runner、检索服务、工具、分析脚本的最后一次代码提交）。tag `cr2-freeze` 打在加入本文件的提交上，它与 `7af873e` 之间只多了本文件和 `cr2-runs.mock.json`。
 
@@ -178,7 +178,7 @@ gold 文件 = `src/retrieval/labels.py` 的文件级标签（`LabelView.gold_fil
 
 ## 10. r1 修订
 
-日期：2026-10-27。依据：[CR-2 合同](CR-2-CONTRACT.zh-CN.md)第 7 节和 [AUDIT-CR-2a](AUDIT-CR-2a.zh-CN.md)。第 1–9 节是 `cr2-freeze` 时的原文，保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r1` 冻结，旧 tag `cr2-freeze` 不动。
+日期：2026-10-27。依据：CR-2 合同第 7 节和 AUDIT-CR-2a。第 1–9 节是 `cr2-freeze` 时的原文，保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r1` 冻结，旧 tag `cr2-freeze` 不动。
 
 **代码提交：`6204762`**（runner、O 组预取脚本、费用报告脚本、分析脚本和测试）。tag `cr2-freeze-r1` 打在加入本节的提交上，它与 `6204762` 之间只多了 `cr2-oracle-prefetch.json`（提交 `a8c388b`）、`cr2-runs.mock-r1.json` 和本节。
 
@@ -247,7 +247,7 @@ gold 文件 = `src/retrieval/labels.py` 的文件级标签（`LabelView.gold_fil
 
 ## 11. r2 修订
 
-日期：2026-10-27。依据：[AUDIT-CR-2b](AUDIT-CR-2b.zh-CN.md)、[CR-2 合同](CR-2-CONTRACT.zh-CN.md)第 8.1、8.2 节。第 1–10 节保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r2` 冻结，旧 tag `cr2-freeze`、`cr2-freeze-r1` 不动。
+日期：2026-10-27。依据：AUDIT-CR-2b、CR-2 合同第 8.1、8.2 节。第 1–10 节保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r2` 冻结，旧 tag `cr2-freeze`、`cr2-freeze-r1` 不动。
 
 **代码提交：`9b83aff`**，只改了 `scripts/run_cr2.py` 和 `tests/test_run_cr2.py`。tag `cr2-freeze-r2` 打在加入本节的提交上，与 `9b83aff` 之间没有代码改动。
 
@@ -281,7 +281,7 @@ r2 没有改动任何冻结数据文件，第 10.7 节的 sha256 全部不变。
 
 ## 12. r3 修订
 
-日期：2026-10-27。依据：[AUDIT-CR-2c-halt1](AUDIT-CR-2c-halt1.zh-CN.md)、[CR-2 合同](CR-2-CONTRACT.zh-CN.md)第 9 节。第 1–11 节保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r3` 冻结，旧 tag `cr2-freeze`、`cr2-freeze-r1`、`cr2-freeze-r2` 不动。
+日期：2026-10-27。依据：AUDIT-CR-2c-halt1、CR-2 合同第 9 节。第 1–11 节保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r3` 冻结，旧 tag `cr2-freeze`、`cr2-freeze-r1`、`cr2-freeze-r2` 不动。
 
 **代码提交：`231dc9f`**，只改了 `scripts/run_cr2.py`、`scripts/analyze_cr2.py` 和它们的测试（`tests/test_run_cr2.py`、`tests/test_analyze_cr2.py`）；`run_swe_task.py`、`src/`、A5/A6 的脚本和判定都没动。合同 9.2 正文只写了 `run_cr2.py`，9.2 的分析脚本条目和 9.4 的启动文字都包括 `analyze_cr2.py`，按后者执行。tag `cr2-freeze-r3` 打在加入本节的提交上，与 `231dc9f` 之间没有代码改动。
 

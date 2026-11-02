@@ -22,6 +22,8 @@ if name=='list_dir':
     if len(entries)>2048: raise ValueError('directory entry limit')
     print('\n'.join(('[D] ' if q.is_dir() else '[F] ')+q.name for q in entries))
 else:
+    # Enabled only for workspace-v1. Legacy temporary-file mode is unchanged.
+    mode = ((path.stat().st_mode & 0o7777) if path.exists() else 0o644) if req.get('preserve_mode') else None
     if name=='write_file': content=p['content']
     else:
         with path.open('rb') as f: data=f.read(limit+1)
@@ -71,6 +73,7 @@ else:
         fd,tmp=tempfile.mkstemp(dir=path.parent)
         try:
             with os.fdopen(fd,'wb') as f: f.write(data); f.flush(); os.fsync(f.fileno())
+            if req.get('preserve_mode'): os.chmod(tmp,mode)
             os.replace(tmp,path)
         finally:
             if os.path.exists(tmp): os.unlink(tmp)
@@ -79,17 +82,19 @@ else:
 
 
 class ContainerFileTool(Tool):
-    def __init__(self, original, backend):
+    def __init__(self, original, backend, *, preserve_mode=False):
         self.name, self.description = original.name, original.description
         self.parameters, self.side_effect = original.parameters, original.side_effect
         self.backend = backend
+        self.preserve_mode = preserve_mode
 
     async def execute(self, params, ctx):
         deadline = ctx.extra.get("deadline")
         limit = ctx.file_size_limit_bytes if ctx.file_size_limit_bytes is not None else 1024*1024
         request = ExecutionRequest(argv=["/usr/local/bin/python", "-I", "-S", "-c", FILE_CODE],
             stdin_bytes=json.dumps(dict(name=self.name, params=params, file_limit=min(limit,1024*1024),
-                                       line_limit=ctx.read_file_max_lines, char_limit=ctx.tool_output_max_chars)).encode(),
+                                       line_limit=ctx.read_file_max_lines, char_limit=ctx.tool_output_max_chars,
+                                       preserve_mode=self.preserve_mode)).encode(),
             env={}, cwd=ctx.workspace_root, cancel_event=ctx.extra.get("cancel_event"),
             deadline_mono=deadline.effective_deadline_mono() if deadline else time.monotonic()+30,
             run_meter=ctx.extra.get("run_output_meter"),

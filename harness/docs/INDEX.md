@@ -11,11 +11,32 @@
 | [PROJECT-HISTORY.zh-CN.md](PROJECT-HISTORY.zh-CN.md) | 按轮次记录做了什么、哪里做错了、怎么发现的 |
 | [LEARNING.zh-CN.md](LEARNING.zh-CN.md) | 按调用顺序读代码的路线和自测题 |
 | [CONTAMINATION-NOTES.zh-CN.md](CONTAMINATION-NOTES.zh-CN.md) | 评测污染和答案隔离的处理 |
+| [retrieval/](retrieval/) | 代码检索（CR）线：冻结记录、结果、数据与演示；从 [CR-1 结果](retrieval/CR-1-RESULTS.zh-CN.md) 和 [CR-2 结果](retrieval/CR-2-RESULTS.zh-CN.md) 读起 |
+| [roadmap/](roadmap/) | 工作区快照、公开验证与完成控制：P2 到 P4 的结果和证据 |
+| [P3 统一入口与检查点](roadmap/P3-INTEGRATION-RESULTS.zh-CN.md) | 当前工作区检索→公开验证→有界反馈→候选与证据交付；脚本回复结合真实 Docker 的机制演示，尚无自主修复收益结论 |
+| [P4 公开目标检查与预检](roadmap/P4-01-02-RESULTS.zh-CN.md) | 真实基点复现、四个公开场景、终态候选检查入口及读取配额审查修正；不是自主修复结果 |
+| [P4 首轮真实任务结果](roadmap/P4-FIRST-RUN-RESULTS.zh-CN.md) | 最终候选通过四项公开目标检查，运行触及 24 步上限；实际轨迹、费用估算、交付证据与后续讨论点 |
+| [P4 延后遮蔽诊断](roadmap/P4-DELAYED-MASK-RESULTS.zh-CN.md) | 单次新增对照未观察到修改或自然收尾效率改善；保留结果与限制，不扩建上下文功能 |
+| [P4 同一历史下的动作诊断](roadmap/P4-ACTION-DIAGNOSTICS.zh-CN.md) | 12 次固定历史动作采样与 6 次工具顺序校准：恢复正文改变读取位置，倒计时促使修改尚无稳定支持 |
+| [P4 短续跑与行动指令敏感性](roadmap/P4-CONTINUATION-AND-ACTIONABILITY.zh-CN.md) | 24 次短续跑响应仍读取；另四次同历史采样中，行动指令触发两份通过公开检查的补丁，含额外改动风险与宿主回放边界 |
+
+代码检索线和 P2 到 P4 的过程文档（实验合同、检查点、审计、阶段计划）不在公开仓库里；结果文档提到它们的地方只说明出处。
+
+冻结标签指向公开快照提交。快照里的代码与原冻结提交逐字节相同，只去掉了这些过程文档。文档里写的是原开发仓库的提交号，对应关系如下；其他原始提交号在公开仓库里没有对应提交。
+
+| 标签 | 文档中的提交号 | 公开快照 |
+| --- | --- | --- |
+| `harness/cr1-freeze` | `4faaa53` | `93f25de` |
+| `harness/cr2-freeze` | `f911103` | `2daa3dc` |
+| `harness/cr2-freeze-r1` | `cd1ba35` | `a776315` |
+| `harness/cr2-freeze-r2` | `b902b93` | `302d82e` |
+| `harness/cr2-freeze-r3` | `0d0ac45` | `e0c4e54` |
 
 ## 2. 实现说明（当前有效）
 
 | 文档 | 内容 |
 | --- | --- |
+| [P2 捕获基础](roadmap/P2-FOUNDATION-RESULTS.zh-CN.md) / [工作区检索](roadmap/P2-A-RESULTS.zh-CN.md) / [公开验证](roadmap/P2-B-RESULTS.zh-CN.md) | 新增模块的实际 API、独立审查修正、真实机制证据与当前限制；旧实验入口保持原样 |
 | [upgrade/H3-IMPLEMENTATION.zh-CN.md](upgrade/H3-IMPLEMENTATION.zh-CN.md) | Docker 执行、干净镜像、宿主机判分 |
 | [upgrade/H4-IMPLEMENTATION.zh-CN.md](upgrade/H4-IMPLEMENTATION.zh-CN.md) | 上下文窗口、模型视图、插件接口 |
 | [upgrade/H5-DEEPSEEK.zh-CN.md](upgrade/H5-DEEPSEEK.zh-CN.md) | 真实 DeepSeek 接入和预算 |
@@ -49,9 +70,9 @@
 
 ## 4. 测试：哪些能直接跑，哪些需要未公开材料
 
-不需要 API key，LLM 全部是 mock。干净克隆里实测：**654 通过、25 跳过、4 失败**。
+不需要 API key，LLM 全部是 mock。全新虚拟环境（`pip install -e ".[dev]"`）里实测：**1249 通过、44 跳过、4 失败**。
 
-跳过的 25 项里，22 项是需要真实 Linux / Docker 的 opt-in 测试，3 项需要本机 `runs/a5-main` 的运行数据。4 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过：
+跳过的 44 项里，39 项需要真实 Linux 或 Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组）；5 项读取不入库的本机数据，文件不存在时自动跳过：`runs/a5-main` 的运行数据 3 项、A5 私有记忆池 1 项、`runs/sprint5-main-public` 1 项（见下表最后一行）。4 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过。下表列出这 4 项和自动跳过的 `test_public_target`：
 
 | 测试 | 缺的文件 | 原因 |
 | --- | --- | --- |
@@ -59,6 +80,7 @@
 | `test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete` | `full-repo-grader/attempt-02/flask-base.tar.gz` | 完整上游归档，体积过大 |
 | `test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations` | `H5/deepseek-flash-attempt-01/seed/boltons/strutils.py` | R2 种子文件，仅本地保存 |
 | `test_summary_pilot.py::test_trace_accounting_replay_and_private_grading` | 同上 | 同上 |
+| `test_public_target.py::test_task_is_complete_public_input_and_manifest_detects_material_change` | `runs/sprint5-main-public/sphinx-doc__sphinx-8721.json` | `runs/` 不入库；文件不存在时自动跳过，不计入失败 |
 
 只想跑公开部分：
 
@@ -67,7 +89,7 @@ python -m pytest -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_exp
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 654 passed, 25 skipped, 4 deselected
+# 1249 passed, 44 skipped, 4 deselected
 ```
 
 ## 5. 运行证据（`upgrade/evidence/`）

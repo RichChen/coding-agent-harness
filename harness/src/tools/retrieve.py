@@ -55,8 +55,10 @@ class RetrieveCodeTool(Tool):
         "additionalProperties": False,
     }
 
-    def __init__(self, retrieval: TaskRetrieval | None = None):
+    def __init__(self, retrieval: TaskRetrieval | None = None, description: str | None = None):
         self.retrieval = retrieval
+        if description is not None:
+            self.description = description
 
     async def execute(self, params: dict, ctx: ToolContext) -> ToolResult:
         call_id = self.resolve_call_id(params, ctx)

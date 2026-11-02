@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import asyncio
+import copy
+from datetime import datetime, timezone
 import logging
 import time
 import uuid
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
-from src.llm.client import LLMError, LLMErrorKind
+from src.llm.client import LLMError, LLMErrorKind, provider_metadata
 from src.policy.model_budget import BudgetLedgerError, ModelBudgetLedger
 from src.runtime.awaitctl import await_with_control, estimate_input_tokens
 from src.runtime.deadline import DeadlineClock, DeadlineExceeded, UserCancelled
@@ -23,6 +25,7 @@ class RetryConfig:
     backoff_base_seconds: float = 1.0
     backoff_factor: float = 2.0
     retry_on: list[str] = field(default_factory=lambda: ["timeout", "model_error", "http", "network"])
+    stop_on_unknown_usage: bool = False
 
 
 @dataclass
@@ -38,6 +41,8 @@ class AttemptRecord:
     reservation_id: int | None = None
     estimate_method: str | None = None
     estimated_input_tokens: int | None = None
+    provider_metadata: dict | None = None
+    billing_stop_reason: str | None = None
 
 
 @dataclass
@@ -49,6 +54,20 @@ class AttemptSink:
         self.attempts.append(record)
         if self.on_record:
             self.on_record(record)
+
+
+class PaidCallStopped(LLMError):
+    """Opt-in stop: evidence is settled; do not retry or consume its tool calls."""
+    def __init__(self, reason):
+        self.reason = reason
+        super().__init__(reason, kind=LLMErrorKind.INCOMPLETE)
+
+
+def complete_billing_usage(usage):
+    if not isinstance(usage, dict) or usage.get('provenance') != 'provider': return False
+    values = [usage.get(k) for k in ('prompt_tokens','completion_tokens','total_tokens')]
+    return (all(type(v) is int and 0 <= v <= 2**63-1 for v in values)
+            and values[0] + values[1] == values[2])
 
 
 class RetryPolicy:
@@ -68,6 +87,7 @@ class RetryPolicy:
         self.cny_phase = "pilot"
         self.cny_component = "agent"
         self.session = None
+        self.billing_stop_reason = None
 
     def should_retry(self, error: Exception) -> bool:
         if isinstance(error, (UserCancelled, DeadlineExceeded, asyncio.CancelledError, BudgetLedgerError)):
@@ -101,6 +121,12 @@ class RetryPolicy:
         **kwargs,
     ):
         """Each loop iteration is one real attempt: reserve → call → settle."""
+        strict = self.config.stop_on_unknown_usage
+        if strict:
+            reason = self.billing_stop_reason or next((a.billing_stop_reason for a in self.sink.attempts
+                                                       if a.billing_stop_reason), None)
+            if reason: raise PaidCallStopped(reason)
+            if self.model_ledger is None: raise ValueError('paid audit requires an existing model ledger')
         last_error: Exception | None = None
         # Prefer explicit messages/tools kwargs; else first two positional for chat-like fns.
         msg_arg = messages if messages is not None else (args[0] if args else None)
@@ -144,6 +170,18 @@ class RetryPolicy:
                 self.session.model_started(self.model_ledger, operation_id, attempt_id)
 
             started = time.monotonic()
+            started_at = datetime.now(timezone.utc).isoformat()
+            owner = getattr(fn, '__self__', None)
+            client = getattr(owner, 'llm', owner)
+            if strict and hasattr(client, 'last_provider_metadata'):
+                client.last_provider_metadata = {}
+            def audit(response=None):
+                if not strict: return None
+                data = getattr(response, 'provider_metadata', None) or getattr(client, 'last_provider_metadata', None)
+                data = copy.deepcopy(data) if data else provider_metadata(getattr(client, 'model', None))
+                data['started_at'] = data.get('started_at') or started_at
+                data['finished_at'] = datetime.now(timezone.utc).isoformat()
+                return data
             try:
                 call = fn(*args, **kwargs)
                 if self.deadline is not None:
@@ -162,18 +200,20 @@ class RetryPolicy:
                     )
                 if cny_reservation is not None:
                     self.cny_ledger.settle(cny_reservation.reservation_id, None)
+                if strict: self.billing_stop_reason = "billing_usage_unknown"
                 self.sink.record(
                     AttemptRecord(
                         attempt=attempt,
                         success=False,
                         error_kind=type(e).__name__,
-                        message=str(e)[:500],
+                        message=(type(e).__name__ if strict else str(e)[:500]),
                         elapsed_ms=elapsed_ms,
                         usage={"provenance": "unknown"},
                         usage_provenance="unknown",
                         reservation_id=reservation.reservation_id if reservation else None,
                         estimate_method=estimate_method,
                         estimated_input_tokens=estimated_input,
+                        provider_metadata=audit(), billing_stop_reason=self.billing_stop_reason if strict else None,
                     )
                 )
                 raise
@@ -193,21 +233,24 @@ class RetryPolicy:
                     )
                 if cny_reservation is not None:
                     self.cny_ledger.settle(cny_reservation.reservation_id, None)
+                if strict: self.billing_stop_reason = "billing_usage_unknown"
                 self.sink.record(
                     AttemptRecord(
                         attempt=attempt,
                         success=False,
                         error_kind=kind,
                         status_code=status_code,
-                        message=str(e)[:500],
+                        message=(type(e).__name__ if strict else str(e)[:500]),
                         elapsed_ms=elapsed_ms,
                         usage={"provenance": "unknown"},
                         usage_provenance="unknown",
                         reservation_id=reservation.reservation_id if reservation else None,
                         estimate_method=estimate_method,
                         estimated_input_tokens=estimated_input,
+                        provider_metadata=audit(), billing_stop_reason=self.billing_stop_reason if strict else None,
                     )
                 )
+                if strict: raise PaidCallStopped(self.billing_stop_reason) from None
                 if attempt == self.config.max_retries or not self.should_retry(e):
                     raise
                 if self.deadline is not None:
@@ -233,23 +276,41 @@ class RetryPolicy:
             if hasattr(result, "usage") and isinstance(result.usage, dict):
                 usage = dict(result.usage)
                 provenance = result.usage.get("provenance")
+            stop_reason = None
+            metadata = audit(result) if strict else None
+            observed = (getattr(result, 'provider_metadata', None)
+                        or getattr(client, 'last_provider_metadata', None) or {})
+            raw_usage = observed.get('raw_usage')
+            raw_incomplete = ('raw_usage' in observed and
+                not complete_billing_usage(dict(raw_usage, provenance='provider')
+                    if isinstance(raw_usage, dict) else None))
+            if strict and (not complete_billing_usage(usage) or raw_incomplete or metadata.get('raw_usage_omitted')):
+                stop_reason = "billing_usage_unknown"
+            elif strict and ((getattr(result, 'provider_metadata', {}) or {}).get('finish_reason',
+                    getattr(result, 'finish_reason', None))) not in ('stop', 'tool_calls'):
+                stop_reason = "response_incomplete"
+            if strict and stop_reason: self.billing_stop_reason = stop_reason
             if reservation is not None and self.model_ledger is not None:
-                settlement = self.model_ledger.settle(reservation.reservation_id, usage)
+                settlement = (self.model_ledger.settle_unknown(reservation.reservation_id, reason=stop_reason)
+                    if stop_reason == 'billing_usage_unknown' else self.model_ledger.settle(reservation.reservation_id, usage))
                 provenance = settlement.provenance
             if cny_reservation is not None:
                 self.cny_ledger.settle(cny_reservation.reservation_id, usage)
             self.sink.record(
                 AttemptRecord(
                     attempt=attempt,
-                    success=True,
+                    success=stop_reason is None,
+                    error_kind=stop_reason,
                     elapsed_ms=elapsed_ms,
                     usage=usage,
                     usage_provenance=provenance,
                     reservation_id=reservation.reservation_id if reservation else None,
                     estimate_method=estimate_method,
                     estimated_input_tokens=estimated_input,
+                    provider_metadata=metadata, billing_stop_reason=stop_reason,
                 )
             )
+            if stop_reason: raise PaidCallStopped(stop_reason)
             return result
 
         raise last_error  # pragma: no cover

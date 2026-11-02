@@ -1,0 +1,350 @@
+{
+  "schema": "p4-action-diagnostics-summary-v1",
+  "date": "2026-10-31",
+  "timezone": "Asia/Shanghai",
+  "status": "checkpoint_complete_no_more_calls",
+  "artifact_root": "D:\\crq\\artifacts\\p4-action-diagnostics-20261031-01",
+  "source_fingerprint": "7cbc503ff081b010268d47fb70bd07da135fcaf5ae89b19f86782c54f552b6ae",
+  "model": "deepseek-flash",
+  "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+  "thinking": "disabled",
+  "request_count": 18,
+  "batches": [
+    {
+      "batch": "initial_12",
+      "request_count": 12,
+      "usage": {
+        "prompt_tokens": 120402,
+        "completion_tokens": 767,
+        "total_tokens": 121169
+      },
+      "peak_uncached_cny_estimate": "0.24694",
+      "manifest_sha256": "495581930c0bd295a6e5b8122bb1d37d2385e8e1999396ad9fa387d85f519b8e",
+      "group_summary": {
+        "M8-A": {
+          "n": 3,
+          "read": 3,
+          "modify": 0,
+          "test": 0,
+          "complete": 0,
+          "mixed": 0,
+          "invalid": 0,
+          "any_exact_history_repeat_responses": 0,
+          "exact_history_repeat_tool_slots": 0,
+          "prior_contiguous_body_reread_responses": 3,
+          "neutral_ids": [
+            "R04",
+            "R05",
+            "R09"
+          ]
+        },
+        "M8-B": {
+          "n": 3,
+          "read": 3,
+          "modify": 0,
+          "test": 0,
+          "complete": 0,
+          "mixed": 0,
+          "invalid": 0,
+          "any_exact_history_repeat_responses": 0,
+          "exact_history_repeat_tool_slots": 0,
+          "prior_contiguous_body_reread_responses": 0,
+          "neutral_ids": [
+            "R11",
+            "R06",
+            "R02"
+          ]
+        },
+        "T23-A": {
+          "n": 3,
+          "read": 3,
+          "modify": 0,
+          "test": 0,
+          "complete": 0,
+          "mixed": 0,
+          "invalid": 0,
+          "any_exact_history_repeat_responses": 3,
+          "exact_history_repeat_tool_slots": 3,
+          "prior_contiguous_body_reread_responses": 3,
+          "neutral_ids": [
+            "R01",
+            "R12",
+            "R10"
+          ]
+        },
+        "T23-B": {
+          "n": 3,
+          "read": 3,
+          "modify": 0,
+          "test": 0,
+          "complete": 0,
+          "mixed": 0,
+          "invalid": 0,
+          "any_exact_history_repeat_responses": 3,
+          "exact_history_repeat_tool_slots": 3,
+          "prior_contiguous_body_reread_responses": 3,
+          "neutral_ids": [
+            "R07",
+            "R03",
+            "R08"
+          ]
+        }
+      },
+      "records": [
+        {
+          "sequence": 1,
+          "experiment": "M8",
+          "arm": "A",
+          "block": 1,
+          "action": "read",
+          "command": "sed -n 1,120p sphinx/ext/viewcode.py",
+          "response_sha256": "0d6b31614902b9afc95e1ec47ca855450fe7338c1789d77c64aa6444d957458f"
+        },
+        {
+          "sequence": 2,
+          "experiment": "M8",
+          "arm": "B",
+          "block": 1,
+          "action": "read",
+          "command": "sed -n 340,470p sphinx/builders/_epub_base.py",
+          "response_sha256": "8a27fef11a6c86b379a2d6f220fe24b970d2e7be48109fc541f0c7e0095f877d"
+        },
+        {
+          "sequence": 3,
+          "experiment": "T23",
+          "arm": "A",
+          "block": 1,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py; grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/__init__.py",
+          "response_sha256": "35b0a1e708e3500e6d5f8f201ac9f5b40c71da4d5f356a4383dad10de2d5874d"
+        },
+        {
+          "sequence": 4,
+          "experiment": "T23",
+          "arm": "B",
+          "block": 1,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py",
+          "response_sha256": "8c2d4cd7d871c06788a46297183188574fdba0cfa70fc3a3f6d577b5ca8406ee"
+        },
+        {
+          "sequence": 5,
+          "experiment": "M8",
+          "arm": "B",
+          "block": 2,
+          "action": "read",
+          "command": "sed -n 340,470p sphinx/builders/_epub_base.py",
+          "response_sha256": "c7d3bc4138c283d365711bed332117ad41a22f65640acce2992be721c3dccc26"
+        },
+        {
+          "sequence": 6,
+          "experiment": "M8",
+          "arm": "A",
+          "block": 2,
+          "action": "read",
+          "command": "sed -n 1,80p sphinx/ext/viewcode.py; echo ----; sed -n 80,300p sphinx/ext/viewcode.py",
+          "response_sha256": "592b67e53163c373fa511db9f11bdc977badf4f1598130d61b86a026dff07316"
+        },
+        {
+          "sequence": 7,
+          "experiment": "T23",
+          "arm": "B",
+          "block": 2,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py",
+          "response_sha256": "2621cf6851628aab64d0afa0d5e523a2506571a2e0018d67dde7a7875e7b92af"
+        },
+        {
+          "sequence": 8,
+          "experiment": "T23",
+          "arm": "A",
+          "block": 2,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py",
+          "response_sha256": "dd05654b89c7bdaf306de4791b018926bf7ef5cb21ae1fd254bfd31f5c41236e"
+        },
+        {
+          "sequence": 9,
+          "experiment": "M8",
+          "arm": "A",
+          "block": 3,
+          "action": "read",
+          "command": "sed -n 1,80p sphinx/ext/viewcode.py; echo ----; sed -n 80,300p sphinx/ext/viewcode.py",
+          "response_sha256": "d911018fd17008fe96d1c12b0d37c4c93f439d9bf571f4f5eb070c77c35364f2"
+        },
+        {
+          "sequence": 10,
+          "experiment": "M8",
+          "arm": "B",
+          "block": 3,
+          "action": "read",
+          "command": "sed -n 340,470p sphinx/builders/_epub_base.py",
+          "response_sha256": "617ec53c20465b1c0941e0b0623778e6bd70575ef89d91354b123334a96a3eb9"
+        },
+        {
+          "sequence": 11,
+          "experiment": "T23",
+          "arm": "A",
+          "block": 3,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py; grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/__init__.py",
+          "response_sha256": "ba287d875d8fd225f305b5f399d9058747dcdbaed7b8cf24653fb3ccedd3dccd"
+        },
+        {
+          "sequence": 12,
+          "experiment": "T23",
+          "arm": "B",
+          "block": 3,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py",
+          "response_sha256": "146054437330484a77247c823c5fd848ad09769d447696e3a3252f124deec3f8"
+        }
+      ],
+      "audit_status": "passed"
+    },
+    {
+      "batch": "native_tools_6",
+      "request_count": 6,
+      "usage": {
+        "prompt_tokens": 71544,
+        "completion_tokens": 324,
+        "total_tokens": 71868
+      },
+      "peak_uncached_cny_estimate": "0.14568",
+      "manifest_sha256": "0d2f208f5b7bff044b8604b93337a09c79ee9a4fe6abd5726ac0a2f6e2c90481",
+      "group_summary": {
+        "T23-A": {
+          "n": 3,
+          "read": 3,
+          "modify": 0,
+          "test": 0,
+          "complete": 0,
+          "mixed": 0,
+          "invalid": 0,
+          "exact_history_repeat_responses": 2,
+          "overlapping_read_responses": 3,
+          "read_already_visible_range": 1,
+          "read_elided_historical_query": 2,
+          "prompt_tokens_each": [
+            11928
+          ],
+          "neutral_ids": [
+            "N04",
+            "N02",
+            "N06"
+          ]
+        },
+        "T23-B": {
+          "n": 3,
+          "read": 3,
+          "modify": 0,
+          "test": 0,
+          "complete": 0,
+          "mixed": 0,
+          "invalid": 0,
+          "exact_history_repeat_responses": 0,
+          "overlapping_read_responses": 3,
+          "read_already_visible_range": 3,
+          "read_elided_historical_query": 0,
+          "prompt_tokens_each": [
+            11920
+          ],
+          "neutral_ids": [
+            "N01",
+            "N05",
+            "N03"
+          ]
+        }
+      },
+      "records": [
+        {
+          "sequence": 1,
+          "experiment": "T23",
+          "arm": "A",
+          "block": 1,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py",
+          "response_sha256": "8b56eb9385482d1b616881471b5668ba5cb93f399eb2f7412e241611e1df7f6a"
+        },
+        {
+          "sequence": 2,
+          "experiment": "T23",
+          "arm": "B",
+          "block": 1,
+          "action": "read",
+          "command": "sed -n 60,80p sphinx/ext/viewcode.py",
+          "response_sha256": "3921ed64b3d0c1e2f1ec5afb7b6a20e2228f340767082f2c756fd6e3edca1c26"
+        },
+        {
+          "sequence": 3,
+          "experiment": "T23",
+          "arm": "B",
+          "block": 2,
+          "action": "read",
+          "command": "sed -n 60,80p sphinx/ext/viewcode.py",
+          "response_sha256": "67e880583548ffe6fbb4c46eab3cc8a7e7e4caa8f0f8441e6b49ba04409e0342"
+        },
+        {
+          "sequence": 4,
+          "experiment": "T23",
+          "arm": "A",
+          "block": 2,
+          "action": "read",
+          "command": "grep -n \"def get_outdated_docs\" -A 30 sphinx/builders/html/__init__.py",
+          "response_sha256": "e0f6eb229bd76d7b399181ba0c884a8d710bccdf289957c0ed413b86178078fd"
+        },
+        {
+          "sequence": 5,
+          "experiment": "T23",
+          "arm": "A",
+          "block": 3,
+          "action": "read",
+          "command": "sed -n 60,80p sphinx/ext/viewcode.py",
+          "response_sha256": "ce71360b2e9acc9358966b5e8c2e9f88dcda9c7cbdf741a2b704354d56350fa7"
+        },
+        {
+          "sequence": 6,
+          "experiment": "T23",
+          "arm": "B",
+          "block": 3,
+          "action": "read",
+          "command": "sed -n 60,80p sphinx/ext/viewcode.py",
+          "response_sha256": "557e148f94bed4e06b376e07da0a6026dccfb79260cfd3bc1b45f4b09dbd4eae"
+        }
+      ],
+      "audit_status": "passed"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 191946,
+    "completion_tokens": 1091,
+    "total_tokens": 193037
+  },
+  "peak_uncached_cny_estimate": "0.39262",
+  "historical_plus_current_cny_estimate": "1.250684",
+  "invoice_verified": false,
+  "tool_execution": false,
+  "docker_execution": false,
+  "candidate_count": 0,
+  "public_acceptance": "not_applicable_no_edit_proposed",
+  "runtime_repair_success": "not_evaluated_single_action_only",
+  "interpretation": [
+    "M8 restoring previously observed tool bodies shifted 3/3 next reads from viewcode rereading to new contiguous builder source. No evidence of an earlier effective repair from a single response.",
+    "T23 with and without current countdown produced only reads in both separately recorded batches; countdown-induced editing lacks stable support here.",
+    "Native-order T23 included 4/6 overlapping reads of lines60-80 still visible from historical call22. Masking does not explain every observed reread.",
+    "Tools mapping order changed during initial request serialization. Follow-up restored known factory order; neither claims captured historical HTTP bytes.",
+    "Two batches are sequential exploratory diagnostics, not a preregistered 18-request design or general repair-rate test."
+  ],
+  "evidence_sha256": {
+    "prepare-manifest.json": "495581930c0bd295a6e5b8122bb1d37d2385e8e1999396ad9fa387d85f519b8e",
+    "analysis-plan.json": "a307fe341f5523496bd56c78ef027283e1899dd3a0780ed61aaf4b7544606b2b",
+    "blind-classification.json": "f1951840db0deec53180f5821f2211453143e87b6d784b1de942b4c74f1a84c5",
+    "analysis-results.json": "3fc22eca56a9cbb7657f1f70cdbe2d1158f60764b6f91a24291d906ab1fcd670",
+    "execution-audit.json": "e37c428d654accbcb1de56e4f402d54020e413d1f90bd18df24bac08097ae27d",
+    "reconstruction-limits.json": "e607f1f779cc7ea7daaf0350bef6a86d65f47853f977002ddc5682dc4ac074b1",
+    "native-tools/prepare-manifest.json": "0d2f208f5b7bff044b8604b93337a09c79ee9a4fe6abd5726ac0a2f6e2c90481",
+    "native-tools/blind-classification.json": "f5848403ef6c6996b33951339092993e52f55a675e291a5f531d49c1b6f638f7",
+    "native-tools/analysis-results.json": "a01077d1743dffd1c4e0aa92e854b90cfc8e8682d00ecae44abd9d1577358f1a",
+    "native-tools/execution-audit.json": "42cf7cac211619b3e825295ef3a39b0906ae152e9a2a6653d6c68d76846e6372"
+  }
+}
