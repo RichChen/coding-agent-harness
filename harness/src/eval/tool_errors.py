@@ -6,7 +6,7 @@ run_command is the agent's own command, not a tool bug. Normal results such as
 """
 import re
 
-HARNESS_TOOLS = frozenset({"read_file", "list_dir", "write_file", "edit_file", "search_replace", "search_code"})
+HARNESS_TOOLS = frozenset({"read_file", "list_dir", "write_file", "edit_file", "search_replace", "search_code", "retrieve_code"})
 IMPLEMENTATION_ERRORS = frozenset({
     "AttributeError", "ImportError", "ModuleNotFoundError", "SyntaxError", "IndentationError",
     "TabError", "NameError", "UnboundLocalError", "TypeError",
@@ -86,7 +86,9 @@ def tool_schemas() -> dict[str, dict]:
     from src.tools.edit import EditFileTool
     from src.tools.files import ListDirTool, ReadFileTool, WriteFileTool
     from src.tools.patch import SearchReplaceTool
+    from src.tools.retrieve import RetrieveCodeTool
     from src.tools.search import SearchCodeTool
 
-    tools = [ReadFileTool(), ListDirTool(), WriteFileTool(), EditFileTool(), SearchReplaceTool(), SearchCodeTool()]
+    tools = [ReadFileTool(), ListDirTool(), WriteFileTool(), EditFileTool(), SearchReplaceTool(), SearchCodeTool(),
+             RetrieveCodeTool()]
     return {tool.name: tool.parameters for tool in tools}

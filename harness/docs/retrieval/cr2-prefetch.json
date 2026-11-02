@@ -1,0 +1,4907 @@
+{
+  "schema": "cr2.prefetch.v1",
+  "code_commit": "50c39dce455a61a31b3475b797f13cfb39c60f37",
+  "cr1_freeze_sha256": "e4c66754a53e87989f5752990abf4a5759d08495ec2889ff4514cb59c653b406",
+  "frozen": {
+    "model": "jina-code",
+    "revision": "516f4baf13dec4ddddda8631e019b5737c8bc250",
+    "max_len": 512,
+    "hybrid": {
+      "k": 60,
+      "w_emb": 2.0,
+      "fusion": "file",
+      "bm25": "chunk"
+    }
+  },
+  "files_per_task": 5,
+  "chunks_per_file": 2,
+  "max_bytes": 1500,
+  "header": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.",
+  "footer": "End of automatic code search results.",
+  "bytes": {
+    "min": 630,
+    "median": 796.5,
+    "max": 1001
+  },
+  "cr1_test_top5_match": 56,
+  "tasks": [
+    {
+      "task": "django__django-11211",
+      "repo": "django/django",
+      "base_commit": "ba726067604ce5a8ca3919edf653496722b433ab",
+      "issue_sha256": "658b186e181f63e4cf92e146a414b8f30b0fc898e5bb698a7a45bcd900fce010",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/contrib/contenttypes/fields.py",
+          "chunks": [
+            [
+              "GenericForeignKey.get_prefetch_queryset",
+              171,
+              215
+            ],
+            [
+              "create_generic_related_manager",
+              504,
+              688
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/fields/related.py",
+          "chunks": [
+            [
+              "ForeignKey",
+              759,
+              986
+            ],
+            [
+              "ForeignKey.deconstruct",
+              855,
+              871
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/query.py",
+          "chunks": [
+            [
+              "prefetch_one_level",
+              1703,
+              1800
+            ],
+            [
+              "QuerySet.prefetch_related",
+              989,
+              1009
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/fields/related_descriptors.py",
+          "chunks": [
+            [
+              "ForwardManyToOneDescriptor.get_prefetch_queryset",
+              111,
+              140
+            ],
+            [
+              "ReverseOneToOneDescriptor.get_prefetch_queryset",
+              356,
+              372
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/__init__.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              48
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/contrib/contenttypes/fields.py\n   - GenericForeignKey.get_prefetch_queryset (lines 171-215)\n   - create_generic_related_manager (lines 504-688)\n2. django/db/models/fields/related.py\n   - ForeignKey (lines 759-986)\n   - ForeignKey.deconstruct (lines 855-871)\n3. django/db/models/query.py\n   - prefetch_one_level (lines 1703-1800)\n   - QuerySet.prefetch_related (lines 989-1009)\n4. django/db/models/fields/related_descriptors.py\n   - ForwardManyToOneDescriptor.get_prefetch_queryset (lines 111-140)\n   - ReverseOneToOneDescriptor.get_prefetch_queryset (lines 356-372)\n5. django/db/models/__init__.py\n   - <module> (lines 1-48)\n\nEnd of automatic code search results.",
+      "sha256": "7bc135b4ecfb7639f2347abc97743db19b90a5870837adc567ad2edfbd343930",
+      "bytes": 891,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-11749",
+      "repo": "django/django",
+      "base_commit": "350123f38c2b6217c38d70bfbd924a9ba3df1289",
+      "issue_sha256": "43e20ff7e1fecc7bc072098091cafb2d1c078428917e0a43b182ef78cecccecb",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/core/management/__init__.py",
+          "chunks": [
+            [
+              "call_command",
+              76,
+              160
+            ],
+            [
+              "ManagementUtility.execute",
+              313,
+              387
+            ]
+          ]
+        },
+        {
+          "path": "django/core/management/base.py",
+          "chunks": [
+            [
+              "BaseCommand.create_parser",
+              249,
+              295
+            ],
+            [
+              "CommandParser.parse_args",
+              50,
+              55
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/auth/management/commands/createsuperuser.py",
+          "chunks": [
+            [
+              "Command.add_arguments",
+              34,
+              75
+            ],
+            [
+              "Command",
+              24,
+              244
+            ]
+          ]
+        },
+        {
+          "path": "django/core/management/commands/check.py",
+          "chunks": [
+            [
+              "Command.add_arguments",
+              12,
+              34
+            ],
+            [
+              "Command",
+              7,
+              65
+            ]
+          ]
+        },
+        {
+          "path": "django/core/management/utils.py",
+          "chunks": [
+            [
+              "get_command_line_option",
+              112,
+              125
+            ],
+            [
+              "<module>",
+              1,
+              153
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/core/management/__init__.py\n   - call_command (lines 76-160)\n   - ManagementUtility.execute (lines 313-387)\n2. django/core/management/base.py\n   - BaseCommand.create_parser (lines 249-295)\n   - CommandParser.parse_args (lines 50-55)\n3. django/contrib/auth/management/commands/createsuperuser.py\n   - Command.add_arguments (lines 34-75)\n   - Command (lines 24-244)\n4. django/core/management/commands/check.py\n   - Command.add_arguments (lines 12-34)\n   - Command (lines 7-65)\n5. django/core/management/utils.py\n   - get_command_line_option (lines 112-125)\n   - <module> (lines 1-153)\n\nEnd of automatic code search results.",
+      "sha256": "8bcc7762b38546b15766ba5efe854a0ca92bd7eca07fda091d2b8a4ad4cdb25c",
+      "bytes": 849,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-12276",
+      "repo": "django/django",
+      "base_commit": "53d8646f799de7f92ab9defe9dc56c6125448102",
+      "issue_sha256": "e8baf7faea7833b073ddc3bc0336ed0bbc8dae41004fbaf398cb6b8c8f667a8b",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/forms/widgets.py",
+          "chunks": [
+            [
+              "ClearableFileInput.use_required_attribute",
+              454,
+              455
+            ],
+            [
+              "Widget.use_required_attribute",
+              275,
+              276
+            ]
+          ]
+        },
+        {
+          "path": "django/forms/fields.py",
+          "chunks": [
+            [
+              "FileField.clean",
+              579,
+              596
+            ],
+            [
+              "FileField",
+              540,
+              604
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/fields/files.py",
+          "chunks": [
+            [
+              "FieldFile._require_file",
+              36,
+              38
+            ],
+            [
+              "FileField.save_form_data",
+              309,
+              317
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/widgets.py",
+          "chunks": [
+            [
+              "AdminFileWidget",
+              101,
+              102
+            ],
+            [
+              "RelatedFieldWidgetWrapper.value_omitted_from_data",
+              309,
+              310
+            ]
+          ]
+        },
+        {
+          "path": "django/forms/models.py",
+          "chunks": [
+            [
+              "BaseModelForm.__init__",
+              280,
+              307
+            ],
+            [
+              "InlineForeignKeyField.has_changed",
+              1125,
+              1126
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/forms/widgets.py\n   - ClearableFileInput.use_required_attribute (lines 454-455)\n   - Widget.use_required_attribute (lines 275-276)\n2. django/forms/fields.py\n   - FileField.clean (lines 579-596)\n   - FileField (lines 540-604)\n3. django/db/models/fields/files.py\n   - FieldFile._require_file (lines 36-38)\n   - FileField.save_form_data (lines 309-317)\n4. django/contrib/admin/widgets.py\n   - AdminFileWidget (lines 101-102)\n   - RelatedFieldWidgetWrapper.value_omitted_from_data (lines 309-310)\n5. django/forms/models.py\n   - BaseModelForm.__init__ (lines 280-307)\n   - InlineForeignKeyField.has_changed (lines 1125-1126)\n\nEnd of automatic code search results.",
+      "sha256": "16ba0b894b7e51cbb0ad432ac9cd154e20a858c4bef2fadb8a2cc8b4a5eb9000",
+      "bytes": 886,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-13109",
+      "repo": "django/django",
+      "base_commit": "fbe82f82555bc25dccb476c749ca062f0b522be3",
+      "issue_sha256": "ae5dcc3d81e5961ced793da00ad311e186b174c968bb7c2cec7c8fae00577545",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/db/models/base.py",
+          "chunks": [
+            [
+              "Model._check_managers",
+              1327,
+              1333
+            ],
+            [
+              "ModelBase._default_manager",
+              380,
+              382
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/fields/related.py",
+          "chunks": [
+            [
+              "ForeignKey.validate",
+              909,
+              929
+            ],
+            [
+              "ForeignKey._check_on_delete",
+              837,
+              858
+            ]
+          ]
+        },
+        {
+          "path": "django/forms/models.py",
+          "chunks": [
+            [
+              "BaseModelFormSet.validate_unique",
+              680,
+              751
+            ],
+            [
+              "BaseModelForm._post_clean",
+              383,
+              411
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/contenttypes/fields.py",
+          "chunks": [
+            [
+              "create_generic_related_manager",
+              506,
+              701
+            ],
+            [
+              "GenericRelation.check",
+              314,
+              318
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/checks.py",
+          "chunks": [
+            [
+              "BaseModelAdminChecks._check_autocomplete_fields_item",
+              177,
+              218
+            ],
+            [
+              "InlineModelAdminChecks._check_relation",
+              1065,
+              1071
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/db/models/base.py\n   - Model._check_managers (lines 1327-1333)\n   - ModelBase._default_manager (lines 380-382)\n2. django/db/models/fields/related.py\n   - ForeignKey.validate (lines 909-929)\n   - ForeignKey._check_on_delete (lines 837-858)\n3. django/forms/models.py\n   - BaseModelFormSet.validate_unique (lines 680-751)\n   - BaseModelForm._post_clean (lines 383-411)\n4. django/contrib/contenttypes/fields.py\n   - create_generic_related_manager (lines 506-701)\n   - GenericRelation.check (lines 314-318)\n5. django/contrib/admin/checks.py\n   - BaseModelAdminChecks._check_autocomplete_fields_item (lines 177-218)\n   - InlineModelAdminChecks._check_relation (lines 1065-1071)\n\nEnd of automatic code search results.",
+      "sha256": "42af301fc9cbff39f2ad008fa2f16a9ee995618220c26edb4b722928bf706c66",
+      "bytes": 938,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-13512",
+      "repo": "django/django",
+      "base_commit": "b79088306513d5ed76d31ac40ab3c15f858946ea",
+      "issue_sha256": "77633ba2243ab634f8e720517e2dea5dee17f839be6ad5ae87c58b4bf021cbf6",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/db/models/fields/json.py",
+          "chunks": [
+            [
+              "JSONField",
+              16,
+              112
+            ],
+            [
+              "JSONField.get_prep_value",
+              81,
+              84
+            ]
+          ]
+        },
+        {
+          "path": "django/core/signing.py",
+          "chunks": [
+            [
+              "JSONSerializer.dumps",
+              86,
+              87
+            ],
+            [
+              "JSONSerializer.loads",
+              89,
+              90
+            ]
+          ]
+        },
+        {
+          "path": "django/forms/fields.py",
+          "chunks": [
+            [
+              "JSONField.prepare_value",
+              1258,
+              1261
+            ],
+            [
+              "JSONField",
+              1219,
+              1271
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/postgres/fields/jsonb.py",
+          "chunks": [
+            [
+              "JSONField",
+              13,
+              22
+            ],
+            [
+              "<module>",
+              1,
+              43
+            ]
+          ]
+        },
+        {
+          "path": "django/utils/encoding.py",
+          "chunks": [
+            [
+              "get_system_encoding",
+              259,
+              270
+            ],
+            [
+              "DjangoUnicodeDecodeError.__str__",
+              17,
+              18
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/db/models/fields/json.py\n   - JSONField (lines 16-112)\n   - JSONField.get_prep_value (lines 81-84)\n2. django/core/signing.py\n   - JSONSerializer.dumps (lines 86-87)\n   - JSONSerializer.loads (lines 89-90)\n3. django/forms/fields.py\n   - JSONField.prepare_value (lines 1258-1261)\n   - JSONField (lines 1219-1271)\n4. django/contrib/postgres/fields/jsonb.py\n   - JSONField (lines 13-22)\n   - <module> (lines 1-43)\n5. django/utils/encoding.py\n   - get_system_encoding (lines 259-270)\n   - DjangoUnicodeDecodeError.__str__ (lines 17-18)\n\nEnd of automatic code search results.",
+      "sha256": "1308fa20dbf08fda6c4b957b58cfe99a0d1c692963c6515d698e8c6c88ffdeff",
+      "bytes": 797,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-13964",
+      "repo": "django/django",
+      "base_commit": "f39634ff229887bf7790c069d0c411b38494ca38",
+      "issue_sha256": "d0a164326a7b3fd89b9236e331075a4b9dd8285ea90f5757ea056d87737020c3",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/db/models/base.py",
+          "chunks": [
+            [
+              "Model._prepare_related_fields_for_save",
+              911,
+              943
+            ],
+            [
+              "Model.save_base",
+              730,
+              777
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/fields/related_descriptors.py",
+          "chunks": [
+            [
+              "ForwardManyToOneDescriptor.__set__",
+              203,
+              267
+            ],
+            [
+              "ForwardOneToOneDescriptor.__set__",
+              309,
+              323
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/options.py",
+          "chunks": [
+            [
+              "Options._prepare",
+              252,
+              287
+            ],
+            [
+              "Options.setup_pk",
+              323,
+              326
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/fields/related.py",
+          "chunks": [
+            [
+              "ForeignKey.__init__",
+              794,
+              832
+            ],
+            [
+              "ForeignKey.get_db_prep_save",
+              965,
+              971
+            ]
+          ]
+        },
+        {
+          "path": "django/forms/models.py",
+          "chunks": [
+            [
+              "_get_foreign_key",
+              997,
+              1050
+            ],
+            [
+              "BaseInlineFormSet.save_new",
+              954,
+              959
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/db/models/base.py\n   - Model._prepare_related_fields_for_save (lines 911-943)\n   - Model.save_base (lines 730-777)\n2. django/db/models/fields/related_descriptors.py\n   - ForwardManyToOneDescriptor.__set__ (lines 203-267)\n   - ForwardOneToOneDescriptor.__set__ (lines 309-323)\n3. django/db/models/options.py\n   - Options._prepare (lines 252-287)\n   - Options.setup_pk (lines 323-326)\n4. django/db/models/fields/related.py\n   - ForeignKey.__init__ (lines 794-832)\n   - ForeignKey.get_db_prep_save (lines 965-971)\n5. django/forms/models.py\n   - _get_foreign_key (lines 997-1050)\n   - BaseInlineFormSet.save_new (lines 954-959)\n\nEnd of automatic code search results.",
+      "sha256": "2bb2da6dd243e30c01d412125ac7873786a7c7f61014b4ab3b87d9b15460ffd7",
+      "bytes": 890,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-14434",
+      "repo": "django/django",
+      "base_commit": "5e04e84d67da8163f365e9f5fcd169e2630e2873",
+      "issue_sha256": "069b0d7ba8ebff2f277a626aec1231cfee3546478a755fd268df7ecf2e4ee766",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/db/backends/ddl_references.py",
+          "chunks": [
+            [
+              "Reference.references_column",
+              17,
+              21
+            ],
+            [
+              "TableColumns.references_column",
+              67,
+              68
+            ]
+          ]
+        },
+        {
+          "path": "django/db/backends/base/schema.py",
+          "chunks": [
+            [
+              "BaseDatabaseSchemaEditor._create_unique_sql",
+              1225,
+              1265
+            ],
+            [
+              "BaseDatabaseSchemaEditor._unique_sql",
+              1192,
+              1223
+            ]
+          ]
+        },
+        {
+          "path": "django/db/backends/sqlite3/schema.py",
+          "chunks": [
+            [
+              "DatabaseSchemaEditor._is_referenced_by_fk_constraint",
+              67,
+              84
+            ],
+            [
+              "DatabaseSchemaEditor",
+              13,
+              438
+            ]
+          ]
+        },
+        {
+          "path": "django/db/backends/oracle/schema.py",
+          "chunks": [
+            [
+              "DatabaseSchemaEditor._unique_should_be_added",
+              164,
+              168
+            ],
+            [
+              "DatabaseSchemaEditor",
+              9,
+              198
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/constraints.py",
+          "chunks": [
+            [
+              "UniqueConstraint.create_sql",
+              200,
+              209
+            ],
+            [
+              "UniqueConstraint.constraint_sql",
+              189,
+              198
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/db/backends/ddl_references.py\n   - Reference.references_column (lines 17-21)\n   - TableColumns.references_column (lines 67-68)\n2. django/db/backends/base/schema.py\n   - BaseDatabaseSchemaEditor._create_unique_sql (lines 1225-1265)\n   - BaseDatabaseSchemaEditor._unique_sql (lines 1192-1223)\n3. django/db/backends/sqlite3/schema.py\n   - DatabaseSchemaEditor._is_referenced_by_fk_constraint (lines 67-84)\n   - DatabaseSchemaEditor (lines 13-438)\n4. django/db/backends/oracle/schema.py\n   - DatabaseSchemaEditor._unique_should_be_added (lines 164-168)\n   - DatabaseSchemaEditor (lines 9-198)\n5. django/db/models/constraints.py\n   - UniqueConstraint.create_sql (lines 200-209)\n   - UniqueConstraint.constraint_sql (lines 189-198)\n\nEnd of automatic code search results.",
+      "sha256": "87bc9045c1113def045414e6f32c8368340ce0b8dd2a63692519ea7d25dd9711",
+      "bytes": 992,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-15022",
+      "repo": "django/django",
+      "base_commit": "e1d673c373a7d032060872b690a92fc95496612e",
+      "issue_sha256": "053d6cadf868999d5c91d65c608c767c064794a28f5a6ce572ddb790e1dcd63f",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/db/models/sql/query.py",
+          "chunks": [
+            [
+              "JoinPromoter.update_join_types",
+              2436,
+              2490
+            ],
+            [
+              "Query.trim_start",
+              2273,
+              2348
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/options.py",
+          "chunks": [
+            [
+              "ModelAdmin.get_search_results",
+              994,
+              1046
+            ],
+            [
+              "BaseModelAdmin.get_queryset",
+              360,
+              370
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/views/main.py",
+          "chunks": [
+            [
+              "ChangeList.get_queryset",
+              452,
+              507
+            ],
+            [
+              "ChangeList.__init__",
+              50,
+              109
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/query_utils.py",
+          "chunks": [
+            [
+              "FilteredRelation",
+              279,
+              318
+            ],
+            [
+              "<module>",
+              1,
+              318
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/checks.py",
+          "chunks": [
+            [
+              "BaseModelAdminChecks._check_autocomplete_fields_item",
+              177,
+              218
+            ],
+            [
+              "<module>",
+              1,
+              1145
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/db/models/sql/query.py\n   - JoinPromoter.update_join_types (lines 2436-2490)\n   - Query.trim_start (lines 2273-2348)\n2. django/contrib/admin/options.py\n   - ModelAdmin.get_search_results (lines 994-1046)\n   - BaseModelAdmin.get_queryset (lines 360-370)\n3. django/contrib/admin/views/main.py\n   - ChangeList.get_queryset (lines 452-507)\n   - ChangeList.__init__ (lines 50-109)\n4. django/db/models/query_utils.py\n   - FilteredRelation (lines 279-318)\n   - <module> (lines 1-318)\n5. django/contrib/admin/checks.py\n   - BaseModelAdminChecks._check_autocomplete_fields_item (lines 177-218)\n   - <module> (lines 1-1145)\n\nEnd of automatic code search results.",
+      "sha256": "4431cf24ae4d842360683adbc2d4ab0c648d89464575470e0866ea9a07c93de9",
+      "bytes": 880,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-15499",
+      "repo": "django/django",
+      "base_commit": "d90e34c61b27fba2527834806639eebbcfab9631",
+      "issue_sha256": "5b157eb69d1b4d671f1f1751692541bfd58a51abda2269af5968a299640619ad",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/db/migrations/operations/models.py",
+          "chunks": [
+            [
+              "CreateModel.reduce",
+              136,
+              293
+            ],
+            [
+              "AlterModelOptions",
+              677,
+              729
+            ]
+          ]
+        },
+        {
+          "path": "django/db/migrations/optimizer.py",
+          "chunks": [
+            [
+              "MigrationOptimizer",
+              1,
+              69
+            ],
+            [
+              "MigrationOptimizer.optimize",
+              12,
+              38
+            ]
+          ]
+        },
+        {
+          "path": "django/db/migrations/autodetector.py",
+          "chunks": [
+            [
+              "MigrationAutodetector.generate_altered_options",
+              1424,
+              1462
+            ],
+            [
+              "MigrationAutodetector.generate_created_proxies",
+              768,
+              799
+            ]
+          ]
+        },
+        {
+          "path": "django/core/management/commands/optimizemigration.py",
+          "chunks": [
+            [
+              "Command.handle",
+              32,
+              129
+            ],
+            [
+              "Command",
+              15,
+              129
+            ]
+          ]
+        },
+        {
+          "path": "django/db/migrations/operations/__init__.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              40
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/db/migrations/operations/models.py\n   - CreateModel.reduce (lines 136-293)\n   - AlterModelOptions (lines 677-729)\n2. django/db/migrations/optimizer.py\n   - MigrationOptimizer (lines 1-69)\n   - MigrationOptimizer.optimize (lines 12-38)\n3. django/db/migrations/autodetector.py\n   - MigrationAutodetector.generate_altered_options (lines 1424-1462)\n   - MigrationAutodetector.generate_created_proxies (lines 768-799)\n4. django/core/management/commands/optimizemigration.py\n   - Command.handle (lines 32-129)\n   - Command (lines 15-129)\n5. django/db/migrations/operations/__init__.py\n   - <module> (lines 1-40)\n\nEnd of automatic code search results.",
+      "sha256": "1f8261e85c7c0dbdf6e6d90ee804721ae9658317de5579b161e3435f013feb79",
+      "bytes": 872,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-15973",
+      "repo": "django/django",
+      "base_commit": "2480554dc4ada4ecf3f6a08e318735a2e50783f3",
+      "issue_sha256": "8f96852cd0ac22cf509a263bbe10456db887c640e893fc4c49f453b45e1ed023",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/db/backends/base/schema.py",
+          "chunks": [
+            [
+              "BaseDatabaseSchemaEditor._alter_many_to_many",
+              1247,
+              1277
+            ],
+            [
+              "BaseDatabaseSchemaEditor.create_model",
+              437,
+              454
+            ]
+          ]
+        },
+        {
+          "path": "django/db/models/fields/related.py",
+          "chunks": [
+            [
+              "ManyToManyField._check_relationship_model",
+              1450,
+              1679
+            ],
+            [
+              "ManyToManyField._check_table_uniqueness",
+              1681,
+              1731
+            ]
+          ]
+        },
+        {
+          "path": "django/db/backends/sqlite3/schema.py",
+          "chunks": [
+            [
+              "DatabaseSchemaEditor._alter_many_to_many",
+              485,
+              535
+            ],
+            [
+              "DatabaseSchemaEditor._alter_field",
+              426,
+              483
+            ]
+          ]
+        },
+        {
+          "path": "django/db/migrations/operations/models.py",
+          "chunks": [
+            [
+              "AlterModelTable.database_forwards",
+              499,
+              517
+            ],
+            [
+              "RenameModel.database_forwards",
+              370,
+              425
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/auth/migrations/0001_initial.py",
+          "chunks": [
+            [
+              "Migration",
+              7,
+              205
+            ],
+            [
+              "<module>",
+              1,
+              205
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/db/backends/base/schema.py\n   - BaseDatabaseSchemaEditor._alter_many_to_many (lines 1247-1277)\n   - BaseDatabaseSchemaEditor.create_model (lines 437-454)\n2. django/db/models/fields/related.py\n   - ManyToManyField._check_relationship_model (lines 1450-1679)\n   - ManyToManyField._check_table_uniqueness (lines 1681-1731)\n3. django/db/backends/sqlite3/schema.py\n   - DatabaseSchemaEditor._alter_many_to_many (lines 485-535)\n   - DatabaseSchemaEditor._alter_field (lines 426-483)\n4. django/db/migrations/operations/models.py\n   - AlterModelTable.database_forwards (lines 499-517)\n   - RenameModel.database_forwards (lines 370-425)\n5. django/contrib/auth/migrations/0001_initial.py\n   - Migration (lines 7-205)\n   - <module> (lines 1-205)\n\nEnd of automatic code search results.",
+      "sha256": "16388c5104704b22eab1cb895e814801b7dd75dba0d889cb3e7416510c103c90",
+      "bytes": 1001,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "django__django-16527",
+      "repo": "django/django",
+      "base_commit": "bd366ca2aeffa869b7dbc0b0aa01caea75e6dc31",
+      "issue_sha256": "d9bcb36c05a8542b01cc22ded3b6545b090ccac64f969ddee3981d62c6e74e10",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "django/contrib/admin/options.py",
+          "chunks": [
+            [
+              "BaseModelAdmin.has_add_permission",
+              538,
+              545
+            ],
+            [
+              "InlineModelAdmin.has_change_permission",
+              2476,
+              2480
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/templatetags/admin_modify.py",
+          "chunks": [
+            [
+              "submit_row",
+              61,
+              112
+            ],
+            [
+              "change_form_object_tools_tag",
+              122,
+              130
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/auth/admin.py",
+          "chunks": [
+            [
+              "UserAdmin.response_add",
+              216,
+              230
+            ],
+            [
+              "UserAdmin._add_view",
+              121,
+              147
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/checks.py",
+          "chunks": [
+            [
+              "ModelAdminChecks._check_save_as",
+              809,
+              815
+            ],
+            [
+              "ModelAdminChecks._check_action_permission_methods",
+              1182,
+              1207
+            ]
+          ]
+        },
+        {
+          "path": "django/contrib/admin/sites.py",
+          "chunks": [
+            [
+              "AdminSite.has_permission",
+              197,
+              202
+            ],
+            [
+              "AdminSite.admin_view",
+              204,
+              249
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. django/contrib/admin/options.py\n   - BaseModelAdmin.has_add_permission (lines 538-545)\n   - InlineModelAdmin.has_change_permission (lines 2476-2480)\n2. django/contrib/admin/templatetags/admin_modify.py\n   - submit_row (lines 61-112)\n   - change_form_object_tools_tag (lines 122-130)\n3. django/contrib/auth/admin.py\n   - UserAdmin.response_add (lines 216-230)\n   - UserAdmin._add_view (lines 121-147)\n4. django/contrib/admin/checks.py\n   - ModelAdminChecks._check_save_as (lines 809-815)\n   - ModelAdminChecks._check_action_permission_methods (lines 1182-1207)\n5. django/contrib/admin/sites.py\n   - AdminSite.has_permission (lines 197-202)\n   - AdminSite.admin_view (lines 204-249)\n\nEnd of automatic code search results.",
+      "sha256": "51584077a6c8b81da144bb894444ce6da9296773bb404cdc001e2ed1a9387968",
+      "bytes": 940,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-10081",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "da9a2b584eb7a6c7e924b2621ed0ddaeca0a7bea",
+      "issue_sha256": "591d6bb69d71666bdd35a3144c95f3d689544055966393676fd23f260f707571",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/unittest.py",
+          "chunks": [
+            [
+              "UnitTestCase._inject_setup_teardown_fixtures",
+              96,
+              119
+            ],
+            [
+              "pytest_runtest_makereport",
+              342,
+              366
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/outcomes.py",
+          "chunks": [
+            [
+              "skip",
+              146,
+              175
+            ],
+            [
+              "Skipped.__init__",
+              59,
+              71
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/debugging.py",
+          "chunks": [
+            [
+              "pytestPDB._get_pdb_wrapper_class",
+              150,
+              235
+            ],
+            [
+              "pytestPDB._init_pdb",
+              237,
+              275
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/skipping.py",
+          "chunks": [
+            [
+              "pytest_configure",
+              46,
+              82
+            ],
+            [
+              "<module>",
+              1,
+              296
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/runner.py",
+          "chunks": [
+            [
+              "SetupState.teardown_exact",
+              507,
+              532
+            ],
+            [
+              "SetupState",
+              400,
+              532
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/unittest.py\n   - UnitTestCase._inject_setup_teardown_fixtures (lines 96-119)\n   - pytest_runtest_makereport (lines 342-366)\n2. src/_pytest/outcomes.py\n   - skip (lines 146-175)\n   - Skipped.__init__ (lines 59-71)\n3. src/_pytest/debugging.py\n   - pytestPDB._get_pdb_wrapper_class (lines 150-235)\n   - pytestPDB._init_pdb (lines 237-275)\n4. src/_pytest/skipping.py\n   - pytest_configure (lines 46-82)\n   - <module> (lines 1-296)\n5. src/_pytest/runner.py\n   - SetupState.teardown_exact (lines 507-532)\n   - SetupState (lines 400-532)\n\nEnd of automatic code search results.",
+      "sha256": "bb5ef2c39af67f790490047b4da0012d93c161935bd5bdf9d7441f0a66de2c10",
+      "bytes": 802,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-5262",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "58e6a09db49f34886ff13f3b7520dd0bcd7063cd",
+      "issue_sha256": "d957354242a7a545699ec4d161c3e4c6ab6df9288000d6e46a051b8b7ff50301",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/capture.py",
+          "chunks": [
+            [
+              "capfdbinary",
+              310,
+              324
+            ],
+            [
+              "capsysbinary",
+              276,
+              290
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/compat.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              457
+            ],
+            [
+              "_is_unittest_unexpected_success_a_failure",
+              360,
+              367
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/doctest.py",
+          "chunks": [
+            [
+              "_fix_spoof_python2",
+              541,
+              564
+            ],
+            [
+              "_get_allow_bytes_flag",
+              516,
+              522
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/pytester.py",
+          "chunks": [
+            [
+              "LsofFdLeakChecker.pytest_runtest_protocol",
+              131,
+              152
+            ],
+            [
+              "<module>",
+              1,
+              1414
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/pastebin.py",
+          "chunks": [
+            [
+              "pytest_configure",
+              27,
+              45
+            ],
+            [
+              "<module>",
+              1,
+              113
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/capture.py\n   - capfdbinary (lines 310-324)\n   - capsysbinary (lines 276-290)\n2. src/_pytest/compat.py\n   - <module> (lines 1-457)\n   - _is_unittest_unexpected_success_a_failure (lines 360-367)\n3. src/_pytest/doctest.py\n   - _fix_spoof_python2 (lines 541-564)\n   - _get_allow_bytes_flag (lines 516-522)\n4. src/_pytest/pytester.py\n   - LsofFdLeakChecker.pytest_runtest_protocol (lines 131-152)\n   - <module> (lines 1-1414)\n5. src/_pytest/pastebin.py\n   - pytest_configure (lines 27-45)\n   - <module> (lines 1-113)\n\nEnd of automatic code search results.",
+      "sha256": "a1bf0ff8f5fb530ccbfce4b8e4a0c559f0ac9c40c17dcdeb18ea3576f2448fce",
+      "bytes": 784,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-5631",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "cb828ebe70b4fa35cd5f9a7ee024272237eab351",
+      "issue_sha256": "1e9120fbb21d881c388af3596eaa479bad2f604703eb79bd19898b5d7b18af03",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/monkeypatch.py",
+          "chunks": [
+            [
+              "MonkeyPatch",
+              100,
+              321
+            ],
+            [
+              "monkeypatch",
+              15,
+              36
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/python_api.py",
+          "chunks": [
+            [
+              "ApproxBase",
+              36,
+              87
+            ],
+            [
+              "<module>",
+              1,
+              721
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/compat.py",
+          "chunks": [
+            [
+              "num_mock_patch_args",
+              62,
+              73
+            ],
+            [
+              "<module>",
+              1,
+              332
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/python.py",
+          "chunks": [
+            [
+              "pytest_pycollect_makeitem",
+              192,
+              226
+            ],
+            [
+              "<module>",
+              1,
+              1467
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/deprecated.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              104
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/monkeypatch.py\n   - MonkeyPatch (lines 100-321)\n   - monkeypatch (lines 15-36)\n2. src/_pytest/python_api.py\n   - ApproxBase (lines 36-87)\n   - <module> (lines 1-721)\n3. src/_pytest/compat.py\n   - num_mock_patch_args (lines 62-73)\n   - <module> (lines 1-332)\n4. src/_pytest/python.py\n   - pytest_pycollect_makeitem (lines 192-226)\n   - <module> (lines 1-1467)\n5. src/_pytest/deprecated.py\n   - <module> (lines 1-104)\n\nEnd of automatic code search results.",
+      "sha256": "92eb0dd378388aea21006f5e6ed5bfa5c9eb5941f4f1ae413456e6d774a540e3",
+      "bytes": 687,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-5809",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "8aba863a634f40560e25055d179220f0eefabe9a",
+      "issue_sha256": "22a2be85d2560116244c4051221d1ab5109fa7476651aac4e4ee8e26e4b8e6f1",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/pastebin.py",
+          "chunks": [
+            [
+              "create_new_paste",
+              65,
+              91
+            ],
+            [
+              "pytest_configure",
+              28,
+              46
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/capture.py",
+          "chunks": [
+            [
+              "EncodedFile",
+              427,
+              457
+            ],
+            [
+              "DontReadFromInput",
+              710,
+              744
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/assertion/rewrite.py",
+          "chunks": [
+            [
+              "_rewrite_test",
+              359,
+              412
+            ],
+            [
+              "_read_pyc",
+              415,
+              448
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/doctest.py",
+          "chunks": [
+            [
+              "_get_checker",
+              463,
+              515
+            ],
+            [
+              "_fix_spoof_python2",
+              552,
+              575
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/_code/source.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              329
+            ],
+            [
+              "Source.isparseable",
+              122,
+              140
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/pastebin.py\n   - create_new_paste (lines 65-91)\n   - pytest_configure (lines 28-46)\n2. src/_pytest/capture.py\n   - EncodedFile (lines 427-457)\n   - DontReadFromInput (lines 710-744)\n3. src/_pytest/assertion/rewrite.py\n   - _rewrite_test (lines 359-412)\n   - _read_pyc (lines 415-448)\n4. src/_pytest/doctest.py\n   - _get_checker (lines 463-515)\n   - _fix_spoof_python2 (lines 552-575)\n5. src/_pytest/_code/source.py\n   - <module> (lines 1-329)\n   - Source.isparseable (lines 122-140)\n\nEnd of automatic code search results.",
+      "sha256": "27a16c6192ef2a2a10703f74d11a915203d79f120e5c77804138b9cf964c514c",
+      "bytes": 754,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-5840",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "73c5b7f4b11a81e971f7d1bb18072e06a87060f4",
+      "issue_sha256": "20d9cc3dd4114c8bc9f5eb76bb16d3c50ff8826b8c106119be6c3cf4ed01f398",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/python.py",
+          "chunks": [
+            [
+              "Module._importtestmodule",
+              497,
+              545
+            ],
+            [
+              "<module>",
+              1,
+              1439
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/config/__init__.py",
+          "chunks": [
+            [
+              "PytestPluginManager",
+              229,
+              576
+            ],
+            [
+              "ConftestImportFailure",
+              40,
+              44
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/compat.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              356
+            ],
+            [
+              "_setup_collect_fakemodule",
+              320,
+              327
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/config/findpaths.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              151
+            ],
+            [
+              "determine_setup",
+              105,
+              151
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/stepwise.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              108
+            ],
+            [
+              "pytest_configure",
+              21,
+              23
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/python.py\n   - Module._importtestmodule (lines 497-545)\n   - <module> (lines 1-1439)\n2. src/_pytest/config/__init__.py\n   - PytestPluginManager (lines 229-576)\n   - ConftestImportFailure (lines 40-44)\n3. src/_pytest/compat.py\n   - <module> (lines 1-356)\n   - _setup_collect_fakemodule (lines 320-327)\n4. src/_pytest/config/findpaths.py\n   - <module> (lines 1-151)\n   - determine_setup (lines 105-151)\n5. src/_pytest/stepwise.py\n   - <module> (lines 1-108)\n   - pytest_configure (lines 21-23)\n\nEnd of automatic code search results.",
+      "sha256": "b7a9a2a7e72ab51caad38bb5161eb60c21b7cef7840070a846775131983adb67",
+      "bytes": 763,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-6202",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "3a668ea6ff24b0c8f00498c3144c63bac561d925",
+      "issue_sha256": "5a155e2295b1a561c0bb815941a93974af85fe064020a90a98d80a10930867bc",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/reports.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              483
+            ],
+            [
+              "_report_unserialization_failure",
+              182,
+              191
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/fixtures.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1464
+            ],
+            [
+              "fail_fixturefunc",
+              764,
+              768
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/nodes.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              441
+            ],
+            [
+              "_splitnode",
+              29,
+              52
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/_code/code.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1094
+            ],
+            [
+              "filter_traceback",
+              1077,
+              1094
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/python.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1445
+            ],
+            [
+              "pytest_configure",
+              132,
+              149
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/reports.py\n   - <module> (lines 1-483)\n   - _report_unserialization_failure (lines 182-191)\n2. src/_pytest/fixtures.py\n   - <module> (lines 1-1464)\n   - fail_fixturefunc (lines 764-768)\n3. src/_pytest/nodes.py\n   - <module> (lines 1-441)\n   - _splitnode (lines 29-52)\n4. src/_pytest/_code/code.py\n   - <module> (lines 1-1094)\n   - filter_traceback (lines 1077-1094)\n5. src/_pytest/python.py\n   - <module> (lines 1-1445)\n   - pytest_configure (lines 132-149)\n\nEnd of automatic code search results.",
+      "sha256": "f4ff48cee7d5acb646124ea22ba7336b94cf391d01b5abcf925730a31f259d5e",
+      "bytes": 729,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-7205",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "5e7f1ab4bf58e473e5d7f878eb2b499d7deabd29",
+      "issue_sha256": "088371cacf194b0c57058002e7701c7ce885d7c4548fa25d6757305fc33d7ed1",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/python.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1560
+            ],
+            [
+              "Module._inject_setup_function_fixture",
+              480,
+              507
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/runner.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              412
+            ],
+            [
+              "call_runtest_hook",
+              209,
+              223
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/config/__init__.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1261
+            ],
+            [
+              "main",
+              95,
+              137
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/pytester.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1536
+            ],
+            [
+              "LsofFdLeakChecker.pytest_runtest_protocol",
+              139,
+              160
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/hookspec.py",
+          "chunks": [
+            [
+              "pytest_runtest_setup",
+              379,
+              380
+            ],
+            [
+              "pytest_collectstart",
+              250,
+              251
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/python.py\n   - <module> (lines 1-1560)\n   - Module._inject_setup_function_fixture (lines 480-507)\n2. src/_pytest/runner.py\n   - <module> (lines 1-412)\n   - call_runtest_hook (lines 209-223)\n3. src/_pytest/config/__init__.py\n   - <module> (lines 1-1261)\n   - main (lines 95-137)\n4. src/_pytest/pytester.py\n   - <module> (lines 1-1536)\n   - LsofFdLeakChecker.pytest_runtest_protocol (lines 139-160)\n5. src/_pytest/hookspec.py\n   - pytest_runtest_setup (lines 379-380)\n   - pytest_collectstart (lines 250-251)\n\nEnd of automatic code search results.",
+      "sha256": "49eec392bd31169be1c39815d2789fd9722c94280d35a8585a989e7d7ea7dbbe",
+      "bytes": 778,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-7324",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "19ad5889353c7f5f2b65cc2acd346b7a9e95dfcd",
+      "issue_sha256": "c86104555dc540eca4e1fc4625c95084e5ebe6bb5484acc6a9d4b2fca7378634",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/assertion/rewrite.py",
+          "chunks": [
+            [
+              "AssertionRewriter.visit_Assert",
+              818,
+              933
+            ],
+            [
+              "<module>",
+              1,
+              1107
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/doctest.py",
+          "chunks": [
+            [
+              "_init_checker_class",
+              577,
+              667
+            ],
+            [
+              "_get_allow_unicode_flag",
+              691,
+              697
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/compat.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              403
+            ],
+            [
+              "ascii_escaped",
+              243,
+              265
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/config/__init__.py",
+          "chunks": [
+            [
+              "_strtobool",
+              1273,
+              1288
+            ],
+            [
+              "_warn_about_missing_assertion",
+              1242,
+              1257
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/mark/expression.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              218
+            ],
+            [
+              "Expression.compile",
+              195,
+              205
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/assertion/rewrite.py\n   - AssertionRewriter.visit_Assert (lines 818-933)\n   - <module> (lines 1-1107)\n2. src/_pytest/doctest.py\n   - _init_checker_class (lines 577-667)\n   - _get_allow_unicode_flag (lines 691-697)\n3. src/_pytest/compat.py\n   - <module> (lines 1-403)\n   - ascii_escaped (lines 243-265)\n4. src/_pytest/config/__init__.py\n   - _strtobool (lines 1273-1288)\n   - _warn_about_missing_assertion (lines 1242-1257)\n5. src/_pytest/mark/expression.py\n   - <module> (lines 1-218)\n   - Expression.compile (lines 195-205)\n\nEnd of automatic code search results.",
+      "sha256": "e3ab1a88fac6650a63ca73bf97399da387849522dfe83054dab71454ec7f05a9",
+      "bytes": 796,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-7490",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "7f7a36478abe7dd1fa993b115d22606aa0e35e88",
+      "issue_sha256": "9a5e8c33368dc3bbe9c5f03d3136a574cebede61fea6c575d39ddf108b92d947",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/skipping.py",
+          "chunks": [
+            [
+              "pytest_configure",
+              48,
+              84
+            ],
+            [
+              "pytest_runtest_makereport",
+              260,
+              306
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/outcomes.py",
+          "chunks": [
+            [
+              "xfail",
+              163,
+              175
+            ],
+            [
+              "XFailed",
+              159,
+              160
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/python.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1614
+            ],
+            [
+              "pytest_configure",
+              139,
+              156
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/cacheprovider.py",
+          "chunks": [
+            [
+              "LFPlugin.pytest_collection_modifyitems",
+              290,
+              340
+            ],
+            [
+              "<module>",
+              1,
+              544
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/junitxml.py",
+          "chunks": [
+            [
+              "_warn_incompatibility_with_xunit2",
+              287,
+              301
+            ],
+            [
+              "<module>",
+              1,
+              715
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/skipping.py\n   - pytest_configure (lines 48-84)\n   - pytest_runtest_makereport (lines 260-306)\n2. src/_pytest/outcomes.py\n   - xfail (lines 163-175)\n   - XFailed (lines 159-160)\n3. src/_pytest/python.py\n   - <module> (lines 1-1614)\n   - pytest_configure (lines 139-156)\n4. src/_pytest/cacheprovider.py\n   - LFPlugin.pytest_collection_modifyitems (lines 290-340)\n   - <module> (lines 1-544)\n5. src/_pytest/junitxml.py\n   - _warn_incompatibility_with_xunit2 (lines 287-301)\n   - <module> (lines 1-715)\n\nEnd of automatic code search results.",
+      "sha256": "610d09d0f00c453cf400592365860e7b8a16653981e0ce5a1c4ed9611238072f",
+      "bytes": 771,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-7521",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "41d211c24a6781843b174379d6d6538f5c17adb9",
+      "issue_sha256": "39f1953e5d5a7481355aa6109b16ecaebbb037957e473cc71e9ab1402d3aa9b9",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/capture.py",
+          "chunks": [
+            [
+              "capfd",
+              857,
+              871
+            ],
+            [
+              "_readline_workaround",
+              67,
+              89
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/terminal.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1317
+            ],
+            [
+              "_get_line_with_reprcrash_message",
+              1206,
+              1242
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/config/__init__.py",
+          "chunks": [
+            [
+              "console_main",
+              173,
+              188
+            ],
+            [
+              "PytestPluginManager._check_non_top_pytest_plugins",
+              577,
+              594
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/logging.py",
+          "chunks": [
+            [
+              "_remove_ansi_escape_sequences",
+              41,
+              42
+            ],
+            [
+              "<module>",
+              1,
+              816
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/fixtures.py",
+          "chunks": [
+            [
+              "FixtureLookupErrorRepr.toterminal",
+              880,
+              896
+            ],
+            [
+              "wrap_function_to_error_out_if_called_directly",
+              1153,
+              1172
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/capture.py\n   - capfd (lines 857-871)\n   - _readline_workaround (lines 67-89)\n2. src/_pytest/terminal.py\n   - <module> (lines 1-1317)\n   - _get_line_with_reprcrash_message (lines 1206-1242)\n3. src/_pytest/config/__init__.py\n   - console_main (lines 173-188)\n   - PytestPluginManager._check_non_top_pytest_plugins (lines 577-594)\n4. src/_pytest/logging.py\n   - _remove_ansi_escape_sequences (lines 41-42)\n   - <module> (lines 1-816)\n5. src/_pytest/fixtures.py\n   - FixtureLookupErrorRepr.toterminal (lines 880-896)\n   - wrap_function_to_error_out_if_called_directly (lines 1153-1172)\n\nEnd of automatic code search results.",
+      "sha256": "0a2e2106548a8a047f867d4e0379621cb2aaf034c09972ce890dc083bf1f8008",
+      "bytes": 854,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-7982",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "a7e38c5c61928033a2dc1915cbee8caa8544a4d0",
+      "issue_sha256": "90201d780cf37fdf665a7ea9c601714391d34ccc8bb513bf3e7d5f3e667e49da",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/pathlib.py",
+          "chunks": [
+            [
+              "visit",
+              551,
+              562
+            ],
+            [
+              "symlink_or_skip",
+              411,
+              416
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/pytester.py",
+          "chunks": [
+            [
+              "Testdir",
+              1482,
+              1688
+            ],
+            [
+              "testdir",
+              453,
+              461
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/python.py",
+          "chunks": [
+            [
+              "Package._recurse",
+              664,
+              674
+            ],
+            [
+              "Package.collect",
+              700,
+              729
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/tmpdir.py",
+          "chunks": [
+            [
+              "TempPathFactory",
+              22,
+              103
+            ],
+            [
+              "<module>",
+              1,
+              193
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/main.py",
+          "chunks": [
+            [
+              "Session._recurse",
+              519,
+              529
+            ],
+            [
+              "Session.collect",
+              634,
+              783
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/pathlib.py\n   - visit (lines 551-562)\n   - symlink_or_skip (lines 411-416)\n2. src/_pytest/pytester.py\n   - Testdir (lines 1482-1688)\n   - testdir (lines 453-461)\n3. src/_pytest/python.py\n   - Package._recurse (lines 664-674)\n   - Package.collect (lines 700-729)\n4. src/_pytest/tmpdir.py\n   - TempPathFactory (lines 22-103)\n   - <module> (lines 1-193)\n5. src/_pytest/main.py\n   - Session._recurse (lines 519-529)\n   - Session.collect (lines 634-783)\n\nEnd of automatic code search results.",
+      "sha256": "ec6742d728ca33649327994f2b3e5633fdaddd3c4467e64ba5aa2d51dd6ca0b0",
+      "bytes": 720,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "pytest-dev__pytest-8399",
+      "repo": "pytest-dev/pytest",
+      "base_commit": "6e7dc8bac831cd8cf7a53b08efa366bd84f0c0fe",
+      "issue_sha256": "2471cd247002e8cb4c9cff40999a0841dbfea96004fb15d6df9c23528395c011",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "src/_pytest/unittest.py",
+          "chunks": [
+            [
+              "UnitTestCase._inject_setup_teardown_fixtures",
+              97,
+              120
+            ],
+            [
+              "UnitTestCase",
+              61,
+              120
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/fixtures.py",
+          "chunks": [
+            [
+              "FixtureManager",
+              1399,
+              1692
+            ],
+            [
+              "<module>",
+              1,
+              1692
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/python.py",
+          "chunks": [
+            [
+              "Class._inject_setup_class_fixture",
+              796,
+              823
+            ],
+            [
+              "Class._inject_setup_method_fixture",
+              825,
+              853
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/doctest.py",
+          "chunks": [
+            [
+              "_setup_fixtures",
+              566,
+              579
+            ],
+            [
+              "pytest_unconfigure",
+              117,
+              120
+            ]
+          ]
+        },
+        {
+          "path": "src/_pytest/deprecated.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              111
+            ],
+            [
+              "check_ispytest",
+              109,
+              111
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. src/_pytest/unittest.py\n   - UnitTestCase._inject_setup_teardown_fixtures (lines 97-120)\n   - UnitTestCase (lines 61-120)\n2. src/_pytest/fixtures.py\n   - FixtureManager (lines 1399-1692)\n   - <module> (lines 1-1692)\n3. src/_pytest/python.py\n   - Class._inject_setup_class_fixture (lines 796-823)\n   - Class._inject_setup_method_fixture (lines 825-853)\n4. src/_pytest/doctest.py\n   - _setup_fixtures (lines 566-579)\n   - pytest_unconfigure (lines 117-120)\n5. src/_pytest/deprecated.py\n   - <module> (lines 1-111)\n   - check_ispytest (lines 109-111)\n\nEnd of automatic code search results.",
+      "sha256": "9a17c5f278cb422d4c569fb88041ad7b4b12f5d2ae072038eb4b294bdc90ffa6",
+      "bytes": 807,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-10908",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "67d06b18c68ee4452768f8a1e868565dd4354abf",
+      "issue_sha256": "706f3719994e3076d30e5aeafcaa86f8ce95666d705c8eb5127779336e4d88ae",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/feature_extraction/text.py",
+          "chunks": [
+            [
+              "CountVectorizer",
+              559,
+              999
+            ],
+            [
+              "CountVectorizer.fit_transform",
+              874,
+              930
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/feature_extraction/dict_vectorizer.py",
+          "chunks": [
+            [
+              "DictVectorizer",
+              26,
+              365
+            ],
+            [
+              "DictVectorizer._transform",
+              137,
+              211
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/naive_bayes.py",
+          "chunks": [
+            [
+              "BaseDiscreteNB.partial_fit",
+              484,
+              564
+            ],
+            [
+              "MultinomialNB._count",
+              711,
+              716
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/preprocessing/data.py",
+          "chunks": [
+            [
+              "OneHotEncoder._transform",
+              2062,
+              2100
+            ],
+            [
+              "OneHotEncoder",
+              1875,
+              2116
+            ]
+          ]
+        },
+        {
+          "path": "benchmarks/bench_text_vectorizers.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              76
+            ],
+            [
+              "run_vectorizer",
+              28,
+              32
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/feature_extraction/text.py\n   - CountVectorizer (lines 559-999)\n   - CountVectorizer.fit_transform (lines 874-930)\n2. sklearn/feature_extraction/dict_vectorizer.py\n   - DictVectorizer (lines 26-365)\n   - DictVectorizer._transform (lines 137-211)\n3. sklearn/naive_bayes.py\n   - BaseDiscreteNB.partial_fit (lines 484-564)\n   - MultinomialNB._count (lines 711-716)\n4. sklearn/preprocessing/data.py\n   - OneHotEncoder._transform (lines 2062-2100)\n   - OneHotEncoder (lines 1875-2116)\n5. benchmarks/bench_text_vectorizers.py\n   - <module> (lines 1-76)\n   - run_vectorizer (lines 28-32)\n\nEnd of automatic code search results.",
+      "sha256": "fc092b908568e011a6c8f4233f77217c3e91b020ea36627175409620326b6924",
+      "bytes": 848,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-12585",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "bfc4a566423e036fbdc9fb02765fd893e4860c85",
+      "issue_sha256": "0bd52ce53c9612da5326a0742940720ef9520cb2c0f8893e2e49f1513706b4a6",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/base.py",
+          "chunks": [
+            [
+              "clone",
+              30,
+              74
+            ],
+            [
+              "BaseEstimator._get_param_names",
+              139,
+              164
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/utils/estimator_checks.py",
+          "chunks": [
+            [
+              "check_parameters_default_constructible",
+              2062,
+              2133
+            ],
+            [
+              "check_estimators_overwrite_params",
+              1930,
+              1962
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/pipeline.py",
+          "chunks": [
+            [
+              "make_pipeline",
+              560,
+              606
+            ],
+            [
+              "Pipeline",
+              30,
+              532
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/model_selection/_search.py",
+          "chunks": [
+            [
+              "BaseSearchCV._estimator_type",
+              408,
+              410
+            ],
+            [
+              "RandomizedSearchCV",
+              1133,
+              1442
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/preprocessing/data.py",
+          "chunks": [
+            [
+              "PowerTransformer.__init__",
+              2572,
+              2575
+            ],
+            [
+              "StandardScaler",
+              480,
+              798
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/base.py\n   - clone (lines 30-74)\n   - BaseEstimator._get_param_names (lines 139-164)\n2. sklearn/utils/estimator_checks.py\n   - check_parameters_default_constructible (lines 2062-2133)\n   - check_estimators_overwrite_params (lines 1930-1962)\n3. sklearn/pipeline.py\n   - make_pipeline (lines 560-606)\n   - Pipeline (lines 30-532)\n4. sklearn/model_selection/_search.py\n   - BaseSearchCV._estimator_type (lines 408-410)\n   - RandomizedSearchCV (lines 1133-1442)\n5. sklearn/preprocessing/data.py\n   - PowerTransformer.__init__ (lines 2572-2575)\n   - StandardScaler (lines 480-798)\n\nEnd of automatic code search results.",
+      "sha256": "a662a1ddfa0b035135b0fd9f9597c4569aa26bbfdfeffde56723119630967aaf",
+      "bytes": 843,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-12973",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "a7b8b9e9e16d4e15fabda5ae615086c2e1c47d8a",
+      "issue_sha256": "9f4c3ac86062600df1bbf16897c088a862213cb9418d09da8d0d6e32163ba223",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/linear_model/least_angle.py",
+          "chunks": [
+            [
+              "LassoLarsIC",
+              1351,
+              1546
+            ],
+            [
+              "LassoLars",
+              710,
+              844
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/linear_model/coordinate_descent.py",
+          "chunks": [
+            [
+              "LassoCV",
+              1245,
+              1409
+            ],
+            [
+              "Lasso",
+              809,
+              940
+            ]
+          ]
+        },
+        {
+          "path": "examples/linear_model/plot_lasso_model_selection.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              155
+            ],
+            [
+              "plot_ic_criterion",
+              81,
+              90
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/covariance/graph_lasso_.py",
+          "chunks": [
+            [
+              "GraphLassoCV",
+              874,
+              985
+            ],
+            [
+              "GraphicalLassoCV",
+              472,
+              720
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/decomposition/dict_learning.py",
+          "chunks": [
+            [
+              "SparseCoder.fit",
+              992,
+              1009
+            ],
+            [
+              "_sparse_encode",
+              25,
+              179
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/linear_model/least_angle.py\n   - LassoLarsIC (lines 1351-1546)\n   - LassoLars (lines 710-844)\n2. sklearn/linear_model/coordinate_descent.py\n   - LassoCV (lines 1245-1409)\n   - Lasso (lines 809-940)\n3. examples/linear_model/plot_lasso_model_selection.py\n   - <module> (lines 1-155)\n   - plot_ic_criterion (lines 81-90)\n4. sklearn/covariance/graph_lasso_.py\n   - GraphLassoCV (lines 874-985)\n   - GraphicalLassoCV (lines 472-720)\n5. sklearn/decomposition/dict_learning.py\n   - SparseCoder.fit (lines 992-1009)\n   - _sparse_encode (lines 25-179)\n\nEnd of automatic code search results.",
+      "sha256": "05582aea7f662b7fde3144e8748b40d81044a60fa89ba1d44d8afc3255a35491",
+      "bytes": 810,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-13142",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "1c8668b0a021832386470ddf740d834e02c66f69",
+      "issue_sha256": "09d29f40006ebbae91aeab363c05beda6131a0d3ddee55d1d9581619e065d6d1",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/mixture/gaussian_mixture.py",
+          "chunks": [
+            [
+              "GaussianMixture",
+              434,
+              755
+            ],
+            [
+              "GaussianMixture._initialize",
+              627,
+              658
+            ]
+          ]
+        },
+        {
+          "path": "examples/mixture/plot_gmm.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              88
+            ],
+            [
+              "plot_results",
+              39,
+              65
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/mixture/base.py",
+          "chunks": [
+            [
+              "BaseMixture.fit_predict",
+              194,
+              276
+            ],
+            [
+              "BaseMixture._check_initial_parameters",
+              85,
+              119
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/utils/estimator_checks.py",
+          "chunks": [
+            [
+              "check_outliers_fit_predict",
+              2307,
+              2340
+            ],
+            [
+              "check_clustering",
+              1275,
+              1332
+            ]
+          ]
+        },
+        {
+          "path": "examples/mixture/plot_gmm_covariances.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              135
+            ],
+            [
+              "make_ellipses",
+              47,
+              67
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/mixture/gaussian_mixture.py\n   - GaussianMixture (lines 434-755)\n   - GaussianMixture._initialize (lines 627-658)\n2. examples/mixture/plot_gmm.py\n   - <module> (lines 1-88)\n   - plot_results (lines 39-65)\n3. sklearn/mixture/base.py\n   - BaseMixture.fit_predict (lines 194-276)\n   - BaseMixture._check_initial_parameters (lines 85-119)\n4. sklearn/utils/estimator_checks.py\n   - check_outliers_fit_predict (lines 2307-2340)\n   - check_clustering (lines 1275-1332)\n5. examples/mixture/plot_gmm_covariances.py\n   - <module> (lines 1-135)\n   - make_ellipses (lines 47-67)\n\nEnd of automatic code search results.",
+      "sha256": "61e779f901a352d6ae03dc38994c339722b545853dc064c2fd5e7aa5f7aa556c",
+      "bytes": 834,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-13439",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "a62775e99f2a5ea3d51db7160fad783f6cd8a4c5",
+      "issue_sha256": "bcdb7c064b7370929b2d8b37e9b35008d95bc4050e49372d9f13723e13f8baa4",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "examples/feature_selection/plot_feature_selection_pipeline.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              40
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/pipeline.py",
+          "chunks": [
+            [
+              "Pipeline",
+              29,
+              562
+            ],
+            [
+              "<module>",
+              1,
+              931
+            ]
+          ]
+        },
+        {
+          "path": "examples/compose/plot_compare_reduction.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              131
+            ]
+          ]
+        },
+        {
+          "path": "examples/compose/plot_digits_pipe.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              78
+            ]
+          ]
+        },
+        {
+          "path": "examples/svm/plot_svm_anova.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              56
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. examples/feature_selection/plot_feature_selection_pipeline.py\n   - <module> (lines 1-40)\n2. sklearn/pipeline.py\n   - Pipeline (lines 29-562)\n   - <module> (lines 1-931)\n3. examples/compose/plot_compare_reduction.py\n   - <module> (lines 1-131)\n4. examples/compose/plot_digits_pipe.py\n   - <module> (lines 1-78)\n5. examples/svm/plot_svm_anova.py\n   - <module> (lines 1-56)\n\nEnd of automatic code search results.",
+      "sha256": "3dc175e577debd6a33ae450f873cb9ecab470627947dd65f760e430c0c1899c5",
+      "bytes": 630,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-14053",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "6ab8c86c383dd847a1be7103ad115f174fe23ffd",
+      "issue_sha256": "4bfeec31c05255ebf71795aa346b58c911563bf4a11dac38c2e20e73f2b2d267",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/tree/export.py",
+          "chunks": [
+            [
+              "export_text",
+              806,
+              957
+            ],
+            [
+              "export_graphviz",
+              655,
+              783
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/feature_extraction/text.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1684
+            ],
+            [
+              "HashingVectorizer",
+              404,
+              677
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/tree/tree.py",
+          "chunks": [
+            [
+              "DecisionTreeClassifier",
+              532,
+              894
+            ],
+            [
+              "<module>",
+              1,
+              1507
+            ]
+          ]
+        },
+        {
+          "path": "examples/tree/plot_unveil_tree_structure.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              134
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/__init__.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              109
+            ],
+            [
+              "setup_module",
+              96,
+              109
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/tree/export.py\n   - export_text (lines 806-957)\n   - export_graphviz (lines 655-783)\n2. sklearn/feature_extraction/text.py\n   - <module> (lines 1-1684)\n   - HashingVectorizer (lines 404-677)\n3. sklearn/tree/tree.py\n   - DecisionTreeClassifier (lines 532-894)\n   - <module> (lines 1-1507)\n4. examples/tree/plot_unveil_tree_structure.py\n   - <module> (lines 1-134)\n5. sklearn/__init__.py\n   - <module> (lines 1-109)\n   - setup_module (lines 96-109)\n\nEnd of automatic code search results.",
+      "sha256": "db049cbd171ea4f3778cf9f8e99c58bde4f48cef66c69dafce261f6b6c77700d",
+      "bytes": 714,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-14496",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "d49a6f13af2f22228d430ac64ac2b518937800d0",
+      "issue_sha256": "7860d59abe6e6a85ed92cbc43c7b632982164bc89105df4df399793154bb15df",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/cluster/optics_.py",
+          "chunks": [
+            [
+              "OPTICS",
+              24,
+              277
+            ],
+            [
+              "compute_optics_graph",
+              331,
+              492
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/neighbors/base.py",
+          "chunks": [
+            [
+              "NeighborsBase._fit",
+              164,
+              278
+            ],
+            [
+              "KNeighborsMixin.kneighbors",
+              333,
+              494
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/neighbors/unsupervised.py",
+          "chunks": [
+            [
+              "NearestNeighbors",
+              9,
+              132
+            ],
+            [
+              "NearestNeighbors.__init__",
+              124,
+              132
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/neighbors/classification.py",
+          "chunks": [
+            [
+              "KNeighborsClassifier",
+              23,
+              247
+            ],
+            [
+              "<module>",
+              1,
+              441
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/neighbors/lof.py",
+          "chunks": [
+            [
+              "LocalOutlierFactor",
+              19,
+              498
+            ],
+            [
+              "<module>",
+              1,
+              498
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/cluster/optics_.py\n   - OPTICS (lines 24-277)\n   - compute_optics_graph (lines 331-492)\n2. sklearn/neighbors/base.py\n   - NeighborsBase._fit (lines 164-278)\n   - KNeighborsMixin.kneighbors (lines 333-494)\n3. sklearn/neighbors/unsupervised.py\n   - NearestNeighbors (lines 9-132)\n   - NearestNeighbors.__init__ (lines 124-132)\n4. sklearn/neighbors/classification.py\n   - KNeighborsClassifier (lines 23-247)\n   - <module> (lines 1-441)\n5. sklearn/neighbors/lof.py\n   - LocalOutlierFactor (lines 19-498)\n   - <module> (lines 1-498)\n\nEnd of automatic code search results.",
+      "sha256": "8b9449b9bc43ce4719609ea003180045a0d7444f831ffc334fa098f2a3e353f3",
+      "bytes": 795,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-14710",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "4b6273b87442a4437d8b3873ea3022ae163f4fdf",
+      "issue_sha256": "a2ab68a76bfcf2cb56a50c1e385a1b1bcbdc8ec024121323193d7034f2075d4f",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py",
+          "chunks": [
+            [
+              "HistGradientBoostingClassifier",
+              814,
+              1044
+            ],
+            [
+              "BaseHistGradientBoosting.fit",
+              83,
+              392
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/ensemble/gradient_boosting.py",
+          "chunks": [
+            [
+              "BaseGradientBoosting.fit",
+              1397,
+              1558
+            ],
+            [
+              "GradientBoostingClassifier",
+              1813,
+              2286
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/decomposition/online_lda.py",
+          "chunks": [
+            [
+              "LatentDirichletAllocation",
+              135,
+              803
+            ],
+            [
+              "LatentDirichletAllocation.fit",
+              516,
+              585
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/linear_model/passive_aggressive.py",
+          "chunks": [
+            [
+              "PassiveAggressiveClassifier",
+              9,
+              254
+            ],
+            [
+              "PassiveAggressiveClassifier.__init__",
+              164,
+              187
+            ]
+          ]
+        },
+        {
+          "path": "benchmarks/bench_hist_gradient_boosting_higgsboson.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              123
+            ],
+            [
+              "load_data",
+              42,
+              56
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py\n   - HistGradientBoostingClassifier (lines 814-1044)\n   - BaseHistGradientBoosting.fit (lines 83-392)\n2. sklearn/ensemble/gradient_boosting.py\n   - BaseGradientBoosting.fit (lines 1397-1558)\n   - GradientBoostingClassifier (lines 1813-2286)\n3. sklearn/decomposition/online_lda.py\n   - LatentDirichletAllocation (lines 135-803)\n   - LatentDirichletAllocation.fit (lines 516-585)\n4. sklearn/linear_model/passive_aggressive.py\n   - PassiveAggressiveClassifier (lines 9-254)\n   - PassiveAggressiveClassifier.__init__ (lines 164-187)\n5. benchmarks/bench_hist_gradient_boosting_higgsboson.py\n   - <module> (lines 1-123)\n   - load_data (lines 42-56)\n\nEnd of automatic code search results.",
+      "sha256": "3abb2df6f03028217ca523a0814c6ec006518b0bec9f3eae570ee9be1ae36664",
+      "bytes": 964,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-15100",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "af8a6e592a1a15d92d77011856d5aa0ec4db4c6c",
+      "issue_sha256": "b77ba0094810ffb21a5f1fe01b16786055bb1a4d20663b52f38cf52395c76f8d",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/feature_extraction/text.py",
+          "chunks": [
+            [
+              "strip_accents_unicode",
+              114,
+              136
+            ],
+            [
+              "TfidfVectorizer",
+              1451,
+              1811
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/feature_extraction/stop_words.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              45
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/externals/_arff.py",
+          "chunks": [
+            [
+              "_unquote",
+              256,
+              263
+            ],
+            [
+              "encode_string",
+              418,
+              421
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/decomposition/online_lda.py",
+          "chunks": [
+            [
+              "LatentDirichletAllocation._unnormalized_transform",
+              598,
+              625
+            ],
+            [
+              "LatentDirichletAllocation",
+              135,
+              814
+            ]
+          ]
+        },
+        {
+          "path": "examples/text/plot_hashing_vs_dict_vectorizer.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              110
+            ],
+            [
+              "tokens",
+              36,
+              42
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/feature_extraction/text.py\n   - strip_accents_unicode (lines 114-136)\n   - TfidfVectorizer (lines 1451-1811)\n2. sklearn/feature_extraction/stop_words.py\n   - <module> (lines 1-45)\n3. sklearn/externals/_arff.py\n   - _unquote (lines 256-263)\n   - encode_string (lines 418-421)\n4. sklearn/decomposition/online_lda.py\n   - LatentDirichletAllocation._unnormalized_transform (lines 598-625)\n   - LatentDirichletAllocation (lines 135-814)\n5. examples/text/plot_hashing_vs_dict_vectorizer.py\n   - <module> (lines 1-110)\n   - tokens (lines 36-42)\n\nEnd of automatic code search results.",
+      "sha256": "eb3360f1e94e11dc2c4cf94ac9d25f9cfc31e876fcaf5cd1ca8df6463fd0ed2a",
+      "bytes": 805,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "scikit-learn__scikit-learn-9288",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "3eacf948e0f95ef957862568d87ce082f378e186",
+      "issue_sha256": "4c6be4c6f8f699371300fb64162cb969da421307c54fc0743c0f78ae90c09b2b",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sklearn/cluster/k_means_.py",
+          "chunks": [
+            [
+              "k_means",
+              178,
+              414
+            ],
+            [
+              "KMeans",
+              763,
+              1098
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/decomposition/online_lda.py",
+          "chunks": [
+            [
+              "LatentDirichletAllocation.fit",
+              513,
+              582
+            ],
+            [
+              "LatentDirichletAllocation",
+              135,
+              800
+            ]
+          ]
+        },
+        {
+          "path": "examples/cluster/plot_mini_batch_kmeans.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              116
+            ]
+          ]
+        },
+        {
+          "path": "sklearn/cluster/bicluster.py",
+          "chunks": [
+            [
+              "SpectralCoclustering",
+              179,
+              307
+            ],
+            [
+              "BaseSpectral._k_means",
+              163,
+              176
+            ]
+          ]
+        },
+        {
+          "path": "examples/cluster/plot_kmeans_stability_low_dim_dense.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              119
+            ],
+            [
+              "make_data",
+              55,
+              68
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sklearn/cluster/k_means_.py\n   - k_means (lines 178-414)\n   - KMeans (lines 763-1098)\n2. sklearn/decomposition/online_lda.py\n   - LatentDirichletAllocation.fit (lines 513-582)\n   - LatentDirichletAllocation (lines 135-800)\n3. examples/cluster/plot_mini_batch_kmeans.py\n   - <module> (lines 1-116)\n4. sklearn/cluster/bicluster.py\n   - SpectralCoclustering (lines 179-307)\n   - BaseSpectral._k_means (lines 163-176)\n5. examples/cluster/plot_kmeans_stability_low_dim_dense.py\n   - <module> (lines 1-119)\n   - make_data (lines 55-68)\n\nEnd of automatic code search results.",
+      "sha256": "7fae66004f790bedaa35163536d4b8f739ed482b154719a3e7e94fcd28525bba",
+      "bytes": 789,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-10323",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "31eba1a76dd485dc633cae48227b46879eda5df4",
+      "issue_sha256": "789a19432537c3948b2c7389aa497711b6ec5a68c9f0d8c3ce2b73eb15f57753",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/directives/code.py",
+          "chunks": [
+            [
+              "LiteralInclude",
+              364,
+              448
+            ],
+            [
+              "LiteralInclude.run",
+              399,
+              448
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/domains/cpp.py",
+          "chunks": [
+            [
+              "CPPObject.before_content",
+              7265,
+              7271
+            ],
+            [
+              "ASTPostfixInc",
+              1134,
+              1143
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "chunks": [
+            [
+              "Documenter.add_line",
+              365,
+              370
+            ],
+            [
+              "between",
+              215,
+              248
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/directives/__init__.py",
+          "chunks": [
+            [
+              "ObjectDescription.before_content",
+              111,
+              116
+            ],
+            [
+              "DefaultRole",
+              209,
+              234
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/directives/other.py",
+          "chunks": [
+            [
+              "Include",
+              347,
+              361
+            ],
+            [
+              "Include.run",
+              353,
+              361
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/directives/code.py\n   - LiteralInclude (lines 364-448)\n   - LiteralInclude.run (lines 399-448)\n2. sphinx/domains/cpp.py\n   - CPPObject.before_content (lines 7265-7271)\n   - ASTPostfixInc (lines 1134-1143)\n3. sphinx/ext/autodoc/__init__.py\n   - Documenter.add_line (lines 365-370)\n   - between (lines 215-248)\n4. sphinx/directives/__init__.py\n   - ObjectDescription.before_content (lines 111-116)\n   - DefaultRole (lines 209-234)\n5. sphinx/directives/other.py\n   - Include (lines 347-361)\n   - Include.run (lines 353-361)\n\nEnd of automatic code search results.",
+      "sha256": "6d223d8e01dce9f2eed0739d5f9b243055d682e2b8c45edd2bdb3ad697ac4473",
+      "bytes": 787,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-10614",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "ac2b7599d212af7d04649959ce6926c63c3133fa",
+      "issue_sha256": "59e104221b08590febe6ae868c6d35b4348e5c6fbf023b4806df6d313e88c730",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/ext/inheritance_diagram.py",
+          "chunks": [
+            [
+              "html_visit_inheritance_diagram",
+              398,
+              428
+            ],
+            [
+              "InheritanceGraph",
+              135,
+              322
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/cmd/quickstart.py",
+          "chunks": [
+            [
+              "QuickstartRenderer",
+              164,
+              183
+            ],
+            [
+              "ask_user",
+              186,
+              323
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/graphviz.py",
+          "chunks": [
+            [
+              "fix_svg_relative_paths",
+              220,
+              248
+            ],
+            [
+              "<module>",
+              1,
+              456
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/imgmath.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              405
+            ],
+            [
+              "write_svg_depth",
+              79,
+              83
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/errors.py",
+          "chunks": [
+            [
+              "NoUri",
+              119,
+              122
+            ],
+            [
+              "FiletypeNotFoundError",
+              125,
+              127
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/ext/inheritance_diagram.py\n   - html_visit_inheritance_diagram (lines 398-428)\n   - InheritanceGraph (lines 135-322)\n2. sphinx/cmd/quickstart.py\n   - QuickstartRenderer (lines 164-183)\n   - ask_user (lines 186-323)\n3. sphinx/ext/graphviz.py\n   - fix_svg_relative_paths (lines 220-248)\n   - <module> (lines 1-456)\n4. sphinx/ext/imgmath.py\n   - <module> (lines 1-405)\n   - write_svg_depth (lines 79-83)\n5. sphinx/errors.py\n   - NoUri (lines 119-122)\n   - FiletypeNotFoundError (lines 125-127)\n\nEnd of automatic code search results.",
+      "sha256": "e0ae74c77e199335e256d2ff05e33bc8c89d0059a1dc6bd908eb8d993dcf52f3",
+      "bytes": 757,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-7440",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "9bb204dcabe6ba0fc422bf4a45ad0c79c680d90b",
+      "issue_sha256": "d9558af32ba6cbcd6cb5c430f514ed0eebb29d72289dc90fcee26062ca9ff073",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/cmd/quickstart.py",
+          "chunks": [
+            [
+              "ValidationError",
+              93,
+              94
+            ],
+            [
+              "<module>",
+              1,
+              616
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/errors.py",
+          "chunks": [
+            [
+              "SphinxWarning",
+              38,
+              40
+            ],
+            [
+              "SphinxError",
+              15,
+              35
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/domains/std.py",
+          "chunks": [
+            [
+              "Glossary.run",
+              333,
+              437
+            ],
+            [
+              "Glossary",
+              319,
+              437
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/writers/latex.py",
+          "chunks": [
+            [
+              "UnsupportedError",
+              72,
+              73
+            ],
+            [
+              "LaTeXTranslator.visit_glossary",
+              613,
+              614
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/domains/cpp.py",
+          "chunks": [
+            [
+              "_DuplicateSymbolError",
+              547,
+              555
+            ],
+            [
+              "ASTFallbackExpr",
+              1598,
+              1610
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/cmd/quickstart.py\n   - ValidationError (lines 93-94)\n   - <module> (lines 1-616)\n2. sphinx/errors.py\n   - SphinxWarning (lines 38-40)\n   - SphinxError (lines 15-35)\n3. sphinx/domains/std.py\n   - Glossary.run (lines 333-437)\n   - Glossary (lines 319-437)\n4. sphinx/writers/latex.py\n   - UnsupportedError (lines 72-73)\n   - LaTeXTranslator.visit_glossary (lines 613-614)\n5. sphinx/domains/cpp.py\n   - _DuplicateSymbolError (lines 547-555)\n   - ASTFallbackExpr (lines 1598-1610)\n\nEnd of automatic code search results.",
+      "sha256": "e86b2bb05e5182ceff422dd971e335dee79bf13a3a432299b8ba74294f8f6530",
+      "bytes": 742,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-7590",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "2e506c5ab457cba743bb47eb5b8c8eb9dd51d23d",
+      "issue_sha256": "23b9b88e30541f1109b04492ccf35a93a15fdeecb2b736bf22be5a2a6173f84e",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/domains/cpp.py",
+          "chunks": [
+            [
+              "DefinitionParser._parse_literal",
+              4646,
+              4686
+            ],
+            [
+              "ASTTemplateArgConstant",
+              1612,
+              1629
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/domains/c.py",
+          "chunks": [
+            [
+              "ASTLiteral",
+              223,
+              224
+            ],
+            [
+              "DefinitionParser.language",
+              2037,
+              2039
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/util/cfamily.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              437
+            ],
+            [
+              "BaseParser._parse_attribute",
+              380,
+              437
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/cmd/quickstart.py",
+          "chunks": [
+            [
+              "convert_python_source",
+              187,
+              191
+            ],
+            [
+              "ask_user",
+              207,
+              342
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/domains/math.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              174
+            ],
+            [
+              "MathDomain",
+              43,
+              162
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/domains/cpp.py\n   - DefinitionParser._parse_literal (lines 4646-4686)\n   - ASTTemplateArgConstant (lines 1612-1629)\n2. sphinx/domains/c.py\n   - ASTLiteral (lines 223-224)\n   - DefinitionParser.language (lines 2037-2039)\n3. sphinx/util/cfamily.py\n   - <module> (lines 1-437)\n   - BaseParser._parse_attribute (lines 380-437)\n4. sphinx/cmd/quickstart.py\n   - convert_python_source (lines 187-191)\n   - ask_user (lines 207-342)\n5. sphinx/domains/math.py\n   - <module> (lines 1-174)\n   - MathDomain (lines 43-162)\n\nEnd of automatic code search results.",
+      "sha256": "d23a20a05a84e257a5a24aaf238e792edbd8c333081a1c0c8683b26aeddeb7ba",
+      "bytes": 775,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-7910",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "27ac10de04697e2372d31db5548e56a7c6d9265d",
+      "issue_sha256": "c3d99aeda62cf24ce56a14f0f21c0dc80ac1a4afb3e43e50dbf7bf32a548aa5b",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/ext/napoleon/__init__.py",
+          "chunks": [
+            [
+              "Config",
+              18,
+              272
+            ],
+            [
+              "_skip_member",
+              381,
+              463
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "chunks": [
+            [
+              "Documenter",
+              214,
+              846
+            ],
+            [
+              "ClassDocumenter._get_signature",
+              1307,
+              1369
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/napoleon/docstring.py",
+          "chunks": [
+            [
+              "GoogleDocstring.__init__",
+              109,
+              181
+            ],
+            [
+              "NumpyDocstring.__init__",
+              876,
+              880
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_numpy.py",
+          "chunks": [
+            [
+              "ExampleClass.__special__",
+              320,
+              334
+            ],
+            [
+              "ExampleClass.__init__",
+              245,
+              277
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_google.py",
+          "chunks": [
+            [
+              "ExampleClass.__special__",
+              261,
+              275
+            ],
+            [
+              "ExampleClass.__init__",
+              197,
+              224
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/ext/napoleon/__init__.py\n   - Config (lines 18-272)\n   - _skip_member (lines 381-463)\n2. sphinx/ext/autodoc/__init__.py\n   - Documenter (lines 214-846)\n   - ClassDocumenter._get_signature (lines 1307-1369)\n3. sphinx/ext/napoleon/docstring.py\n   - GoogleDocstring.__init__ (lines 109-181)\n   - NumpyDocstring.__init__ (lines 876-880)\n4. doc/usage/extensions/example_numpy.py\n   - ExampleClass.__special__ (lines 320-334)\n   - ExampleClass.__init__ (lines 245-277)\n5. doc/usage/extensions/example_google.py\n   - ExampleClass.__special__ (lines 261-275)\n   - ExampleClass.__init__ (lines 197-224)\n\nEnd of automatic code search results.",
+      "sha256": "65c884b3220c32285540a4edbe70a9348faf9065c91db0b0d27e8201bac9fbc8",
+      "bytes": 860,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-8120",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "795747bdb6b8fb7d717d5bbfc2c3316869e66a73",
+      "issue_sha256": "2260a8491280312f611378ddff0e08bb9f0961011d0a49b7a2be74a1844cb18b",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/application.py",
+          "chunks": [
+            [
+              "Sphinx._init_i18n",
+              279,
+              302
+            ],
+            [
+              "Sphinx.__init__",
+              137,
+              277
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/locale/__init__.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              266
+            ],
+            [
+              "init",
+              109,
+              146
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/util/i18n.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              333
+            ],
+            [
+              "find_catalog_source_files",
+              155,
+              201
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/builders/gettext.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              331
+            ],
+            [
+              "setup",
+              316,
+              331
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/environment/__init__.py",
+          "chunks": [
+            [
+              "BuildEnvironment.find_files",
+              370,
+              397
+            ],
+            [
+              "<module>",
+              1,
+              661
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/application.py\n   - Sphinx._init_i18n (lines 279-302)\n   - Sphinx.__init__ (lines 137-277)\n2. sphinx/locale/__init__.py\n   - <module> (lines 1-266)\n   - init (lines 109-146)\n3. sphinx/util/i18n.py\n   - <module> (lines 1-333)\n   - find_catalog_source_files (lines 155-201)\n4. sphinx/builders/gettext.py\n   - <module> (lines 1-331)\n   - setup (lines 316-331)\n5. sphinx/environment/__init__.py\n   - BuildEnvironment.find_files (lines 370-397)\n   - <module> (lines 1-661)\n\nEnd of automatic code search results.",
+      "sha256": "4cb16b675108fab4fceac3ca6edc85591e826a9fbd6225aa358757531a4b4591",
+      "bytes": 734,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-8459",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "68aa4fb29e7dfe521749e1e14f750d7afabb3481",
+      "issue_sha256": "5a7af99001528e86ff4d88a9bf03e4b87b08c1c4907ef4230d6dfa05a3375018",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/ext/autodoc/typehints.py",
+          "chunks": [
+            [
+              "record_typehints",
+              23,
+              37
+            ],
+            [
+              "merge_typehints",
+              40,
+              66
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              2340
+            ],
+            [
+              "setup",
+              2304,
+              2340
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/napoleon/docstring.py",
+          "chunks": [
+            [
+              "GoogleDocstring",
+              60,
+              805
+            ],
+            [
+              "<module>",
+              1,
+              1267
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autodoc/type_comment.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              139
+            ],
+            [
+              "update_annotations_using_type_comments",
+              115,
+              133
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/util/typing.py",
+          "chunks": [
+            [
+              "get_type_hints",
+              60,
+              80
+            ],
+            [
+              "<module>",
+              1,
+              451
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/ext/autodoc/typehints.py\n   - record_typehints (lines 23-37)\n   - merge_typehints (lines 40-66)\n2. sphinx/ext/autodoc/__init__.py\n   - <module> (lines 1-2340)\n   - setup (lines 2304-2340)\n3. sphinx/ext/napoleon/docstring.py\n   - GoogleDocstring (lines 60-805)\n   - <module> (lines 1-1267)\n4. sphinx/ext/autodoc/type_comment.py\n   - <module> (lines 1-139)\n   - update_annotations_using_type_comments (lines 115-133)\n5. sphinx/util/typing.py\n   - get_type_hints (lines 60-80)\n   - <module> (lines 1-451)\n\nEnd of automatic code search results.",
+      "sha256": "363ea809e37ad696dad91763ce85f4f5f96b031d0063e3237dc7a729e0043fd8",
+      "bytes": 768,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-8593",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "07983a5a8704ad91ae855218ecbda1c8598200ca",
+      "issue_sha256": "d7a0b222ecda2268846b70d86cee54c8162748aacb047519b2e657c3c18dc962",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "chunks": [
+            [
+              "ObjectMember",
+              260,
+              283
+            ],
+            [
+              "PropertyDocumenter.document_members",
+              2447,
+              2448
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_google.py",
+          "chunks": [
+            [
+              "ExampleClass._private",
+              280,
+              293
+            ],
+            [
+              "ExampleClass.__special__",
+              261,
+              275
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_numpy.py",
+          "chunks": [
+            [
+              "ExampleClass._private",
+              339,
+              352
+            ],
+            [
+              "ExampleClass.__special__",
+              320,
+              334
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/environment/__init__.py",
+          "chunks": [
+            [
+              "BuildEnvironment.docname",
+              467,
+              470
+            ],
+            [
+              "BuildEnvironment.found_docs",
+              363,
+              366
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autosummary/generate.py",
+          "chunks": [
+            [
+              "generate_autosummary_content",
+              225,
+              340
+            ],
+            [
+              "<module>",
+              1,
+              647
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/ext/autodoc/__init__.py\n   - ObjectMember (lines 260-283)\n   - PropertyDocumenter.document_members (lines 2447-2448)\n2. doc/usage/extensions/example_google.py\n   - ExampleClass._private (lines 280-293)\n   - ExampleClass.__special__ (lines 261-275)\n3. doc/usage/extensions/example_numpy.py\n   - ExampleClass._private (lines 339-352)\n   - ExampleClass.__special__ (lines 320-334)\n4. sphinx/environment/__init__.py\n   - BuildEnvironment.docname (lines 467-470)\n   - BuildEnvironment.found_docs (lines 363-366)\n5. sphinx/ext/autosummary/generate.py\n   - generate_autosummary_content (lines 225-340)\n   - <module> (lines 1-647)\n\nEnd of automatic code search results.",
+      "sha256": "521f724c2e0c8fb542efe9b05370c6a11faa32f08a70efc34b41ecb82c0c7ed9",
+      "bytes": 889,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-9258",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "06107f838c28ab6ca6bfc2cc208e15997fcb2146",
+      "issue_sha256": "4163acebdf504c769400387fdf4abdce2b57c5d5634a7845a8a347af1de7464f",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "doc/usage/extensions/example_google.py",
+          "chunks": [
+            [
+              "function_with_types_in_docstring",
+              45,
+              62
+            ],
+            [
+              "function_with_pep484_type_annotations",
+              65,
+              75
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_numpy.py",
+          "chunks": [
+            [
+              "function_with_types_in_docstring",
+              55,
+              77
+            ],
+            [
+              "function_with_pep484_type_annotations",
+              80,
+              98
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/addnodes.py",
+          "chunks": [
+            [
+              "desc_type",
+              238,
+              239
+            ],
+            [
+              "desc_sig_literal_string",
+              332,
+              334
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/util/docfields.py",
+          "chunks": [
+            [
+              "TypedField",
+              144,
+              204
+            ],
+            [
+              "Field",
+              38,
+              99
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/writers/text.py",
+          "chunks": [
+            [
+              "TextTranslator.visit_desc_type",
+              593,
+              594
+            ],
+            [
+              "TextTranslator.depart_desc_type",
+              596,
+              597
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. doc/usage/extensions/example_google.py\n   - function_with_types_in_docstring (lines 45-62)\n   - function_with_pep484_type_annotations (lines 65-75)\n2. doc/usage/extensions/example_numpy.py\n   - function_with_types_in_docstring (lines 55-77)\n   - function_with_pep484_type_annotations (lines 80-98)\n3. sphinx/addnodes.py\n   - desc_type (lines 238-239)\n   - desc_sig_literal_string (lines 332-334)\n4. sphinx/util/docfields.py\n   - TypedField (lines 144-204)\n   - Field (lines 38-99)\n5. sphinx/writers/text.py\n   - TextTranslator.visit_desc_type (lines 593-594)\n   - TextTranslator.depart_desc_type (lines 596-597)\n\nEnd of automatic code search results.",
+      "sha256": "d1c9d89641812d1e3bc301155242a3d6170e8aa335e448ed59b622427dd6c597",
+      "bytes": 871,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-9461",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "939c7bb7ff7c53a4d27df067cea637540f0e1dad",
+      "issue_sha256": "cc2eb5d4afca2da5e00ca423f2dce2bf467613a98b9686da7dc19a08e1f4de0f",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "chunks": [
+            [
+              "ClassDocumenter.get_doc",
+              1681,
+              1731
+            ],
+            [
+              "ClassDocumenter._get_signature",
+              1473,
+              1549
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/util/inspect.py",
+          "chunks": [
+            [
+              "getdoc",
+              830,
+              865
+            ],
+            [
+              "isclassmethod",
+              248,
+              255
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autodoc/importer.py",
+          "chunks": [
+            [
+              "get_class_members",
+              240,
+              324
+            ],
+            [
+              "get_object_members",
+              179,
+              237
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_google.py",
+          "chunks": [
+            [
+              "ExampleClass",
+              180,
+              296
+            ],
+            [
+              "ExampleClass.__special__",
+              261,
+              275
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autosummary/__init__.py",
+          "chunks": [
+            [
+              "get_documenter",
+              200,
+              232
+            ],
+            [
+              "<module>",
+              1,
+              803
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/ext/autodoc/__init__.py\n   - ClassDocumenter.get_doc (lines 1681-1731)\n   - ClassDocumenter._get_signature (lines 1473-1549)\n2. sphinx/util/inspect.py\n   - getdoc (lines 830-865)\n   - isclassmethod (lines 248-255)\n3. sphinx/ext/autodoc/importer.py\n   - get_class_members (lines 240-324)\n   - get_object_members (lines 179-237)\n4. doc/usage/extensions/example_google.py\n   - ExampleClass (lines 180-296)\n   - ExampleClass.__special__ (lines 261-275)\n5. sphinx/ext/autosummary/__init__.py\n   - get_documenter (lines 200-232)\n   - <module> (lines 1-803)\n\nEnd of automatic code search results.",
+      "sha256": "62a3a36d9f2f2a526705c54033b9a20e229ba0fdd5f92e3eb61793dadbe0f46b",
+      "bytes": 817,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sphinx-doc__sphinx-9673",
+      "repo": "sphinx-doc/sphinx",
+      "base_commit": "5fb51fb1467dc5eea7505402c3c5d9b378d3b441",
+      "issue_sha256": "7926d944c30024620395f3792e0585e9f9105999c2de9d57269a75f648dc5b2b",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sphinx/ext/napoleon/docstring.py",
+          "chunks": [
+            [
+              "NumpyDocstring",
+              1047,
+              1338
+            ],
+            [
+              "GoogleDocstring",
+              70,
+              872
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/napoleon/__init__.py",
+          "chunks": [
+            [
+              "Config",
+              19,
+              294
+            ],
+            [
+              "_process_docstring",
+              353,
+              400
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_numpy.py",
+          "chunks": [
+            [
+              "function_with_types_in_docstring",
+              55,
+              77
+            ],
+            [
+              "function_with_pep484_type_annotations",
+              80,
+              98
+            ]
+          ]
+        },
+        {
+          "path": "doc/usage/extensions/example_google.py",
+          "chunks": [
+            [
+              "function_with_types_in_docstring",
+              45,
+              62
+            ],
+            [
+              "function_with_pep484_type_annotations",
+              65,
+              75
+            ]
+          ]
+        },
+        {
+          "path": "sphinx/ext/autodoc/typehints.py",
+          "chunks": [
+            [
+              "augment_descriptions_with_types",
+              130,
+              173
+            ],
+            [
+              "merge_typehints",
+              40,
+              67
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sphinx/ext/napoleon/docstring.py\n   - NumpyDocstring (lines 1047-1338)\n   - GoogleDocstring (lines 70-872)\n2. sphinx/ext/napoleon/__init__.py\n   - Config (lines 19-294)\n   - _process_docstring (lines 353-400)\n3. doc/usage/extensions/example_numpy.py\n   - function_with_types_in_docstring (lines 55-77)\n   - function_with_pep484_type_annotations (lines 80-98)\n4. doc/usage/extensions/example_google.py\n   - function_with_types_in_docstring (lines 45-62)\n   - function_with_pep484_type_annotations (lines 65-75)\n5. sphinx/ext/autodoc/typehints.py\n   - augment_descriptions_with_types (lines 130-173)\n   - merge_typehints (lines 40-67)\n\nEnd of automatic code search results.",
+      "sha256": "ee41dc751029a09b3ed68ad737df51b6a21c239eea513f7d209f2c6d7adb6611",
+      "bytes": 892,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-11618",
+      "repo": "sympy/sympy",
+      "base_commit": "360290c4c401e386db60723ddb0109ed499c9f6e",
+      "issue_sha256": "7eec6e997311bf1014a07659710714c0a891fd0e5b9d58dadb31a83b23746330",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/geometry/util.py",
+          "chunks": [
+            [
+              "closest_points",
+              336,
+              412
+            ],
+            [
+              "farthest_points",
+              415,
+              498
+            ]
+          ]
+        },
+        {
+          "path": "sympy/geometry/line3d.py",
+          "chunks": [
+            [
+              "Ray3D.distance",
+              1174,
+              1205
+            ],
+            [
+              "Line3D.distance",
+              955,
+              981
+            ]
+          ]
+        },
+        {
+          "path": "sympy/geometry/line.py",
+          "chunks": [
+            [
+              "Ray.distance",
+              1412,
+              1445
+            ],
+            [
+              "Segment.distance",
+              1743,
+              1777
+            ]
+          ]
+        },
+        {
+          "path": "sympy/geometry/point.py",
+          "chunks": [
+            [
+              "Point.distance",
+              237,
+              270
+            ],
+            [
+              "Point.taxicab_distance",
+              272,
+              303
+            ]
+          ]
+        },
+        {
+          "path": "sympy/geometry/polygon.py",
+          "chunks": [
+            [
+              "Polygon._do_poly_distance",
+              723,
+              920
+            ],
+            [
+              "Polygon.distance",
+              694,
+              721
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/geometry/util.py\n   - closest_points (lines 336-412)\n   - farthest_points (lines 415-498)\n2. sympy/geometry/line3d.py\n   - Ray3D.distance (lines 1174-1205)\n   - Line3D.distance (lines 955-981)\n3. sympy/geometry/line.py\n   - Ray.distance (lines 1412-1445)\n   - Segment.distance (lines 1743-1777)\n4. sympy/geometry/point.py\n   - Point.distance (lines 237-270)\n   - Point.taxicab_distance (lines 272-303)\n5. sympy/geometry/polygon.py\n   - Polygon._do_poly_distance (lines 723-920)\n   - Polygon.distance (lines 694-721)\n\nEnd of automatic code search results.",
+      "sha256": "922774de2451d545783bf1b3d36c1f2ec480f2c8ec272442f62e0f2b3510274f",
+      "bytes": 781,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-13091",
+      "repo": "sympy/sympy",
+      "base_commit": "d1320814eda6549996190618a21eaf212cfd4d1e",
+      "issue_sha256": "56dd1975c2cdb9924609fb6ce9a46f4a1269dce8da33bf80032d1c9d8a73e7db",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/core/basic.py",
+          "chunks": [
+            [
+              "Basic.__eq__",
+              282,
+              321
+            ],
+            [
+              "Basic.is_comparable",
+              559,
+              603
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/numbers.py",
+          "chunks": [
+            [
+              "Rational.__eq__",
+              1718,
+              1734
+            ],
+            [
+              "Number.__eq__",
+              688,
+              690
+            ]
+          ]
+        },
+        {
+          "path": "sympy/matrices/common.py",
+          "chunks": [
+            [
+              "MatrixRequired.__eq__",
+              58,
+              59
+            ],
+            [
+              "MatrixProperties.is_anti_symmetric",
+              1033,
+              1102
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/relational.py",
+          "chunks": [
+            [
+              "Equality",
+              232,
+              368
+            ],
+            [
+              "GreaterThan",
+              498,
+              744
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/function.py",
+          "chunks": [
+            [
+              "UndefinedFunction.__eq__",
+              825,
+              828
+            ],
+            [
+              "UndefinedFunction.__ne__",
+              830,
+              831
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/core/basic.py\n   - Basic.__eq__ (lines 282-321)\n   - Basic.is_comparable (lines 559-603)\n2. sympy/core/numbers.py\n   - Rational.__eq__ (lines 1718-1734)\n   - Number.__eq__ (lines 688-690)\n3. sympy/matrices/common.py\n   - MatrixRequired.__eq__ (lines 58-59)\n   - MatrixProperties.is_anti_symmetric (lines 1033-1102)\n4. sympy/core/relational.py\n   - Equality (lines 232-368)\n   - GreaterThan (lines 498-744)\n5. sympy/core/function.py\n   - UndefinedFunction.__eq__ (lines 825-828)\n   - UndefinedFunction.__ne__ (lines 830-831)\n\nEnd of automatic code search results.",
+      "sha256": "a4c4bf288c36a5c5ac6027decfdbf3e43781064ee3de959ea852259324ddc2de",
+      "bytes": 789,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-13757",
+      "repo": "sympy/sympy",
+      "base_commit": "a5e6a101869e027e7930e694f8b1cfb082603453",
+      "issue_sha256": "63fe3a94f352bfa567c1934f7dacc6d0c86db8ed628f4595b73c1f3f0bf9a4c4",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/polys/polytools.py",
+          "chunks": [
+            [
+              "Poly",
+              61,
+              4163
+            ],
+            [
+              "poly",
+              7000,
+              7079
+            ]
+          ]
+        },
+        {
+          "path": "sympy/simplify/hyperexpand.py",
+          "chunks": [
+            [
+              "MultOperator.__init__",
+              984,
+              985
+            ],
+            [
+              "MeijerShiftA.__init__",
+              1100,
+              1102
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/numberfields.py",
+          "chunks": [
+            [
+              "_minpoly_mul",
+              382,
+              391
+            ],
+            [
+              "_muly",
+              306,
+              314
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/numbers.py",
+          "chunks": [
+            [
+              "AlgebraicNumber.as_poly",
+              2393,
+              2402
+            ],
+            [
+              "igcd_lehmer",
+              229,
+              369
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/rings.py",
+          "chunks": [
+            [
+              "PolyElement.__mul__",
+              1061,
+              1109
+            ],
+            [
+              "PolyElement.mul_ground",
+              1951,
+              1956
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/polys/polytools.py\n   - Poly (lines 61-4163)\n   - poly (lines 7000-7079)\n2. sympy/simplify/hyperexpand.py\n   - MultOperator.__init__ (lines 984-985)\n   - MeijerShiftA.__init__ (lines 1100-1102)\n3. sympy/polys/numberfields.py\n   - _minpoly_mul (lines 382-391)\n   - _muly (lines 306-314)\n4. sympy/core/numbers.py\n   - AlgebraicNumber.as_poly (lines 2393-2402)\n   - igcd_lehmer (lines 229-369)\n5. sympy/polys/rings.py\n   - PolyElement.__mul__ (lines 1061-1109)\n   - PolyElement.mul_ground (lines 1951-1956)\n\nEnd of automatic code search results.",
+      "sha256": "b6b1aa14f6bb3a08069c73929e0de348724f51fe9db2fb98dce58bd78912748e",
+      "bytes": 769,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-14248",
+      "repo": "sympy/sympy",
+      "base_commit": "9986b38181cdd556a3f3411e553864f11912244e",
+      "issue_sha256": "056549bbb76a727325fc85b052ecb5d1c9ba9d70d702cf011b407e3877e5c383",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/printing/pretty/pretty.py",
+          "chunks": [
+            [
+              "PrettyPrinter._print_SymmetricDifference",
+              1709,
+              1715
+            ],
+            [
+              "PrettyPrinter._print_MatrixBase",
+              722,
+              726
+            ]
+          ]
+        },
+        {
+          "path": "sympy/printing/julia.py",
+          "chunks": [
+            [
+              "JuliaCodePrinter._print_Mul",
+              118,
+              181
+            ],
+            [
+              "julia_code",
+              480,
+              614
+            ]
+          ]
+        },
+        {
+          "path": "sympy/matrices/matrices.py",
+          "chunks": [
+            [
+              "MatrixBase.__repr__",
+              1930,
+              1931
+            ],
+            [
+              "MatrixBase.__str__",
+              1933,
+              1936
+            ]
+          ]
+        },
+        {
+          "path": "sympy/printing/latex.py",
+          "chunks": [
+            [
+              "LatexPrinter._print_SymmetricDifference",
+              1745,
+              1746
+            ],
+            [
+              "LatexPrinter._print_MatPow",
+              1509,
+              1515
+            ]
+          ]
+        },
+        {
+          "path": "sympy/printing/codeprinter.py",
+          "chunks": [
+            [
+              "CodePrinter._print_Mul",
+              409,
+              449
+            ],
+            [
+              "CodePrinter.doprint",
+              65,
+              121
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/printing/pretty/pretty.py\n   - PrettyPrinter._print_SymmetricDifference (lines 1709-1715)\n   - PrettyPrinter._print_MatrixBase (lines 722-726)\n2. sympy/printing/julia.py\n   - JuliaCodePrinter._print_Mul (lines 118-181)\n   - julia_code (lines 480-614)\n3. sympy/matrices/matrices.py\n   - MatrixBase.__repr__ (lines 1930-1931)\n   - MatrixBase.__str__ (lines 1933-1936)\n4. sympy/printing/latex.py\n   - LatexPrinter._print_SymmetricDifference (lines 1745-1746)\n   - LatexPrinter._print_MatPow (lines 1509-1515)\n5. sympy/printing/codeprinter.py\n   - CodePrinter._print_Mul (lines 409-449)\n   - CodePrinter.doprint (lines 65-121)\n\nEnd of automatic code search results.",
+      "sha256": "ce1e158651133d92d891f5809e04ed9f7c43975a2fa7ba171a619edf18d71130",
+      "bytes": 888,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-15599",
+      "repo": "sympy/sympy",
+      "base_commit": "5e17a90c19f7eecfa10c1ab872648ae7e2131323",
+      "issue_sha256": "cf4081c50e2bce78ef90503152dbf7f94f2f8cf0323ee9cd68cf0e3a60835d6e",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/core/mod.py",
+          "chunks": [
+            [
+              "Mod.eval",
+              26,
+              197
+            ],
+            [
+              "Mod",
+              7,
+              211
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/expr.py",
+          "chunks": [
+            [
+              "Expr.__mod__",
+              198,
+              201
+            ],
+            [
+              "<module>",
+              1,
+              3512
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/mul.py",
+          "chunks": [
+            [
+              "Mul._eval_subs",
+              1380,
+              1642
+            ],
+            [
+              "<module>",
+              1,
+              1816
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/numbers.py",
+          "chunks": [
+            [
+              "mod_inverse",
+              436,
+              498
+            ],
+            [
+              "Integer.__mod__",
+              2135,
+              2142
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/power.py",
+          "chunks": [
+            [
+              "Pow._eval_expand_power_base",
+              836,
+              952
+            ],
+            [
+              "Pow._eval_subs",
+              648,
+              761
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/core/mod.py\n   - Mod.eval (lines 26-197)\n   - Mod (lines 7-211)\n2. sympy/core/expr.py\n   - Expr.__mod__ (lines 198-201)\n   - <module> (lines 1-3512)\n3. sympy/core/mul.py\n   - Mul._eval_subs (lines 1380-1642)\n   - <module> (lines 1-1816)\n4. sympy/core/numbers.py\n   - mod_inverse (lines 436-498)\n   - Integer.__mod__ (lines 2135-2142)\n5. sympy/core/power.py\n   - Pow._eval_expand_power_base (lines 836-952)\n   - Pow._eval_subs (lines 648-761)\n\nEnd of automatic code search results.",
+      "sha256": "46e52b0a82158d772f2acc9f9e46f119418d0e9f55762805f09eb3c7ddff7ee0",
+      "bytes": 707,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-16766",
+      "repo": "sympy/sympy",
+      "base_commit": "b8fe457a02cc24b3470ff678d0099c350b7fef43",
+      "issue_sha256": "c71bac3070c6e9ab8d889dd00a304ef866828dbf4c152138857e3be79b96f971",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/printing/julia.py",
+          "chunks": [
+            [
+              "JuliaCodePrinter._print_Indexed",
+              393,
+              395
+            ],
+            [
+              "JuliaCodePrinter._print_Idx",
+              398,
+              399
+            ]
+          ]
+        },
+        {
+          "path": "sympy/printing/octave.py",
+          "chunks": [
+            [
+              "OctaveCodePrinter._print_Indexed",
+              381,
+              383
+            ],
+            [
+              "OctaveCodePrinter._print_Idx",
+              386,
+              387
+            ]
+          ]
+        },
+        {
+          "path": "sympy/printing/fcode.py",
+          "chunks": [
+            [
+              "FCodePrinter._print_Indexed",
+              368,
+              370
+            ],
+            [
+              "FCodePrinter._print_Idx",
+              372,
+              373
+            ]
+          ]
+        },
+        {
+          "path": "sympy/printing/jscode.py",
+          "chunks": [
+            [
+              "JavascriptCodePrinter._print_Indexed",
+              116,
+              124
+            ],
+            [
+              "JavascriptCodePrinter._print_Idx",
+              126,
+              127
+            ]
+          ]
+        },
+        {
+          "path": "sympy/printing/rust.py",
+          "chunks": [
+            [
+              "RustCodePrinter._print_Indexed",
+              361,
+              369
+            ],
+            [
+              "RustCodePrinter._print_Idx",
+              371,
+              372
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/printing/julia.py\n   - JuliaCodePrinter._print_Indexed (lines 393-395)\n   - JuliaCodePrinter._print_Idx (lines 398-399)\n2. sympy/printing/octave.py\n   - OctaveCodePrinter._print_Indexed (lines 381-383)\n   - OctaveCodePrinter._print_Idx (lines 386-387)\n3. sympy/printing/fcode.py\n   - FCodePrinter._print_Indexed (lines 368-370)\n   - FCodePrinter._print_Idx (lines 372-373)\n4. sympy/printing/jscode.py\n   - JavascriptCodePrinter._print_Indexed (lines 116-124)\n   - JavascriptCodePrinter._print_Idx (lines 126-127)\n5. sympy/printing/rust.py\n   - RustCodePrinter._print_Indexed (lines 361-369)\n   - RustCodePrinter._print_Idx (lines 371-372)\n\nEnd of automatic code search results.",
+      "sha256": "024176f43b2058eaf65e1822b1c58faec91ea6ec05cf0d5b331a161080d32301",
+      "bytes": 904,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-17655",
+      "repo": "sympy/sympy",
+      "base_commit": "f5e965947af2410ded92cfad987aaf45262ea434",
+      "issue_sha256": "933042963b8cdfbe2ba70d5a221c3a40e00b60595f5b865417d4494c0b566af0",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/geometry/point.py",
+          "chunks": [
+            [
+              "Point.__add__",
+              185,
+              222
+            ],
+            [
+              "Point",
+              41,
+              855
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/sympify.py",
+          "chunks": [
+            [
+              "SympifyError",
+              12,
+              23
+            ],
+            [
+              "_sympify",
+              392,
+              418
+            ]
+          ]
+        },
+        {
+          "path": "sympy/geometry/entity.py",
+          "chunks": [
+            [
+              "GeometryEntity.__new__",
+              115,
+              125
+            ],
+            [
+              "GeometryEntity._eval_subs",
+              153,
+              162
+            ]
+          ]
+        },
+        {
+          "path": "sympy/geometry/line.py",
+          "chunks": [
+            [
+              "Segment.distance",
+              1625,
+              1666
+            ],
+            [
+              "Segment.contains",
+              1564,
+              1618
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/numbers.py",
+          "chunks": [
+            [
+              "Rational.__add__",
+              1699,
+              1711
+            ],
+            [
+              "Number.__mul__",
+              736,
+              757
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/geometry/point.py\n   - Point.__add__ (lines 185-222)\n   - Point (lines 41-855)\n2. sympy/core/sympify.py\n   - SympifyError (lines 12-23)\n   - _sympify (lines 392-418)\n3. sympy/geometry/entity.py\n   - GeometryEntity.__new__ (lines 115-125)\n   - GeometryEntity._eval_subs (lines 153-162)\n4. sympy/geometry/line.py\n   - Segment.distance (lines 1625-1666)\n   - Segment.contains (lines 1564-1618)\n5. sympy/core/numbers.py\n   - Rational.__add__ (lines 1699-1711)\n   - Number.__mul__ (lines 736-757)\n\nEnd of automatic code search results.",
+      "sha256": "5f818010ee3a000894737d7601c13a087a07d3c21cdc16b9c8e27135531ae133",
+      "bytes": 757,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-19040",
+      "repo": "sympy/sympy",
+      "base_commit": "b9179e80d2daa1bb6cba1ffe35ca9e6612e115c9",
+      "issue_sha256": "42bb887eb79aa3dcd7183824fdce7ccc38d867dff8242d8edad92a705e0bbd58",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/core/expr.py",
+          "chunks": [
+            [
+              "Expr.factor",
+              3586,
+              3589
+            ],
+            [
+              "Expr.equals",
+              727,
+              857
+            ]
+          ]
+        },
+        {
+          "path": "sympy/ntheory/factor_.py",
+          "chunks": [
+            [
+              "_factorint_small",
+              876,
+              974
+            ],
+            [
+              "is_perfect",
+              2315,
+              2392
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/numbers.py",
+          "chunks": [
+            [
+              "One.factors",
+              2689,
+              2695
+            ],
+            [
+              "Integer._eval_power",
+              2300,
+              2403
+            ]
+          ]
+        },
+        {
+          "path": "sympy/functions/combinatorial/factorials.py",
+          "chunks": [
+            [
+              "subfactorial",
+              294,
+              378
+            ],
+            [
+              "FallingFactorial",
+              636,
+              766
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/polytools.py",
+          "chunks": [
+            [
+              "factor",
+              6258,
+              6356
+            ],
+            [
+              "_symbolic_factor",
+              5957,
+              5969
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/core/expr.py\n   - Expr.factor (lines 3586-3589)\n   - Expr.equals (lines 727-857)\n2. sympy/ntheory/factor_.py\n   - _factorint_small (lines 876-974)\n   - is_perfect (lines 2315-2392)\n3. sympy/core/numbers.py\n   - One.factors (lines 2689-2695)\n   - Integer._eval_power (lines 2300-2403)\n4. sympy/functions/combinatorial/factorials.py\n   - subfactorial (lines 294-378)\n   - FallingFactorial (lines 636-766)\n5. sympy/polys/polytools.py\n   - factor (lines 6258-6356)\n   - _symbolic_factor (lines 5957-5969)\n\nEnd of automatic code search results.",
+      "sha256": "3346ac6b9511db7b479ba58edd6791f5d08497cec3572ce422d6d4c607df5d54",
+      "bytes": 766,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-20428",
+      "repo": "sympy/sympy",
+      "base_commit": "c0e85160406f9bf2bcaa2992138587668a1cd0bc",
+      "issue_sha256": "3e20082eaadedd75f04a9afb22c1256f85d6e4768296ee14bdfbb5ba6a255fff",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/polys/polytools.py",
+          "chunks": [
+            [
+              "Poly.clear_denoms",
+              2219,
+              2256
+            ],
+            [
+              "Poly.rat_clear_denoms",
+              2258,
+              2295
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/densetools.py",
+          "chunks": [
+            [
+              "dmp_clear_denoms",
+              1223,
+              1258
+            ],
+            [
+              "<module>",
+              1,
+              1309
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/polyclasses.py",
+          "chunks": [
+            [
+              "DMP.clear_denoms",
+              586,
+              589
+            ],
+            [
+              "<module>",
+              1,
+              1763
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/factortools.py",
+          "chunks": [
+            [
+              "<module>",
+              1,
+              1490
+            ],
+            [
+              "dup_factor_list",
+              1301,
+              1364
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/polyroots.py",
+          "chunks": [
+            [
+              "preprocess_roots",
+              715,
+              785
+            ],
+            [
+              "roots_quadratic",
+              45,
+              111
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/polys/polytools.py\n   - Poly.clear_denoms (lines 2219-2256)\n   - Poly.rat_clear_denoms (lines 2258-2295)\n2. sympy/polys/densetools.py\n   - dmp_clear_denoms (lines 1223-1258)\n   - <module> (lines 1-1309)\n3. sympy/polys/polyclasses.py\n   - DMP.clear_denoms (lines 586-589)\n   - <module> (lines 1-1763)\n4. sympy/polys/factortools.py\n   - <module> (lines 1-1490)\n   - dup_factor_list (lines 1301-1364)\n5. sympy/polys/polyroots.py\n   - preprocess_roots (lines 715-785)\n   - roots_quadratic (lines 45-111)\n\nEnd of automatic code search results.",
+      "sha256": "fc757a8bd008beba40a76065a03f8a4b0fd222168da90ce79a8f8f8918c249f7",
+      "bytes": 765,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-21596",
+      "repo": "sympy/sympy",
+      "base_commit": "110997fe18b9f7d5ba7d22f624d156a29bf40759",
+      "issue_sha256": "14ad62b22f2daefbb61e2837aaf1a92c5ac3fd3639733a6e8b2fb6831296edb5",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/sets/handlers/intersection.py",
+          "chunks": [
+            [
+              "intersection_sets",
+              223,
+              382
+            ],
+            [
+              "intersection_sets",
+              30,
+              75
+            ]
+          ]
+        },
+        {
+          "path": "sympy/sets/handlers/issubset.py",
+          "chunks": [
+            [
+              "is_subset_sets",
+              129,
+              131
+            ],
+            [
+              "is_subset_sets",
+              133,
+              135
+            ]
+          ]
+        },
+        {
+          "path": "sympy/sets/sets.py",
+          "chunks": [
+            [
+              "Set.is_subset",
+              350,
+              397
+            ],
+            [
+              "Set.intersect",
+              116,
+              135
+            ]
+          ]
+        },
+        {
+          "path": "sympy/sets/fancysets.py",
+          "chunks": [
+            [
+              "ImageSet",
+              281,
+              504
+            ],
+            [
+              "Naturals._eval_is_subset",
+              110,
+              111
+            ]
+          ]
+        },
+        {
+          "path": "sympy/logic/boolalg.py",
+          "chunks": [
+            [
+              "And._eval_as_set",
+              790,
+              792
+            ],
+            [
+              "Implies",
+              1228,
+              1308
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/sets/handlers/intersection.py\n   - intersection_sets (lines 223-382)\n   - intersection_sets (lines 30-75)\n2. sympy/sets/handlers/issubset.py\n   - is_subset_sets (lines 129-131)\n   - is_subset_sets (lines 133-135)\n3. sympy/sets/sets.py\n   - Set.is_subset (lines 350-397)\n   - Set.intersect (lines 116-135)\n4. sympy/sets/fancysets.py\n   - ImageSet (lines 281-504)\n   - Naturals._eval_is_subset (lines 110-111)\n5. sympy/logic/boolalg.py\n   - And._eval_as_set (lines 790-792)\n   - Implies (lines 1228-1308)\n\nEnd of automatic code search results.",
+      "sha256": "c6e0ce0284d9c1bc5852805fbe64e02500fae57456b42de8f0005e27e3d06a0b",
+      "bytes": 768,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-22714",
+      "repo": "sympy/sympy",
+      "base_commit": "3ff4717b6aef6086e78f01cdfa06f64ae23aed7e",
+      "issue_sha256": "8f4d48e9d985d6bbdd7b61fbdf1342c381f26da9849ebd45c4b78252fdaf1f11",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/geometry/point.py",
+          "chunks": [
+            [
+              "Point.__new__",
+              109,
+              179
+            ],
+            [
+              "Point",
+              42,
+              857
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/sympify.py",
+          "chunks": [
+            [
+              "sympify",
+              97,
+              480
+            ],
+            [
+              "SympifyError",
+              17,
+              28
+            ]
+          ]
+        },
+        {
+          "path": "sympy/parsing/sympy_parser.py",
+          "chunks": [
+            [
+              "evaluateFalse",
+              1103,
+              1112
+            ],
+            [
+              "parse_expr",
+              918,
+              1100
+            ]
+          ]
+        },
+        {
+          "path": "sympy/polys/polytools.py",
+          "chunks": [
+            [
+              "_polifyit",
+              65,
+              90
+            ],
+            [
+              "primitive",
+              5674,
+              5717
+            ]
+          ]
+        },
+        {
+          "path": "sympy/functions/elementary/piecewise.py",
+          "chunks": [
+            [
+              "Piecewise._eval_simplify",
+              308,
+              309
+            ],
+            [
+              "Piecewise._eval_interval",
+              521,
+              649
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/geometry/point.py\n   - Point.__new__ (lines 109-179)\n   - Point (lines 42-857)\n2. sympy/core/sympify.py\n   - sympify (lines 97-480)\n   - SympifyError (lines 17-28)\n3. sympy/parsing/sympy_parser.py\n   - evaluateFalse (lines 1103-1112)\n   - parse_expr (lines 918-1100)\n4. sympy/polys/polytools.py\n   - _polifyit (lines 65-90)\n   - primitive (lines 5674-5717)\n5. sympy/functions/elementary/piecewise.py\n   - Piecewise._eval_simplify (lines 308-309)\n   - Piecewise._eval_interval (lines 521-649)\n\nEnd of automatic code search results.",
+      "sha256": "e4b6acdad5edcf7cde0255fc840afcde92b4d57231f2f38d10863bd857014bd7",
+      "bytes": 757,
+      "cr1_test_top5_match": true
+    },
+    {
+      "task": "sympy__sympy-23950",
+      "repo": "sympy/sympy",
+      "base_commit": "88664e6e0b781d0a8b5347896af74b555e92891e",
+      "issue_sha256": "b56221e6a6bb28b09a09c076fdba0cbf1cb9d256956c52345ec825ccd52f61db",
+      "query_vector": "cache",
+      "files": [
+        {
+          "path": "sympy/logic/boolalg.py",
+          "chunks": [
+            [
+              "Boolean.as_set",
+              135,
+              182
+            ],
+            [
+              "And._eval_as_set",
+              718,
+              720
+            ]
+          ]
+        },
+        {
+          "path": "sympy/sets/sets.py",
+          "chunks": [
+            [
+              "Set.contains",
+              306,
+              352
+            ],
+            [
+              "ProductSet.as_relational",
+              912,
+              918
+            ]
+          ]
+        },
+        {
+          "path": "sympy/core/relational.py",
+          "chunks": [
+            [
+              "Relational._eval_as_set",
+              513,
+              526
+            ],
+            [
+              "Relational.binary_symbols",
+              528,
+              531
+            ]
+          ]
+        },
+        {
+          "path": "sympy/sets/fancysets.py",
+          "chunks": [
+            [
+              "Naturals0._contains",
+              150,
+              156
+            ],
+            [
+              "Naturals._contains",
+              107,
+              113
+            ]
+          ]
+        },
+        {
+          "path": "sympy/functions/elementary/piecewise.py",
+          "chunks": [
+            [
+              "Piecewise.as_expr_set_pairs",
+              910,
+              957
+            ],
+            [
+              "Piecewise._handle_irel",
+              368,
+              433
+            ]
+          ]
+        }
+      ],
+      "text": "Automatic code search results (hints only)\nAn automatic search over the original repository at the base revision ranked the files below for the issue above. The results may be wrong. They are hints, not instructions.\n\n1. sympy/logic/boolalg.py\n   - Boolean.as_set (lines 135-182)\n   - And._eval_as_set (lines 718-720)\n2. sympy/sets/sets.py\n   - Set.contains (lines 306-352)\n   - ProductSet.as_relational (lines 912-918)\n3. sympy/core/relational.py\n   - Relational._eval_as_set (lines 513-526)\n   - Relational.binary_symbols (lines 528-531)\n4. sympy/sets/fancysets.py\n   - Naturals0._contains (lines 150-156)\n   - Naturals._contains (lines 107-113)\n5. sympy/functions/elementary/piecewise.py\n   - Piecewise.as_expr_set_pairs (lines 910-957)\n   - Piecewise._handle_irel (lines 368-433)\n\nEnd of automatic code search results.",
+      "sha256": "80426a353581a4ec6f3087130f2b939c61e8ed71cfaba25f001d04c822386173",
+      "bytes": 822,
+      "cr1_test_top5_match": true
+    }
+  ]
+}

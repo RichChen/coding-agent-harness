@@ -100,11 +100,13 @@ def build_agent(
     event_bus: EventBus | None = None,
     plugin_registry=None,
     execution_backend=None,
+    retrieval=None,
 ) -> AgentLoop:
     """Assemble an AgentLoop from a config dict and workspace.
 
     This is pure wiring — no side effects beyond object construction.
     Optional execution_backend lets callers inject A5 image-backed backends.
+    Optional retrieval (src.tools.retrieve.TaskRetrieval) is required when retrieve_code is enabled.
     """
     llm_cfg = config["llm"]
     rt_cfg = config["runtime"]
@@ -165,7 +167,9 @@ def build_agent(
     exec_profile = cmd_cfg.get("execution_profile", "legacy_host")
     docker_backend = None
     if exec_profile == "docker_linux":
-        if set(enabled) - {"read_file", "write_file", "list_dir", "edit_file", "search_replace", "run_command", "search_code"}:
+        # retrieve_code is the one host-side tool allowed here: it reads only the CR cache, never the workspace.
+        if set(enabled) - {"read_file", "write_file", "list_dir", "edit_file", "search_replace", "run_command", "search_code",
+                           "retrieve_code"}:
             raise ValueError("Docker profile rejects host-only/debug/subagent tools")
         if execution_backend is not None:
             docker_backend = execution_backend
@@ -217,6 +221,11 @@ def build_agent(
         tools.register(file_tool(EditFileTool()))
     if "search_code" in enabled:
         tools.register(SearchCodeTool(execution_backend=docker_backend))
+    if "retrieve_code" in enabled:
+        if retrieval is None:
+            raise ValueError("tools.enabled includes retrieve_code but build_agent got no retrieval service")
+        from src.tools.retrieve import RetrieveCodeTool
+        tools.register(RetrieveCodeTool(retrieval))
 
     subagent_cfg = rt_cfg.get("subagents", {})
     if subagent_cfg.get("enabled"):

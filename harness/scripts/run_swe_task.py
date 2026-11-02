@@ -717,7 +717,12 @@ async def tool_smoke(image: str, profile: Path) -> dict:
 
 
 async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, variant: str = "B0", cards_path: Path | None = None, legacy_image: bool = False,
-                   prompt_suffix: str | None = None, retry: dict | None = None) -> dict:
+                   prompt_suffix: str | None = None, retry: dict | None = None,
+                   retrieval=None, mock_llm=None, on_agent=None) -> dict:
+    """retrieval: passed to build_agent (needed when the profile enables retrieve_code).
+    mock_llm: with mock=True, replaces the default mock model. on_agent(agent) runs once the agent is built."""
+    if mock_llm is not None and not mock:
+        raise ValueError("mock_llm requires mock=True")
     if task["id"] in HOLDOUT:
         raise SystemExit("hold-out task refused: " + task["id"])
     output.mkdir(parents=True, exist_ok=True)
@@ -773,9 +778,11 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
         memory = memory_summary(variant, cards_path, dropped, await preview.decide({}))
         memory["cards_before"] = len(loaded)
         memory["cards_after"] = len(cards)
-    agent = build_agent(config, workspace, execution_backend=backend, plugin_registry=registry)
+    agent = build_agent(config, workspace, execution_backend=backend, plugin_registry=registry, retrieval=retrieval)
     if mock:
-        agent.llm = _MockLLM()
+        agent.llm = mock_llm if mock_llm is not None else _MockLLM()
+    if on_agent is not None:
+        on_agent(agent)
     requested_model = model_identity(agent.llm)
     ledger = make_ledger(output / "cny-ledger.json")
     before = ledger.cost_committed
