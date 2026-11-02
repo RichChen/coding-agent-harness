@@ -278,3 +278,65 @@ canary 的 8 个槽位保留，不重跑，它们的模型名记为缺失，在�
 ### 11.4 文件
 
 r2 没有改动任何冻结数据文件，第 10.7 节的 sha256 全部不变。
+
+## 12. r3 修订
+
+日期：2026-10-27。依据：[AUDIT-CR-2c-halt1](AUDIT-CR-2c-halt1.zh-CN.md)、[CR-2 合同](CR-2-CONTRACT.zh-CN.md)第 9 节。第 1–11 节保持不动；与本节冲突的地方以本节为准。本节随 tag `cr2-freeze-r3` 冻结，旧 tag `cr2-freeze`、`cr2-freeze-r1`、`cr2-freeze-r2` 不动。
+
+**代码提交：`231dc9f`**，只改了 `scripts/run_cr2.py`、`scripts/analyze_cr2.py` 和它们的测试（`tests/test_run_cr2.py`、`tests/test_analyze_cr2.py`）；`run_swe_task.py`、`src/`、A5/A6 的脚本和判定都没动。合同 9.2 正文只写了 `run_cr2.py`，9.2 的分析脚本条目和 9.4 的启动文字都包括 `analyze_cr2.py`，按后者执行。tag `cr2-freeze-r3` 打在加入本节的提交上，与 `231dc9f` 之间没有代码改动。
+
+合同第 9 节在仓库里的文本有乱码：UTF-8 被按 GBK 解码后又存成了 UTF-8。本次按 GBK 编码再按 UTF-8 解码的方式还原后阅读，没有改动合同文件。
+
+### 12.1 为什么改：9.1 重放核实
+
+`scripts/cr2_replay_snapshot.py`（提交 `a37002c`）用同一个基础镜像起一个干净容器，把 `scikit-learn__scikit-learn-12585/n/r4` 的 `events.jsonl` 里 agent 的每个工具调用按顺序交给同一套工具执行，超时与原运行相同，不调用模型。每步之后统计 `/workspace` 相对 `/opt/repo` 的改动，最后调用真实的 `export_delta()`。输出在 `runs/cr2-logs/replay-scikit-learn__scikit-learn-12585-n-r4.json`。
+
+- 最终改动有 6 个文件，共 4,056,963 字节，没有新文件。其中 agent 改的 `sklearn/base.py` 占 19,055 字节，其余 5 个是重新生成的 Cython 源文件：`sklearn/cluster/_k_means.c` 1,559,660，`sklearn/cluster/_hierarchical.cpp` 1,212,652，`sklearn/_isotonic.c` 897,262，`sklearn/cluster/_dbscan_inner.cpp` 257,334，`sklearn/__check_build/_check_build.c` 111,000。
+- 来源是 agent 第 5 步运行的 `python -m pytest sklearn/tests/test_base.py sklearn/tests/test_common.py -q -x`（工具超时，120.2 秒）。其中 `test_common.py::test_configure` 在仓库根目录执行 `setup.py config`，会重新 cythonize。这一步新增了 4 个文件，共 2,478,248 字节。第 6 步（`timeout 110 python -m pytest sklearn/tests/test_base.py sklearn/tests/test_pipeline.py sklearn/tests/test_metaestimators.py -q`，5.8 秒）后又多出 `_k_means.c`，应是上一步留下的 cythonize 子进程跑完了。
+- 没有 harness 自己写进工作区的文件。重放的 `export_delta()` 同样抛出 `ValueError: delta_too_large`。
+
+判定：**agent 造成**，即 agent 运行的命令生成的文件超过了快照上限（200 个文件或 4 MiB）。按 9.2 修订。
+
+### 12.2 改了什么
+
+- **重新分类**（`agent_snapshot_failure`、`counted_status`）：下面三个条件同时成立的运行算任务结果，不算 infra：
+  - summary 的 `status` 是 `infra_error`；
+  - `snapshot_error` 是 `ValueError: delta_too_large` 或 `DockerUnavailable: Docker control output quota exceeded`；
+  - `infra_reason` 正好是 `candidate snapshot failed: ` 加上这个 `snapshot_error`。
+
+  `snapshot_error` 只在 `close(snapshot=True)` 的 `export_delta()` 里设置，所以满足这些条件就说明错误出在快照这一步（op = snapshot）。最后一个条件排除了更早已有别的 infra 原因的运行。对这类运行：
+  - `needs_rerun` 返回 None，不退役，不重跑；
+  - 停止条件 `run_checks` 收到的行把它们的 status 换成 `delta_too_large`，所以不计入 infra 数量。已退役的运行也按同一规则计；
+  - `cr2-runs.json` 的行写 `status: "delta_too_large"`、`solved: false`、`no_candidate: true`，并带上 `snapshot_error`。其他行的 `no_candidate` 为 false。
+
+  其他 `snapshot_error`（容器提前消失、tar 失败、超时等）和其他 infra 原因都照旧退役重跑。常量是 `AGENT_SNAPSHOT_ERRORS` 和 `DELTA_STATUS = "delta_too_large"`。
+- **已有槽位**：`scikit-learn__scikit-learn-12585/n/r4` 保留的那次运行（`ValueError: delta_too_large`）按新规则成为已完成的任务结果，续跑时跳过。两次退役运行 `r4.infra1`（quota）和 `r4.infra2`（delta_too_large）保留原目录，费用照计。它们的目录名带点，不进入 `cr2-runs.json` 和分析。
+- **单实例锁**（`acquire_lock`）：`run_slots` 开始时在输出根目录（全量运行即 `runs/cr2-main/`）用 `O_CREAT|O_EXCL` 独占创建 `run_cr2.lock`，写入 `{"pid", "started_at"}`，在 `finally` 里删除。锁已存在时，下列情况都以 SystemExit 拒绝启动，不写报告、不启动槽位：
+  - PID 仍在运行：报告另一个 runner；
+  - PID 已不存在：报告陈旧锁，需要人工删除；
+  - 锁文件无法解析：同样拒绝。
+
+  Windows 上 `os.kill(pid, 0)` 会结束进程，所以用 `OpenProcess` 加 `GetExitCodeProcess`，`STILL_ACTIVE` 为 259；其他系统用 `os.kill(pid, 0)`。
+- **system_fingerprint**：复用模型名钩子，同一个正则同时匹配 `"model"` 和 `"system_fingerprint"` 的字符串值（null 不记）。`model-names.json` 改为 `{"models": [...], "system_fingerprints": [...]}`；读取时也接受 r2 写的纯列表（视为只有模型名）。报告新增 `returned_fingerprint_slots`（`by_fingerprint`、`without_fingerprint`，mock 为 null），`cr2-runs.json` 每行新增 `system_fingerprints`。只做报告，不是停止条件。前 3 个槽位的模型名检查不变。
+- **delta_too_large 统计**：报告新增 `delta_too_large_by_group`（组 → 槽位列表），统计范围是本次运行的全部槽位，包括跳过的已完成槽位。
+- **analyze_cr2.py**：接受 `delta_too_large` 行。步数等主指标和 T 组指标照常从 `events.jsonl` 计算，`solved` 记为 false（即使行里写了 true），报告新增 `delta_too_large_by_group`（组 → 数量）。其他指标、配对、种子不变。
+
+队列、组定义、注入核对、费用上限、其他停止条件和 infra 规则都不变。
+
+### 12.3 测试
+
+`tests/test_run_cr2.py` 由 32 个增加到 43 个：
+- 两种 `snapshot_error` 都改判为任务结果：不退役、不重跑、续跑时跳过、计入 `delta_too_large_by_group`；
+- 其他 `snapshot_error`、`infra_reason` 不是这个快照错误的运行、没有快照错误的 infra 仍然退役；
+- 4 个改判运行不触发 infra 停止条件；把其中 3 个换成别的快照错误就触发；
+- `write_runs` 的 `status`、`solved`、`no_candidate`、`snapshot_error`；
+- 锁的三种情况（PID 在运行、陈旧锁、无法解析）都拒绝且不启动槽位；正常结束和槽位崩溃后锁都被删除；`_pid_alive` 认得本进程，认得已结束的子进程；
+- 按 fingerprint 列槽位且不停止。
+
+另外，钩子测试的响应里加了 `system_fingerprint`，并检查 null 不记；读取坏文件的测试覆盖新旧两种格式。`tests/test_analyze_cr2.py` 的端到端用例加了一条 `delta_too_large` 行。
+
+全量 pytest（`231dc9f`，未激活 venv）：**862 passed、22 skipped、0 failed**，比 r2 多 12 个：上面 11 个新用例，加上 `test_retrieval_isolation` 对新脚本 `cr2_replay_snapshot.py` 的一个参数化检查。`run_cr2.py --preflight` 通过（56 题，224 条首条消息，1120 个槽位）。用新规则读取现有的 `runs/cr2-main`：28 份 summary 不触发停止条件；`12585/n/r4` 计为 `delta_too_large`，不需要重跑。
+
+### 12.4 文件
+
+r3 没有改动任何冻结数据文件，第 10.7 节的 sha256 全部不变。

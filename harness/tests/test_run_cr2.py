@@ -143,7 +143,7 @@ class FakeService:
 
 def make_fake_run(behaviour=None, calls=None):
     """behaviour(task, group, attempt) -> dict of overrides: status, events, prompt, tools, crash_log, models
-    (text written to model-names.json)."""
+    (text written to model-names.json), summary (extra summary fields)."""
     behaviour = behaviour or (lambda task, group, attempt: {})
     attempts = {}
 
@@ -166,7 +166,8 @@ def make_fake_run(behaviour=None, calls=None):
             (output / run_cr2.MODELS_FILE).write_text(over["models"], encoding="utf-8")
         summary = {"task_id": task["id"], "mock": mock, "profile": Path(profile).stem, "variant": variant,
                    "status": over.get("status", "failed"), "solved": False, "cost_cny": "0", "harness_tool_errors": 0,
-                   "prompt_sha256": run_cr2._sha(prompt), "model": {"name": "mock-model", "base_url_host": None}}
+                   "prompt_sha256": run_cr2._sha(prompt), "model": {"name": "mock-model", "base_url_host": None},
+                   **over.get("summary", {})}
         (output / "summary.json").write_text(json.dumps(summary), encoding="utf-8")
         return summary
 
@@ -299,11 +300,13 @@ def _model_handler(encoding=None):
     def handler(request):
         body = json.loads(request.content)
         if body.get("stream"):
-            chunks = [{"id": "1", "model": "served-v4", "choices": [{"index": 0, "delta": {"content": "he said \"model\": \"x\""}}]},
-                      {"id": "1", "model": "served-v4", "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
+            chunks = [{"id": "1", "model": "served-v4", "system_fingerprint": "fp_stream",
+                       "choices": [{"index": 0, "delta": {"content": "he said \"model\": \"x\""}}]},
+                      {"id": "1", "model": "served-v4", "system_fingerprint": "fp_stream",
+                       "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
                        "usage": {"prompt_tokens": 3, "completion_tokens": 2}}]
             return _network_response(200, _sse(*chunks), "text/event-stream", encoding)
-        return _network_response(200, json.dumps({"id": "2", "model": "served-plain", "choices": [
+        return _network_response(200, json.dumps({"id": "2", "model": "served-plain", "system_fingerprint": None, "choices": [
             {"index": 0, "message": {"role": "assistant", "content": "ok"}, "finish_reason": "stop"}],
             "usage": {"prompt_tokens": 1, "completion_tokens": 1}}).encode(), encoding=encoding)
     return handler
@@ -327,6 +330,7 @@ def test_model_name_tap_records_streamed_and_plain_responses(tmp_path, encoding)
     tapped = _tap_round(tmp_path, encoding, tap=True)
     assert tapped == _tap_round(tmp_path / "untapped", encoding, tap=False) == _tap_round(tmp_path / "x", None, tap=False)
     assert run_cr2.returned_models(tmp_path) == ["served-plain", "served-v4"]
+    assert run_cr2.returned_fingerprints(tmp_path) == ["fp_stream"]  # a null fingerprint is not recorded
 
 
 @pytest.mark.parametrize("encoding,body", [
@@ -337,7 +341,7 @@ def test_model_tap_stream_passes_other_bodies_through(encoding, body):
     seen = []
 
     async def go():
-        stream = run_cr2._ModelTapStream(_Pieces(body), seen.append, encoding)
+        stream = run_cr2._ModelTapStream(_Pieces(body), lambda value, field: seen.append(value), encoding)
         return b"".join([chunk async for chunk in stream])
 
     assert asyncio.run(go()) == body and seen == []
@@ -406,9 +410,139 @@ def test_model_name_check_skips_mock_and_short_runs(tmp_path):
 
 def test_returned_models_tolerates_bad_files(tmp_path):
     path = tmp_path / run_cr2.MODELS_FILE
-    for text, want in (("", []), ("{", []), ('{"a": 1}', []), ('["x", "", 3]', ["x"]), ('["m"]', ["m"])):
+    for text, want in (("", []), ("{", []), ('{"a": 1}', []), ('["x", "", 3]', ["x"]), ('["m"]', ["m"]),
+                       ('{"models": ["m", 1], "system_fingerprints": ["fp"]}', ["m"]), ('{"models": "m"}', []), ("3", [])):
         path.write_text(text, encoding="utf-8")
         assert run_cr2.returned_models(tmp_path) == want
+    for text, want in (('["m"]', []), ('{"models": ["m"], "system_fingerprints": ["fp", ""]}', ["fp"]), ("{", [])):
+        path.write_text(text, encoding="utf-8")
+        assert run_cr2.returned_fingerprints(tmp_path) == want
+
+
+def test_real_run_lists_slots_per_fingerprint_without_stopping(tmp_path):
+    files = {"a": '{"models": ["m"], "system_fingerprints": ["fp_1"]}',
+             "b": '{"models": ["m"], "system_fingerprints": ["fp_1", "fp_2"]}', "c": '{"models": ["m"]}'}
+
+    def behaviour(task, group, attempt):
+        return {"models": files[task]} if task in files else {"models": '["m"]'}
+
+    report = _run(tmp_path, FIVE, make_fake_run(behaviour), mock=False)
+    assert report["halt_reason"] is None and report["started"] == 5 and report["returned_models"] == ["m"]
+    assert report["returned_fingerprint_slots"] == {
+        "by_fingerprint": {"fp_1": ["a/n/r1", "b/p/r1"], "fp_2": ["b/p/r1"]},
+        "without_fingerprint": ["c/t/r1", "d/o/r1", "e/n/r1"]}
+    assert _run(tmp_path / "mock", FIVE, make_fake_run())["returned_fingerprint_slots"] is None
+
+
+# --- r3: delta_too_large is a task result; single-instance lock -----------------------------------
+
+DELTA = "ValueError: delta_too_large"
+QUOTA = "DockerUnavailable: Docker control output quota exceeded"
+
+
+def _snapshot_failed(error, reason=None):
+    return {"status": "infra_error", "summary": {
+        "snapshot_error": error, "stop_reason": "candidate_snapshot_failed",
+        "infra_reason": reason or "candidate snapshot failed: " + error}}
+
+
+@pytest.mark.parametrize("error", [DELTA, QUOTA])
+def test_agent_snapshot_failures_are_task_results(tmp_path, error):
+    summary = {"status": "infra_error", **_snapshot_failed(error)["summary"]}
+    assert run_cr2.agent_snapshot_failure(summary) and run_cr2.counted_status(summary) == "delta_too_large"
+    assert run_cr2.needs_rerun(tmp_path, summary) is None
+    calls = []
+    report = _run(tmp_path, [("a", "n", 1)], make_fake_run(lambda *a: _snapshot_failed(error), calls=calls))
+    assert report["halt_reason"] is None and len(calls) == 1 and report["infra_retired"] == []
+    assert report["infra_kept"] == [] and report["delta_too_large_by_group"] == {"n": ["a/n/r1"], "p": [], "t": [], "o": []}
+    again = _run(tmp_path, [("a", "n", 1)], make_fake_run(calls=calls))
+    assert again["skipped_finished"] == 1 and len(calls) == 1
+    assert again["delta_too_large_by_group"]["n"] == ["a/n/r1"]
+
+
+@pytest.mark.parametrize("over", [
+    _snapshot_failed("DockerUnavailable: docker exec timed out"),
+    _snapshot_failed("RuntimeError: tar failed"),
+    _snapshot_failed(DELTA, reason="container start failed"),       # an earlier infra failure, not the snapshot
+    {"status": "infra_error", "summary": {"snapshot_error": None, "infra_reason": "image pull failed"}},
+])
+def test_other_infra_errors_are_still_retired(tmp_path, over):
+    summary = {"status": "infra_error", **over["summary"]}
+    assert not run_cr2.agent_snapshot_failure(summary) and run_cr2.needs_rerun(tmp_path, summary) == "infra_error"
+
+    def behaviour(task, group, attempt):
+        return over if attempt == 1 else {}
+
+    report = _run(tmp_path, [("a", "n", 1)], make_fake_run(behaviour))
+    assert report["infra_retired"] == [run_cr2._display_path(tmp_path / "out" / "a" / "n" / "r1.infra1")]
+    assert report["delta_too_large_by_group"]["n"] == []
+
+
+def test_infra_stop_condition_excludes_reclassified_runs(tmp_path):
+    slots = [("a", "n", 1), ("b", "n", 1), ("c", "n", 1), ("d", "n", 1)]
+    report = _run(tmp_path, slots, make_fake_run(lambda *a: _snapshot_failed(DELTA)))
+    assert report["halt_reason"] is None and report["started"] == 4
+    assert run_cr2.halt_reason(tmp_path / "out", _expected(["a", "b", "c", "d"]), TOOLS) is None
+    # the same summaries with any other snapshot error are infra and trip the 3-and-over-10% rule
+    for task in ("a", "b", "c"):
+        path = tmp_path / "out" / task / "n" / "r1" / "summary.json"
+        summary = json.loads(path.read_text(encoding="utf-8"))
+        summary.update(snapshot_error="RuntimeError: tar failed", infra_reason="candidate snapshot failed: RuntimeError: tar failed")
+        path.write_text(json.dumps(summary), encoding="utf-8")
+    assert "infra_error 3 of 4" in run_cr2.halt_reason(tmp_path / "out", _expected(["a", "b", "c", "d"]), TOOLS)
+
+
+def test_write_runs_marks_delta_too_large_without_candidate(tmp_path):
+    out_root = tmp_path / "out"
+    _run(tmp_path, [("a", "n", 1), ("a", "p", 1)],
+         make_fake_run(lambda task, group, attempt: {**_snapshot_failed(QUOTA), "summary": {
+             **_snapshot_failed(QUOTA)["summary"], "solved": True}} if group == "n" else {}))
+    destination = run_cr2.write_runs(task_ids=["a"], repo_of={"a": "o/r"}, mock=True, prefetch_sha256="x",
+                                     out_root=out_root, destination=tmp_path / "runs.json")
+    rows = {row["group"]: row for row in json.loads(destination.read_text(encoding="utf-8"))["runs"]}
+    assert rows["n"]["status"] == "delta_too_large" and rows["n"]["solved"] is False and rows["n"]["no_candidate"] is True
+    assert rows["n"]["rerun_reason"] is None and rows["n"]["snapshot_error"] == QUOTA
+    assert rows["p"]["status"] == "failed" and rows["p"]["no_candidate"] is False
+
+
+def test_lock_refuses_live_and_stale_owners_and_is_released(tmp_path, monkeypatch):
+    out_root = tmp_path / "out"
+    lock = out_root / run_cr2.LOCK_FILE
+    report = _run(tmp_path, [("a", "n", 1)], make_fake_run())
+    assert report["halt_reason"] is None and not lock.exists()
+
+    out_root.mkdir(parents=True, exist_ok=True)
+    lock.write_text(json.dumps({"pid": 4242, "started_at": "2026-10-27T02:14:53+08:00"}), encoding="utf-8")
+    calls = []
+    monkeypatch.setattr(run_cr2, "_pid_alive", lambda pid: True)
+    with pytest.raises(SystemExit, match="another run_cr2.py .pid 4242"):
+        _run(tmp_path, [("b", "n", 1)], make_fake_run(calls=calls))
+    monkeypatch.setattr(run_cr2, "_pid_alive", lambda pid: False)
+    with pytest.raises(SystemExit, match="stale lock"):
+        _run(tmp_path, [("b", "n", 1)], make_fake_run(calls=calls))
+    lock.write_text("not json", encoding="utf-8")
+    with pytest.raises(SystemExit, match="unreadable lock"):
+        _run(tmp_path, [("b", "n", 1)], make_fake_run(calls=calls))
+    assert calls == [] and lock.exists() and not (out_root / "t-report.json").read_text(encoding="utf-8").count("b/n/r1")
+
+    lock.unlink()
+    monkeypatch.undo()
+
+    def crash(*args, **kwargs):
+        raise RuntimeError("boom")
+
+    report = _run(tmp_path, [("b", "n", 1)], crash, ids=["a", "b"])
+    assert "run crashed" in report["halt_reason"] and not lock.exists()
+
+
+def test_pid_alive_sees_this_process_and_not_a_finished_one():
+    import subprocess
+    import sys
+
+    assert run_cr2._pid_alive(run_cr2.os.getpid())
+    child = subprocess.Popen([sys.executable, "-c", "pass"])
+    child.wait()
+    assert not run_cr2._pid_alive(child.pid)
 
 
 def test_run_slots_reruns_provider_failures_and_keeps_directory(tmp_path):

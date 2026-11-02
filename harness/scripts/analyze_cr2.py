@@ -15,6 +15,9 @@ Step rules (unit-tested in tests/test_analyze_cr2.py):
 Paired per-task differences: P - N, T - N and O - N (r1, contract section 7.3; O is an upper-bound reference,
 not a retrieval method). solve_by_early_touch splits each group's runs by whether a gold file was touched
 within the first 10 steps.
+
+r3 (contract 9.2): runs with status delta_too_large (the candidate snapshot failed on the workspace delta size) are
+task results: their step metrics count, solved counts as false, and delta_too_large_by_group reports them.
 """
 from __future__ import annotations
 
@@ -39,6 +42,7 @@ RUNS = ROOT / "docs" / "retrieval" / "cr2-runs.json"
 OUT = ROOT / "docs" / "retrieval" / "cr2-analysis.json"
 PREFETCH = ROOT / "docs" / "retrieval" / "cr2-prefetch.json"
 CALLS_FILE = "retrieval-calls.jsonl"
+DELTA_STATUS = "delta_too_large"
 PAIRED_METRICS = ("first_gold_step", "gold_within_10", "solved", "model_calls", "cost_cny", "first_message_bytes")
 
 
@@ -103,7 +107,9 @@ def run_metrics(row: dict, events: list[dict], gold, calls: list[dict] | None = 
         "task_id": row["task_id"], "group": row["group"], "k": row["k"],
         "first_gold_step": step,
         "gold_within_10": step <= EARLY,
-        "solved": bool(row.get("solved")),
+        # Contract 9.2: a delta_too_large run left no candidate, so it counts as unsolved; its steps still count.
+        "solved": bool(row.get("solved")) and row.get("status") != DELTA_STATUS,
+        "delta_too_large": row.get("status") == DELTA_STATUS,
         "model_calls": row.get("model_calls"),
         "cost_cny": float(row["cost_cny"]) if row.get("cost_cny") is not None else None,
         "stop_reason": row.get("stop_reason"),
@@ -180,6 +186,7 @@ def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Pat
         "tasks": len(tasks),
         "complete": all(counts.get((t, g)) == repeats for t in tasks for g in GROUPS),
         "runs_by_group": {g: sum(1 for r in per_run if r["group"] == g) for g in GROUPS},
+        "delta_too_large_by_group": {g: sum(1 for r in per_run if r["group"] == g and r["delta_too_large"]) for g in GROUPS},
         "group_means": {}, "paired": {}, "stop_reasons": {},
     }
     for metric in PAIRED_METRICS:
