@@ -1,0 +1,626 @@
+{
+  "n_instances": 100,
+  "n_unretrievable": 0,
+  "retrievers": {
+    "random": {
+      "all": {
+        "n": 100,
+        "hit@1": 0.0,
+        "hit@5": 0.02,
+        "hit@10": 0.06,
+        "recall@10": 0.055,
+        "mrr": 0.018640566116691227,
+        "fn_hit@5": 0.0,
+        "fn_hit@10": 0.0
+      },
+      "by_repo": {
+        "astropy/astropy": {
+          "n": 5,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.2,
+          "recall@10": 0.2,
+          "mrr": 0.025,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "django/django": {
+          "n": 50,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.0,
+          "recall@10": 0.0,
+          "mrr": 0.003698320726892155,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "matplotlib/matplotlib": {
+          "n": 8,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.0,
+          "recall@10": 0.0,
+          "mrr": 0.012122844827586207,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "mwaskom/seaborn": {
+          "n": 1,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.0,
+          "recall@10": 0.0,
+          "mrr": 0.014492753623188406,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "psf/requests": {
+          "n": 2,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.5,
+          "recall@10": 0.5,
+          "mrr": 0.06851851851851852,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "pydata/xarray": {
+          "n": 5,
+          "hit@1": 0.0,
+          "hit@5": 0.2,
+          "hit@10": 0.2,
+          "recall@10": 0.2,
+          "mrr": 0.05310490526176801,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "pylint-dev/pylint": {
+          "n": 2,
+          "hit@1": 0.0,
+          "hit@5": 0.5,
+          "hit@10": 0.5,
+          "recall@10": 0.5,
+          "mrr": 0.25806451612903225,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "pytest-dev/pytest": {
+          "n": 2,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.5,
+          "recall@10": 0.5,
+          "mrr": 0.10714285714285714,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "scikit-learn/scikit-learn": {
+          "n": 4,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.0,
+          "recall@10": 0.0,
+          "mrr": 0.020512820512820513,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "sphinx-doc/sphinx": {
+          "n": 7,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.0,
+          "recall@10": 0.0,
+          "mrr": 0.016491764169782746,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "sympy/sympy": {
+          "n": 14,
+          "hit@1": 0.0,
+          "hit@5": 0.0,
+          "hit@10": 0.07142857142857142,
+          "recall@10": 0.03571428571428571,
+          "mrr": 0.008013937282229966,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        }
+      },
+      "macro": {
+        "n_repos": 11,
+        "hit@1": 0.0,
+        "hit@5": 0.06363636363636363,
+        "hit@10": 0.1792207792207792,
+        "recall@10": 0.17597402597402598,
+        "mrr": 0.053378476199515995,
+        "fn_hit@5": 0.0,
+        "fn_hit@10": 0.0
+      }
+    },
+    "path_mention": {
+      "all": {
+        "n": 100,
+        "hit@1": 0.49,
+        "hit@5": 0.76,
+        "hit@10": 0.86,
+        "recall@10": 0.8343333333333334,
+        "mrr": 0.6230075314929384,
+        "fn_hit@5": 0.47,
+        "fn_hit@10": 0.6
+      },
+      "by_repo": {
+        "astropy/astropy": {
+          "n": 5,
+          "hit@1": 0.6,
+          "hit@5": 0.8,
+          "hit@10": 0.8,
+          "recall@10": 0.8,
+          "mrr": 0.7095238095238094,
+          "fn_hit@5": 0.8,
+          "fn_hit@10": 0.8
+        },
+        "django/django": {
+          "n": 50,
+          "hit@1": 0.56,
+          "hit@5": 0.76,
+          "hit@10": 0.92,
+          "recall@10": 0.902,
+          "mrr": 0.6733853174603174,
+          "fn_hit@5": 0.5,
+          "fn_hit@10": 0.68
+        },
+        "matplotlib/matplotlib": {
+          "n": 8,
+          "hit@1": 0.375,
+          "hit@5": 0.875,
+          "hit@10": 0.875,
+          "recall@10": 0.875,
+          "mrr": 0.5875,
+          "fn_hit@5": 0.25,
+          "fn_hit@10": 0.25
+        },
+        "mwaskom/seaborn": {
+          "n": 1,
+          "hit@1": 1.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 1.0,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 1.0
+        },
+        "psf/requests": {
+          "n": 2,
+          "hit@1": 0.5,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 0.75,
+          "fn_hit@5": 1.0,
+          "fn_hit@10": 1.0
+        },
+        "pydata/xarray": {
+          "n": 5,
+          "hit@1": 0.4,
+          "hit@5": 0.6,
+          "hit@10": 0.8,
+          "recall@10": 0.7,
+          "mrr": 0.4685087719298246,
+          "fn_hit@5": 0.2,
+          "fn_hit@10": 0.4
+        },
+        "pylint-dev/pylint": {
+          "n": 2,
+          "hit@1": 0.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 0.6666666666666666,
+          "mrr": 0.29166666666666663,
+          "fn_hit@5": 0.5,
+          "fn_hit@10": 0.5
+        },
+        "pytest-dev/pytest": {
+          "n": 2,
+          "hit@1": 1.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 1.0,
+          "fn_hit@5": 0.5,
+          "fn_hit@10": 0.5
+        },
+        "scikit-learn/scikit-learn": {
+          "n": 4,
+          "hit@1": 0.75,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 0.875,
+          "fn_hit@5": 1.0,
+          "fn_hit@10": 1.0
+        },
+        "sphinx-doc/sphinx": {
+          "n": 7,
+          "hit@1": 0.14285714285714285,
+          "hit@5": 0.14285714285714285,
+          "hit@10": 0.2857142857142857,
+          "recall@10": 0.2857142857142857,
+          "mrr": 0.19413674560733382,
+          "fn_hit@5": 0.14285714285714285,
+          "fn_hit@10": 0.2857142857142857
+        },
+        "sympy/sympy": {
+          "n": 14,
+          "hit@1": 0.35714285714285715,
+          "hit@5": 0.8571428571428571,
+          "hit@10": 0.8571428571428571,
+          "recall@10": 0.8214285714285714,
+          "mrr": 0.5785024154589371,
+          "fn_hit@5": 0.42857142857142855,
+          "fn_hit@10": 0.5
+        }
+      },
+      "macro": {
+        "n_repos": 11,
+        "hit@1": 0.5168181818181818,
+        "hit@5": 0.8213636363636364,
+        "hit@10": 0.8670779220779221,
+        "recall@10": 0.8228008658008658,
+        "mrr": 0.6480203387860807,
+        "fn_hit@5": 0.48376623376623384,
+        "fn_hit@10": 0.6287012987012986
+      }
+    },
+    "bm25_chunk": {
+      "all": {
+        "n": 100,
+        "hit@1": 0.46,
+        "hit@5": 0.67,
+        "hit@10": 0.8,
+        "recall@10": 0.7693333333333334,
+        "mrr": 0.569689462704665,
+        "fn_hit@5": 0.47,
+        "fn_hit@10": 0.59
+      },
+      "by_repo": {
+        "astropy/astropy": {
+          "n": 5,
+          "hit@1": 0.6,
+          "hit@5": 0.8,
+          "hit@10": 0.8,
+          "recall@10": 0.8,
+          "mrr": 0.71,
+          "fn_hit@5": 0.6,
+          "fn_hit@10": 0.8
+        },
+        "django/django": {
+          "n": 50,
+          "hit@1": 0.54,
+          "hit@5": 0.74,
+          "hit@10": 0.9,
+          "recall@10": 0.882,
+          "mrr": 0.6469695346923607,
+          "fn_hit@5": 0.54,
+          "fn_hit@10": 0.68
+        },
+        "matplotlib/matplotlib": {
+          "n": 8,
+          "hit@1": 0.375,
+          "hit@5": 0.5,
+          "hit@10": 0.625,
+          "recall@10": 0.625,
+          "mrr": 0.4692708333333333,
+          "fn_hit@5": 0.375,
+          "fn_hit@10": 0.5
+        },
+        "mwaskom/seaborn": {
+          "n": 1,
+          "hit@1": 0.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 0.5,
+          "mrr": 0.3333333333333333,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.0
+        },
+        "psf/requests": {
+          "n": 2,
+          "hit@1": 0.0,
+          "hit@5": 0.5,
+          "hit@10": 0.5,
+          "recall@10": 0.5,
+          "mrr": 0.15833333333333333,
+          "fn_hit@5": 0.5,
+          "fn_hit@10": 0.5
+        },
+        "pydata/xarray": {
+          "n": 5,
+          "hit@1": 0.0,
+          "hit@5": 0.2,
+          "hit@10": 0.6,
+          "recall@10": 0.5,
+          "mrr": 0.1632309941520468,
+          "fn_hit@5": 0.2,
+          "fn_hit@10": 0.2
+        },
+        "pylint-dev/pylint": {
+          "n": 2,
+          "hit@1": 0.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 0.6666666666666666,
+          "mrr": 0.225,
+          "fn_hit@5": 0.0,
+          "fn_hit@10": 0.5
+        },
+        "pytest-dev/pytest": {
+          "n": 2,
+          "hit@1": 1.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 1.0,
+          "fn_hit@5": 0.5,
+          "fn_hit@10": 0.5
+        },
+        "scikit-learn/scikit-learn": {
+          "n": 4,
+          "hit@1": 0.75,
+          "hit@5": 0.75,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 0.7916666666666666,
+          "fn_hit@5": 0.75,
+          "fn_hit@10": 0.75
+        },
+        "sphinx-doc/sphinx": {
+          "n": 7,
+          "hit@1": 0.14285714285714285,
+          "hit@5": 0.14285714285714285,
+          "hit@10": 0.2857142857142857,
+          "recall@10": 0.2857142857142857,
+          "mrr": 0.19413674560733382,
+          "fn_hit@5": 0.14285714285714285,
+          "fn_hit@10": 0.2857142857142857
+        },
+        "sympy/sympy": {
+          "n": 14,
+          "hit@1": 0.5,
+          "hit@5": 0.7857142857142857,
+          "hit@10": 0.7857142857142857,
+          "recall@10": 0.75,
+          "mrr": 0.6338945723216823,
+          "fn_hit@5": 0.5,
+          "fn_hit@10": 0.5714285714285714
+        }
+      },
+      "macro": {
+        "n_repos": 11,
+        "hit@1": 0.3552597402597403,
+        "hit@5": 0.6744155844155845,
+        "hit@10": 0.7724025974025974,
+        "recall@10": 0.6826709956709957,
+        "mrr": 0.48416691031273545,
+        "fn_hit@5": 0.3734415584415584,
+        "fn_hit@10": 0.4806493506493506
+      }
+    },
+    "bm25_file": {
+      "all": {
+        "n": 100,
+        "hit@1": 0.43,
+        "hit@5": 0.72,
+        "hit@10": 0.84,
+        "recall@10": 0.8036666666666668,
+        "mrr": 0.5661216605729186
+      },
+      "by_repo": {
+        "astropy/astropy": {
+          "n": 5,
+          "hit@1": 0.6,
+          "hit@5": 0.8,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 0.72
+        },
+        "django/django": {
+          "n": 50,
+          "hit@1": 0.46,
+          "hit@5": 0.82,
+          "hit@10": 0.92,
+          "recall@10": 0.8906666666666666,
+          "mrr": 0.6103884909182582
+        },
+        "matplotlib/matplotlib": {
+          "n": 8,
+          "hit@1": 0.25,
+          "hit@5": 0.375,
+          "hit@10": 0.625,
+          "recall@10": 0.625,
+          "mrr": 0.33453947368421055
+        },
+        "mwaskom/seaborn": {
+          "n": 1,
+          "hit@1": 1.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 1.0
+        },
+        "psf/requests": {
+          "n": 2,
+          "hit@1": 0.0,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 0.375
+        },
+        "pydata/xarray": {
+          "n": 5,
+          "hit@1": 0.0,
+          "hit@5": 0.2,
+          "hit@10": 0.6,
+          "recall@10": 0.5,
+          "mrr": 0.17232026143790852
+        },
+        "pylint-dev/pylint": {
+          "n": 2,
+          "hit@1": 0.5,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 0.6666666666666666,
+          "mrr": 0.6666666666666666
+        },
+        "pytest-dev/pytest": {
+          "n": 2,
+          "hit@1": 0.5,
+          "hit@5": 1.0,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 0.75
+        },
+        "scikit-learn/scikit-learn": {
+          "n": 4,
+          "hit@1": 0.75,
+          "hit@5": 0.75,
+          "hit@10": 1.0,
+          "recall@10": 1.0,
+          "mrr": 0.7916666666666666
+        },
+        "sphinx-doc/sphinx": {
+          "n": 7,
+          "hit@1": 0.14285714285714285,
+          "hit@5": 0.42857142857142855,
+          "hit@10": 0.42857142857142855,
+          "recall@10": 0.42857142857142855,
+          "mrr": 0.2722826086956522
+        },
+        "sympy/sympy": {
+          "n": 14,
+          "hit@1": 0.5714285714285714,
+          "hit@5": 0.7142857142857143,
+          "hit@10": 0.7857142857142857,
+          "recall@10": 0.7142857142857143,
+          "mrr": 0.6642032967032966
+        }
+      },
+      "macro": {
+        "n_repos": 11,
+        "hit@1": 0.4340259740259741,
+        "hit@5": 0.7352597402597403,
+        "hit@10": 0.8508441558441558,
+        "recall@10": 0.8022900432900432,
+        "mrr": 0.5779152240702417
+      }
+    }
+  },
+  "path_mention": {
+    "with_any_mention": 58,
+    "mention_includes_gold": 39,
+    "retrievable": 100
+  },
+  "dev_paired_bm25_chunk_minus_file": {
+    "hit@5": {
+      "diff": -0.05,
+      "lo": -0.12,
+      "hi": 0.02
+    },
+    "mrr": {
+      "diff": 0.0035678021317464225,
+      "lo": -0.058311778778940615,
+      "hi": 0.06475818886574161
+    }
+  },
+  "seconds_per_instance": {
+    "n": 100,
+    "min": 0.02,
+    "median": 0.57,
+    "mean": 0.5604,
+    "p90": 0.86,
+    "max": 1.43
+  },
+  "corpus": {
+    "files": {
+      "n": 100,
+      "min": 21.0,
+      "median": 820.0,
+      "mean": 670.14,
+      "p90": 862.1,
+      "max": 1008.0
+    },
+    "chunks": {
+      "n": 100,
+      "min": 293.0,
+      "median": 9858.0,
+      "mean": 10067.75,
+      "p90": 16012.6,
+      "max": 29332.0
+    }
+  },
+  "examples": [
+    {
+      "instance_id": "django__django-13195",
+      "issue_head": "HttpResponse.delete_cookie() should preserve cookie's samesite.\nDescription\n\t\nWe noticed we were getting this warning message from Firefox:\n'Cookie \u201cmessages\u201d will be soon rejected because it has the \u201csameSite\u201d attribute set to \u201cnone\u201d or an invalid value, without the \u201csecure\u201d attribute. To know more",
+      "gold_files": [
+        "django/contrib/messages/storage/cookie.py",
+        "django/contrib/sessions/middleware.py",
+        "django/http/response.py"
+      ],
+      "bm25_chunk_top5": [
+        "django/http/response.py",
+        "django/contrib/sessions/middleware.py",
+        "django/contrib/messages/storage/cookie.py",
+        "django/views/i18n.py",
+        "django/middleware/csrf.py"
+      ],
+      "bm25_chunk_top5_chunks": [
+        "django/http/response.py::HttpResponseBase.delete_cookie@213",
+        "django/contrib/sessions/middleware.py::SessionMiddleware.process_response@26",
+        "django/contrib/messages/storage/cookie.py::CookieStorage._update_cookie@81",
+        "django/http/response.py::HttpResponseBase.set_cookie@158",
+        "django/views/i18n.py::set_language@23"
+      ]
+    },
+    {
+      "instance_id": "django__django-15814",
+      "issue_head": "QuerySet.only() after select_related() crash on proxy models.\nDescription\n\t\nWhen I optimize a query using select_related() and only() methods from the proxy model I encounter an error:\nWindows 10; Python 3.10; Django 4.0.5\nTraceback (most recent call last):\n File \"D:\\study\\django_college\\manage.py\",",
+      "gold_files": [
+        "django/db/models/sql/query.py"
+      ],
+      "bm25_chunk_top5": [
+        "django/db/models/query.py",
+        "django/core/management/base.py",
+        "django/core/management/__init__.py",
+        "django/db/models/sql/compiler.py",
+        "django/db/models/deletion.py"
+      ],
+      "bm25_chunk_top5_chunks": [
+        "django/db/models/query.py::RelatedPopulator.__init__@2550",
+        "django/db/models/query.py::ModelIterable.__iter__@81",
+        "django/db/models/query.py::get_related_populators@2620",
+        "django/core/management/base.py::BaseCommand.run_from_argv@385",
+        "django/core/management/__init__.py::ManagementUtility.execute@357"
+      ]
+    },
+    {
+      "instance_id": "sympy__sympy-23413",
+      "issue_head": "bug with HNF removing rows\nI expect\r\n`np.flip (hermite_normal_form (Matrix (np.flip (np.array ([[5, 8, 12], [0, 0, 1]]))).T).T))`\r\nto give\r\n`[[5,  8, 0], [0,  0, 1]]`\r\nbut instead I get\r\n`[[5,  8, 0]]`\r\nIt seems to be falsely identifying my matrix as rank-deficient and removing the row when I try to",
+      "gold_files": [
+        "sympy/polys/matrices/normalforms.py"
+      ],
+      "bm25_chunk_top5": [
+        "sympy/matrices/normalforms.py",
+        "sympy/polys/matrices/normalforms.py",
+        "sympy/polys/numberfields/modules.py",
+        "sympy/plotting/plot.py",
+        "sympy/matrices/decompositions.py"
+      ],
+      "bm25_chunk_top5_chunks": [
+        "sympy/matrices/normalforms.py::hermite_normal_form@70",
+        "sympy/polys/matrices/normalforms.py::hermite_normal_form@339",
+        "sympy/polys/numberfields/modules.py::Submodule.add@1024",
+        "sympy/polys/matrices/normalforms.py::_hermite_normal_form_modulo_D@251",
+        "sympy/polys/numberfields/modules.py::Module.submodule_from_gens@571"
+      ]
+    }
+  ]
+}
