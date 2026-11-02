@@ -12,23 +12,29 @@ from src.retrieval.serve import PREFETCH_FOOTER, PREFETCH_HEADER, TOOL_HEADER
 IDS = [f"repo__repo-{i:03d}" for i in range(56)]
 
 
-def test_queue_has_336_interleaved_slots_and_is_deterministic():
+def test_queue_has_1120_interleaved_slots_and_is_deterministic():
+    assert run_cr2.GROUPS == ("n", "p", "t", "o") and run_cr2.REPEATS == (1, 2, 3, 4, 5)
+    assert run_cr2.TOTAL_CAP == Decimal("800")
     queue = run_cr2.slot_queue(IDS)
-    assert len(queue) == run_cr2.EXPECTED_SLOTS == 336 and len(set(queue)) == 336
+    assert len(queue) == run_cr2.EXPECTED_SLOTS == 1120 and len(set(queue)) == 1120
     assert queue == run_cr2.slot_queue(list(reversed(IDS)))
     assert queue != run_cr2.all_slots(IDS)
-    assert {group for _, group, _ in queue[:30]} == {"n", "p", "t"}
-    assert {k for _, _, k in queue} == {1, 2}
+    assert {group for _, group, _ in queue[:40]} == {"n", "p", "t", "o"}
+    assert {k for _, _, k in queue} == {1, 2, 3, 4, 5}
 
 
 def test_canary_and_mock_selection():
     queue = run_cr2.slot_queue(IDS)
     canary = run_cr2.canary_slots(queue)
-    assert [g for _, g, _ in canary].count("n") == 2 and len(canary) == 6
+    assert len(canary) == 8 and all([g for _, g, _ in canary].count(group) == 2 for group in run_cr2.GROUPS)
     assert canary == sorted(canary, key=queue.index)
+    firsts = {}
+    for slot in queue:
+        firsts.setdefault(slot[1], []).append(slot)
+    assert set(canary) == {slot for group in run_cr2.GROUPS for slot in firsts[group][:2]}
     mock = run_cr2.mock_slots(queue)
-    assert len(mock) == 6 and len({task for task, _, _ in mock}) == 6
-    assert sorted(g for _, g, _ in mock) == ["n", "n", "p", "p", "t", "t"]
+    assert len(mock) == 8 and len({task for task, _, _ in mock}) == 8
+    assert sorted(g for _, g, _ in mock) == ["n", "n", "o", "o", "p", "p", "t", "t"]
 
 
 def test_parse_slot_and_label():
@@ -46,11 +52,13 @@ def test_resumable_checks_mock_profile_variant():
     assert "profile" in run_cr2.resumable(ok, "n", mock=True)
     assert "variant" in run_cr2.resumable({**ok, "profile": "b0-v2"}, "n", mock=True)
     assert run_cr2.resumable({"mock": True, "profile": "b0-v2", "variant": "CR2-P"}, "p", mock=True) is None
+    assert run_cr2.resumable({"mock": True, "profile": "b0-v2", "variant": "CR2-O"}, "o", mock=True) is None
+    assert "variant" in run_cr2.resumable({"mock": True, "profile": "b0-v2", "variant": "CR2-P"}, "o", mock=True)
 
 
 def test_check_authorized():
-    run_cr2.check_authorized("2,200")
-    for bad in (None, "3,200", "2,150", "two"):
+    run_cr2.check_authorized("5,800")
+    for bad in (None, "2,200", "5,200", "3,800", "two"):
         with pytest.raises(SystemExit):
             run_cr2.check_authorized(bad)
 
@@ -85,17 +93,19 @@ def test_provider_failure_rule(tmp_path):
 
 # --- a fake run_task drives run_slots end to end -------------------------------------------------
 
-TOOLS = {"n": ["read_file", "list_dir"], "p": ["read_file", "list_dir"], "t": ["read_file", "list_dir", "retrieve_code"]}
+TOOLS = {"n": ["read_file", "list_dir"], "p": ["read_file", "list_dir"], "t": ["read_file", "list_dir", "retrieve_code"],
+         "o": ["read_file", "list_dir"]}
 
 
 def _expected(ids):
     out = {}
     for task in ids:
         base = "prompt for " + task
-        suffix = PREFETCH_HEADER + "\n\n1. a.py\n\n" + PREFETCH_FOOTER
         out[(task, "n")] = {"suffix": None, "text": base, "sha256": run_cr2._sha(base)}
-        out[(task, "p")] = {"suffix": suffix, "text": base + "\n\n" + suffix, "sha256": run_cr2._sha(base + "\n\n" + suffix)}
         out[(task, "t")] = {"suffix": None, "text": base, "sha256": run_cr2._sha(base)}
+        for group, listed in (("p", "a.py"), ("o", "gold.py")):
+            suffix = PREFETCH_HEADER + "\n\n1. " + listed + "\n\n" + PREFETCH_FOOTER
+            out[(task, group)] = {"suffix": suffix, "text": base + "\n\n" + suffix, "sha256": run_cr2._sha(base + "\n\n" + suffix)}
     return out
 
 
@@ -131,7 +141,7 @@ def make_fake_run(behaviour=None, calls=None):
     attempts = {}
 
     async def run(task, profile, output, *, mock, variant, prompt_suffix, retrieval, mock_llm, on_agent):
-        group = {"CR2-N": "n", "CR2-P": "p", "CR2-T": "t"}[variant]
+        group = {"CR2-N": "n", "CR2-P": "p", "CR2-T": "t", "CR2-O": "o"}[variant]
         key = (task["id"], group)
         attempts[key] = attempts.get(key, 0) + 1
         over = behaviour(task["id"], group, attempts[key])
@@ -163,19 +173,141 @@ def _run(tmp_path, slots, run, service=None, ids=None):
 
 
 def test_run_slots_runs_verifies_and_resumes(tmp_path):
-    slots = [("a", "n", 1), ("a", "p", 1), ("b", "t", 1)]
+    slots = [("a", "n", 1), ("a", "p", 1), ("b", "t", 1), ("c", "o", 3)]
     calls, service = [], FakeService()
     report = _run(tmp_path, slots, make_fake_run(calls=calls), service=service)
-    assert report["halt_reason"] is None and report["started"] == 3 and report["injection_verified_runs"] == 3
+    assert report["halt_reason"] is None and report["started"] == 4 and report["injection_verified_runs"] == 4
+    assert report["started_at"] <= report["finished_at"] and report["returned_models"] == []
     assert service.warmed == 1 and service.indexes == [("o/r", "abc")]
     by_group = {c[1]: c for c in calls}
     assert by_group["n"][2] is None and by_group["p"][2].startswith(PREFETCH_HEADER) and by_group["t"][2] is None
+    assert by_group["o"][2].startswith(PREFETCH_HEADER) and "gold.py" in by_group["o"][2]
     assert [c[3] for c in calls if c[1] == "t"] == [True] and all(not c[3] for c in calls if c[1] != "t")
     assert (tmp_path / "out" / "b" / "t" / "r1" / run_cr2.CALLS_FILE).is_file()
+    assert not (tmp_path / "out" / "c" / "o" / "r3" / run_cr2.CALLS_FILE).exists()
     tools = json.loads((tmp_path / "out" / "a" / "n" / "r1" / run_cr2.TOOLS_FILE).read_text(encoding="utf-8"))
     assert tools["tools"] == TOOLS["n"]
     again = _run(tmp_path, slots + [("b", "n", 2)], make_fake_run(calls=calls))
-    assert again["started"] == 1 and again["skipped_finished"] == 3 and again["halt_reason"] is None
+    assert again["started"] == 1 and again["skipped_finished"] == 4 and again["halt_reason"] is None
+
+
+def test_o_group_with_p_text_or_t_tools_stops(tmp_path):
+    def p_text(task, group, attempt):
+        return {"prompt": "prompt for a\n\n" + PREFETCH_HEADER + "\n\n1. a.py\n\n" + PREFETCH_FOOTER}
+
+    report = _run(tmp_path, [("a", "o", 1)], make_fake_run(p_text))
+    assert "differs from the expected prompt" in report["halt_reason"]
+    report = _run(tmp_path / "2", [("a", "o", 1)], make_fake_run(lambda *a: {"tools": TOOLS["t"]}))
+    assert "tool schemas differ" in report["halt_reason"]
+
+
+def test_expected_prompts_cover_four_groups(monkeypatch):
+    monkeypatch.setattr(run_cr2, "build_prompt", lambda task, suffix=None: "base" + ("\n\n" + suffix if suffix else ""))
+    prefetch = {"a": {"text": "P-TEXT"}}
+    oracle = {"a": {"text": "O-TEXT"}}
+    expected = run_cr2.expected_prompts({"a": {}}, prefetch, oracle)
+    assert {g: expected[("a", g)]["text"] for g in run_cr2.GROUPS} == {
+        "n": "base", "p": "base\n\nP-TEXT", "t": "base", "o": "base\n\nO-TEXT"}
+    assert expected[("a", "o")]["suffix"] == "O-TEXT" and expected[("a", "t")]["suffix"] is None
+    monkeypatch.setattr(run_cr2, "build_prompt", lambda task, suffix=None: "base" + (suffix or ""))
+    with pytest.raises(SystemExit):
+        run_cr2.expected_prompts({"a": {}}, prefetch, oracle)
+
+
+def test_load_prefetch_checks_frame_and_schema(tmp_path):
+    from src.retrieval import serve
+
+    text = serve.render_prefetch([serve.FileHit("a.py", (serve.ChunkHit("f", 1, 2),))])
+    row = {"task": "a", "text": text, "sha256": run_cr2._sha(text), "bytes": len(text.encode("utf-8")), "issue_sha256": "x"}
+    manifest = {"schema": run_cr2.ORACLE_SCHEMA, "header": serve.PREFETCH_HEADER, "footer": serve.PREFETCH_FOOTER, "tasks": [row]}
+    path = tmp_path / "o.json"
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    rows, _ = run_cr2.load_prefetch(path, {"a"}, schema=run_cr2.ORACLE_SCHEMA)
+    assert rows["a"]["text"] == text
+    with pytest.raises(SystemExit, match="schema"):
+        run_cr2.load_prefetch(path, {"a"})
+    bad = "Different header\n\n1. a.py\n\n" + serve.PREFETCH_FOOTER
+    manifest["tasks"] = [{**row, "text": bad, "sha256": run_cr2._sha(bad), "bytes": len(bad)}]
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(SystemExit, match="row frame"):
+        run_cr2.load_prefetch(path, {"a"}, schema=run_cr2.ORACLE_SCHEMA)
+
+
+# --- returned model name -------------------------------------------------------------------------
+
+def _sse(*chunks):
+    return b"".join(b"data: " + json.dumps(c).encode() + b"\n\n" for c in chunks) + b"data: [DONE]\n\n"
+
+
+def _network_response(status, body: bytes, content_type="application/json"):
+    """A response whose body arrives in small pieces, like a real connection (content= would preload it)."""
+    import httpx
+
+    class Pieces(httpx.AsyncByteStream):
+        async def __aiter__(self):
+            for i in range(0, len(body), 7):
+                yield body[i:i + 7]
+
+    return httpx.Response(status, stream=Pieces(), headers={"content-type": content_type})
+
+
+def _client(handler):
+    import httpx
+
+    from src.llm.client import LLMClient
+
+    return LLMClient("https://api.example.com/v1", "k", "alias-model", supports_streaming=True,
+                     http_client=httpx.AsyncClient(transport=httpx.MockTransport(handler)))
+
+
+def test_model_name_tap_records_streamed_and_plain_responses(tmp_path):
+    import httpx
+
+    def handler(request):
+        body = json.loads(request.content)
+        if body.get("stream"):
+            chunks = [{"id": "1", "model": "served-v4", "choices": [{"index": 0, "delta": {"content": "he said \"model\": \"x\""}}]},
+                      {"id": "1", "model": "served-v4", "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
+                       "usage": {"prompt_tokens": 3, "completion_tokens": 2}}]
+            return _network_response(200, _sse(*chunks), "text/event-stream")
+        return _network_response(200, json.dumps({"id": "2", "model": "served-plain", "choices": [
+            {"index": 0, "message": {"role": "assistant", "content": "ok"}, "finish_reason": "stop"}],
+            "usage": {"prompt_tokens": 1, "completion_tokens": 1}}).encode())
+
+    async def go(tap):
+        llm = _client(handler)
+        if tap:
+            run_cr2.model_name_tap(llm, run_cr2.model_recorder(tmp_path))
+        events = [e async for e in llm.stream_chat([{"role": "user", "content": "hi"}])]
+        plain = await llm.chat([{"role": "user", "content": "hi"}])
+        await llm.aclose()
+        done = [e for e in events if e.event == "llm_stream_done"][0].data["response"]
+        return done.text, done.usage, plain.text
+
+    assert asyncio.run(go(True)) == asyncio.run(go(False))
+    assert run_cr2.returned_models(tmp_path) == ["served-plain", "served-v4"]
+
+
+def test_model_name_tap_never_breaks_errors(tmp_path):
+    import httpx
+
+    from src.llm.client import LLMError
+
+    def handler(request):
+        return _network_response(402, json.dumps({"error": {"message": "Insufficient Balance"}}).encode())
+
+    async def go():
+        llm = _client(handler)
+        llm.supports_streaming = False
+        run_cr2.model_name_tap(llm, run_cr2.model_recorder(tmp_path))
+        try:
+            await llm.chat([{"role": "user", "content": "hi"}])
+        finally:
+            await llm.aclose()
+
+    with pytest.raises(LLMError) as err:
+        asyncio.run(go())
+    assert err.value.status_code == 402 and run_cr2.returned_models(tmp_path) == []
 
 
 def test_run_slots_reruns_provider_failures_and_keeps_directory(tmp_path):
@@ -254,6 +386,20 @@ def test_mock_llm_t_calls_retrieve_code_then_reads_first_hit():
     second = _chat(llm, [user, tool_msg, reminder], TOOLS["t"])
     assert second.tool_calls[0].name == "read_file" and second.tool_calls[0].arguments["path"] == "pkg/http.py"
     assert not _chat(llm, [user, tool_msg], TOOLS["t"]).tool_calls
+
+
+def test_tool_recorder_taps_only_real_runs(tmp_path):
+    class Agent(FakeAgent):
+        def __init__(self):
+            super().__init__(TOOLS["n"])
+            self.llm = _client(lambda request: None)
+
+    plain, tapped = Agent(), Agent()
+    original = plain.llm._ensure_client
+    run_cr2.tool_recorder(tmp_path)(plain)
+    assert plain.llm._ensure_client == original
+    run_cr2.tool_recorder(tmp_path, tap_model=True)(tapped)
+    assert tapped.llm._ensure_client != original and (tmp_path / run_cr2.TOOLS_FILE).is_file()
 
 
 def test_mock_llm_p_and_n_paths():

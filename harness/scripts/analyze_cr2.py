@@ -11,6 +11,10 @@ Step rules (unit-tested in tests/test_analyze_cr2.py):
   normalized, is a gold file. The intent counts whatever the tool result was.
 - Path normalization: backslashes to slashes, a leading /workspace/ and leading ./ removed, posix normpath.
 - Never touched = 41 (one past the 40-call budget).
+
+Paired per-task differences: P - N, T - N and O - N (r1, contract section 7.3; O is an upper-bound reference,
+not a retrieval method). solve_by_early_touch splits each group's runs by whether a gold file was touched
+within the first 10 steps.
 """
 from __future__ import annotations
 
@@ -29,7 +33,8 @@ N_BOOT = 10000
 NEVER = 41
 EARLY = 10
 TOUCH_TOOLS = frozenset({"read_file", "edit_file", "search_replace", "write_file"})
-GROUPS = ("n", "p", "t")
+GROUPS = ("n", "p", "t", "o")
+PAIRS = (("p_minus_n", "p", "n"), ("t_minus_n", "t", "n"), ("o_minus_n", "o", "n"))
 RUNS = ROOT / "docs" / "retrieval" / "cr2-runs.json"
 OUT = ROOT / "docs" / "retrieval" / "cr2-analysis.json"
 PREFETCH = ROOT / "docs" / "retrieval" / "cr2-prefetch.json"
@@ -145,7 +150,20 @@ def gold_in_prefetch(prefetch_rows: dict, gold_by_task: dict) -> dict[str, bool]
             for task, row in prefetch_rows.items() if task in gold_by_task}
 
 
-def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Path = ROOT, repeats: int = 2) -> dict:
+def solve_by_early_touch(per_run: list[dict]) -> dict:
+    """Per group, the solve rate of runs that touched a gold file within the first 10 steps and of those that did not."""
+    out = {}
+    for group in GROUPS:
+        rows = [r for r in per_run if r["group"] == group]
+        out[group] = {}
+        for name, flag in (("touched_within_10", True), ("not_touched_within_10", False)):
+            part = [r for r in rows if r["gold_within_10"] is flag]
+            solved = sum(1 for r in part if r["solved"])
+            out[group][name] = {"runs": len(part), "solved": solved, "rate": solved / len(part) if part else None}
+    return out
+
+
+def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Path = ROOT, repeats: int = 5) -> dict:
     from scripts.run_a6_retry import first_user_message
 
     per_run = []
@@ -167,7 +185,7 @@ def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Pat
     for metric in PAIRED_METRICS:
         means = task_means(per_run, metric)
         report["group_means"][metric] = {g: group_mean(means, g) for g in GROUPS}
-        report["paired"][metric] = {"p_minus_n": paired(means, "p", "n"), "t_minus_n": paired(means, "t", "n")}
+        report["paired"][metric] = {name: paired(means, a, b) for name, a, b in PAIRS}
     for group in GROUPS:
         report["stop_reasons"][group] = dict(sorted(Counter(r["stop_reason"] for r in per_run if r["group"] == group).items(),
                                                     key=lambda kv: str(kv[0])))
@@ -194,6 +212,7 @@ def analyze(runs: list[dict], gold_by_task: dict, prefetch_rows: dict, root: Pat
             "p_minus_n": paired(steps_means, "p", "n", subset),
         }
     report["p_only_first_gold_step"] = split
+    report["solve_by_early_touch"] = solve_by_early_touch(per_run)
     report["per_run"] = per_run
     return report
 
@@ -226,7 +245,7 @@ def main():
     if any(row.get("rerun_reason") for row in runs):
         raise SystemExit("runs file still has slots whose final run needs a rerun")
     gold = load_gold(sorted(prefetch_rows))
-    report = analyze(runs, gold, prefetch_rows, repeats=payload.get("repeats", 2))
+    report = analyze(runs, gold, prefetch_rows, repeats=payload.get("repeats", 5))
     report["runs_file"] = args.runs.relative_to(ROOT).as_posix() if args.runs.is_relative_to(ROOT) else str(args.runs)
     report["scope"] = payload.get("scope")
     args.out.parent.mkdir(parents=True, exist_ok=True)

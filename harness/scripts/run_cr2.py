@@ -1,15 +1,17 @@
-"""CR-2: run the N / P / T groups on the 56-task A5/A6 pool (docs/retrieval/CR-2-CONTRACT.zh-CN.md).
+"""CR-2: run the N / P / T / O groups on the 56-task A5/A6 pool (docs/retrieval/CR-2-CONTRACT.zh-CN.md).
 
 N is b0-v2 unchanged. P appends the frozen prefetch text (docs/retrieval/cr2-prefetch.json) to the first user
-message. T uses configs/retrieval/cr2-t.yaml, which adds the read-only retrieve_code tool. Slots
-runs/cr2-main/<task>/<group>/r<k> share one queue, shuffled with seed 20261026 after a sort on (task, group, k).
-The structure follows run_a6_retry.py; its helpers and run_a5_main's are imported, not copied or changed.
+message. T uses configs/retrieval/cr2-t.yaml, which adds the read-only retrieve_code tool. O appends the frozen
+oracle list (docs/retrieval/cr2-oracle-prefetch.json, written by cr2_oracle_prefetch.py) in the P format; this
+runner reads only that frozen file, never the labels. Slots runs/cr2-main/<task>/<group>/r<k> share one queue,
+shuffled with seed 20261026 after a sort on (task, group, k). The structure follows run_a6_retry.py; its helpers
+and run_a5_main's are imported, not copied or changed.
 
     run_cr2.py --freeze-prefetch            render the P text for the 56 tasks (no model calls)
     run_cr2.py --preflight                  every pre-run check (no model calls)
-    run_cr2.py --mock --mock-slots          mock model, two tasks per group, under runs/cr2-mock
-    run_cr2.py --canary --authorized 2,200  CR-2b: the first two slots of each group with the real model
-    run_cr2.py --authorized 2,200           CR-2c: every slot
+    run_cr2.py --mock --mock-slots          mock model, two tasks per group, under runs/cr2-mock-r1
+    run_cr2.py --canary --authorized 5,800  CR-2b: the first two slots of each group with the real model
+    run_cr2.py --authorized 5,800           CR-2c: every slot
 """
 from __future__ import annotations
 
@@ -22,8 +24,11 @@ import re
 import statistics
 import subprocess
 import sys
+from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
+
+import httpx
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -44,31 +49,35 @@ from scripts.run_swe_task import build_prompt, issue_text, load_json, run_task  
 from src.llm.client import LLMClient, LLMResponse, LLMStreamEvent, StreamCapability, ToolCall  # noqa: E402
 
 SEED = 20261026
-GROUPS = ("n", "p", "t")
-REPEATS = (1, 2)
-TOTAL_CAP = Decimal("200")
+GROUPS = ("n", "p", "t", "o")
+REPEATS = (1, 2, 3, 4, 5)
+TOTAL_CAP = Decimal("800")
 EXPECTED_TASKS = 56
 EXPECTED_SLOTS = EXPECTED_TASKS * len(GROUPS) * len(REPEATS)
 T_PROFILE = ROOT / "configs" / "retrieval" / "cr2-t.yaml"
-PROFILES = {"n": PROFILE, "p": PROFILE, "t": T_PROFILE}
-VARIANTS = {"n": "CR2-N", "p": "CR2-P", "t": "CR2-T"}
+PROFILES = {"n": PROFILE, "p": PROFILE, "t": T_PROFILE, "o": PROFILE}
+VARIANTS = {"n": "CR2-N", "p": "CR2-P", "t": "CR2-T", "o": "CR2-O"}
+SUFFIX_GROUPS = ("p", "o")
 PREFETCH = ROOT / "docs" / "retrieval" / "cr2-prefetch.json"
 PREFETCH_SCHEMA = "cr2.prefetch.v1"
+ORACLE = ROOT / "docs" / "retrieval" / "cr2-oracle-prefetch.json"
+ORACLE_SCHEMA = "cr2.oracle-prefetch.v1"
 RUNS_SCHEMA = "cr2.runs.v1"
 CR1_TEST_RANKINGS = ROOT / "runs" / "cr" / "test-frozen-rankings.jsonl"
 LOGS = ROOT / "runs" / "cr2-logs"
 TOOLS_FILE = "agent-tools.json"
 CALLS_FILE = "retrieval-calls.jsonl"
+MODELS_FILE = "model-names.json"
 # Settlement error kinds that count as provider unavailability (HTTP such as 402, network) and rerun the slot.
 PROVIDER_FAILURE_KINDS = frozenset({"http", "network"})
 
 
 def out_root_for(mock: bool) -> Path:
-    return ROOT / "runs" / ("cr2-mock" if mock else "cr2-main")
+    return ROOT / "runs" / ("cr2-mock-r1" if mock else "cr2-main")
 
 
 def runs_path_for(mock: bool) -> Path:
-    return ROOT / "docs" / "retrieval" / ("cr2-runs.mock.json" if mock else "cr2-runs.json")
+    return ROOT / "docs" / "retrieval" / ("cr2-runs.mock-r1.json" if mock else "cr2-runs.json")
 
 
 def _sha(text: str) -> str:
@@ -145,16 +154,21 @@ def freeze_prefetch(tasks: list[dict], service, destination: Path = PREFETCH) ->
     return manifest
 
 
-def load_prefetch(path: Path = PREFETCH, task_ids: set[str] | None = None) -> tuple[dict, str]:
-    """task id -> row, and the handoff sha256 of the file. Every row is checked against its sha256."""
+def load_prefetch(path: Path = PREFETCH, task_ids: set[str] | None = None,
+                  schema: str = PREFETCH_SCHEMA) -> tuple[dict, str]:
+    """task id -> row, and the handoff sha256 of the file. Every row is checked against its sha256.
+    The P and O manifests share this layout and the P header and footer."""
     from src.retrieval import serve
 
     if not path.is_file():
         raise SystemExit("prefetch manifest missing: " + _display_path(path))
     manifest = json.loads(path.read_text(encoding="utf-8"))
     rows = {row["task"]: row for row in manifest.get("tasks") or []}
+    framed = serve.PREFETCH_HEADER + "\n\n"
     problems = [name for name, bad in (
-        ("schema", manifest.get("schema") != PREFETCH_SCHEMA),
+        ("schema", manifest.get("schema") != schema),
+        ("row frame", any(not row["text"].startswith(framed) or not row["text"].endswith("\n\n" + serve.PREFETCH_FOOTER)
+                          for row in rows.values())),
         ("header", manifest.get("header") != serve.PREFETCH_HEADER or manifest.get("footer") != serve.PREFETCH_FOOTER),
         ("task set", task_ids is not None and set(rows) != task_ids),
         ("row sha256", any(_sha(row["text"]) != row["sha256"] for row in rows.values())),
@@ -166,17 +180,19 @@ def load_prefetch(path: Path = PREFETCH, task_ids: set[str] | None = None) -> tu
     return rows, handoff_sha256(path)
 
 
-def expected_prompts(prepared: dict, prefetch: dict) -> dict:
+def expected_prompts(prepared: dict, prefetch: dict, oracle: dict) -> dict:
     """(task, group) -> the exact first user message, its sha256 and the prompt suffix."""
     expected = {}
     for task_id, task in prepared.items():
         base = build_prompt(task)
-        suffix = prefetch[task_id]["text"]
-        with_prefetch = build_prompt(task, suffix)
-        if with_prefetch != base + "\n\n" + suffix:
-            raise SystemExit("P prompt for " + task_id + " is not the B0 prompt plus the prefetch text")
-        for group, sfx, text in (("n", None, base), ("p", suffix, with_prefetch), ("t", None, base)):
-            expected[(task_id, group)] = {"suffix": sfx, "text": text, "sha256": _sha(text)}
+        for group in GROUPS:
+            expected[(task_id, group)] = {"suffix": None, "text": base, "sha256": _sha(base)}
+        for group, rows in (("p", prefetch), ("o", oracle)):
+            suffix = rows[task_id]["text"]
+            text = build_prompt(task, suffix)
+            if text != base + "\n\n" + suffix:
+                raise SystemExit(group.upper() + " prompt for " + task_id + " is not the B0 prompt plus the frozen text")
+            expected[(task_id, group)] = {"suffix": suffix, "text": text, "sha256": _sha(text)}
     return expected
 
 
@@ -195,19 +211,88 @@ def expected_tools() -> dict[str, list[str]]:
             retrieval = TaskRetrieval(None, Path(tmp) / CALLS_FILE) if group == "t" else None
             agent = build_agent(config, Path(tmp), retrieval=retrieval)
             out[group] = [s["function"]["name"] for s in agent.tools.schemas(agent.enabled_tools)]
-    if "retrieve_code" in out["n"] or "retrieve_code" in out["p"] or out["t"] != out["n"] + ["retrieve_code"]:
-        raise SystemExit("tool lists are not N = P = b0-v2 and T = b0-v2 + retrieve_code: " + json.dumps(out))
+    plain = [out[group] for group in GROUPS if group != "t"]
+    if "retrieve_code" in out["n"] or any(names != out["n"] for names in plain) or out["t"] != out["n"] + ["retrieve_code"]:
+        raise SystemExit("tool lists are not N = P = O = b0-v2 and T = b0-v2 + retrieve_code: " + json.dumps(out))
     return out
 
 
-def tool_recorder(output: Path):
-    """on_agent hook for run_task: write the tool schemas the agent will send, before the first model call."""
+_MODEL_FIELD = re.compile(rb'"model"\s*:\s*"([^"\\]{1,200})"')
+
+
+class _ModelTapStream(httpx.AsyncByteStream):
+    """Pass a response body through unchanged while noting every top-level "model" value in it."""
+
+    def __init__(self, stream, record):
+        self._stream = stream
+        self._record = record
+        self._tail = b""
+
+    async def __aiter__(self):
+        async for chunk in self._stream:
+            try:
+                data = self._tail + chunk
+                for match in _MODEL_FIELD.finditer(data):
+                    self._record(match.group(1).decode("utf-8", "replace"))
+                self._tail = data[-256:]
+            except Exception:  # noqa: BLE001 - observation must never break the response
+                pass
+            yield chunk
+
+    async def aclose(self):
+        await self._stream.aclose()
+
+
+def model_name_tap(llm, record) -> None:
+    """Record the model name the provider returns (LLMResponse does not keep it).
+
+    Wraps the client's own _ensure_client so the httpx client is built exactly as before, then adds a
+    response hook that only observes the body bytes. Request payloads and parsed responses are unchanged."""
+    original = llm._ensure_client
+
+    async def hook(response):
+        try:
+            if response.request.url.path.endswith("/chat/completions"):
+                response.stream = _ModelTapStream(response.stream, record)
+        except Exception:  # noqa: BLE001
+            pass
+
+    async def ensure_client():
+        client = await original()
+        hooks = client.event_hooks
+        if hook not in hooks["response"]:
+            client.event_hooks = {"request": list(hooks["request"]), "response": [*hooks["response"], hook]}
+        return client
+
+    llm._ensure_client = ensure_client
+
+
+def model_recorder(output: Path):
+    seen: set[str] = set()
+
+    def record(name: str) -> None:
+        if name not in seen:
+            seen.add(name)
+            (output / MODELS_FILE).write_text(json.dumps(sorted(seen)) + "\n", encoding="utf-8")
+    return record
+
+
+def tool_recorder(output: Path, *, tap_model: bool = False):
+    """on_agent hook for run_task: write the tool schemas the agent will send, before the first model call.
+    With tap_model, also record the model names the provider returns into model-names.json."""
     def record(agent) -> None:
         schemas = agent.tools.schemas(agent.enabled_tools)
         payload = {"tools": [s["function"]["name"] for s in schemas],
                    "schemas_sha256": _sha(json.dumps(schemas, ensure_ascii=False))}
         (output / TOOLS_FILE).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        if tap_model:
+            model_name_tap(agent.llm, model_recorder(output))
     return record
+
+
+def returned_models(run_dir: Path) -> list[str]:
+    path = run_dir / MODELS_FILE
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else []
 
 
 # --- slots ---------------------------------------------------------------------------------------
@@ -388,7 +473,7 @@ _DIR_FILE = re.compile(r"^\[F\] (\S+\.py)$", re.M)
 
 class CR2MockLLM(LLMClient):
     """Zero-cost scripted model. It reacts to what it is given, so each group takes its own path:
-    T calls retrieve_code, P reads the first prefetched file, N lists the root and reads a listed file."""
+    T calls retrieve_code, P and O read the first listed file, N lists the root and reads a listed file."""
 
     def __init__(self):
         self.model = "mock-model"
@@ -438,10 +523,15 @@ class CR2MockLLM(LLMClient):
 
 # --- running -------------------------------------------------------------------------------------
 
+def _now() -> str:
+    return datetime.now().astimezone().isoformat(timespec="seconds")
+
+
 async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expected: dict, tools: dict,
-                    prefetch_sha256: str, label: str, service=None, run=run_task) -> dict:
+                    prefetch_sha256: str, label: str, service=None, run=run_task, oracle_sha256: str | None = None) -> dict:
     from src.tools.retrieve import TaskRetrieval
 
+    started_at = _now()
     verified = set()
     pending, refused, kept_infra = [], [], []
     for slot in slots:
@@ -487,7 +577,8 @@ async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expect
                         retrieval = TaskRetrieval(index, output / CALLS_FILE)
                     summary = await run(prepared[task], PROFILES[group], output, mock=mock, variant=VARIANTS[group],
                                         prompt_suffix=want["suffix"], retrieval=retrieval,
-                                        mock_llm=CR2MockLLM() if mock else None, on_agent=tool_recorder(output))
+                                        mock_llm=CR2MockLLM() if mock else None,
+                                        on_agent=tool_recorder(output, tap_model=not mock))
                 except (Exception, SystemExit) as exc:
                     state["halt"] = state["halt"] or ("run crashed: " + slot_label(slot) + " "
                                                       + type(exc).__name__ + ": " + str(exc)[:300])
@@ -506,14 +597,19 @@ async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expect
     results = await asyncio.gather(*(one(*item) for item in pending))
     retired = [path for group in GROUPS for path in out_root.glob("*/" + group + "/r*.infra*")]
     started = [(slot, row) for (slot, _), row in zip(pending, results) if row is not None]
+    models = sorted({name for slot, _ in started for name in returned_models(slot_dir(out_root, slot))})
     report = {
         "label": label,
         "mock": mock,
+        "started_at": started_at,
+        "finished_at": _now(),
         "parallel": PARALLEL,
         "seed": SEED,
         "repeats": len(REPEATS),
         "total_cap_cny": str(TOTAL_CAP),
         "prefetch_sha256": prefetch_sha256,
+        "oracle_sha256": oracle_sha256,
+        "returned_models": models,
         "slots": [slot_label(slot) for slot in slots],
         "halt_reason": state["halt"],
         "started": len(started),
@@ -531,7 +627,7 @@ async def run_slots(slots, *, mock: bool, out_root: Path, prepared: dict, expect
 
 
 def write_runs(*, task_ids, repo_of: dict, mock: bool, prefetch_sha256: str, out_root: Path | None = None,
-               destination: Path | None = None) -> Path:
+               destination: Path | None = None, oracle_sha256: str | None = None) -> Path:
     """cr2-runs.json: one row per finished slot, the input of analyze_cr2.py."""
     out_root = out_root or out_root_for(mock)
     runs = []
@@ -551,9 +647,11 @@ def write_runs(*, task_ids, repo_of: dict, mock: bool, prefetch_sha256: str, out
             "status": summary.get("status"), "solved": summary.get("solved"), "model_calls": summary.get("model_calls"),
             "cost_cny": summary.get("cost_cny"), "stop_reason": summary.get("stop_reason"),
             "prompt_sha256": summary.get("prompt_sha256"), "rerun_reason": needs_rerun(run_dir, summary),
+            "returned_models": returned_models(run_dir),
         })
     payload = {"schema": RUNS_SCHEMA, "scope": "mock" if mock else "cr2", "seed": SEED, "repeats": len(REPEATS),
-               "prefetch_sha256": prefetch_sha256, "slots_expected": len(all_slots(task_ids)), "runs": runs}
+               "groups": list(GROUPS), "prefetch_sha256": prefetch_sha256, "oracle_sha256": oracle_sha256,
+               "slots_expected": len(all_slots(task_ids)), "runs": runs}
     if mock:
         payload["note"] = "Zero-model mock runs. This is not CR-2 data."
     destination = destination or runs_path_for(mock)
@@ -565,7 +663,7 @@ def write_runs(*, task_ids, repo_of: dict, mock: bool, prefetch_sha256: str, out
 
 # --- preflight -----------------------------------------------------------------------------------
 
-def preflight(tasks: list[dict], prefetch: dict, destination: Path | None = None) -> dict:
+def preflight(tasks: list[dict], prefetch: dict, oracle: dict, destination: Path | None = None) -> dict:
     """Checks that need no model and no container: pool, issue and base_commit against Verified, prompts, tools."""
     from src.retrieval import dataset
 
@@ -580,14 +678,17 @@ def preflight(tasks: list[dict], prefetch: dict, destination: Path | None = None
             q = verified[task["id"]]
             row["base_commit_matches_verified"] = q.base_commit == task["base_commit"]
             row["issue_matches_verified"] = agent_issue(prepared[task["id"]]) == q.problem_statement
-            row["prefetch_issue_sha256_matches"] = prefetch[task["id"]]["issue_sha256"] == _sha(agent_issue(prepared[task["id"]]))
-            row["failure"] = None if row["base_commit_matches_verified"] and row["prefetch_issue_sha256_matches"] else "mismatch"
+            issue_sha = _sha(agent_issue(prepared[task["id"]]))
+            row["prefetch_issue_sha256_matches"] = prefetch[task["id"]]["issue_sha256"] == issue_sha
+            row["oracle_issue_sha256_matches"] = oracle[task["id"]]["issue_sha256"] == issue_sha
+            ok = row["base_commit_matches_verified"] and row["prefetch_issue_sha256_matches"] and row["oracle_issue_sha256_matches"]
+            row["failure"] = None if ok else "mismatch"
         except (Exception, SystemExit) as exc:
             row["failure"] = type(exc).__name__ + ": " + str(exc)[:300]
         rows.append(row)
     prompts = {"checked": 0, "failure": None}
     try:
-        expected = expected_prompts(prepared, prefetch)
+        expected = expected_prompts(prepared, prefetch, oracle)
         prompts["checked"] = len(expected)
     except (Exception, SystemExit) as exc:
         prompts["failure"] = type(exc).__name__ + ": " + str(exc)[:300]
@@ -637,10 +738,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--freeze-prefetch", action="store_true", help="render docs/retrieval/cr2-prefetch.json")
     parser.add_argument("--preflight", action="store_true", help="pre-run checks, no model calls")
-    parser.add_argument("--mock", action="store_true", help="mock model, output under runs/cr2-mock")
-    parser.add_argument("--mock-slots", action="store_true", help="with --mock: two slots per group, six different tasks")
+    parser.add_argument("--mock", action="store_true", help="mock model, output under runs/cr2-mock-r1")
+    parser.add_argument("--mock-slots", action="store_true", help="with --mock: two slots per group, all on different tasks")
     parser.add_argument("--canary", action="store_true", help="the first two slots of each group in the queue")
-    parser.add_argument("--slot", action="append", default=[], help="<task>/<n|p|t>/r<k>; repeatable")
+    parser.add_argument("--slot", action="append", default=[], help="<task>/<n|p|t|o>/r<k>; repeatable")
     parser.add_argument("--runs-file", action="store_true", help="rewrite cr2-runs.json from existing summaries")
     parser.add_argument("--authorized", help="R,CAP confirmed by the project author; required without --mock")
     args = parser.parse_args()
@@ -658,11 +759,12 @@ def main():
         print("prefetch", manifest["bytes"], "cr1 top5 match", manifest["cr1_test_top5_match"], "of", len(manifest["tasks"]))
         return
     prefetch, prefetch_sha = load_prefetch(task_ids=set(task_ids))
+    oracle, oracle_sha = load_prefetch(ORACLE, task_ids=set(task_ids), schema=ORACLE_SCHEMA)
     if args.runs_file:
-        write_runs(task_ids=task_ids, repo_of=repo_of, mock=args.mock, prefetch_sha256=prefetch_sha)
+        write_runs(task_ids=task_ids, repo_of=repo_of, mock=args.mock, prefetch_sha256=prefetch_sha, oracle_sha256=oracle_sha)
         return
     if args.preflight:
-        report = preflight(tasks, prefetch)
+        report = preflight(tasks, prefetch, oracle)
         print("preflight", report["passed"], "of", report["total"], "tasks; prompts", json.dumps(report["prompts"]),
               "slots", report["slots"], "pass", report["pass"], flush=True)
         if not report["pass"]:
@@ -687,7 +789,7 @@ def main():
     if args.mock:
         label = "mock" if label == "mock" else "mock-" + label
     prepared = {task["id"]: materialize_runner_task(task) for task in tasks}
-    expected = expected_prompts(prepared, prefetch)
+    expected = expected_prompts(prepared, prefetch, oracle)
     tools = expected_tools()
     service = None
     if any(slot[1] == "t" for slot in slots):
@@ -696,12 +798,15 @@ def main():
         service = RetrievalService.from_freeze()
     out_root = out_root_for(args.mock)
     report = asyncio.run(run_slots(slots, mock=args.mock, out_root=out_root, prepared=prepared, expected=expected,
-                                   tools=tools, prefetch_sha256=prefetch_sha, label=label, service=service))
+                                   tools=tools, prefetch_sha256=prefetch_sha, label=label, service=service,
+                                   oracle_sha256=oracle_sha))
     print(json.dumps({key: value for key, value in report.items() if key != "slots"}, indent=2), flush=True)
     if args.mock:
-        write_runs(task_ids=task_ids, repo_of=repo_of, mock=True, prefetch_sha256=prefetch_sha, out_root=out_root)
+        write_runs(task_ids=task_ids, repo_of=repo_of, mock=True, prefetch_sha256=prefetch_sha, out_root=out_root,
+                   oracle_sha256=oracle_sha)
     elif label == "main" and not report["halt_reason"]:
-        write_runs(task_ids=task_ids, repo_of=repo_of, mock=False, prefetch_sha256=prefetch_sha, out_root=out_root)
+        write_runs(task_ids=task_ids, repo_of=repo_of, mock=False, prefetch_sha256=prefetch_sha, out_root=out_root,
+                   oracle_sha256=oracle_sha)
     if report["halt_reason"]:
         raise SystemExit("stopped: " + report["halt_reason"])
 
