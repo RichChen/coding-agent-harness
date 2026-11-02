@@ -20,7 +20,7 @@
 
 固定模型的意义是让每次输出一致，方便跟踪。它不会证明真实模型有修复能力。后面会指出换成真实模型后，调用链在哪儿接上。
 
-本教程增加的入口是 [tutorial_walkthrough.py](/D:/crq/src/coding-harness/scripts/tutorial_walkthrough.py)，配置是 [tutorial.yaml](/D:/crq/src/coding-harness/configs/tutorial.yaml)。核心代码没有为教程另写一套。
+本教程增加的入口是 [tutorial_walkthrough.py](../../scripts/tutorial_walkthrough.py)，配置是 [tutorial.yaml](../../configs/tutorial.yaml)。核心代码没有为教程另写一套。
 
 ## 1. 第一次运行：逐条复制，不需要配置 API
 
@@ -205,17 +205,17 @@ flowchart TD
 
 | 顺序  | 打开的代码块                                                                                                                                                                                              | 输入 → 输出                            | 第一遍只回答这一个问题                 |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | --------------------------- |
-| 1   | [教学入口的](/D:/crq/src/coding-harness/scripts/tutorial_walkthrough.py) `run` [和](/D:/crq/src/coding-harness/scripts/tutorial_walkthrough.py) `model_for`                                               | `case` → 任务、配置、工作区、固定回复            | 本次输入从哪来？哪些是教学用替身？           |
-| 2   | `load_config` [/](/D:/crq/src/coding-harness/src/harness/factory.py) `build_agent`                                                                                                               | YAML + workspace → 配好组件的 AgentLoop | 模型、工具、预算、沙箱是谁组装的？           |
-| 3   | `[RunSession.create](/D:/crq/src/coding-harness/src/runtime/session.py)` 和同文件 `run`                                                                                                             | 会话目录 + 兼容信息 → 持久化会话及运行结果           | 日志为什么放在工作区外？                |
-| 4   | `[AgentLoop._run_loop](/D:/crq/src/coding-harness/src/runtime/loop.py)` 的初始化和 `while True`                                                                                                      | 任务 → messages → 一轮轮响应              | 循环持有哪些跨轮状态？                 |
-| 5   | [调用](/D:/crq/src/coding-harness/src/runtime/loop.py) `_model_view` [和](/D:/crq/src/coding-harness/src/runtime/loop.py) `_call_llm` [的块](/D:/crq/src/coding-harness/src/runtime/loop.py) | 历史 + schemas → LLMResponse         | 什么数据被送给模型？                  |
-| 6   | [无工具时返回结果的块](/D:/crq/src/coding-harness/src/runtime/loop.py)                                                                                                                                    | 纯文本响应 → `success=True` 的运行结果       | “结束”在哪里被决定？                 |
-| 7   | `[validate_tool_call_batch](/D:/crq/src/coding-harness/src/tools/validation.py)`                                                                                                                | tool calls + registry → 校验通过的调用或失败 | JSON/schema 错误为什么不直接落到文件操作？ |
-| 8   | [构造 ToolContext、执行工具并记录结果的块](/D:/crq/src/coding-harness/src/runtime/loop.py)                                                                                                                    | 参数 + 上下文 → ToolResult              | 谁把 `calc.py` 限定在本次工作区？      |
-| 9   | `[ReadFileTool.execute](/D:/crq/src/coding-harness/src/tools/files.py)`；`[SearchReplaceTool.execute](/D:/crq/src/coding-harness/src/tools/patch.py)`                                          | 相对路径、替换参数 → 文件内容或操作结果              | 实际读写在哪儿？                    |
-| 10  | [把 tool result 追加到 messages 的块](/D:/crq/src/coding-harness/src/runtime/loop.py)                                                                                                                | ToolResult → 下一轮的输入                | 模型如何知道工具成功还是失败？             |
-| 11  | [教学入口末尾的文件检查](/D:/crq/src/coding-harness/scripts/tutorial_walkthrough.py)                                                                                                                           | 最终源文件 → `teaching_check_passed`    | 判分为何不依赖模型最后一句话？             |
+| 1   | [教学入口的](../../scripts/tutorial_walkthrough.py) `run` [和](../../scripts/tutorial_walkthrough.py) `model_for`                                               | `case` → 任务、配置、工作区、固定回复            | 本次输入从哪来？哪些是教学用替身？           |
+| 2   | `load_config` [/](../../src/harness/factory.py) `build_agent`                                                                                                               | YAML + workspace → 配好组件的 AgentLoop | 模型、工具、预算、沙箱是谁组装的？           |
+| 3   | `[RunSession.create](../../src/runtime/session.py)` 和同文件 `run`                                                                                                             | 会话目录 + 兼容信息 → 持久化会话及运行结果           | 日志为什么放在工作区外？                |
+| 4   | `[AgentLoop._run_loop](../../src/runtime/loop.py)` 的初始化和 `while True`                                                                                                      | 任务 → messages → 一轮轮响应              | 循环持有哪些跨轮状态？                 |
+| 5   | [调用](../../src/runtime/loop.py) `_model_view` [和](../../src/runtime/loop.py) `_call_llm` [的块](../../src/runtime/loop.py) | 历史 + schemas → LLMResponse         | 什么数据被送给模型？                  |
+| 6   | [无工具时返回结果的块](../../src/runtime/loop.py)                                                                                                                                    | 纯文本响应 → `success=True` 的运行结果       | “结束”在哪里被决定？                 |
+| 7   | `[validate_tool_call_batch](../../src/tools/validation.py)`                                                                                                                | tool calls + registry → 校验通过的调用或失败 | JSON/schema 错误为什么不直接落到文件操作？ |
+| 8   | [构造 ToolContext、执行工具并记录结果的块](../../src/runtime/loop.py)                                                                                                                    | 参数 + 上下文 → ToolResult              | 谁把 `calc.py` 限定在本次工作区？      |
+| 9   | `[ReadFileTool.execute](../../src/tools/files.py)`；`[SearchReplaceTool.execute](../../src/tools/patch.py)`                                          | 相对路径、替换参数 → 文件内容或操作结果              | 实际读写在哪儿？                    |
+| 10  | [把 tool result 追加到 messages 的块](../../src/runtime/loop.py)                                                                                                                | ToolResult → 下一轮的输入                | 模型如何知道工具成功还是失败？             |
+| 11  | [教学入口末尾的文件检查](../../scripts/tutorial_walkthrough.py)                                                                                                                           | 最终源文件 → `teaching_check_passed`    | 判分为何不依赖模型最后一句话？             |
 
 
 每块只写三行笔记：“输入是什么；输出交给谁；出错后从哪里看”。暂时跳过函数里面的实现细节。
@@ -267,7 +267,7 @@ flowchart TD
 
 它从最近一次普通运行的会话事件重建状态，显示 `terminated`、`operations` 和预算。**不会调用模型，不会再改一次文件**。三个工具对应三个 operation；`bad-edit` 对应的编辑 operation 会显示失败。
 
-源码入口是 `[RunSession.replay](/D:/crq/src/coding-harness/src/runtime/session.py:151)` → `[reduce_events](/D:/crq/src/coding-harness/src/runtime/recovery.py:30)`。
+源码入口是 `[RunSession.replay](../../src/runtime/session.py#L151)` → `[reduce_events](../../src/runtime/recovery.py#L30)`。
 
 ### 5.2 真实杀掉一个教学子进程，再恢复
 
@@ -275,7 +275,7 @@ flowchart TD
 .\.venv\Scripts\python.exe scripts/tutorial_walkthrough.py crash --window after_effect
 ```
 
-这里复用现有 [recovery_worker.py](/D:/crq/src/coding-harness/tests/fixtures/recovery_worker.py)。子进程只在一个新目录里向 `value.txt` 追加 `x`，随后 `os._exit(71)`。它不会杀你自己的终端或其他进程。
+这里复用现有 [recovery_worker.py](../../tests/fixtures/recovery_worker.py)。子进程只在一个新目录里向 `value.txt` 追加 `x`，随后 `os._exit(71)`。它不会杀你自己的终端或其他进程。
 
 关键输出：
 
@@ -310,7 +310,7 @@ flowchart TD
 
 这些结果已实测。每次的 JSON 存在终端打印的 `CRASH_DIR/crash.json`；crash 不改变普通运行的 `latest.txt`。
 
-对应代码只读三块：`prepare_tool` [/](/D:/crq/src/coding-harness/src/runtime/session.py:265) `intent`、`[record_result](/D:/crq/src/coding-harness/src/runtime/session.py:217)`、`[reconcile](/D:/crq/src/coding-harness/src/runtime/session.py:242)`。
+对应代码只读三块：`prepare_tool` [/](../../src/runtime/session.py#L265) `intent`、`[record_result](../../src/runtime/session.py#L217)`、`[reconcile](../../src/runtime/session.py#L242)`。
 
 边界：这个演示不是任意副作用“恰好一次执行”的证明。项目对特定内置 `write_file` 还有内容哈希核对路径；不能把它推广到任意 shell 命令或插件。resume 还会核对工作区、配置、代码身份和有效期。
 
@@ -320,7 +320,7 @@ flowchart TD
 
 ### 6.1 正常的真实模型入口在哪里
 
-现有入口是 [run_single.py](/D:/crq/src/coding-harness/scripts/run_single.py:27)，可以先安全地看帮助：
+现有入口是 [run_single.py](../../scripts/run_single.py#L27)，可以先安全地看帮助：
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/run_single.py --help
@@ -341,14 +341,14 @@ run_single.py "任务文本" --config 配置.yaml --workspace 候选代码目录
 
 | 功能             | 从哪里读                                                                                                                                | 上游 → 本模块 → 下游                     | 第一遍需要掌握的边界                  |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | --------------------------- |
-| 工具注册、参数校验      | [registry.py](/D:/crq/src/coding-harness/src/tools/registry.py)、[validation.py](/D:/crq/src/coding-harness/src/tools/validation.py) | 工具定义 → schemas/校验 → execute       | 仅有模型输出的工具名不代表允许执行           |
-| 预算             | [model_budget.py](/D:/crq/src/coding-harness/src/policy/model_budget.py)                                                            | 请求预估 → reserve → settle           | 缺 usage 时不能假装消耗为零           |
-| deadline、取消、清理 | [deadline.py](/D:/crq/src/coding-harness/src/runtime/deadline.py)、[awaitctl.py](/D:/crq/src/coding-harness/src/runtime/awaitctl.py) | 限时/取消信号 → 等待与清理 → 终止状态            | 停止等待不等于外部进程已结束              |
-| 本地路径约束         | [sandbox.py](/D:/crq/src/coding-harness/src/policy/sandbox.py)                                                                      | 相对路径 → 校验后的路径 → 文件工具              | 路径检查不是完整 OS 隔离              |
-| Docker 执行      | [docker.py](/D:/crq/src/coding-harness/src/execution/docker.py)                                                                     | 执行请求 → 容器内运行 → 输出/清理结果            | 本教程的文件操作没有演示 Docker 隔离      |
-| 上下文窗口、摘要       | [window.py](/D:/crq/src/coding-harness/src/runtime/window.py:159)、[summary.py](/D:/crq/src/coding-harness/src/runtime/summary.py)   | 历史 → 模型可见视图 → 模型请求                | 模型看到的内容与原始持久记录可不同；本教程没触发摘要  |
-| 持久化和恢复         | [session.py](/D:/crq/src/coding-harness/src/runtime/session.py)、[recovery.py](/D:/crq/src/coding-harness/src/runtime/recovery.py)   | 事件流 → 状态还原/核对 → 续跑或拒绝             | replay 和 resume 做的事不同       |
-| SWE-bench 镜像判分 | [image_grader.py](/D:/crq/src/coding-harness/src/eval/image_grader.py:45)                                                           | 候选改动 + 测试回执 → F2P/P2P 核对 → solved | 不是相信“tests passed”这句 stdout |
+| 工具注册、参数校验      | [registry.py](../../src/tools/registry.py)、[validation.py](../../src/tools/validation.py) | 工具定义 → schemas/校验 → execute       | 仅有模型输出的工具名不代表允许执行           |
+| 预算             | [model_budget.py](../../src/policy/model_budget.py)                                                            | 请求预估 → reserve → settle           | 缺 usage 时不能假装消耗为零           |
+| deadline、取消、清理 | [deadline.py](../../src/runtime/deadline.py)、[awaitctl.py](../../src/runtime/awaitctl.py) | 限时/取消信号 → 等待与清理 → 终止状态            | 停止等待不等于外部进程已结束              |
+| 本地路径约束         | [sandbox.py](../../src/policy/sandbox.py)                                                                      | 相对路径 → 校验后的路径 → 文件工具              | 路径检查不是完整 OS 隔离              |
+| Docker 执行      | [docker.py](../../src/execution/docker.py)                                                                     | 执行请求 → 容器内运行 → 输出/清理结果            | 本教程的文件操作没有演示 Docker 隔离      |
+| 上下文窗口、摘要       | [window.py](../../src/runtime/window.py#L159)、[summary.py](../../src/runtime/summary.py)   | 历史 → 模型可见视图 → 模型请求                | 模型看到的内容与原始持久记录可不同；本教程没触发摘要  |
+| 持久化和恢复         | [session.py](../../src/runtime/session.py)、[recovery.py](../../src/runtime/recovery.py)   | 事件流 → 状态还原/核对 → 续跑或拒绝             | replay 和 resume 做的事不同       |
+| SWE-bench 镜像判分 | [image_grader.py](../../src/eval/image_grader.py#L45)                                                           | 候选改动 + 测试回执 → F2P/P2P 核对 → solved | 不是相信“tests passed”这句 stdout |
 
 
 F2P 是原先失败、修复后应通过的测试；P2P 是原先通过、修复后仍应通过的测试。`score_receipt` 按具体测试 node id 核对，缺失测试不算通过。完整镜像判分还需要镜像、候选改动和测试环境，不能把本教程的字符串比较写成真实评测结果。

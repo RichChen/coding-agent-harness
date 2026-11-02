@@ -133,4 +133,4 @@ cr_demo.py <instance_id> [--run <run_dir>] [--show-gold] [--out <file.md>]
 
 ## 6. 启动文字
 
-> CR-2 正式实验已收尾。请读 `D:/crq/src/coding-harness/docs/retrieval/CR-2e-CONTRACT.zh-CN.md`，执行 CR-2e-a：新配置 T2（新 system prompt、工具描述 v2）、开发检查 12 次真实运行（`--authorized dev,20`）、演示脚本和 2 份示例、README 的代码检索一节。总时限 3 天。只能做合同第 0 节允许的改动，b0-v2 和 cr2-t 的兼容性必须不变。门槛不满足时只允许改一次，第二次仍不满足就收尾，不能用强制调用来过门槛。写完 `docs/retrieval/CHECKPOINT-CR-2e-a.md` 并提交后停下，不做同期对照。系统待机这一轮不用改：12 次运行大约 20 分钟。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。

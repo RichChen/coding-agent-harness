@@ -4,8 +4,8 @@
 
 | 顺序 | 教程 | 第一遍的目标 |
 |---|---|---|
-| 1 | [coding-harness 上手教程](/D:/crq/src/coding-harness/docs/tutorials/HARNESS-START-HERE.zh-CN.md) | 跑修复任务，查看每轮输入输出，把 loop、工具、session 对上 |
-| 2 | [GRPO 上手教程](//wsl.localhost/Ubuntu/home/crq/agentic-rl/docs/tutorials/GRPO-START-HERE.zh-CN.md) | 跑 episode，查看隐藏判分，再接到 batch、更新和真实训练日志 |
+| 1 | [coding-harness 上手教程](HARNESS-START-HERE.zh-CN.md) | 跑修复任务，查看每轮输入输出，把 loop、工具、session 对上 |
+| 2 | GRPO 上手教程（另一个项目 agentic-rl 的 `docs/tutorials/GRPO-START-HERE.zh-CN.md`，不在本仓库） | 跑 episode，查看隐藏判分，再接到 batch、更新和真实训练日志 |
 
 **今天只做 harness 的第 1～3 节。** 跑通并能解释“读文件的结果如何进入下一轮输入”，已经完成第一轮目标。然后做失败对照，最后再碰恢复、训练、评测细节。
 

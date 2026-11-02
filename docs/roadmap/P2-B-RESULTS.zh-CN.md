@@ -1,6 +1,6 @@
 # P2-B：公开验证服务交付记录
 
-日期：2026-10-30（Asia/Shanghai）。实施基点：`d0bdf6f8302a8a8b65a806730724bd81e25a3375`。分支：`codex/p2-public-validation`。唯一写入工作区：`C:/Users/Administrator/.codex/worktrees/8571/coding-harness`。实现与本报告在同一交付提交，SHA 见本会话最终回执；没有 merge/push。
+日期：2026-10-30（Asia/Shanghai）。实施基点：`d0bdf6f8302a8a8b65a806730724bd81e25a3375`。分支：`codex/p2-public-validation`。唯一写入工作区：`<worktree-B>`。实现与本报告在同一交付提交，SHA 见本会话最终回执；没有 merge/push。
 
 依据：[P1 接口](P1-INTERFACES.zh-CN.md) §2、5–7、9–11；共享 [contracts](../../src/workspace/contracts.py) 与 [fixture](../../tests/fixtures/workspace_contracts/fixture.py) 原样使用。按 AGENTS 查看参考项目 `D:/crq/src/learn-claude-code-main/agents/s01_agent_loop.py` 的工具/循环边界，没有引入新 agent 循环，也未使用 research-workflow。
 

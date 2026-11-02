@@ -185,9 +185,9 @@ C:/Users/Administrator/.cache/huggingface/hub/datasets--princeton-nlp--SWE-bench
 - 不把 dev 上的数字当结果报告。
 - 某个检索器在某个仓库上更差，照实写进表里。
 
-## 10. 启动文字（发给 Cursor）
+## 10. 启动文字
 
-> 请阅读 `D:/crq/src/coding-harness/docs/retrieval/PLAN.zh-CN.md` 第 2 节，然后完整阅读同目录的 `CR-1-CONTRACT.zh-CN.md`，执行其中的 CR-1a。只做 CR-1a，写完 `docs/retrieval/CHECKPOINT-CR-1a.md` 并提交后停下，不要开始 CR-1b。不要修改合同第 0 节列出的禁改路径。遇到合同没覆盖、需要做取舍的情况，选保守的做法并写进检查点；会改变答案隔离、划分或主比较的问题，先停下来问。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
 
 ## 11. CR-1a 审计后的补充（2026-10-26，适用于 CR-1b 和 CR-1c）
 
@@ -222,7 +222,7 @@ C:/Users/Administrator/.cache/huggingface/hub/datasets--princeton-nlp--SWE-bench
 
 ### 11.6 CR-1b 启动文字
 
-> CR-1a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1a.zh-CN.md`。请先读这份审计，再读 `CR-1-CONTRACT.zh-CN.md` 第 5、8 节中 CR-1b 的部分和新增的第 11 节，然后执行 CR-1b。第 11 节与前文冲突时以第 11 节为准。只用 dev，不要对 test 运行任何检索或打分。写完 `docs/retrieval/CR-1-FREEZE.md`、打 tag `cr1-freeze`、写完 `docs/retrieval/CHECKPOINT-CR-1b.md` 并提交后停下，不要开始 CR-1c。吞吐试跑之后如果估算的总耗时超过 6 小时，先写一份简短的检查点停下来问。其他规则与 CR-1a 相同：不改禁改路径，不调用付费 API，取舍写进检查点，涉及答案隔离、划分或主比较的问题先停下来问。torch 和 sentence-transformers 只装进 `D:/crq/src/coding-harness/.venv`，不要修改任何 conda 环境。下载慢的话，可以只在 pip 命令上加 `--proxy http://127.0.0.1:7890`，不要改全局配置。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
 
 ## 12. CR-1b 审计后的补充（2026-10-26，适用于 CR-1c）
 
@@ -251,5 +251,5 @@ C:/Users/Administrator/.cache/huggingface/hub/datasets--princeton-nlp--SWE-bench
 
 ### 12.4 CR-1c 启动文字
 
-> CR-1b 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1b.zh-CN.md`。请先读这份审计，再读 `CR-1-CONTRACT.zh-CN.md` 第 8 节 CR-1c 部分、第 9 节、第 11.3 节和新增的第 12 节，然后执行 CR-1c。第 12 节与前文冲突时以第 12 节为准。先做 12.1 的三项检查，任何一项不满足就停下来问。test 只跑一次冻结配置；冻结后不修改 `src/retrieval/`、`scripts/cr_index.py`、`scripts/cr_eval.py`，新的统计写进 `scripts/cr_report.py`。写完 `docs/retrieval/CR-1-RESULTS.zh-CN.md`、`docs/retrieval/cr1-test-per-instance.jsonl`、`docs/retrieval/CHECKPOINT-CR-1c.md`，跑一次全量 pytest，提交后停下。结果文件严格按第 9 节的表述规则写，不要因为结果好或不好改变写法。其他规则与前两轮相同：不改禁改路径，不调用付费 API，取舍写进检查点。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
 

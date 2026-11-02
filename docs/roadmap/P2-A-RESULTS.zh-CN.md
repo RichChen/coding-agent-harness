@@ -2,7 +2,7 @@
 
 日期：2026-10-30（Asia/Shanghai）。工作基点：`d0bdf6f`。分支：`codex/p2-workspace-retrieval`。实现及测试提交：`38efd6c69e09627dcfd1ea9f24b0c2f7e60a5caa`；原报告提交 `89159d3`。GPU smoke 在该提交上完成，新增专属 fixture runner、JSON 与本报告修订另行提交，最终提交号由会话返回。
 
-工作区仅为 `C:/Users/Administrator/.codex/worktrees/57b9/coding-harness`。已阅读根 AGENTS、P1 §2/4/9–11、共享 contracts/fixture，以及指定参考项目的 s01/s12 中文文档。没有修改主工作区、共享契约、旧检索实现/缓存或运行入口；没有使用 research-workflow，没有另行委派。
+工作区仅为 `<worktree-A>`。已阅读根 AGENTS、P1 §2/4/9–11、共享 contracts/fixture，以及指定参考项目的 s01/s12 中文文档。没有修改主工作区、共享契约、旧检索实现/缓存或运行入口；没有使用 research-workflow，没有另行委派。
 
 ## 1. 已实现范围
 
@@ -76,7 +76,7 @@ Qwen 的模型及 query prefix 取自既有 `embed.MODELS['qwen3-0.6b']`：
 最终确定性与兼容检查 **243 passed**（3.96s），包含新增索引/编码器测试、共享契约测试和旧纯函数、缓存隔离与 CR-2 serve 测试。该 pytest 检查没有新增 skip、没有运行原实验数据集或真实模型。后续 GPU smoke 没有修改生产模块，因此未无变化重复这 243 项。
 
 ```powershell
-Set-Location C:/Users/Administrator/.codex/worktrees/57b9/coding-harness
+Set-Location <worktree-A>
 # 第一次先确保 pytest 临时目录的父目录存在。
 New-Item -ItemType Directory -Path .pytest_cache -Force | Out-Null
 & D:/crq/src/coding-harness/.venv/Scripts/python.exe -m pytest tests/test_workspace_retrieval.py tests/test_workspace_encoder.py tests/test_workspace_contracts.py tests/test_retrieval_bm25.py tests/test_retrieval_chunking.py tests/test_retrieval_tokenize.py tests/test_retrieval_fusion.py tests/test_retrieval_embed.py tests/test_retrieval_isolation.py tests/test_cr2_serve.py -q --basetemp=.pytest_cache/p2-a-tmp-5 --tb=short
@@ -115,7 +115,7 @@ New-Item -ItemType Directory -Path .pytest_cache -Force | Out-Null
 实际命令如下。缓存目录当次为空；再次复现必须换新的 cache-root 编号，不能复用 01 后仍期待首次 encoded=2。
 
 ```powershell
-Set-Location C:/Users/Administrator/.codex/worktrees/57b9/coding-harness
+Set-Location <worktree-A>
 $env:HF_HUB_OFFLINE = '1'
 $env:TRANSFORMERS_OFFLINE = '1'
 $env:HF_HUB_DISABLE_TELEMETRY = '1'

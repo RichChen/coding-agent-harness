@@ -93,7 +93,7 @@ P1 会话标识：`01a188a4-1ab1-7e31-9bdd-4335e2ffebf9`，主机 local。主会
 
 自动 worktree 新会话请求 A=`client-new-thread:4ce76b70-65bd-46ac-b930-c5ab9631763f`、B=`client-new-thread:56d79215-479d-4ab3-b451-6c9081de8b01` 未启动：创建在主树扫描被忽略的 `AGENTS.override.md` 时卡住，两个 git 扫描持续超过 6 分钟后由主会话终止。未获得正式会话 ID，不把它们计为执行者。已完成的两个 P0 可见会话被复用并改名执行 A/B，避免重复创建与重复派工。
 
-A 工作区：`C:/Users/Administrator/.codex/worktrees/57b9/coding-harness`；B 工作区：`C:/Users/Administrator/.codex/worktrees/8571/coding-harness`。均已核对从 `d0bdf6f` 开始且干净，根 AGENTS.md 已复制；工作区 src/tests/scripts 未发现额外 AGENTS。命令显式使用各自工作区，分支分别为 `codex/p2-workspace-retrieval`、`codex/p2-public-validation`。会话 UI 关联原项目；这次使用显式路径，未宣称自动工作区挂接已成功。
+A 工作区：`<worktree-A>`；B 工作区：`<worktree-B>`。均已核对从 `d0bdf6f` 开始且干净，根 AGENTS.md 已复制；工作区 src/tests/scripts 未发现额外 AGENTS。命令显式使用各自工作区，分支分别为 `codex/p2-workspace-retrieval`、`codex/p2-public-validation`。会话 UI 关联原项目；这次使用显式路径，未宣称自动工作区挂接已成功。
 
 P0 两任务先只读并各写一份报告，再复用为独立模块开发。A/B 先跑纯 fixture，随后主会话分别排期授权已有 Qwen 的本地 GPU 小检查、已有 Sphinx 镜像的 Docker 验收。所有人没有调用求解模型 API。只有主会话负责合并；没有重复启动失败的 worktree 会话。
 

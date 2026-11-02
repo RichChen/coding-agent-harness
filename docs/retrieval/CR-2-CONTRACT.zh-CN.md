@@ -114,7 +114,7 @@ gold 文件用 `labels.py` 的文件级标签，只在运行全部结束后由�
 
 ## 6. 启动文字（CR-2a）
 
-> 请阅读 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-1c.zh-CN.md`、`PLAN.zh-CN.md` 第 4 节和 `CR-2-CONTRACT.zh-CN.md`，执行 CR-2a。只做 CR-2a，不调用任何付费模型。写完 `docs/retrieval/CR-2-FREEZE.md`、打 tag `cr2-freeze`、写完 `docs/retrieval/CHECKPOINT-CR-2a.md` 并提交后停下。只能按合同第 0 节放开的范围做增量修改，用兼容性测试证明 b0-v2 的默认路径没有变。合同没覆盖的取舍选保守做法并写进检查点；会改变三组定义、主指标或题单的问题，先停下来问。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
 
 ## 7. CR-2a 审计后的扩大（2026-10-26，适用于 CR-2b 以后）
 
@@ -173,7 +173,7 @@ O 组不是一种方法。它回答的是：定位做到完美时，agent 最多
 
 ### 7.6 CR-2a-r1 + CR-2b 启动文字
 
-> CR-2a 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2a.zh-CN.md`。项目作者放开了预算，CR-2 增加第四组 O，并把 R 改为 5。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 7 节，按 7.4 的顺序执行：先做 CR-2a-r1 重新冻结（打 tag `cr2-freeze-r1`，旧 tag 不动），mock 和全量 pytest 都通过后，再用 `--canary --authorized 5,800` 跑 8 个 canary 槽位。项目作者已经授权 R=5、上限 800 元。canary 之外不要启动任何真实槽位。写完 `docs/retrieval/CHECKPOINT-CR-2b.md` 并提交后停下。O 组的标签只能在 `scripts/cr2_oracle_prefetch.py` 里读；O 组的说明文字必须与 P 组逐字相同。任何注入核对失败、harness 工具错误或测试失败，都要停下写检查点，不要绕过。canary 要同时报账本费用和缓存口径费用，并记录开始和结束时间（见 7.4 末段）。其他规则与前几轮相同。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
 
 
 ## 8. CR-2b 审计后（2026-10-27，适用于 CR-2c 以后）
@@ -210,7 +210,7 @@ O 组不是一种方法。它回答的是：定位做到完美时，agent 最多
 
 ### 8.5 r2 + CR-2c 启动文字
 
-> CR-2b 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2b.zh-CN.md`。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 8 节，先做 8.1 和 8.2 的 r2 修订：只改 `scripts/run_cr2.py` 和它的测试，补 `CR-2-FREEZE.md` 第 11 节，打 tag `cr2-freeze-r2`，跑全量 pytest。全部通过后，在 `cr2-freeze-r2` 上按 8.3 启动全量运行（`--authorized 5,800`，`HF_HUB_OFFLINE=1`，后台运行，输出写到 `runs/cr2-logs/main.out`）。项目作者已经确认余额并关闭了系统待机。运行期间不改代码；前 3 个真实槽位如果都没有记到模型名，runner 会停下，这时写检查点等审计，不要自行修改后继续。全部槽位跑完后，写 `docs/retrieval/CHECKPOINT-CR-2c.md` 并提交后停下，不做分析。其他规则与前几轮相同。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
 
 ## 9. 第一次停止后（2026-10-27，适用于 CR-2c 续跑）
 
@@ -252,7 +252,7 @@ O 组不是一种方法。它回答的是：定位做到完美时，agent 最多
 
 ### 9.4 启动文字
 
-> CR-2c 的第一次停止已审计，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2c-halt1.zh-CN.md`。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 9 节。先做 9.1 的重放核实，不调用模型、不改冻结代码。只有判定为"agent 造成"时，才做 9.2 的 r3 修订：只改 `scripts/run_cr2.py`、`scripts/analyze_cr2.py` 和它们的测试，补 `CR-2-FREEZE.md` 第 12 节，打 tag `cr2-freeze-r3`，跑全量 pytest。如果判定为"harness 造成"，或者重放复现不出来，就写检查点停下。r3 全部通过后，按 9.3 续跑：开跑前确认系统待机已关闭、Docker 在线、没有其他 `run_cr2.py` 进程。全部槽位跑完后，在 `CHECKPOINT-CR-2c.md` 末尾追加"续跑"一节并提交，然后停下，不做分析。其他规则与前几轮相同。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
 
 ## 10. CR-2c 审计后：分析（2026-10-29，适用于 CR-2d）
 
@@ -301,4 +301,4 @@ S4 要从运行目录读取退役运行的 summary 和 `events.jsonl`。退役�
 
 ### 10.5 启动文字
 
-> CR-2c 审计通过，审计记录在 `D:/crq/src/coding-harness/docs/retrieval/AUDIT-CR-2c.zh-CN.md`。合同第 9 节之前是乱码，已经恢复成原文。请读审计和 `CR-2-CONTRACT.zh-CN.md` 第 10 节，执行 CR-2d：先做 10.3 的 runs 文件核对，再做 10.1 的 r4 修订（只改 `scripts/analyze_cr2.py` 和它的测试）和 10.2 的 S1–S4，然后运行分析，写 `docs/retrieval/CR-2-RESULTS.zh-CN.md`、`docs/retrieval/cr2-analysis.json`、`docs/retrieval/CHECKPOINT-CR-2d.md`，跑全量 pytest，提交后停下。不要运行 `run_cr2.py` 的正式模式，不调用任何模型。主分析和敏感性分析的定义在本节已经写定，看到结果后不能改；如果某项定义无法执行，写进检查点，并说明你是怎样处理的。结果严格按表述规则写，不要因为结果好或不好改变写法。
+启动文字是发给执行代理的操作指令，公开版本略去；本阶段的范围、限制和停止条件以上文各节为准。
