@@ -43,6 +43,7 @@ class ReplicaResult:
     cleanup_state: str
     truncated: bool = False
     runner_unchanged: bool = True
+    cleanup_evidence: dict | None = None
 
 
 class ReplicaExecutor(Protocol):

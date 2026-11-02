@@ -2,10 +2,17 @@
 from __future__ import annotations
 
 import asyncio
+import copy
 import time
 from contextlib import asynccontextmanager
 
 from src.workspace.control import CaptureControl, CaptureError
+
+
+def cleanup_exception(exc):
+    """No arbitrary exception message, environment, or unbounded traceback."""
+    return dict(exception_type=type(exc).__name__, reason=getattr(exc, "reason", None),
+                cause_type=type(exc.__cause__).__name__ if exc.__cause__ else None)
 
 
 class WorkspaceCoordinator:
@@ -14,6 +21,7 @@ class WorkspaceCoordinator:
         self._lock = asyncio.Lock()
         self.state = "new"
         self.cleanup_ok = None
+        self.cleanup_evidence = []
 
     @property
     def transport_identity(self):
@@ -24,10 +32,15 @@ class WorkspaceCoordinator:
     async def _cleanup(self):
         # Cleanup is the sole bounded operation allowed after cancellation/deadline.
         cleanup = CaptureControl("owned-cleanup", time.monotonic() + 10)
+        error = None
         try:
             self.cleanup_ok = await self._transport.close(cleanup)
-        except (Exception, asyncio.CancelledError):
+        except (Exception, asyncio.CancelledError) as exc:
             self.cleanup_ok = False
+            error = cleanup_exception(exc)
+        finally:
+            self.cleanup_evidence.append(dict(cleanup_ok=self.cleanup_ok, error=error,
+                transport=copy.deepcopy(getattr(self._transport, "cleanup_evidence", None))))
 
     @asynccontextmanager
     async def _locked(self, control):

@@ -21,7 +21,7 @@ from src.validation.sphinx_profile import REVISION, SphinxProfile
 from src.workspace.capture import CaptureProvider
 from src.workspace.contracts import canonical_json
 from src.workspace.control import CaptureControl, CaptureError
-from src.workspace.coordinator import WorkspaceCoordinator
+from src.workspace.coordinator import WorkspaceCoordinator, cleanup_exception
 
 
 class DeferredRunEvents:
@@ -385,6 +385,7 @@ class CompletionController:
                 self.current, self.current_ref, self.dirty = None, None, True
             cleanup_started = time.monotonic()
             cleanup_ok = True
+            cleanup_error = None
             if self.coordinator:
                 try:
                     cleanup_left = min(12, min(self.run_deadline, self._stop_at or float("inf"))+12-time.monotonic())
@@ -392,8 +393,10 @@ class CompletionController:
                         raise TimeoutError("shared cleanup grace exhausted")
                     async with asyncio.timeout(cleanup_left):
                         cleanup_ok = await self.coordinator.close()
-                except (Exception, asyncio.CancelledError):
+                except (Exception, asyncio.CancelledError) as exc:
                     cleanup_ok = False
+                    cleanup_error = cleanup_exception(exc)
+            main_cleanup_ok = cleanup_ok
             # Replica cleanup is part of the same run's delivery obligation.
             # A later successful capture cannot erase an earlier uncertain cleanup.
             cleanup_ok = cleanup_ok and all(
@@ -407,6 +410,12 @@ class CompletionController:
                           "budget_exhausted" if result.failure_reason in (FailureReason.BUDGET_EXHAUSTED, FailureReason.STEP_LIMIT) else
                           "deadline" if "deadline" in reason else "completed" if result.success else "execution_failed")
                 result.workspace_v1["run"] = dict(status=status, reason=reason, cleanup_ok=cleanup_ok)
+                result.workspace_v1["run"]["cleanup_evidence"] = dict(
+                    main_workspace=dict(cleanup_ok=main_cleanup_ok, close_error=cleanup_error,
+                        attempts=getattr(self.coordinator, "cleanup_evidence", [])),
+                    validation_records=[dict(record_id=key, operation_id=value["record"]["operation_id"],
+                        cleanup_state=value["record"]["cleanup_state"])
+                        for key,value in loop.session.state.workspace.get("records", {}).items()])
                 if not cleanup_ok:
                     result.workspace_v1["delivery"]["status"] = "incomplete"
                     result.success, result.failure_reason = False, FailureReason.CLEANUP_FAILED

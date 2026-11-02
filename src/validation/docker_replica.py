@@ -2,6 +2,7 @@
 from __future__ import annotations
 import asyncio
 import base64
+import copy
 import json
 import time
 from dataclasses import dataclass
@@ -12,7 +13,7 @@ from src.validation.sphinx_profile import IMAGE, REVISION, SphinxProfile
 from src.workspace.capture import CaptureProvider
 from src.workspace.contracts import ContractError, blob_sha256, canonical_json, tree_id
 from src.workspace.control import CaptureControl, CaptureError
-from src.workspace.coordinator import WorkspaceCoordinator
+from src.workspace.coordinator import WorkspaceCoordinator, cleanup_exception
 from src.workspace.materialize import materialize
 
 WRITE_CONTROL = r'''
@@ -145,12 +146,19 @@ class DockerReplicaExecutor:
             status='blocked';audit['reason']=type(exc).__name__
             err=(err+b'\n'+canonical_json(dict(adapter='docker-public-sphinx-v1',phase=audit['phase'],reason=type(exc).__name__)))[:request.spec.limits.max_output_bytes]
         finally:
+            cleanup_error = None
             try:
                 async with asyncio.timeout(12):
                     audit['cleanup_ok']=await coordinator.close()
-            except (Exception,asyncio.CancelledError): audit['cleanup_ok']=False
+            except (Exception,asyncio.CancelledError) as exc:
+                audit['cleanup_ok']=False
+                cleanup_error=cleanup_exception(exc)
+            audit['cleanup_evidence']=dict(container_name=transport.name,
+                cleanup_ok=audit['cleanup_ok'],close_error=cleanup_error,
+                attempts=copy.deepcopy(getattr(coordinator,'cleanup_evidence',[])))
             watcher.cancel()
             await asyncio.gather(watcher,return_exceptions=True)
         audit.update(execution_status=status,exit_code=code,before_manifest_id=before,after_manifest_id=after)
         return ReplicaResult(status,code,report,out,err,actual_environment,before,after,
-                             'cleaned' if audit['cleanup_ok'] else 'cleanup_failed',truncated,unchanged)
+                             'cleaned' if audit['cleanup_ok'] else 'cleanup_failed',truncated,unchanged,
+                             cleanup_evidence=audit['cleanup_evidence'])

@@ -255,13 +255,16 @@ class ValidationService:
                                     (parsed.status, parsed.reason, parsed.complete))
         refs, node_ref, used = [], None, 0
         try:
-            attestation = canonical_json(dict(protocol="replica-attestation-v1",
+            attestation_data = dict(protocol="replica-attestation-v1",
                 operation_id=operation_id, replica_id=replica_identity, candidate_id=capture.candidate_id,
                 check_id=check_id, environment_id=execution.environment_id,
                 before_manifest_id=execution.before_manifest_id, after_manifest_id=execution.after_manifest_id,
                 runner_unchanged=execution.runner_unchanged, cleanup_state=execution.cleanup_state,
                 execution_status=execution.execution_status, exit_code=execution.exit_code,
-                truncated=execution.truncated))
+                truncated=execution.truncated)
+            if execution.cleanup_evidence is not None:
+                attestation_data["cleanup_evidence"] = execution.cleanup_evidence
+            attestation = canonical_json(attestation_data)
             for data, limit in ((execution.report, spec.limits.max_report_bytes),
                                 (execution.stdout, spec.limits.max_output_bytes),
                                 (execution.stderr, spec.limits.max_output_bytes),

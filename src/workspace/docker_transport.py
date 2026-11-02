@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import time
 from dataclasses import dataclass
 from decimal import Decimal
 from pathlib import Path
@@ -53,6 +54,8 @@ class DockerWorkspace:
         self.reserved = False
         self.create_pending = False
         self.cleanup_ok = None
+        self.cleanup_evidence = None
+        self._cleanup_step = None
         self.profile = dict(cpus=cpus, nanocpus=int(nano), memory_bytes=memory_bytes,
                             workspace_bytes=workspace_bytes, tmp_bytes=tmp_bytes, pids_limit=pids_limit)
         self.image_id = None
@@ -121,6 +124,13 @@ class DockerWorkspace:
 
     async def ok(self, control, *args, **kwargs):
         result = await self.cli(control, *args, **kwargs)
+        if self._cleanup_step is not None:
+            # Bound the JSON-encoded excerpt, including control-character escapes.
+            excerpt = result.stderr[:256].decode("utf-8", "replace")
+            while len(canonical_json(excerpt)) > 256:
+                excerpt = excerpt[:-1]
+            self._cleanup_step.update(exit_code=result.exit_code, stderr=excerpt,
+                stderr_truncated=len(excerpt.encode("utf-8")) < len(result.stderr))
         if result.exit_code:
             raise CaptureError("docker_control_failed", evidence={"operation": args[0], "exit_code": result.exit_code})
         return result.stdout
@@ -181,25 +191,76 @@ class DockerWorkspace:
                               data=stdin, timeout=None)
 
     async def close(self, control):
+        from src.workspace.coordinator import cleanup_exception
+        started = time.monotonic()
+        self.cleanup_ok = False
+        self.cleanup_evidence = dict(schema="owned-cleanup-v1", owner=self.owner,
+            container_name=self.name, container_id=self.container_id, context=self.context,
+            deadline_mono_ms=int(control.deadline*1000), remaining_ms_at_start=max(0, int((control.deadline-started)*1000)),
+            phase="not_reserved", status="unconfirmed", removal_succeeded=False,
+            absence_confirmed=False, steps=[])
+
+        async def command(phase, *args, **kwargs):
+            report = self.cleanup_evidence
+            report["phase"] = phase
+            if report["steps"] and report["steps"][-1]["phase"] == phase:
+                step = report["steps"][-1]
+                step["calls"] += 1
+            else:
+                step = dict(phase=phase, operation=args[0], calls=1, exit_code=None)
+                report["steps"].append(step)
+            # A repeated lookup may raise before cli returns. Never attach the
+            # preceding query's result to this call's timeout/remaining deadline.
+            for key in ("stderr", "stderr_truncated", "exception_type", "reason", "cause_type", "remaining_ms_after"):
+                step.pop(key, None)
+            step.update(exit_code=None, stderr=None, stderr_truncated=False,
+                result_scope="latest_call_only", result_call_number=step["calls"])
+            step["remaining_ms_before"] = max(0, int((control.deadline-time.monotonic())*1000))
+            self._cleanup_step = step
+            try:
+                return await self.ok(control, *args, **kwargs)
+            except (Exception, asyncio.CancelledError) as exc:
+                step.update(cleanup_exception(exc))
+                raise
+            finally:
+                step["remaining_ms_after"] = max(0, int((control.deadline-time.monotonic())*1000))
+                self._cleanup_step = None
+
+        try:
+            return await self._close_owned(control, command)
+        except (Exception, asyncio.CancelledError) as exc:
+            self.cleanup_evidence.update(status="failed", error=cleanup_exception(exc))
+            raise
+        finally:
+            self.cleanup_evidence.update(cleanup_ok=self.cleanup_ok, elapsed_ms=int((time.monotonic()-started)*1000),
+                create_pending=self.create_pending, remaining_ms_at_end=max(0, int((control.deadline-time.monotonic())*1000)))
+
+    async def _close_owned(self, control, command):
         if not self.reserved:
             self.cleanup_ok = True
+            self.cleanup_evidence["status"] = "not_reserved"
             return True
-        found = await self.ok(control, "ps", "-aq", "--no-trunc", "--filter", "name=^/" + self.name + "$", limit=4096)
+        found = await command("locate", "ps", "-aq", "--no-trunc", "--filter", "name=^/" + self.name + "$", limit=4096)
         # Killing `docker create` does not cancel the daemon's create request.
         # Wait only within the caller's cleanup grace for an uncertain late create.
         # An absent name alone cannot certify that an in-flight create is settled.
         while not found.strip() and self.create_pending:
+            self.cleanup_evidence["phase"] = "await_pending_create"
             await control.wait(asyncio.sleep(0.1), maximum=None)
-            found = await self.ok(control, "ps", "-aq", "--no-trunc", "--filter", "name=^/" + self.name + "$", limit=4096)
+            found = await command("locate", "ps", "-aq", "--no-trunc", "--filter", "name=^/" + self.name + "$", limit=4096)
         if found.strip():
-            item = json.loads(await self.ok(control, "inspect", self.name, limit=256 * 1024))[0]
+            item = json.loads(await command("inspect_owner", "inspect", self.name, limit=256 * 1024))[0]
+            self.cleanup_evidence["phase"] = "verify_ownership"
             if (item["Config"].get("Labels", {}).get(OWNER_LABEL) != self.owner
                     or self.container_id is not None and item["Id"] != self.container_id):
                 raise CaptureError("cleanup_ownership_mismatch")
-            await self.ok(control, "rm", "-f", item["Id"], limit=4096)
+            self.cleanup_evidence["observed_container_id"] = item["Id"]
+            await command("remove", "rm", "-f", item["Id"], limit=4096)
+            self.cleanup_evidence["removal_succeeded"] = True
             self.create_pending = False
-        left = await self.ok(control, "ps", "-aq", "--filter", "name=^/" + self.name + "$", limit=4096)
+        left = await command("confirm_absence", "ps", "-aq", "--filter", "name=^/" + self.name + "$", limit=4096)
         self.cleanup_ok = not left.strip()
         if not self.cleanup_ok:
             raise CaptureError("cleanup_failed")
+        self.cleanup_evidence.update(status="confirmed_absent", absence_confirmed=True)
         return True
