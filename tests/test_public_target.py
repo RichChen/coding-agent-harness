@@ -99,6 +99,7 @@ def test_arbitrary_directory_is_not_a_terminal_session(tmp_path):
     with pytest.raises(Exception):target.load_candidate(tmp_path)
 
 
+@pytest.mark.skipif(not (target.ROOT / "runs/sprint5-main-public/sphinx-doc__sphinx-8721.json").is_file(), reason="needs runs/sprint5-main-public/sphinx-doc__sphinx-8721.json (not published)")
 def test_task_is_complete_public_input_and_manifest_detects_material_change(monkeypatch,tmp_path):
     package=tmp_path/'public';package.mkdir()
     for name in target.MATERIALS:(package/name).write_bytes((target.PACKAGE/name).read_bytes())

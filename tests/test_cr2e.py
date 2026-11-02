@@ -102,6 +102,9 @@ def test_expected_t2_agent_is_b0v2_plus_retrieve_code_with_t2_prompt():
 
 def test_no_config_other_than_t_and_t2_enables_retrieve_code():
     for path in (ROOT / "configs").rglob("*.yaml"):
+        # configs/workspace/ 启用的是 P2 的工作区检索工具，与 CR-2 的 retrieve_code 同名，不在这个守卫的范围内。
+        if (ROOT / "configs" / "workspace") in path.parents:
+            continue
         if path not in (T, T2, T2_R2):
             assert "retrieve_code" not in path.read_text(encoding="utf-8"), path
 
