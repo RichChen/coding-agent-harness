@@ -105,10 +105,10 @@ pytest tests/ -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_export
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 654 passed, 25 skipped, 4 deselected
+# 1249 passed, 44 skipped, 4 deselected
 ```
 
-测试用 Mock LLM，不需要 API Key。在 Windows 上的干净克隆里，654 个通过；25 个跳过的测试里，22 个需要真实 Linux / Docker，3 个需要本机已有的 `runs/a5-main` 运行数据。
+测试用 Mock LLM，不需要 API Key。在 Windows 上的干净克隆里，1249 个通过；44 个跳过的测试里，39 个需要真实 Linux / Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组），5 个需要未发布的本机数据（`runs/a5-main`、A5 私有记忆池、`runs/sprint5-main-public`）。
 
 上面排除的 4 项读取从未提交的本地证据文件：A5 记忆记录、Flask 完整源码包和两个 R2 种子文件。它们不是代码回归，也没有被跳过；把文件放回 `docs/upgrade/evidence/` 下对应路径后，去掉 `--deselect` 即可全跑。明细见 [docs/INDEX.md](docs/INDEX.md) 第 4 节。
 

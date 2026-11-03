@@ -44,7 +44,9 @@
 python -m pytest -q --deselect tests/test_a5_funding.py::test_funded_build_bundle_is_prepared_only_and_private_material_stays_outside_public \
   --deselect tests/test_a5_funding.py::test_funded_build_artifacts_are_hashed \
   --deselect tests/test_memory_cards_v5.py::test_generic_builder_matches_v5_bytes
-# 357 passed, 7 skipped, 3 deselected
+# 354 passed, 10 skipped, 3 deselected
+# 跳过的 10 项里，3 项（test_a5_preparation.py）需要 pyarrow，agent 的依赖里没有它；
+# 同一环境装过 harness（会带上 pyarrow）时为 357 passed, 7 skipped。
 ```
 
 ## 实验证据（`docs/sprint/`）

@@ -112,10 +112,10 @@ pytest tests/ -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_export
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 654 passed, 25 skipped, 4 deselected
+# 1249 passed, 44 skipped, 4 deselected
 ```
 
-No API key is needed; tests use a mock LLM. In a clean clone on Windows, 654 pass; of the 25 skipped, 22 need real Linux or Docker and 3 need `runs/a5-main` data that only exists locally.
+No API key is needed; tests use a mock LLM. In a clean clone on Windows, 1249 pass; of the 44 skipped, 39 need real Linux or Docker (opt-in Docker execution tests, pinned local images, real Linux process groups) and 5 need local data that was not published (`runs/a5-main`, the A5 private memory pool, `runs/sprint5-main-public`).
 
 The four deselected tests read local evidence files that were never committed: the A5 memory records, the full Flask source archive, and two R2 seed files. They are not code regressions and they are not skipped. Put those files back under `docs/upgrade/evidence/` and drop the `--deselect` flags to run everything. Details in [docs/INDEX.md](docs/INDEX.md), section 4.
 
