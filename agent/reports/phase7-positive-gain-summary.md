@@ -71,28 +71,6 @@ memory_heavy 0%→86%（6-task probe）；holdout 匹配 + procedural gating + i
 
 ---
 
-## 最终叙事（README / 面试 / 论文）
-
-**可写：**
-
-- RepoSkillAgent 是 **真实 LLM Coding Agent 能力增强系统**，不是 eval framework demo
-- 48 medium repo tasks、4 repos、2 次真实 DeepSeek repeats
-- L5 **80.2% ± 5.2pp** vs L2 **70.8% ± 2.1pp**（+9.4pp mean；两次 repeat 均 L5≥L2）
-- 收益集中在 skill-heavy、memory-heavy；parse_err 不高于 baseline
-- 机制：PlanAct + multi-agent + SkillCard gating + MemoryHint + category policy router
-
-**如实披露：**
-
-- L5 std（±5.2pp）高于 L2（±2.1pp）；context_heavy / traceback_repair 非主要增益来源
-- synthetic medium repos，非 SWE-bench；repeats=2，非大规模统计显著性
-- multi_file_api 仍为共享难点；external baselines 未实跑
-
-见 `docs/limitations.md`
-
-**不再做：** repeats=3、继续调 benchmark 追分、宣称「全面显著领先」
-
----
-
 ## 报告索引
 
 | 文档 | 路径 |

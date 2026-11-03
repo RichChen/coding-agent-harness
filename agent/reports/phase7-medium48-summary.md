@@ -91,12 +91,6 @@ Original 24 tasks unchanged; 24 new tasks with **new test files and boundary con
 
 ---
 
-## 建议表述（论文/面试）
-
-> We evaluate on **48 medium repo tasks** across skill-heavy, memory-heavy, context-heavy, and multi-file API categories spanning four synthetic codebases. Under the same DeepSeek backend, **L5 (PlanAct + MultiAgent + Skill + Memory) achieves 79% vs 69% for L2**, with category-level gains concentrated in **memory-heavy (94%)** and **context-heavy (90%)**. Task diversity supplements repeats for generalization claims; repeats=1 here — optional L0/L2/L5 repeats=2/3 for variance estimates only.
-
----
-
 ## 报告路径
 
 | 文档 | 路径 |

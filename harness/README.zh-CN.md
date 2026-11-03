@@ -3,7 +3,7 @@
 
 # Coding Harness（中文说明）
 
-[English README](README.md) · [项目说明与亮点](docs/PROJECT-OVERVIEW.zh-CN.md) · [学习指南：如何读透本项目](docs/LEARNING.zh-CN.md) · [文档索引](docs/INDEX.md)
+[English README](README.md) · [文档索引](docs/INDEX.md)
 
 可控的 **Coding Agent 运行时（Harness）**，并内置 **评测 Harness（Eval）**，用于可复现、可度量、可回归的智能体实验。
 
@@ -224,8 +224,7 @@ Agent 的 system prompt 不再硬编码在 `loop.py`，而是存放在 `prompts/
 - `datasets/`：`mini_tasks.json`（36 题）、`repo_tasks.json`、`swebench_lite_tasks.json`  
 - `docker/`：Docker 后端测试镜像  
 - `scripts/`：CLI 入口，分组见英文 README 的 Scripts 表（mini 评测、SWE-bench 准备与运行、A5-main、A6-R、A5 预检与 pilot、H3-H5 与 R2、审计）。每个脚本开头的 docstring 写明是否调用模型。早期 sprint 里没有被 `docs/sprint/` 引用的一次性脚本不放进仓库  
-- `docs/`：`PROJECT-HISTORY`（项目历程）、`PROJECT-OVERVIEW`、`LEARNING`、`CONTAMINATION-NOTES`；`INDEX.md` 是文档分类和阅读顺序，`sprint/` 为 A5 / A6-R 证据链（只追加）；`upgrade/` 为 H3-H5、R1-R2 实现说明，`evidence/` 下是运行记录；`changes/` 为 HP-01..04 证据报告引用的两份重构收口记录；`examples/` 为合成 demo 轨迹  
+- `docs/`：`PROJECT-HISTORY`（项目历程）、`CONTAMINATION-NOTES`；`INDEX.md` 是文档分类和阅读顺序，`sprint/` 为 A5 / A6-R 证据链（只追加）；`upgrade/` 为 H3-H5、R1-R2 实现说明，`evidence/` 下是运行记录；`changes/` 为 HP-01..04 证据报告引用的两份重构收口记录；`examples/` 为合成 demo 轨迹  
 - `reports/`：污染探针、失败分类和 SWE-bench Lite 验证日志  
 - `tests/`：69 个测试模块（含 Mock LLM，无需 API Key）；`fixtures/repos/` 有 16 个小型仓库任务和 12 个 SWE-bench Lite 源码快照  
 
-更细的**阅读顺序与练习**见 [LEARNING.zh-CN.md](docs/LEARNING.zh-CN.md)。

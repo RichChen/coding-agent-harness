@@ -1,7 +1,7 @@
 # 项目历程：思路、问题与解决
 
 日期：2026-09-29。覆盖两个仓库：`coding-harness`（运行时和评测）和 `coding-agent`（记忆）。
-写给以后回看这个项目的人，包括面试时需要讲清楚来龙去脉的自己。实验结论的正式版本见 `coding-agent/docs/A5-FINAL-REPORT.zh-CN.md`。
+写给以后回看这个项目的人。实验结论的正式版本见 `coding-agent/docs/A5-FINAL-REPORT.zh-CN.md`。
 
 ## 0. 一句话
 
@@ -45,7 +45,7 @@ RepoSkillAgent 是独立的多智能体项目：PlanAct 任务图、Manager/Loca
 
 ### 3.1 目标
 
-9 月的总目标写在 `docs/upgrade/00_双项目协作与接口约定_v0.1.md` 和两份总修改目标里：harness 负责"可测可控"，coding-agent 改造成挂在 harness 上的插件，负责"记忆和技能到底有没有用"。
+9 月的总目标写在当时的双项目约定和两份总修改目标里（未公开）：harness 负责"可测可控"，coding-agent 改造成挂在 harness 上的插件，负责"记忆和技能到底有没有用"。
 
 ### 3.2 做了什么
 

@@ -110,11 +110,7 @@ hard:     A0=0.00，A3/A4/A5 有可解释增量
 报告:     无 `卤`，使用 `+/-`；含 By Task Category
 ```
 
-## 7. 面试叙事（中文）
-
-> 我没有只报一个 demo pass rate。Phase 6 一开始发现 baseline 在 toy benchmark 上已经 100% 饱和，于是我把评测分成 plumbing eval 和 hard mechanism eval。前者验证系统稳定，后者在关闭 scripted fix 后暴露真实失败，并证明 skill 与 memory 能驱动 deterministic patch strategy。按 task category 分组后，rename 类未全覆盖的失败也被如实报告——这能说明我知道怎么避免「看起来都过了但其实没有证明收益」的 Agent 评测陷阱。
-
-## 8. 后续建议（Phase 7）
+## 7. 后续建议（Phase 7）
 
 - README / design.md 引用本报告与 `docs/evaluation-contract.md`
 - 可选：让 A2 multi-agent 在 locate 阶段利用 memory 减少步骤（当前 mainly success 维度有收益）

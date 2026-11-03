@@ -3,7 +3,7 @@
 
 # Coding Harness
 
-**中文文档**：[README.zh-CN.md](README.zh-CN.md) · [学习指南（阅读顺序与自测题）](docs/LEARNING.zh-CN.md)
+**中文文档**：[README.zh-CN.md](README.zh-CN.md)
 
 A controllable Coding Agent Runtime with integrated Eval Harness — built for reproducible, measurable, regressable agent evaluation.
 
@@ -277,7 +277,7 @@ coding-harness/
 ├── scripts/                        # CLI entry points, see the table below
 ├── docs/
 │   ├── PROJECT-HISTORY.zh-CN.md    # What was built, what failed, how it was fixed
-│   ├── PROJECT-OVERVIEW.zh-CN.md, LEARNING.zh-CN.md, CONTAMINATION-NOTES.zh-CN.md
+│   ├── CONTAMINATION-NOTES.zh-CN.md
 │   ├── INDEX.md                    # What each doc is, and the order to read them in
 │   ├── sprint/                     # A5 / A6-R evidence chain: designs, preregistration, checkpoints (append-only)
 │   ├── upgrade/                    # H3-H5 and R1-R2 implementation notes; evidence/ holds run records

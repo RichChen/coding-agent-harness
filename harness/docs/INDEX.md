@@ -7,9 +7,7 @@
 | 文档 | 内容 |
 | --- | --- |
 | [../README.md](../README.md) / [../README.zh-CN.md](../README.zh-CN.md) | 安装、跑一次、跑评测、项目结构 |
-| [PROJECT-OVERVIEW.zh-CN.md](PROJECT-OVERVIEW.zh-CN.md) | 项目要解决什么问题，和同类工作的差别 |
 | [PROJECT-HISTORY.zh-CN.md](PROJECT-HISTORY.zh-CN.md) | 按轮次记录做了什么、哪里做错了、怎么发现的 |
-| [LEARNING.zh-CN.md](LEARNING.zh-CN.md) | 按调用顺序读代码的路线和自测题 |
 | [CONTAMINATION-NOTES.zh-CN.md](CONTAMINATION-NOTES.zh-CN.md) | 评测污染和答案隔离的处理 |
 | [retrieval/](retrieval/) | 代码检索（CR）线：冻结记录、结果、数据与演示；从 [CR-1 结果](retrieval/CR-1-RESULTS.zh-CN.md) 和 [CR-2 结果](retrieval/CR-2-RESULTS.zh-CN.md) 读起 |
 | [roadmap/](roadmap/) | 工作区快照、公开验证与完成控制：P2 到 P4 的结果和证据 |

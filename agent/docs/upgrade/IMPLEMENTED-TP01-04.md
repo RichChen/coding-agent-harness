@@ -99,4 +99,4 @@ Git 仍不可用，没有 init/commit/push。实施前重新检查旧 manifest 1
 
 下一工程阶段仍是 A4 的 harness 接入：由 coding-harness 执行 proposals、模型/工具、预算、事件、receipt、取消和恢复；本仓已提供可消费的 public router、纯 state DTO 和 fixture runner，但没有实现跨仓 plugin 或第二个 runtime。接入完成后才做一次受限预算真实修复，未向其他任务发消息或改对方仓库。
 
-A5 付费 pilot 前仍须固定真实数据来源/split、模型价目和总费用上限。当前用户授权允许继续常规实现，但不等于授权无限模型消费。旧论文和岗位报告仍是此前调研，本批没有新增复现/全国招聘覆盖声明。
+A5 付费 pilot 前仍须固定真实数据来源/split、模型价目和总费用上限。当前用户授权允许继续常规实现，但不等于授权无限模型消费。

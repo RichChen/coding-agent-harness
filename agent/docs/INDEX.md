@@ -60,7 +60,6 @@ python -m pytest -q --deselect tests/test_a5_funding.py::test_funded_build_bundl
 
 早期计划保留原文，用于追溯当时的范围，不代表当前设计：
 
-- [PROJECT-PLAN-OpenHands-RepoSkillAgent.zh-CN.md](archive/PROJECT-PLAN-OpenHands-RepoSkillAgent.zh-CN.md)：最初的总体计划。
 - [PHASE7_1-POSITIVE-GAIN-HARDENING-PLAN.zh-CN.md](archive/PHASE7_1-POSITIVE-GAIN-HARDENING-PLAN.zh-CN.md)：Phase 7.1 计划。
 - [IMPLEMENTATION-PLAN-TP01-04.md](archive/IMPLEMENTATION-PLAN-TP01-04.md) 和 [tasks/](archive/tasks/TP01-PUBLIC-BOUNDARY.md)：新路径首批实现的任务包。里面的"可直接转交的执行说明"是当时的派工文本，接口结论已收进 `PUBLIC-API` 和实现记录。
 

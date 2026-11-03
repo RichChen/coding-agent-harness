@@ -4,7 +4,7 @@
 
 2026-09-21 实现对齐更新：已只读核对 H4 0.1 的实际源码并完成本仓 async adapter，详见 [H4-ADAPTER.md](H4-ADAPTER.md)。C02/C06 的实际限制是 message hash 无正文 resolver、proposals 暂不派发、RunSession 暂拒绝外部插件；宿主 prepared-view metadata 不能直接视作本仓 operation/attempt 注入收据。下文保留原设计提案，不据其早期状态否定本轮实现。
 
-日期：2026-09-18。状态：coding-agent 单方设计提案，未生效、未发送其他任务、未修改共享原件或 coding-harness。基于 [原始 v0.1](00_双项目协作与接口约定_v0.1.md)；本轮没有读对方最新实现，以下对 harness 的影响是接口职责分析，不是对其现状的断言。
+日期：2026-09-18。状态：coding-agent 单方设计提案，未生效、未发送其他任务、未修改共享原件或 coding-harness。基于原始 v0.1（未公开）；本轮没有读对方最新实现，以下对 harness 的影响是接口职责分析，不是对其现状的断言。
 
 总体责任分配无异议：harness 是唯一在线预算权威、有序 run-event 写入器及执行/恢复主体；agent 管理策略和知识状态。本计划选择可选 async Protocol + JSON payload，首版无需 subprocess bridge。
 
