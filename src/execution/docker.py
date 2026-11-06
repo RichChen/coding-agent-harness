@@ -121,6 +121,28 @@ print(json.dumps(files))
 '''
 
 
+# Kills every process whose environment carries HARNESS_EXEC_ID=<argv[1]>, including setsid
+# descendants. Repeats until none is left, since a dying parent may still fork; exit 3 if it never settles.
+REAP_CODE = r'''import os,signal,sys,time
+mark=b"HARNESS_EXEC_ID="+sys.argv[1].encode()
+me=os.getpid(); killed=set()
+for _ in range(50):
+    found=[]
+    for p in os.listdir("/proc"):
+        if not p.isdigit() or int(p)==me: continue
+        try: env=open("/proc/"+p+"/environ","rb").read().split(b"\0")
+        except OSError: continue
+        if mark in env: found.append(int(p))
+    if not found: break
+    for pid in found:
+        try: os.kill(pid,signal.SIGKILL); killed.add(pid)
+        except ProcessLookupError: pass
+    time.sleep(.05)
+else: sys.exit(3)
+print(len(killed))
+'''
+
+
 class DockerExecutionBackend:
     profile = "docker_linux"
     platform = "linux-container"
@@ -128,9 +150,11 @@ class DockerExecutionBackend:
     def __init__(self, *, image=DEFAULT_IMAGE, context="desktop-linux", cpus=1.0,
                  memory_bytes=512*1024*1024, pids_limit=128, network="none",
                  tmpfs_bytes=16*1024*1024, workspace_bytes=64*1024*1024, docker_bin="docker",
-                 python_bin="/usr/local/bin/python"):
+                 python_bin="/usr/local/bin/python", reap_on_timeout=False):
         if not image_is_pinned(image):
             raise ValueError("Docker image must be pinned by sha256 digest")
+        if type(reap_on_timeout) is not bool:
+            raise ValueError("reap_on_timeout must be a bool")
         if isinstance(cpus, bool) or not isinstance(cpus, (int, float)) or not math.isfinite(cpus) or cpus <= 0:
             raise ValueError("invalid CPU limit")
         if any(type(n) is not int or n <= 0 for n in (memory_bytes, pids_limit, tmpfs_bytes, workspace_bytes)):
@@ -141,6 +165,8 @@ class DockerExecutionBackend:
         self.python_bin = python_bin
         self.cpus, self.memory_bytes, self.pids_limit = cpus, memory_bytes, pids_limit
         self.network, self.tmpfs_bytes, self.workspace_bytes = network, tmpfs_bytes, workspace_bytes
+        # A timed-out or cancelled command keeps the container up; when set, its processes are killed in place.
+        self.reap_on_timeout = reap_on_timeout
         self.name = "h3-" + uuid.uuid4().hex
         self.active = False
         self.closed = False
@@ -158,13 +184,16 @@ class DockerExecutionBackend:
 
     @property
     def capabilities(self):
-        return dict(profile=self.profile, platform=self.platform, image=self.image,
+        caps = dict(profile=self.profile, platform=self.platform, image=self.image,
             context=self.context, cancel=True, filesystem_isolation=True, network_control=True,
             network_default=self.network, resource_limits=True, complete_isolation=False,
             cpu_limit=self.cpus, memory_limit_bytes=self.memory_bytes, pids_limit=self.pids_limit,
             workspace_limit_bytes=self.workspace_bytes, tmpfs_limit_bytes=self.tmpfs_bytes,
             tree_reclaim_guaranteed=True, privileged=False, docker_socket_mounted=False,
             host_mounts=False, workspace_transfer_limit=TRANSFER_LIMIT)
+        if self.reap_on_timeout:
+            caps["exec_reap_on_timeout"] = True
+        return caps
 
     async def _control(self, *args, data=None, limit=16*1024*1024, timeout=10):
         """Bound even control output. Host credentials are used ONLY by the trusted Docker CLI."""
@@ -310,7 +339,17 @@ class DockerExecutionBackend:
                                    elapsed_s=self.cleanup_elapsed_s))
         return self.cleanup_ok
 
-    async def _settle_exec(self, proc, tasks, kind):
+    async def _reap_exec(self, exec_id, kind):
+        """Kill the stopped command's processes inside the container; destroy the container if that fails."""
+        try:
+            out = await self._ok("exec", self.name, self.python_bin, "-I", "-S", "-c", REAP_CODE, exec_id,
+                                 limit=4096, op="exec reap")
+            self.lifecycle.append(dict(event="exec_reaped", kind=kind, killed=int(out.strip() or 0)))
+        except (Exception, asyncio.CancelledError) as exc:
+            self.lifecycle.append(dict(event="exec_reap_failed", kind=kind, error=repr(exc)[:300]))
+            await self.close()
+
+    async def _settle_exec(self, proc, tasks, kind, exec_id=None):
         if tasks:
             await asyncio.wait(tasks, timeout=.2)
         cli_cleanup_error = None
@@ -324,6 +363,8 @@ class DockerExecutionBackend:
             self.lifecycle.append(dict(event='cli_cleanup_error', error=repr(exc)))
         for t in tasks:
             if not t.done(): t.cancel()
+        if exec_id and kind in ("tool_timeout", "user_cancelled") and self.active and not self.closed:
+            await self._reap_exec(exec_id, kind)
         if kind and kind not in ("tool_timeout", "user_cancelled"):
             # A command timeout or a parent deadline must leave the container
             # up: the model needs the timeout result, and the loop exports
@@ -359,6 +400,9 @@ class DockerExecutionBackend:
         env.update(request.env or {})
         if any(not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", k) or not isinstance(v, str) or "\x00" in v for k,v in env.items()):
             return result(ExecutionStatus.BLOCKED, "invalid_environment")
+        exec_id = uuid.uuid4().hex if self.reap_on_timeout else None
+        if exec_id:
+            env["HARNESS_EXEC_ID"] = exec_id
         argv = request.argv or ["/bin/sh", "-c", request.shell_command]
         # env -i strips image ENV, docker exec receives only explicitly allowed values.
         command = [self.docker_bin, "--context", self.context, "exec", *(["-i"] if request.stdin_bytes is not None else []), self.name,
@@ -422,7 +466,7 @@ class DockerExecutionBackend:
             # The outer tool deadline fires at the same instant as ours, so its
             # cancel can land here. Cleanup still runs to the end, and the
             # timeout result is returned rather than lost.
-            settle = asyncio.ensure_future(self._settle_exec(proc, tasks, kind))
+            settle = asyncio.ensure_future(self._settle_exec(proc, tasks, kind, exec_id))
             try:
                 while True:
                     try:

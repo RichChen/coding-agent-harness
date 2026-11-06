@@ -144,7 +144,7 @@ class SandboxConfig(BaseModel):
 
 class CommandConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
-    omit_when_default = ("observation_bytes_kept",)
+    omit_when_default = ("observation_bytes_kept", "docker_reap_on_timeout")
 
     allow_all: bool = True
     allowed_prefixes: list[str] = Field(default_factory=list)
@@ -170,6 +170,9 @@ class CommandConfig(OmitNewDefaults):
     # bytes_kept shown in the model-visible command trailer. "legacy" is the old
     # memory+artifact sum; "persisted" is the artifact bytes reported in events.
     observation_bytes_kept: Literal["legacy", "persisted"] = "legacy"
+    # Docker profile: after a command timeout or cancel the container stays up. True also kills
+    # that command's processes inside it (commands then see HARNESS_EXEC_ID in their environment).
+    docker_reap_on_timeout: bool = False
 
 
 class PolicyConfig(BaseModel):

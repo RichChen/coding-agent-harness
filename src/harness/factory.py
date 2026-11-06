@@ -190,6 +190,8 @@ def build_agent(
                            "retrieve_code", *( ["validate_patch"] if workspace_controller else [])}:
             raise ValueError("Docker profile rejects host-only/debug/subagent tools")
         if workspace_controller is not None:
+            if cmd_cfg.get("docker_reap_on_timeout", False):
+                raise ValueError("docker_reap_on_timeout is not supported by the workspace transport")
             from src.execution.workspace import WorkspaceExecutionBackend
             docker_backend = WorkspaceExecutionBackend(workspace_controller)
         elif execution_backend is not None:
@@ -203,7 +205,8 @@ def build_agent(
                 pids_limit=cmd_cfg.get("docker_pids_limit", 128),
                 network=cmd_cfg.get("docker_network", "none"),
                 tmpfs_bytes=cmd_cfg.get("docker_tmpfs_bytes", 16*1024*1024),
-                workspace_bytes=cmd_cfg.get("docker_workspace_bytes", 64*1024*1024))
+                workspace_bytes=cmd_cfg.get("docker_workspace_bytes", 64*1024*1024),
+                reap_on_timeout=cmd_cfg.get("docker_reap_on_timeout", False))
     def file_tool(tool):
         return ContainerFileTool(tool, docker_backend, preserve_mode=workspace_controller is not None,
                                  observation_bytes_kept=observation_bytes_kept) if docker_backend else tool
