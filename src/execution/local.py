@@ -283,83 +283,95 @@ class LocalExecutionBackend:
             cancelled = True
             cancel_producer.set()
         finally:
-            # Always reclaim: cancel_event, deadline, quota, task.cancel, collector errors.
-            if proc is not None:
-                needs_cleanup = (
-                    cancelled
-                    or timed_out
-                    or run_cap_hit
-                    or externally_cancelled
-                    or error_kind == "collector_error"
-                    or (wait_task is not None and not wait_task.done() and proc.returncode is None)
-                    or (proc.returncode is None)
-                )
-                if needs_cleanup:
-                    cleanup = await self._cleanup_process(
-                        proc,
-                        use_session=use_session,
-                        grace_s=grace,
-                        pgid=proc.pid if use_session else None,
+            async def reclaim():
+                nonlocal cleanup, stdout_cap, stderr_cap, exit_code
+                # Always reclaim: cancel_event, deadline, quota, task.cancel, collector errors.
+                if proc is not None:
+                    needs_cleanup = (
+                        cancelled
+                        or timed_out
+                        or run_cap_hit
+                        or externally_cancelled
+                        or error_kind == "collector_error"
+                        or (wait_task is not None and not wait_task.done() and proc.returncode is None)
+                        or (proc.returncode is None)
                     )
-                elif proc.returncode is not None and use_session:
-                    # Leader exited — still verify group is empty when controlled.
-                    cleanup = await self._verify_group_gone(
-                        proc.pid, grace_s=min(0.5, grace), already=cleanup
-                    )
+                    if needs_cleanup:
+                        cleanup = await self._cleanup_process(
+                            proc,
+                            use_session=use_session,
+                            grace_s=grace,
+                            pgid=proc.pid if use_session else None,
+                        )
+                    elif proc.returncode is not None and use_session:
+                        # Leader exited — still verify group is empty when controlled.
+                        cleanup = await self._verify_group_gone(
+                            proc.pid, grace_s=min(0.5, grace), already=cleanup
+                        )
 
-            # Drain normal EOF before cancellation, preserving the final pipe buffers.
-            pending_collectors = {t for t in (out_task, err_task) if t is not None and not t.done()}
-            if pending_collectors:
-                await asyncio.wait(pending_collectors, timeout=min(0.2, grace))
-            # Bound collector wait — never hang on EOF forever.
-            for t in (out_task, err_task):
-                if t is None:
-                    continue
-                if not t.done():
-                    t.cancel()
-            caps = []
-            for t in (out_task, err_task):
-                if t is None:
-                    caps.append(None)
-                    continue
-                try:
-                    caps.append(await asyncio.wait_for(asyncio.shield(t), timeout=grace))
-                except (asyncio.TimeoutError, asyncio.CancelledError, Exception):
-                    from src.execution.base import StreamCapture
-
-                    caps.append(StreamCapture(truncated=True))
-            stdout_cap, stderr_cap = caps[0], caps[1]
-
-            if wait_task is not None and not wait_task.done():
-                wait_task.cancel()
-                try:
-                    await asyncio.wait_for(wait_task, timeout=0.2)
-                except (asyncio.TimeoutError, asyncio.CancelledError, Exception):
-                    pass
-            elif wait_task is not None and wait_task.done() and exit_code is None:
-                try:
-                    exit_code = wait_task.result()
-                except (Exception, asyncio.CancelledError):
-                    pass
-
-            # Close pipe transports to avoid Windows ProactorBasePipeTransport.__del__ warnings.
-            if proc is not None:
-                for pipe_attr in ("stdout", "stderr", "stdin"):
-                    pipe = getattr(proc, pipe_attr, None)
-                    if pipe is None:
+                # Drain normal EOF before cancellation, preserving the final pipe buffers.
+                pending_collectors = {t for t in (out_task, err_task) if t is not None and not t.done()}
+                if pending_collectors:
+                    await asyncio.wait(pending_collectors, timeout=min(0.2, grace))
+                # Bound collector wait — never hang on EOF forever.
+                for t in (out_task, err_task):
+                    if t is None:
                         continue
-                    transport = getattr(pipe, "_transport", None)
-                    if transport is not None:
-                        try:
-                            transport.close()
-                        except Exception:
-                            pass
-                    feeder = getattr(pipe, "feed_eof", None)
-                    if callable(feeder):
-                        try:
-                            feeder()
-                        except Exception:
-                            pass
+                    if not t.done():
+                        t.cancel()
+                caps = []
+                for t in (out_task, err_task):
+                    if t is None:
+                        caps.append(None)
+                        continue
+                    try:
+                        caps.append(await asyncio.wait_for(asyncio.shield(t), timeout=grace))
+                    except (asyncio.TimeoutError, asyncio.CancelledError, Exception):
+                        from src.execution.base import StreamCapture
+
+                        caps.append(StreamCapture(truncated=True))
+                stdout_cap, stderr_cap = caps[0], caps[1]
+
+                if wait_task is not None and not wait_task.done():
+                    wait_task.cancel()
+                    try:
+                        await asyncio.wait_for(wait_task, timeout=0.2)
+                    except (asyncio.TimeoutError, asyncio.CancelledError, Exception):
+                        pass
+                elif wait_task is not None and wait_task.done() and exit_code is None:
+                    try:
+                        exit_code = wait_task.result()
+                    except (Exception, asyncio.CancelledError):
+                        pass
+
+                # Close pipe transports to avoid Windows ProactorBasePipeTransport.__del__ warnings.
+                if proc is not None:
+                    for pipe_attr in ("stdout", "stderr", "stdin"):
+                        pipe = getattr(proc, pipe_attr, None)
+                        if pipe is None:
+                            continue
+                        transport = getattr(pipe, "_transport", None)
+                        if transport is not None:
+                            try:
+                                transport.close()
+                            except Exception:
+                                pass
+                        feeder = getattr(pipe, "feed_eof", None)
+                        if callable(feeder):
+                            try:
+                                feeder()
+                            except Exception:
+                                pass
+
+            # A second cancel (e.g. the outer tool deadline) can land while
+            # reclaiming; the reclaim still runs to the end and the result is kept.
+            settle = asyncio.ensure_future(reclaim())
+            while True:
+                try:
+                    await asyncio.shield(settle)
+                    break
+                except asyncio.CancelledError:
+                    if settle.done(): raise
 
         if externally_cancelled and not cancelled:
             cancelled = True
