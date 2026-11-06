@@ -41,6 +41,7 @@ class ContextPolicyConfig:
     explicit_window: bool = False
     dispatcher: str = "disabled"
     dispatcher_max_calls: int = 0
+    protection_rules: str = "v1"
 
     @classmethod
     def from_runtime_config(
@@ -66,10 +67,11 @@ class ContextPolicyConfig:
             explicit_window=runtime_context.get('strategy') is not None or runtime_context.get('max_tokens') is not None or runtime_context.get('plugin','noop')!='noop',
             dispatcher=runtime_context.get('dispatcher','disabled'),
             dispatcher_max_calls=runtime_context.get('dispatcher_max_calls',0),
+            protection_rules=runtime_context.get('protection_rules', 'v1'),
         )
 
     def to_trace_metadata(self) -> dict[str, Any]:
-        return {
+        metadata = {
             "l0_tool_output_max_chars": self.tool_output_max_chars,
             "l0_read_file_max_lines": self.read_file_max_lines,
             "l1_micro_compact": self.micro_compact,
@@ -84,6 +86,9 @@ class ContextPolicyConfig:
             "h5_dispatcher": self.dispatcher,
             "h5_dispatcher_max_calls": self.dispatcher_max_calls,
         }
+        if self.protection_rules != "v1":
+            metadata["protection_rules"] = self.protection_rules
+        return metadata
 
 
 def build_context_hooks(config: ContextPolicyConfig, *, plugin_registry=None, dispatcher=None, summary_provider=None) -> LoopHooks | None:
@@ -111,6 +116,7 @@ def build_context_hooks(config: ContextPolicyConfig, *, plugin_registry=None, di
         return MicroCompactHooks(
             keep_recent=config.keep_recent_tool_results,
             token_threshold=config.compact_token_threshold,
+            protection_rules=config.protection_rules,
         )
     return WindowPolicyHooks(WindowPolicy(
         strategy=config.strategy,
@@ -123,4 +129,4 @@ def build_context_hooks(config: ContextPolicyConfig, *, plugin_registry=None, di
         max_injection_bytes=config.max_injection_bytes,
         dispatcher=config.dispatcher,
         dispatcher_max_calls=config.dispatcher_max_calls,
-    ), plugin, dispatcher=dispatcher, summary_provider=summary_provider)
+    ), plugin, dispatcher=dispatcher, summary_provider=summary_provider, protection_rules=config.protection_rules)

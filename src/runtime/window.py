@@ -7,7 +7,7 @@ import asyncio
 from dataclasses import asdict, dataclass
 from src.policy.plugin import NoOpPolicyPlugin, json_data, validate_decision, version
 from src.policy.registry import RegisteredPolicyPlugin
-from src.runtime.compact import _protected_tool_indices, micro_compact_openai_messages_with_stats
+from src.runtime.compact import PROTECTION_RULES, _protected_tool_indices, micro_compact_openai_messages_with_stats
 from src.runtime.hooks import HookContext, LoopHooks
 from src.runtime.deadline import DeadlineExceeded, UserCancelled
 from src.tracing.store import StoreError
@@ -115,8 +115,12 @@ def summarize_fixture(messages):
 
 
 class WindowPolicyHooks(LoopHooks):
-    def __init__(self, policy: WindowPolicy, plugin=None, *, dispatcher=None, summary_provider=None):
+    def __init__(self, policy: WindowPolicy, plugin=None, *, dispatcher=None, summary_provider=None,
+                 protection_rules='v1'):
+        # Not a WindowPolicy field: asdict(policy) feeds recorded config hashes.
+        if protection_rules not in PROTECTION_RULES: raise ValueError(f'unknown protection rules: {protection_rules}')
         self.policy = policy
+        self.protection_rules = protection_rules
         self.plugin = plugin or NoOpPolicyPlugin()
         self.dispatcher = dispatcher
         self.summary_provider = summary_provider
@@ -131,11 +135,13 @@ class WindowPolicyHooks(LoopHooks):
         plugin = (self.plugin.fingerprint() if type(self.plugin) is RegisteredPolicyPlugin else
                   dict(name=self.plugin.name, version=self.plugin.schema_version,
                        candidates=getattr(self.plugin, 'candidates', [])))
-        return dict(policy=asdict(self.policy), plugin=plugin,
+        fingerprint = dict(policy=asdict(self.policy), plugin=plugin,
                     dispatcher=(self.dispatcher.fingerprint() if self.dispatcher else None),
                     summary_provider=(self.summary_provider.fingerprint() if self.summary_provider else None),
                     summary_prompt_version=PROMPT_VERSION, summary_config_version=CONFIG_VERSION,
                     runner_version='r2-lite-view-1')
+        if self.protection_rules != 'v1': fingerprint['protection_rules'] = self.protection_rules
+        return fingerprint
 
     def restore(self, state):
         state = copy.deepcopy(state)
@@ -172,7 +178,7 @@ class WindowPolicyHooks(LoopHooks):
                      overflow=False, **request_size(original, tools, output))
         # Cache summary by source bytes, not shifting indices. Raw history is never replaced.
         positions = [i for i,m in enumerate(original) if m.get('role') == 'tool']
-        protected = _protected_tool_indices(original, positions)
+        protected = _protected_tool_indices(original, positions, rules=self.protection_rules)
         if self.policy.keep_recent: protected.update(positions[-self.policy.keep_recent:])
         groups = []
         i = 0
@@ -208,7 +214,8 @@ class WindowPolicyHooks(LoopHooks):
                 stats['summary_records'] = copy.deepcopy(cached)
         if self.policy.strategy in ('masking','mask-then-summary'):
             if self.policy.compact_token_threshold is None or request_size(view)['estimated_input_tokens'] > self.policy.compact_token_threshold:
-                view, mask = micro_compact_openai_messages_with_stats(view, keep_recent=self.policy.keep_recent, preserve_tools=set())
+                view, mask = micro_compact_openai_messages_with_stats(view, keep_recent=self.policy.keep_recent, preserve_tools=set(),
+                                                                      protection_rules=self.protection_rules)
                 stats['masking'] = mask.to_dict()
                 stats['compacted_tool_count'] = mask.compacted_tool_count
                 if mask.did_compact:
@@ -239,7 +246,8 @@ class WindowPolicyHooks(LoopHooks):
                             stats['rejection_reason'] = 'summary_' + record['status']
                             raise ContextWindowError('summary rejected: ' + record['status'], stats=stats)
                         # Explicit fail-open only to masking, still subject to admission.
-                        view, mask = micro_compact_openai_messages_with_stats(view,keep_recent=self.policy.keep_recent,preserve_tools=set())
+                        view, mask = micro_compact_openai_messages_with_stats(view,keep_recent=self.policy.keep_recent,preserve_tools=set(),
+                                                                              protection_rules=self.protection_rules)
                         stats.update(actually_injected='masking', fallback='summary_failure_masking', masking=mask.to_dict())
                 else:
                     text=summarize_fixture(source)
@@ -257,7 +265,8 @@ class WindowPolicyHooks(LoopHooks):
                     for r in reversed(self.state['summaries']):
                         view[r['source_start']:r['source_end']]=[summary_message(r)] if r.get('provider') == 'llm' else [{'role':'assistant','content':r['text']}]
                     if self.policy.strategy=='mask-then-summary':
-                        view,_=micro_compact_openai_messages_with_stats(view,keep_recent=self.policy.keep_recent,preserve_tools=set())
+                        view,_=micro_compact_openai_messages_with_stats(view,keep_recent=self.policy.keep_recent,preserve_tools=set(),
+                                                                        protection_rules=self.protection_rules)
                     stats['summary_records']=copy.deepcopy(self.state['summaries'])
                     stats['actually_injected']=self.policy.strategy
         stats.update(summary_calls=self.state['summary_calls'],

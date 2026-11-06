@@ -1,0 +1,117 @@
+{
+ "configs/baseline.yaml": {
+  "canonical_hash": "a236f452dd7c85d337eae7baed4f739ddb5e689e29b4f1c062f77ad3a6486ba9",
+  "session_config_hash": "a236f452dd7c85d337eae7baed4f739ddb5e689e29b4f1c062f77ad3a6486ba9",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/baseline_modelB.yaml": {
+  "canonical_hash": "32534e5dd6f0dadb43ac7a0e2a1aba2c61c92418236e4e07dfe6df0db284b529",
+  "session_config_hash": "32534e5dd6f0dadb43ac7a0e2a1aba2c61c92418236e4e07dfe6df0db284b529",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/context_compact.yaml": {
+  "canonical_hash": "473130b8279be9accf220e799a68b6cfc64596c815aebafd10588b9b0a9e4535",
+  "session_config_hash": "473130b8279be9accf220e799a68b6cfc64596c815aebafd10588b9b0a9e4535",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/context_compact_threshold.yaml": {
+  "canonical_hash": "6ba8d85ea6ef088289aeca4843b9c8231e583bce49dfaf47ae1ba9fe4ba75da6",
+  "session_config_hash": "6ba8d85ea6ef088289aeca4843b9c8231e583bce49dfaf47ae1ba9fe4ba75da6",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/debug.yaml": {
+  "canonical_hash": "737eb302358f5d60878376ae477c7296e54df3d4ab0d8e408a5913bb99a380f1",
+  "session_config_hash": "737eb302358f5d60878376ae477c7296e54df3d4ab0d8e408a5913bb99a380f1",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/deepseek.yaml": {
+  "canonical_hash": "26fff57a3911e7174069e1419a6b70afe1bdb49d7f134e87d440e2b5e2506c10",
+  "session_config_hash": "26fff57a3911e7174069e1419a6b70afe1bdb49d7f134e87d440e2b5e2506c10",
+  "runtime_fingerprint": "f1570ffd103318caf987bb1ea95aa2e096a6d760fce984e94879ffbcb33d6a91"
+ },
+ "configs/docker.yaml": {
+  "canonical_hash": "32ef3045c7d3ffa10ef246cbe2c983932b3afa0f2c5369f59573fc86bff0f361",
+  "session_config_hash": "32ef3045c7d3ffa10ef246cbe2c983932b3afa0f2c5369f59573fc86bff0f361",
+  "runtime_fingerprint": "fac3a603b5fe977ed0acf2383d7ed7d37591810096368cbf6fef1d11b526b212"
+ },
+ "configs/hardened.yaml": {
+  "canonical_hash": "a4f64e1c7e9a3024c5e8cac154cb66e56c90341046b2b85f754799763faa9a1e",
+  "session_config_hash": "a4f64e1c7e9a3024c5e8cac154cb66e56c90341046b2b85f754799763faa9a1e",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/hardened_argv.yaml": {
+  "canonical_hash": "87d4a42b0c43b5f4aab71a7220a48df86fcd2ed4285e9b7aba39e332685072d8",
+  "session_config_hash": "87d4a42b0c43b5f4aab71a7220a48df86fcd2ed4285e9b7aba39e332685072d8",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/memory-smoke-a5.yaml": {
+  "canonical_hash": "12230682a0a92f168a100834862cc8fe3d8fd7158cc39dec6d8225ae47a7d098",
+  "session_config_hash": "12230682a0a92f168a100834862cc8fe3d8fd7158cc39dec6d8225ae47a7d098",
+  "runtime_fingerprint": "939138b6e646aafc307b4629f28e01cd2267f76994712909ee09dd6754de2692"
+ },
+ "configs/plan_act.yaml": {
+  "canonical_hash": "82931fae7c2c834157181ebaf115c52e36a2e2258376d4c9c4f13356f5edc683",
+  "session_config_hash": "82931fae7c2c834157181ebaf115c52e36a2e2258376d4c9c4f13356f5edc683",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/plan_act_permissive.yaml": {
+  "canonical_hash": "0e9a8826405dc78fe235b0ee13dc12fcb61e06a5c69fe8ecbc2623f2f755c90d",
+  "session_config_hash": "0e9a8826405dc78fe235b0ee13dc12fcb61e06a5c69fe8ecbc2623f2f755c90d",
+  "runtime_fingerprint": "unbuildable: AttributeError"
+ },
+ "configs/retrieval/cr2-t.yaml": {
+  "canonical_hash": "cd059381225068757513ade67a181f33ad5315f9668b8f508b69643eee645477",
+  "session_config_hash": "cd059381225068757513ade67a181f33ad5315f9668b8f508b69643eee645477",
+  "runtime_fingerprint": "unbuildable: ValueError"
+ },
+ "configs/retrieval/cr2e-t2-r2.yaml": {
+  "canonical_hash": "42f3452f6f3c00b759361244bb8f8622939a328909e18a236db99c1e9193a610",
+  "session_config_hash": "42f3452f6f3c00b759361244bb8f8622939a328909e18a236db99c1e9193a610",
+  "runtime_fingerprint": "unbuildable: ValueError"
+ },
+ "configs/retrieval/cr2e-t2.yaml": {
+  "canonical_hash": "b76ab8357c6997ace64fabd5b0821a5d3c5f013a2cfe409b6d41056ec5e9ec57",
+  "session_config_hash": "b76ab8357c6997ace64fabd5b0821a5d3c5f013a2cfe409b6d41056ec5e9ec57",
+  "runtime_fingerprint": "unbuildable: ValueError"
+ },
+ "configs/sprint/b0-v1.yaml": {
+  "canonical_hash": "95a319ca806bc255f522a41ff085fd3572c9559cb0b4c17a5f543e9ac79f14c7",
+  "session_config_hash": "95a319ca806bc255f522a41ff085fd3572c9559cb0b4c17a5f543e9ac79f14c7",
+  "runtime_fingerprint": "7e0fb3341476f002e6ba85b5467ff5215d3ec7f79ad7b699714bd9e6655d45de"
+ },
+ "configs/sprint/b0-v2.yaml": {
+  "canonical_hash": "95a319ca806bc255f522a41ff085fd3572c9559cb0b4c17a5f543e9ac79f14c7",
+  "session_config_hash": "95a319ca806bc255f522a41ff085fd3572c9559cb0b4c17a5f543e9ac79f14c7",
+  "runtime_fingerprint": "7e0fb3341476f002e6ba85b5467ff5215d3ec7f79ad7b699714bd9e6655d45de"
+ },
+ "configs/sprint/b0.yaml": {
+  "canonical_hash": "eee7ede4d5bee031eb97030fd914b7a935bdc5789ec7c8bd75dfd30d6c9012b9",
+  "session_config_hash": "eee7ede4d5bee031eb97030fd914b7a935bdc5789ec7c8bd75dfd30d6c9012b9",
+  "runtime_fingerprint": "c612717025ceca587cdd0b94bc143db6b3d4bb2fd32df42d240d8cbd340199c1"
+ },
+ "configs/subagent_readonly.yaml": {
+  "canonical_hash": "432cc916bd61fcd4c5e83d08e661a66a9063e5febc415c7682df7a33979604ed",
+  "session_config_hash": "432cc916bd61fcd4c5e83d08e661a66a9063e5febc415c7682df7a33979604ed",
+  "runtime_fingerprint": "7375acd18bb31a374bf7432826c7ec173ed0faef8d46b3dea8602450b27f213a"
+ },
+ "configs/tutorial.yaml": {
+  "canonical_hash": "95322e5ad5f4592db11369ba7c9b29f77603e299eb7429b7f70af28edf17b37f",
+  "session_config_hash": "95322e5ad5f4592db11369ba7c9b29f77603e299eb7429b7f70af28edf17b37f",
+  "runtime_fingerprint": "e6576d73ae8b7998f1fb263a3a11a4594f45bf42aae55455195bf82314e5829b"
+ },
+ "configs/workspace/p4-sphinx-deepseek-delayed-mask.yaml": {
+  "canonical_hash": "0af03687ca262c55de710f911b377f4df653cccb6f4951f8f3f09857d360b722",
+  "session_config_hash": "0af03687ca262c55de710f911b377f4df653cccb6f4951f8f3f09857d360b722",
+  "runtime_fingerprint": "44543a9cb3e3b1f37289999588e9c2e209c928f0502c32d1f239a4efcde01e2a"
+ },
+ "configs/workspace/p4-sphinx-deepseek.yaml": {
+  "canonical_hash": "762e2477fe5fcffd452e17054b71e3c30285a6b400cb561bc7a90ab22c5b70b2",
+  "session_config_hash": "762e2477fe5fcffd452e17054b71e3c30285a6b400cb561bc7a90ab22c5b70b2",
+  "runtime_fingerprint": "905c236592ee7b4892248d0e24302c6dd78b88057d82aa4f29aa7a503fc72c7e"
+ },
+ "configs/workspace/sphinx-bm25.yaml": {
+  "canonical_hash": "139576af778444fbe2dc955c672f0491e088c7ad02347ddda60782d434c7bf3b",
+  "session_config_hash": "139576af778444fbe2dc955c672f0491e088c7ad02347ddda60782d434c7bf3b",
+  "runtime_fingerprint": "50968a9af7f047ce4b23091a64d6b49cfe4d21ace422b4beb1ae1d971ab47f0f"
+ }
+}

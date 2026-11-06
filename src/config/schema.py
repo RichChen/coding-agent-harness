@@ -6,9 +6,24 @@ so typos in YAML keys surface as clear errors.
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import ClassVar, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_serializer
+
+
+class OmitNewDefaults(BaseModel):
+    """Fields listed here are dumped only when set: the dump feeds config_hash,
+    so adding an option must not change the hash of configs that leave it alone."""
+
+    omit_when_default: ClassVar[tuple[str, ...]] = ()
+
+    @model_serializer(mode="wrap")
+    def _omit_new_defaults(self, handler):
+        data = handler(self)
+        for name in self.omit_when_default:
+            if getattr(self, name) == type(self).model_fields[name].default:
+                data.pop(name, None)
+        return data
 
 
 class LLMConfig(BaseModel):
@@ -43,8 +58,9 @@ class RetryConfig(BaseModel):
     )
 
 
-class RuntimeContextConfig(BaseModel):
+class RuntimeContextConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
+    omit_when_default = ("protection_rules",)
 
     strategy: str | None = Field(default=None, pattern="^(none|masking|summary|mask-then-summary)$")
     max_tokens: int | None = Field(default=None, gt=0)
@@ -67,6 +83,8 @@ class RuntimeContextConfig(BaseModel):
     max_injection_bytes: int = Field(default=4096, ge=0, le=65536)
     dispatcher: str = Field(default="disabled", pattern="^(disabled|read_search)$")
     dispatcher_max_calls: int = Field(default=0, ge=0, le=256)
+    # v2: a status trailer alone is not a failure; run_command edits count as modifications.
+    protection_rules: Literal["v1", "v2"] = "v1"
 
 
 class RuntimePlannerConfig(BaseModel):
