@@ -1,0 +1,185 @@
+{
+  "schema": "errata-2026-11.e5.v1",
+  "inputs": {
+    "a6_runs": "docs/sprint/a6-retry-runs.json",
+    "a6_runs_sha256": "d46b6bc011c5b21a35407a0aa4aa3461bab15ae92ae875e3da1f16d42811aff3",
+    "profile": "configs/sprint/b0-v2.yaml"
+  },
+  "overflow_runs": 4,
+  "overflow_by_arm": {
+    "r0": 1,
+    "r1": 3
+  },
+  "all_exceed_max_tokens": true,
+  "admission_span": [
+    87823,
+    92548
+  ],
+  "reserved_output_span": [
+    8192,
+    8192
+  ],
+  "max_tokens": [
+    96000
+  ],
+  "previous_prompt_tokens_span": [
+    17843,
+    35329
+  ],
+  "max_prompt_tokens_span": [
+    17843,
+    35329
+  ],
+  "admission_over_previous_prompt_tokens_span": [
+    2.49,
+    5.19
+  ],
+  "rejection_only_in_context_rejected": true,
+  "task_prompt_bytes_by_arm": {
+    "r0": {
+      "runs": 159,
+      "mean": 2510,
+      "median": 2049
+    },
+    "r1": {
+      "runs": 159,
+      "mean": 5412,
+      "median": 4791
+    }
+  },
+  "previous_attempt_bytes_by_arm": {
+    "r0": {
+      "mean": 0,
+      "max": 0
+    },
+    "r1": {
+      "mean": 2881,
+      "max": 8173
+    }
+  },
+  "r1_overflow_admitted_without_record": [
+    "pytest-dev__pytest-5840/r1/b0r2/r3",
+    "sphinx-doc__sphinx-8120/r1/b0r3/r3"
+  ],
+  "a5_runs": 392,
+  "a5_context_overflow": 0,
+  "overflow_detail": [
+    {
+      "slot": "django__django-13964/r1/b0r2/r1",
+      "arm": "r1",
+      "first": "b0r2",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 34,
+      "task_prompt_bytes": 3031,
+      "previous_attempt_bytes": 673,
+      "admission_without_record_approx": 91875,
+      "step_admitted_without_record": false,
+      "rejected_events": 1,
+      "rejected_step": 34,
+      "last_prepared_step": 33,
+      "last_prepared_overflow": false,
+      "strategy": "masking",
+      "error_kind": "context_overflow",
+      "serialized_bytes": 88804,
+      "raw_serialized_bytes": 136670,
+      "admission_input_tokens": 92548,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "admission_plus_output": 100740,
+      "exceeds_max_tokens": true,
+      "successful_calls": 34,
+      "previous_prompt_tokens": 17843,
+      "max_prompt_tokens": 17843,
+      "admission_over_previous_prompt_tokens": 5.19
+    },
+    {
+      "slot": "pytest-dev__pytest-5840/r1/b0r2/r3",
+      "arm": "r1",
+      "first": "b0r2",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 36,
+      "task_prompt_bytes": 5905,
+      "previous_attempt_bytes": 4793,
+      "admission_without_record_approx": 84670,
+      "step_admitted_without_record": true,
+      "rejected_events": 1,
+      "rejected_step": 36,
+      "last_prepared_step": 35,
+      "last_prepared_overflow": false,
+      "strategy": "masking",
+      "error_kind": "context_overflow",
+      "serialized_bytes": 84823,
+      "raw_serialized_bytes": 145963,
+      "admission_input_tokens": 89463,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "admission_plus_output": 97655,
+      "exceeds_max_tokens": true,
+      "successful_calls": 36,
+      "previous_prompt_tokens": 20758,
+      "max_prompt_tokens": 20758,
+      "admission_over_previous_prompt_tokens": 4.31
+    },
+    {
+      "slot": "sphinx-doc__sphinx-7590/r0/b0r1/r3",
+      "arm": "r0",
+      "first": "b0r1",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 18,
+      "task_prompt_bytes": 1066,
+      "previous_attempt_bytes": 0,
+      "admission_without_record_approx": 87823,
+      "step_admitted_without_record": false,
+      "rejected_events": 1,
+      "rejected_step": 18,
+      "last_prepared_step": 17,
+      "last_prepared_overflow": false,
+      "strategy": "masking",
+      "error_kind": "context_overflow",
+      "serialized_bytes": 85039,
+      "raw_serialized_bytes": 101747,
+      "admission_input_tokens": 87823,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "admission_plus_output": 96015,
+      "exceeds_max_tokens": true,
+      "successful_calls": 18,
+      "previous_prompt_tokens": 35329,
+      "max_prompt_tokens": 35329,
+      "admission_over_previous_prompt_tokens": 2.49
+    },
+    {
+      "slot": "sphinx-doc__sphinx-8120/r1/b0r3/r3",
+      "arm": "r1",
+      "first": "b0r3",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 40,
+      "task_prompt_bytes": 3672,
+      "previous_attempt_bytes": 1330,
+      "admission_without_record_approx": 86976,
+      "step_admitted_without_record": true,
+      "rejected_events": 1,
+      "rejected_step": 40,
+      "last_prepared_step": 39,
+      "last_prepared_overflow": false,
+      "strategy": "masking",
+      "error_kind": "context_overflow",
+      "serialized_bytes": 84114,
+      "raw_serialized_bytes": 135559,
+      "admission_input_tokens": 88306,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "admission_plus_output": 96498,
+      "exceeds_max_tokens": true,
+      "successful_calls": 40,
+      "previous_prompt_tokens": 19744,
+      "max_prompt_tokens": 19744,
+      "admission_over_previous_prompt_tokens": 4.47
+    }
+  ],
+  "retired_run_overflow_detail": []
+}
