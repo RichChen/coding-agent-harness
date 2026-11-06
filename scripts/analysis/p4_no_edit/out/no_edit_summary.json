@@ -1,0 +1,480 @@
+{
+  "schema": "p4-no-edit.v1",
+  "failed": 44,
+  "passed": 9,
+  "counts": {
+    "budget": 0,
+    "not_found": 0,
+    "found_idle": 43,
+    "other": 1
+  },
+  "by_task": {
+    "public-sphinx-issue-8637": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 9,
+      "other": 0
+    },
+    "public-sphinx-issue-8756": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 9,
+      "other": 0
+    },
+    "public-sphinx-issue-8775": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 9,
+      "other": 0
+    },
+    "public-sphinx-issue-8800": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 9,
+      "other": 0
+    },
+    "public-sphinx-issue-8945": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 6,
+      "other": 1
+    },
+    "public-sphinx-issue-9030": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 1,
+      "other": 0
+    }
+  },
+  "by_condition": {
+    "N": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 16,
+      "other": 0
+    },
+    "I": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 14,
+      "other": 1
+    },
+    "M": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 13,
+      "other": 0
+    }
+  },
+  "by_stop": {
+    "context_overflow": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 0,
+      "other": 1
+    },
+    "insufficient_reserve": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 31,
+      "other": 0
+    },
+    "response_nonexecutable": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 6,
+      "other": 0
+    },
+    "step_limit": {
+      "budget": 0,
+      "not_found": 0,
+      "found_idle": 6,
+      "other": 0
+    }
+  },
+  "tasks": {
+    "public-sphinx-issue-8637": {
+      "runs": 9,
+      "passed": 0,
+      "reliability": "medium"
+    },
+    "public-sphinx-issue-8756": {
+      "runs": 9,
+      "passed": 0,
+      "reliability": "medium"
+    },
+    "public-sphinx-issue-8775": {
+      "runs": 9,
+      "passed": 0,
+      "reliability": "medium-low"
+    },
+    "public-sphinx-issue-8800": {
+      "runs": 9,
+      "passed": 0,
+      "reliability": "medium-low"
+    },
+    "public-sphinx-issue-8945": {
+      "runs": 9,
+      "passed": 2,
+      "reliability": "high"
+    },
+    "public-sphinx-issue-9030": {
+      "runs": 8,
+      "passed": 7,
+      "reliability": "high"
+    }
+  },
+  "all_fail_tasks": [
+    "public-sphinx-issue-8637",
+    "public-sphinx-issue-8756",
+    "public-sphinx-issue-8775",
+    "public-sphinx-issue-8800"
+  ],
+  "located_any": 44,
+  "file_read_any": 44,
+  "search_hit_only": 0,
+  "found_idle_detail": {
+    "runs": 43,
+    "plan_text": 3,
+    "rehearsal": 0,
+    "either": 3,
+    "located_request_median": 3,
+    "after_located_median": 16,
+    "calls_after": 682,
+    "rereads_after": 311,
+    "ref_reads_after_median": 2
+  },
+  "not_found_detail": {
+    "runs": 0,
+    "file_read": 0,
+    "search_hit": 0
+  },
+  "budget": {
+    "stops": {
+      "insufficient_reserve": 31,
+      "response_nonexecutable": 6,
+      "step_limit": 6,
+      "context_overflow": 1
+    },
+    "insufficient_reserve_runs": 31,
+    "requests_median": 19,
+    "settled_median": 0.35252,
+    "curve": {
+      "1": {
+        "cost_median": 0.01134,
+        "tokens_median": 5208.0,
+        "runs": 44
+      },
+      "5": {
+        "cost_median": 0.018066,
+        "tokens_median": 8560.0,
+        "runs": 44
+      },
+      "10": {
+        "cost_median": 0.019186,
+        "tokens_median": 9313,
+        "runs": 37
+      },
+      "15": {
+        "cost_median": 0.021324,
+        "tokens_median": 10279,
+        "runs": 37
+      }
+    },
+    "counterfactual": {
+      "0.9": {
+        "uncapped_median": 18,
+        "capped_median": 5,
+        "uncapped": [
+          12,
+          12,
+          14,
+          14,
+          15,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          19,
+          19,
+          19,
+          19,
+          20,
+          20,
+          21,
+          21,
+          23,
+          25,
+          25
+        ]
+      },
+      "1.35": {
+        "uncapped_median": 33,
+        "capped_median": 5,
+        "uncapped": [
+          21,
+          21,
+          24,
+          25,
+          26,
+          29,
+          30,
+          30,
+          30,
+          31,
+          31,
+          32,
+          32,
+          33,
+          33,
+          33,
+          33,
+          33,
+          34,
+          35,
+          38,
+          39,
+          39,
+          39,
+          39,
+          40,
+          40,
+          41,
+          46,
+          49,
+          51
+        ]
+      }
+    }
+  },
+  "passing_check": [
+    {
+      "task": "8945",
+      "condition": "M",
+      "repeat": 1,
+      "located": 3,
+      "first_edit": 14,
+      "file_read": 3
+    },
+    {
+      "task": "8945",
+      "condition": "M",
+      "repeat": 3,
+      "located": 4,
+      "first_edit": 15,
+      "file_read": 4
+    },
+    {
+      "task": "9030",
+      "condition": "I",
+      "repeat": 1,
+      "located": 3,
+      "first_edit": 9,
+      "file_read": 1
+    },
+    {
+      "task": "9030",
+      "condition": "I",
+      "repeat": 2,
+      "located": 2,
+      "first_edit": 5,
+      "file_read": 1
+    },
+    {
+      "task": "9030",
+      "condition": "I",
+      "repeat": 3,
+      "located": 3,
+      "first_edit": 5,
+      "file_read": 1
+    },
+    {
+      "task": "9030",
+      "condition": "M",
+      "repeat": 1,
+      "located": 3,
+      "first_edit": 8,
+      "file_read": 1
+    },
+    {
+      "task": "9030",
+      "condition": "M",
+      "repeat": 2,
+      "located": 4,
+      "first_edit": 10,
+      "file_read": 1
+    },
+    {
+      "task": "9030",
+      "condition": "M",
+      "repeat": 3,
+      "located": 4,
+      "first_edit": 11,
+      "file_read": 2
+    },
+    {
+      "task": "9030",
+      "condition": "N",
+      "repeat": 2,
+      "located": 4,
+      "first_edit": 10,
+      "file_read": 2
+    }
+  ],
+  "decision": "redesign_action",
+  "posthoc": {
+    "note": "descriptive, added after the classification; does not change any class or the decision",
+    "passing_gap_located_to_edit": [
+      2,
+      3,
+      5,
+      6,
+      6,
+      6,
+      7,
+      11,
+      11
+    ],
+    "found_idle_after_located": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      12,
+      12,
+      13,
+      13,
+      13,
+      14,
+      14,
+      14,
+      14,
+      14,
+      15,
+      15,
+      15,
+      15,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      17,
+      17,
+      17,
+      17,
+      17,
+      18,
+      20,
+      20,
+      20,
+      21,
+      21,
+      21,
+      21,
+      21,
+      21
+    ],
+    "found_idle_after_located_gt_max_pass_gap": 37,
+    "found_idle_nonexecutable_stop": {
+      "public-sphinx-issue-8756": 6
+    },
+    "found_idle_without_nonexecutable": 37,
+    "counts_without_nonexecutable": {
+      "found_idle": 37,
+      "other": 1
+    },
+    "high_reliability_failed": {
+      "other": 1,
+      "found_idle": 7
+    },
+    "failed_requests_from_prompt_on": {
+      "I": [
+        6,
+        6,
+        6,
+        6,
+        17,
+        17,
+        18,
+        18,
+        19,
+        19,
+        20,
+        21,
+        24,
+        24,
+        24
+      ],
+      "M": [
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    "text_responses_per_failed_run": {
+      "1": 34,
+      "2": 8,
+      "3": 2
+    },
+    "plan_hits": [
+      {
+        "task": "8775",
+        "condition": "M",
+        "repeat": 2,
+        "hits": [
+          {
+            "request": 14,
+            "text": "I have enough evidence to make a targeted fix. The failure is in `sphinx/util/typing.py`: `stringify()`/`restify()` don't handle PEP 604 `types.UnionType` (the `str | int` object produced when annotations are evaluated), so `restify` raises `AttributeError` on `cls.__module__`/`__name__` access paths, which autodoc reports as \"failed to import attribute\".\n\nLet me confirm the exact failure point before editing."
+          }
+        ]
+      },
+      {
+        "task": "8775",
+        "condition": "M",
+        "repeat": 3,
+        "hits": [
+          {
+            "request": 13,
+            "text": "I have enough evidence to make a targeted fix. The failure is in `sphinx/util/typing.py`: `stringify()`/`restify()` don't handle PEP 604 `types.UnionType` (i.e. `str | int`), which raises `AttributeError` when autodoc tries to render the annotation.\n\nLet me confirm the exact failure point before editing."
+          }
+        ]
+      },
+      {
+        "task": "8800",
+        "condition": "M",
+        "repeat": 3,
+        "hits": [
+          {
+            "request": 18,
+            "text": "I have enough evidence to make the minimal fix. The root cause: in `get_class_members` (sphinx/ext/autodoc/importer.py), inherited members are created as `ObjectMember(unmangled, value)` without `class_=subject`. Later, `ClassDocumenter.get_object_members` filters with `m.class_ == self.object`, so inherited annotation-only attributes (which have no value in the subclass `__dict__`) get dropped. Also, `filter_members` treats members without a docstring as undocumented unless `undoc-members` is set — but for annotation-only attributes the docstring comes from the analyzer's `attr_docs`, which i"
+          }
+        ]
+      }
+    ]
+  }
+}
