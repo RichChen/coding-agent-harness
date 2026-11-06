@@ -1,0 +1,2996 @@
+{
+  "schema": "context-sim.v1",
+  "rules": {
+    "A": {
+      "keep_recent": 4,
+      "content": false,
+      "mask": true
+    },
+    "B": {
+      "keep_recent": 8,
+      "content": false,
+      "mask": true
+    },
+    "C": {
+      "keep_recent": 4,
+      "content": true,
+      "mask": true
+    },
+    "BC": {
+      "keep_recent": 8,
+      "content": true,
+      "mask": true
+    },
+    "N": {
+      "keep_recent": 0,
+      "content": false,
+      "mask": false
+    }
+  },
+  "limit": 96000,
+  "validation": {
+    "runs": 1872,
+    "steps": 53976,
+    "view_equal": 53976,
+    "states_equal": 53976,
+    "runs_with_view_difference": 0,
+    "raw_history_source_steps": {
+      "last_saved": 53823,
+      "recorded_view": 0,
+      "earlier_saved": 0,
+      "injected_view": 153
+    },
+    "tool_stub_mismatch_steps": 0,
+    "difference_examples": [],
+    "reread_count_equal_runs": 1872,
+    "reread_calls_reference": 21069,
+    "reread_calls_here": 21069,
+    "reread_calls_same_set": true,
+    "view_state_equal": 21069,
+    "provider_over_calibrated": {
+      "n": 52998,
+      "median": 0.454,
+      "p10": 0.417,
+      "p90": 0.494,
+      "max": 0.895
+    },
+    "cache_hit_share_from_second_request": {
+      "estimated": 72.2,
+      "provider": 67.1,
+      "by_experiment": {
+        "A5": {
+          "estimated": 74.5,
+          "provider": 69.5
+        },
+        "A6-R": {
+          "estimated": 75.7,
+          "provider": 71.1
+        },
+        "CR-2": {
+          "estimated": 70.4,
+          "provider": 64.9
+        },
+        "P4": {
+          "estimated": 69.6,
+          "provider": 67.6
+        },
+        "P4-first": {
+          "estimated": 64.2,
+          "provider": 60.2
+        }
+      }
+    },
+    "cost_recorded_views": {
+      "estimated_cny": 278.16,
+      "provider_usage_cny": 302.44,
+      "ratio": 0.92
+    }
+  },
+  "excluded": {
+    "excluded:infra_error": 12,
+    "excluded:infra_retired": 197,
+    "excluded:invalid_candidate": 1,
+    "excluded:unknown": 1
+  },
+  "sim_errors": [],
+  "groups": {
+    "A5 all": {
+      "runs": 392,
+      "tool_calls": 10995,
+      "reread_calls": 1701,
+      "reread_pct_of_tool_calls": 15.5,
+      "requests": 9383,
+      "rules": {
+        "A": {
+          "avoidable_raw": 149,
+          "avoidable_raw_pct_of_rereads": 8.8,
+          "avoidable_raw_pct_of_tool_calls": 1.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 14.9,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 132.6,
+            "cached": 45.4
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 38463,
+          "avoidable_only_steps": 116,
+          "avoidable_only_steps_pct_of_requests": 1.2,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 1110,
+          "avoidable_raw_pct_of_rereads": 65.3,
+          "avoidable_raw_pct_of_tool_calls": 10.1,
+          "avoidable_raw_or_partial_pct_of_rereads": 75.7,
+          "run_input_tokens_increase_pct": {
+            "median": 11.9,
+            "p90": 21.7
+          },
+          "pooled_input_tokens_increase_pct": 13.3,
+          "run_cost_upper_increase_pct": {
+            "median": 10.6,
+            "p90": 19.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 40.1,
+            "p90": 59.1
+          },
+          "cost_cny": {
+            "upper": 148.74,
+            "cached": 65.72
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 40991,
+          "avoidable_only_steps": 779,
+          "avoidable_only_steps_pct_of_requests": 8.3,
+          "rough_net_input_increase_pct": {
+            "median": 6.3,
+            "p90": 15.8
+          }
+        },
+        "C": {
+          "avoidable_raw": 1470,
+          "avoidable_raw_pct_of_rereads": 86.4,
+          "avoidable_raw_pct_of_tool_calls": 13.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 96.4,
+          "run_input_tokens_increase_pct": {
+            "median": 7.3,
+            "p90": 56.0
+          },
+          "pooled_input_tokens_increase_pct": 32.1,
+          "run_cost_upper_increase_pct": {
+            "median": 6.6,
+            "p90": 51.5
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 5.1
+          },
+          "cost_cny": {
+            "upper": 171.77,
+            "cached": 44.57
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 79818,
+          "avoidable_only_steps": 1061,
+          "avoidable_only_steps_pct_of_requests": 11.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 24.7
+          }
+        },
+        "BC": {
+          "avoidable_raw": 1504,
+          "avoidable_raw_pct_of_rereads": 88.4,
+          "avoidable_raw_pct_of_tool_calls": 13.7,
+          "avoidable_raw_or_partial_pct_of_rereads": 98.4,
+          "run_input_tokens_increase_pct": {
+            "median": 18.2,
+            "p90": 59.6
+          },
+          "pooled_input_tokens_increase_pct": 38.7,
+          "run_cost_upper_increase_pct": {
+            "median": 16.0,
+            "p90": 55.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 27.8,
+            "p90": 47.2
+          },
+          "cost_cny": {
+            "upper": 179.77,
+            "cached": 59.69
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 81385,
+          "avoidable_only_steps": 1088,
+          "avoidable_only_steps_pct_of_requests": 11.6,
+          "rough_net_input_increase_pct": {
+            "median": 10.9,
+            "p90": 32.8
+          }
+        },
+        "N": {
+          "avoidable_raw": 1532,
+          "avoidable_raw_pct_of_rereads": 90.1,
+          "avoidable_raw_pct_of_tool_calls": 13.9,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 46.8,
+            "p90": 108.6
+          },
+          "pooled_input_tokens_increase_pct": 76.4,
+          "run_cost_upper_increase_pct": {
+            "median": 42.5,
+            "p90": 102.5
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -38.3,
+            "p90": -21.2
+          },
+          "cost_cny": {
+            "upper": 225.48,
+            "cached": 27.12
+          },
+          "rejected_requests": 16,
+          "runs_with_rejection": 2,
+          "max_request_tokens": 103279,
+          "avoidable_only_steps": 1107,
+          "avoidable_only_steps_pct_of_requests": 11.8,
+          "rough_net_input_increase_pct": {
+            "median": 33.1,
+            "p90": 75.8
+          }
+        }
+      }
+    },
+    "A5 b0": {
+      "runs": 224,
+      "tool_calls": 6244,
+      "reread_calls": 932,
+      "reread_pct_of_tool_calls": 14.9,
+      "requests": 5353,
+      "rules": {
+        "A": {
+          "avoidable_raw": 93,
+          "avoidable_raw_pct_of_rereads": 10.0,
+          "avoidable_raw_pct_of_tool_calls": 1.5,
+          "avoidable_raw_or_partial_pct_of_rereads": 15.8,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 74.62,
+            "cached": 25.44
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 33595,
+          "avoidable_only_steps": 78,
+          "avoidable_only_steps_pct_of_requests": 1.5,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 610,
+          "avoidable_raw_pct_of_rereads": 65.5,
+          "avoidable_raw_pct_of_tool_calls": 9.8,
+          "avoidable_raw_or_partial_pct_of_rereads": 75.6,
+          "run_input_tokens_increase_pct": {
+            "median": 11.9,
+            "p90": 21.9
+          },
+          "pooled_input_tokens_increase_pct": 13.3,
+          "run_cost_upper_increase_pct": {
+            "median": 10.7,
+            "p90": 19.8
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 40.2,
+            "p90": 58.9
+          },
+          "cost_cny": {
+            "upper": 83.65,
+            "cached": 36.77
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 39223,
+          "avoidable_only_steps": 433,
+          "avoidable_only_steps_pct_of_requests": 8.1,
+          "rough_net_input_increase_pct": {
+            "median": 6.0,
+            "p90": 14.9
+          }
+        },
+        "C": {
+          "avoidable_raw": 817,
+          "avoidable_raw_pct_of_rereads": 87.7,
+          "avoidable_raw_pct_of_tool_calls": 13.1,
+          "avoidable_raw_or_partial_pct_of_rereads": 97.4,
+          "run_input_tokens_increase_pct": {
+            "median": 7.5,
+            "p90": 56.9
+          },
+          "pooled_input_tokens_increase_pct": 32.3,
+          "run_cost_upper_increase_pct": {
+            "median": 6.6,
+            "p90": 51.8
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 4.4
+          },
+          "cost_cny": {
+            "upper": 96.83,
+            "cached": 24.94
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 79818,
+          "avoidable_only_steps": 593,
+          "avoidable_only_steps_pct_of_requests": 11.1,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 24.8
+          }
+        },
+        "BC": {
+          "avoidable_raw": 825,
+          "avoidable_raw_pct_of_rereads": 88.5,
+          "avoidable_raw_pct_of_tool_calls": 13.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 98.3,
+          "run_input_tokens_increase_pct": {
+            "median": 18.3,
+            "p90": 62.2
+          },
+          "pooled_input_tokens_increase_pct": 38.9,
+          "run_cost_upper_increase_pct": {
+            "median": 16.3,
+            "p90": 57.1
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 28.5,
+            "p90": 47.3
+          },
+          "cost_cny": {
+            "upper": 101.27,
+            "cached": 33.39
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 81385,
+          "avoidable_only_steps": 598,
+          "avoidable_only_steps_pct_of_requests": 11.2,
+          "rough_net_input_increase_pct": {
+            "median": 10.5,
+            "p90": 32.1
+          }
+        },
+        "N": {
+          "avoidable_raw": 841,
+          "avoidable_raw_pct_of_rereads": 90.2,
+          "avoidable_raw_pct_of_tool_calls": 13.5,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 45.0,
+            "p90": 106.2
+          },
+          "pooled_input_tokens_increase_pct": 76.1,
+          "run_cost_upper_increase_pct": {
+            "median": 40.4,
+            "p90": 97.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -39.2,
+            "p90": -21.3
+          },
+          "cost_cny": {
+            "upper": 126.73,
+            "cached": 15.11
+          },
+          "rejected_requests": 16,
+          "runs_with_rejection": 2,
+          "max_request_tokens": 103279,
+          "avoidable_only_steps": 608,
+          "avoidable_only_steps_pct_of_requests": 11.4,
+          "rough_net_input_increase_pct": {
+            "median": 32.7,
+            "p90": 75.3
+          }
+        }
+      }
+    },
+    "A5 b2": {
+      "runs": 168,
+      "tool_calls": 4751,
+      "reread_calls": 769,
+      "reread_pct_of_tool_calls": 16.2,
+      "requests": 4030,
+      "rules": {
+        "A": {
+          "avoidable_raw": 56,
+          "avoidable_raw_pct_of_rereads": 7.3,
+          "avoidable_raw_pct_of_tool_calls": 1.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 13.8,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 57.99,
+            "cached": 19.96
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 38463,
+          "avoidable_only_steps": 38,
+          "avoidable_only_steps_pct_of_requests": 0.9,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 500,
+          "avoidable_raw_pct_of_rereads": 65.0,
+          "avoidable_raw_pct_of_tool_calls": 10.5,
+          "avoidable_raw_or_partial_pct_of_rereads": 75.8,
+          "run_input_tokens_increase_pct": {
+            "median": 11.8,
+            "p90": 21.4
+          },
+          "pooled_input_tokens_increase_pct": 13.4,
+          "run_cost_upper_increase_pct": {
+            "median": 10.5,
+            "p90": 19.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 39.8,
+            "p90": 59.6
+          },
+          "cost_cny": {
+            "upper": 65.09,
+            "cached": 28.95
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 40991,
+          "avoidable_only_steps": 346,
+          "avoidable_only_steps_pct_of_requests": 8.6,
+          "rough_net_input_increase_pct": {
+            "median": 6.8,
+            "p90": 16.8
+          }
+        },
+        "C": {
+          "avoidable_raw": 653,
+          "avoidable_raw_pct_of_rereads": 84.9,
+          "avoidable_raw_pct_of_tool_calls": 13.7,
+          "avoidable_raw_or_partial_pct_of_rereads": 95.1,
+          "run_input_tokens_increase_pct": {
+            "median": 7.3,
+            "p90": 54.1
+          },
+          "pooled_input_tokens_increase_pct": 31.7,
+          "run_cost_upper_increase_pct": {
+            "median": 6.5,
+            "p90": 49.8
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 6.3
+          },
+          "cost_cny": {
+            "upper": 74.93,
+            "cached": 19.62
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 79542,
+          "avoidable_only_steps": 468,
+          "avoidable_only_steps_pct_of_requests": 11.6,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 24.0
+          }
+        },
+        "BC": {
+          "avoidable_raw": 679,
+          "avoidable_raw_pct_of_rereads": 88.3,
+          "avoidable_raw_pct_of_tool_calls": 14.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 98.4,
+          "run_input_tokens_increase_pct": {
+            "median": 17.7,
+            "p90": 58.8
+          },
+          "pooled_input_tokens_increase_pct": 38.5,
+          "run_cost_upper_increase_pct": {
+            "median": 15.9,
+            "p90": 54.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 27.1,
+            "p90": 46.7
+          },
+          "cost_cny": {
+            "upper": 78.49,
+            "cached": 26.3
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 79989,
+          "avoidable_only_steps": 490,
+          "avoidable_only_steps_pct_of_requests": 12.2,
+          "rough_net_input_increase_pct": {
+            "median": 11.1,
+            "p90": 33.3
+          }
+        },
+        "N": {
+          "avoidable_raw": 691,
+          "avoidable_raw_pct_of_rereads": 89.9,
+          "avoidable_raw_pct_of_tool_calls": 14.5,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 48.5,
+            "p90": 110.0
+          },
+          "pooled_input_tokens_increase_pct": 76.8,
+          "run_cost_upper_increase_pct": {
+            "median": 44.4,
+            "p90": 103.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -37.6,
+            "p90": -22.0
+          },
+          "cost_cny": {
+            "upper": 98.75,
+            "cached": 12.0
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 85425,
+          "avoidable_only_steps": 499,
+          "avoidable_only_steps_pct_of_requests": 12.4,
+          "rough_net_input_increase_pct": {
+            "median": 33.8,
+            "p90": 77.1
+          }
+        }
+      }
+    },
+    "A6-R all": {
+      "runs": 318,
+      "tool_calls": 13404,
+      "reread_calls": 4101,
+      "reread_pct_of_tool_calls": 30.6,
+      "requests": 10265,
+      "rules": {
+        "A": {
+          "avoidable_raw": 192,
+          "avoidable_raw_pct_of_rereads": 4.7,
+          "avoidable_raw_pct_of_tool_calls": 1.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 7.8,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 177.27,
+            "cached": 57.34
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 43943,
+          "avoidable_only_steps": 131,
+          "avoidable_only_steps_pct_of_requests": 1.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 2993,
+          "avoidable_raw_pct_of_rereads": 73.0,
+          "avoidable_raw_pct_of_tool_calls": 22.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 78.8,
+          "run_input_tokens_increase_pct": {
+            "median": 12.0,
+            "p90": 20.2
+          },
+          "pooled_input_tokens_increase_pct": 13.1,
+          "run_cost_upper_increase_pct": {
+            "median": 10.9,
+            "p90": 18.8
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 47.8,
+            "p90": 63.8
+          },
+          "cost_cny": {
+            "upper": 198.52,
+            "cached": 86.41
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 45152,
+          "avoidable_only_steps": 1533,
+          "avoidable_only_steps_pct_of_requests": 14.9,
+          "rough_net_input_increase_pct": {
+            "median": 1.9,
+            "p90": 10.4
+          }
+        },
+        "C": {
+          "avoidable_raw": 3739,
+          "avoidable_raw_pct_of_rereads": 91.2,
+          "avoidable_raw_pct_of_tool_calls": 27.9,
+          "avoidable_raw_or_partial_pct_of_rereads": 96.3,
+          "run_input_tokens_increase_pct": {
+            "median": 31.9,
+            "p90": 108.7
+          },
+          "pooled_input_tokens_increase_pct": 56.5,
+          "run_cost_upper_increase_pct": {
+            "median": 28.7,
+            "p90": 102.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 10.8
+          },
+          "cost_cny": {
+            "upper": 269.16,
+            "cached": 56.17
+          },
+          "rejected_requests": 84,
+          "runs_with_rejection": 14,
+          "max_request_tokens": 150747,
+          "avoidable_only_steps": 2071,
+          "avoidable_only_steps_pct_of_requests": 20.2,
+          "rough_net_input_increase_pct": {
+            "median": 4.9,
+            "p90": 38.1
+          }
+        },
+        "BC": {
+          "avoidable_raw": 3830,
+          "avoidable_raw_pct_of_rereads": 93.4,
+          "avoidable_raw_pct_of_tool_calls": 28.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 98.5,
+          "run_input_tokens_increase_pct": {
+            "median": 37.8,
+            "p90": 111.3
+          },
+          "pooled_input_tokens_increase_pct": 60.6,
+          "run_cost_upper_increase_pct": {
+            "median": 34.1,
+            "p90": 105.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 30.1,
+            "p90": 49.4
+          },
+          "cost_cny": {
+            "upper": 275.83,
+            "cached": 74.27
+          },
+          "rejected_requests": 84,
+          "runs_with_rejection": 14,
+          "max_request_tokens": 150747,
+          "avoidable_only_steps": 2132,
+          "avoidable_only_steps_pct_of_requests": 20.8,
+          "rough_net_input_increase_pct": {
+            "median": 10.1,
+            "p90": 41.9
+          }
+        },
+        "N": {
+          "avoidable_raw": 3894,
+          "avoidable_raw_pct_of_rereads": 95.0,
+          "avoidable_raw_pct_of_tool_calls": 29.1,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 69.9,
+            "p90": 137.1
+          },
+          "pooled_input_tokens_increase_pct": 92.6,
+          "run_cost_upper_increase_pct": {
+            "median": 63.1,
+            "p90": 127.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -38.9,
+            "p90": -25.0
+          },
+          "cost_cny": {
+            "upper": 327.53,
+            "cached": 35.21
+          },
+          "rejected_requests": 147,
+          "runs_with_rejection": 17,
+          "max_request_tokens": 154092,
+          "avoidable_only_steps": 2172,
+          "avoidable_only_steps_pct_of_requests": 21.2,
+          "rough_net_input_increase_pct": {
+            "median": 39.0,
+            "p90": 73.6
+          }
+        }
+      }
+    },
+    "A6-R r0": {
+      "runs": 159,
+      "tool_calls": 6432,
+      "reread_calls": 1602,
+      "reread_pct_of_tool_calls": 24.9,
+      "requests": 5074,
+      "rules": {
+        "A": {
+          "avoidable_raw": 74,
+          "avoidable_raw_pct_of_rereads": 4.6,
+          "avoidable_raw_pct_of_tool_calls": 1.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 7.6,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 81.07,
+            "cached": 27.24
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 41235,
+          "avoidable_only_steps": 53,
+          "avoidable_only_steps_pct_of_requests": 1.0,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 1115,
+          "avoidable_raw_pct_of_rereads": 69.6,
+          "avoidable_raw_pct_of_tool_calls": 17.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 76.2,
+          "run_input_tokens_increase_pct": {
+            "median": 12.4,
+            "p90": 21.3
+          },
+          "pooled_input_tokens_increase_pct": 13.7,
+          "run_cost_upper_increase_pct": {
+            "median": 11.0,
+            "p90": 20.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 48.8,
+            "p90": 63.8
+          },
+          "cost_cny": {
+            "upper": 91.21,
+            "cached": 41.19
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 41320,
+          "avoidable_only_steps": 637,
+          "avoidable_only_steps_pct_of_requests": 12.6,
+          "rough_net_input_increase_pct": {
+            "median": 3.7,
+            "p90": 12.8
+          }
+        },
+        "C": {
+          "avoidable_raw": 1464,
+          "avoidable_raw_pct_of_rereads": 91.4,
+          "avoidable_raw_pct_of_tool_calls": 22.8,
+          "avoidable_raw_or_partial_pct_of_rereads": 97.4,
+          "run_input_tokens_increase_pct": {
+            "median": 32.1,
+            "p90": 104.5
+          },
+          "pooled_input_tokens_increase_pct": 56.8,
+          "run_cost_upper_increase_pct": {
+            "median": 28.9,
+            "p90": 98.1
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -0.7,
+            "p90": 9.5
+          },
+          "cost_cny": {
+            "upper": 123.49,
+            "cached": 26.35
+          },
+          "rejected_requests": 50,
+          "runs_with_rejection": 5,
+          "max_request_tokens": 150747,
+          "avoidable_only_steps": 882,
+          "avoidable_only_steps_pct_of_requests": 17.4,
+          "rough_net_input_increase_pct": {
+            "median": 6.6,
+            "p90": 49.2
+          }
+        },
+        "BC": {
+          "avoidable_raw": 1488,
+          "avoidable_raw_pct_of_rereads": 92.9,
+          "avoidable_raw_pct_of_tool_calls": 23.1,
+          "avoidable_raw_or_partial_pct_of_rereads": 98.9,
+          "run_input_tokens_increase_pct": {
+            "median": 38.4,
+            "p90": 108.2
+          },
+          "pooled_input_tokens_increase_pct": 61.3,
+          "run_cost_upper_increase_pct": {
+            "median": 34.5,
+            "p90": 101.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 29.5,
+            "p90": 49.8
+          },
+          "cost_cny": {
+            "upper": 126.75,
+            "cached": 35.23
+          },
+          "rejected_requests": 50,
+          "runs_with_rejection": 5,
+          "max_request_tokens": 150747,
+          "avoidable_only_steps": 904,
+          "avoidable_only_steps_pct_of_requests": 17.8,
+          "rough_net_input_increase_pct": {
+            "median": 12.7,
+            "p90": 50.5
+          }
+        },
+        "N": {
+          "avoidable_raw": 1506,
+          "avoidable_raw_pct_of_rereads": 94.0,
+          "avoidable_raw_pct_of_tool_calls": 23.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 72.0,
+            "p90": 135.7
+          },
+          "pooled_input_tokens_increase_pct": 95.2,
+          "run_cost_upper_increase_pct": {
+            "median": 64.7,
+            "p90": 126.9
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -40.3,
+            "p90": -27.2
+          },
+          "cost_cny": {
+            "upper": 151.79,
+            "cached": 16.38
+          },
+          "rejected_requests": 58,
+          "runs_with_rejection": 5,
+          "max_request_tokens": 154092,
+          "avoidable_only_steps": 915,
+          "avoidable_only_steps_pct_of_requests": 18.0,
+          "rough_net_input_increase_pct": {
+            "median": 47.4,
+            "p90": 80.9
+          }
+        }
+      }
+    },
+    "A6-R r1": {
+      "runs": 159,
+      "tool_calls": 6972,
+      "reread_calls": 2499,
+      "reread_pct_of_tool_calls": 35.8,
+      "requests": 5191,
+      "rules": {
+        "A": {
+          "avoidable_raw": 118,
+          "avoidable_raw_pct_of_rereads": 4.7,
+          "avoidable_raw_pct_of_tool_calls": 1.7,
+          "avoidable_raw_or_partial_pct_of_rereads": 8.0,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 96.2,
+            "cached": 30.11
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 43943,
+          "avoidable_only_steps": 78,
+          "avoidable_only_steps_pct_of_requests": 1.5,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 1878,
+          "avoidable_raw_pct_of_rereads": 75.2,
+          "avoidable_raw_pct_of_tool_calls": 26.9,
+          "avoidable_raw_or_partial_pct_of_rereads": 80.5,
+          "run_input_tokens_increase_pct": {
+            "median": 11.5,
+            "p90": 19.9
+          },
+          "pooled_input_tokens_increase_pct": 12.6,
+          "run_cost_upper_increase_pct": {
+            "median": 10.5,
+            "p90": 18.5
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 45.7,
+            "p90": 63.7
+          },
+          "cost_cny": {
+            "upper": 107.32,
+            "cached": 45.22
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 45152,
+          "avoidable_only_steps": 896,
+          "avoidable_only_steps_pct_of_requests": 17.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.3,
+            "p90": 8.1
+          }
+        },
+        "C": {
+          "avoidable_raw": 2275,
+          "avoidable_raw_pct_of_rereads": 91.0,
+          "avoidable_raw_pct_of_tool_calls": 32.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 95.6,
+          "run_input_tokens_increase_pct": {
+            "median": 29.5,
+            "p90": 109.8
+          },
+          "pooled_input_tokens_increase_pct": 56.2,
+          "run_cost_upper_increase_pct": {
+            "median": 27.0,
+            "p90": 104.1
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 10.9
+          },
+          "cost_cny": {
+            "upper": 145.67,
+            "cached": 29.82
+          },
+          "rejected_requests": 34,
+          "runs_with_rejection": 9,
+          "max_request_tokens": 145208,
+          "avoidable_only_steps": 1189,
+          "avoidable_only_steps_pct_of_requests": 22.9,
+          "rough_net_input_increase_pct": {
+            "median": 3.3,
+            "p90": 29.5
+          }
+        },
+        "BC": {
+          "avoidable_raw": 2342,
+          "avoidable_raw_pct_of_rereads": 93.7,
+          "avoidable_raw_pct_of_tool_calls": 33.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 98.3,
+          "run_input_tokens_increase_pct": {
+            "median": 35.7,
+            "p90": 112.8
+          },
+          "pooled_input_tokens_increase_pct": 60.1,
+          "run_cost_upper_increase_pct": {
+            "median": 31.8,
+            "p90": 106.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 30.4,
+            "p90": 48.2
+          },
+          "cost_cny": {
+            "upper": 149.08,
+            "cached": 39.04
+          },
+          "rejected_requests": 34,
+          "runs_with_rejection": 9,
+          "max_request_tokens": 145208,
+          "avoidable_only_steps": 1228,
+          "avoidable_only_steps_pct_of_requests": 23.7,
+          "rough_net_input_increase_pct": {
+            "median": 8.4,
+            "p90": 30.0
+          }
+        },
+        "N": {
+          "avoidable_raw": 2388,
+          "avoidable_raw_pct_of_rereads": 95.6,
+          "avoidable_raw_pct_of_tool_calls": 34.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 65.9,
+            "p90": 138.4
+          },
+          "pooled_input_tokens_increase_pct": 90.3,
+          "run_cost_upper_increase_pct": {
+            "median": 58.5,
+            "p90": 129.8
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -37.7,
+            "p90": -23.9
+          },
+          "cost_cny": {
+            "upper": 175.73,
+            "cached": 18.83
+          },
+          "rejected_requests": 89,
+          "runs_with_rejection": 12,
+          "max_request_tokens": 145737,
+          "avoidable_only_steps": 1257,
+          "avoidable_only_steps_pct_of_requests": 24.2,
+          "rough_net_input_increase_pct": {
+            "median": 32.1,
+            "p90": 65.9
+          }
+        }
+      }
+    },
+    "CR-2 all": {
+      "runs": 1108,
+      "tool_calls": 36989,
+      "reread_calls": 14925,
+      "reread_pct_of_tool_calls": 40.3,
+      "requests": 33350,
+      "rules": {
+        "A": {
+          "avoidable_raw": 1504,
+          "avoidable_raw_pct_of_rereads": 10.1,
+          "avoidable_raw_pct_of_tool_calls": 4.1,
+          "avoidable_raw_or_partial_pct_of_rereads": 12.3,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 478.16,
+            "cached": 168.89
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 41875,
+          "avoidable_only_steps": 1441,
+          "avoidable_only_steps_pct_of_requests": 4.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 11431,
+          "avoidable_raw_pct_of_rereads": 76.6,
+          "avoidable_raw_pct_of_tool_calls": 30.9,
+          "avoidable_raw_or_partial_pct_of_rereads": 83.3,
+          "run_input_tokens_increase_pct": {
+            "median": 17.4,
+            "p90": 28.1
+          },
+          "pooled_input_tokens_increase_pct": 19.4,
+          "run_cost_upper_increase_pct": {
+            "median": 16.2,
+            "p90": 26.5
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 55.8,
+            "p90": 71.3
+          },
+          "cost_cny": {
+            "upper": 565.97,
+            "cached": 269.15
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 51066,
+          "avoidable_only_steps": 10078,
+          "avoidable_only_steps_pct_of_requests": 30.2,
+          "rough_net_input_increase_pct": {
+            "median": -3.0,
+            "p90": 14.0
+          }
+        },
+        "C": {
+          "avoidable_raw": 9622,
+          "avoidable_raw_pct_of_rereads": 64.5,
+          "avoidable_raw_pct_of_tool_calls": 26.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 70.1,
+          "run_input_tokens_increase_pct": {
+            "median": 32.7,
+            "p90": 104.0
+          },
+          "pooled_input_tokens_increase_pct": 61.2,
+          "run_cost_upper_increase_pct": {
+            "median": 30.6,
+            "p90": 100.1
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -5.6,
+            "p90": 0.8
+          },
+          "cost_cny": {
+            "upper": 755.52,
+            "cached": 147.5
+          },
+          "rejected_requests": 145,
+          "runs_with_rejection": 16,
+          "max_request_tokens": 156442,
+          "avoidable_only_steps": 8325,
+          "avoidable_only_steps_pct_of_requests": 25.0,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 36.3
+          }
+        },
+        "BC": {
+          "avoidable_raw": 13379,
+          "avoidable_raw_pct_of_rereads": 89.6,
+          "avoidable_raw_pct_of_tool_calls": 36.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 94.6,
+          "run_input_tokens_increase_pct": {
+            "median": 41.2,
+            "p90": 111.7
+          },
+          "pooled_input_tokens_increase_pct": 70.0,
+          "run_cost_upper_increase_pct": {
+            "median": 38.2,
+            "p90": 106.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 22.7,
+            "p90": 46.8
+          },
+          "cost_cny": {
+            "upper": 795.27,
+            "cached": 209.62
+          },
+          "rejected_requests": 153,
+          "runs_with_rejection": 16,
+          "max_request_tokens": 158328,
+          "avoidable_only_steps": 11862,
+          "avoidable_only_steps_pct_of_requests": 35.6,
+          "rough_net_input_increase_pct": {
+            "median": 2.8,
+            "p90": 26.9
+          }
+        },
+        "N": {
+          "avoidable_raw": 14312,
+          "avoidable_raw_pct_of_rereads": 95.9,
+          "avoidable_raw_pct_of_tool_calls": 38.7,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 75.8,
+            "p90": 154.9
+          },
+          "pooled_input_tokens_increase_pct": 108.3,
+          "run_cost_upper_increase_pct": {
+            "median": 71.1,
+            "p90": 148.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -45.2,
+            "p90": -27.3
+          },
+          "cost_cny": {
+            "upper": 968.59,
+            "cached": 89.1
+          },
+          "rejected_requests": 517,
+          "runs_with_rejection": 62,
+          "max_request_tokens": 180431,
+          "avoidable_only_steps": 12763,
+          "avoidable_only_steps_pct_of_requests": 38.3,
+          "rough_net_input_increase_pct": {
+            "median": 9.8,
+            "p90": 60.3
+          }
+        }
+      }
+    },
+    "CR-2 n": {
+      "runs": 275,
+      "tool_calls": 9739,
+      "reread_calls": 3898,
+      "reread_pct_of_tool_calls": 40.0,
+      "requests": 8589,
+      "rules": {
+        "A": {
+          "avoidable_raw": 320,
+          "avoidable_raw_pct_of_rereads": 8.2,
+          "avoidable_raw_pct_of_tool_calls": 3.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 10.6,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 120.87,
+            "cached": 43.28
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 41875,
+          "avoidable_only_steps": 286,
+          "avoidable_only_steps_pct_of_requests": 3.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 2900,
+          "avoidable_raw_pct_of_rereads": 74.4,
+          "avoidable_raw_pct_of_tool_calls": 29.8,
+          "avoidable_raw_or_partial_pct_of_rereads": 81.4,
+          "run_input_tokens_increase_pct": {
+            "median": 18.1,
+            "p90": 27.7
+          },
+          "pooled_input_tokens_increase_pct": 19.6,
+          "run_cost_upper_increase_pct": {
+            "median": 17.0,
+            "p90": 25.8
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 58.2,
+            "p90": 70.9
+          },
+          "cost_cny": {
+            "upper": 143.21,
+            "cached": 69.27
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 51066,
+          "avoidable_only_steps": 2476,
+          "avoidable_only_steps_pct_of_requests": 28.8,
+          "rough_net_input_increase_pct": {
+            "median": -4.5,
+            "p90": 14.2
+          }
+        },
+        "C": {
+          "avoidable_raw": 2516,
+          "avoidable_raw_pct_of_rereads": 64.5,
+          "avoidable_raw_pct_of_tool_calls": 25.8,
+          "avoidable_raw_or_partial_pct_of_rereads": 69.9,
+          "run_input_tokens_increase_pct": {
+            "median": 36.9,
+            "p90": 109.1
+          },
+          "pooled_input_tokens_increase_pct": 62.7,
+          "run_cost_upper_increase_pct": {
+            "median": 33.7,
+            "p90": 104.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -5.0,
+            "p90": 0.6
+          },
+          "cost_cny": {
+            "upper": 192.69,
+            "cached": 38.14
+          },
+          "rejected_requests": 72,
+          "runs_with_rejection": 6,
+          "max_request_tokens": 156442,
+          "avoidable_only_steps": 2087,
+          "avoidable_only_steps_pct_of_requests": 24.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.3,
+            "p90": 32.8
+          }
+        },
+        "BC": {
+          "avoidable_raw": 3465,
+          "avoidable_raw_pct_of_rereads": 88.9,
+          "avoidable_raw_pct_of_tool_calls": 35.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 93.8,
+          "run_input_tokens_increase_pct": {
+            "median": 43.4,
+            "p90": 114.5
+          },
+          "pooled_input_tokens_increase_pct": 71.5,
+          "run_cost_upper_increase_pct": {
+            "median": 41.0,
+            "p90": 109.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 24.0,
+            "p90": 49.0
+          },
+          "cost_cny": {
+            "upper": 202.75,
+            "cached": 54.33
+          },
+          "rejected_requests": 73,
+          "runs_with_rejection": 6,
+          "max_request_tokens": 158328,
+          "avoidable_only_steps": 2973,
+          "avoidable_only_steps_pct_of_requests": 34.6,
+          "rough_net_input_increase_pct": {
+            "median": 4.0,
+            "p90": 25.6
+          }
+        },
+        "N": {
+          "avoidable_raw": 3726,
+          "avoidable_raw_pct_of_rereads": 95.6,
+          "avoidable_raw_pct_of_tool_calls": 38.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 83.5,
+            "p90": 156.7
+          },
+          "pooled_input_tokens_increase_pct": 112.5,
+          "run_cost_upper_increase_pct": {
+            "median": 78.1,
+            "p90": 150.5
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -45.3,
+            "p90": -30.5
+          },
+          "cost_cny": {
+            "upper": 249.81,
+            "cached": 23.02
+          },
+          "rejected_requests": 163,
+          "runs_with_rejection": 14,
+          "max_request_tokens": 180431,
+          "avoidable_only_steps": 3219,
+          "avoidable_only_steps_pct_of_requests": 37.5,
+          "rough_net_input_increase_pct": {
+            "median": 11.0,
+            "p90": 59.7
+          }
+        }
+      }
+    },
+    "CR-2 o": {
+      "runs": 277,
+      "tool_calls": 8884,
+      "reread_calls": 3647,
+      "reread_pct_of_tool_calls": 41.1,
+      "requests": 8236,
+      "rules": {
+        "A": {
+          "avoidable_raw": 535,
+          "avoidable_raw_pct_of_rereads": 14.7,
+          "avoidable_raw_pct_of_tool_calls": 6.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 16.6,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 117.04,
+            "cached": 41.04
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 32794,
+          "avoidable_only_steps": 530,
+          "avoidable_only_steps_pct_of_requests": 6.4,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 2875,
+          "avoidable_raw_pct_of_rereads": 78.8,
+          "avoidable_raw_pct_of_tool_calls": 32.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 85.0,
+          "run_input_tokens_increase_pct": {
+            "median": 17.5,
+            "p90": 28.4
+          },
+          "pooled_input_tokens_increase_pct": 19.2,
+          "run_cost_upper_increase_pct": {
+            "median": 16.3,
+            "p90": 26.6
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 54.5,
+            "p90": 71.3
+          },
+          "cost_cny": {
+            "upper": 138.29,
+            "cached": 65.16
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 42724,
+          "avoidable_only_steps": 2667,
+          "avoidable_only_steps_pct_of_requests": 32.4,
+          "rough_net_input_increase_pct": {
+            "median": -4.7,
+            "p90": 12.8
+          }
+        },
+        "C": {
+          "avoidable_raw": 2281,
+          "avoidable_raw_pct_of_rereads": 62.5,
+          "avoidable_raw_pct_of_tool_calls": 25.7,
+          "avoidable_raw_or_partial_pct_of_rereads": 68.2,
+          "run_input_tokens_increase_pct": {
+            "median": 28.3,
+            "p90": 94.6
+          },
+          "pooled_input_tokens_increase_pct": 55.3,
+          "run_cost_upper_increase_pct": {
+            "median": 26.4,
+            "p90": 91.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -5.6,
+            "p90": 0.7
+          },
+          "cost_cny": {
+            "upper": 178.11,
+            "cached": 36.35
+          },
+          "rejected_requests": 11,
+          "runs_with_rejection": 2,
+          "max_request_tokens": 105627,
+          "avoidable_only_steps": 2073,
+          "avoidable_only_steps_pct_of_requests": 25.2,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 34.6
+          }
+        },
+        "BC": {
+          "avoidable_raw": 3290,
+          "avoidable_raw_pct_of_rereads": 90.2,
+          "avoidable_raw_pct_of_tool_calls": 37.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 94.8,
+          "run_input_tokens_increase_pct": {
+            "median": 39.4,
+            "p90": 102.8
+          },
+          "pooled_input_tokens_increase_pct": 64.7,
+          "run_cost_upper_increase_pct": {
+            "median": 36.5,
+            "p90": 98.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 22.7,
+            "p90": 46.2
+          },
+          "cost_cny": {
+            "upper": 188.57,
+            "cached": 51.79
+          },
+          "rejected_requests": 12,
+          "runs_with_rejection": 2,
+          "max_request_tokens": 105639,
+          "avoidable_only_steps": 3058,
+          "avoidable_only_steps_pct_of_requests": 37.1,
+          "rough_net_input_increase_pct": {
+            "median": 1.2,
+            "p90": 25.3
+          }
+        },
+        "N": {
+          "avoidable_raw": 3514,
+          "avoidable_raw_pct_of_rereads": 96.4,
+          "avoidable_raw_pct_of_tool_calls": 39.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 73.9,
+            "p90": 146.1
+          },
+          "pooled_input_tokens_increase_pct": 102.9,
+          "run_cost_upper_increase_pct": {
+            "median": 68.0,
+            "p90": 140.6
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -45.2,
+            "p90": -27.3
+          },
+          "cost_cny": {
+            "upper": 230.95,
+            "cached": 21.4
+          },
+          "rejected_requests": 95,
+          "runs_with_rejection": 14,
+          "max_request_tokens": 127463,
+          "avoidable_only_steps": 3277,
+          "avoidable_only_steps_pct_of_requests": 39.8,
+          "rough_net_input_increase_pct": {
+            "median": 8.5,
+            "p90": 58.8
+          }
+        }
+      }
+    },
+    "CR-2 p": {
+      "runs": 279,
+      "tool_calls": 8655,
+      "reread_calls": 3391,
+      "reread_pct_of_tool_calls": 39.2,
+      "requests": 8071,
+      "rules": {
+        "A": {
+          "avoidable_raw": 314,
+          "avoidable_raw_pct_of_rereads": 9.3,
+          "avoidable_raw_pct_of_tool_calls": 3.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 11.6,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 117.16,
+            "cached": 41.66
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 33126,
+          "avoidable_only_steps": 308,
+          "avoidable_only_steps_pct_of_requests": 3.8,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 2592,
+          "avoidable_raw_pct_of_rereads": 76.4,
+          "avoidable_raw_pct_of_tool_calls": 29.9,
+          "avoidable_raw_or_partial_pct_of_rereads": 83.5,
+          "run_input_tokens_increase_pct": {
+            "median": 17.1,
+            "p90": 29.4
+          },
+          "pooled_input_tokens_increase_pct": 20.1,
+          "run_cost_upper_increase_pct": {
+            "median": 15.9,
+            "p90": 28.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 52.3,
+            "p90": 71.5
+          },
+          "cost_cny": {
+            "upper": 139.46,
+            "cached": 66.25
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 41819,
+          "avoidable_only_steps": 2404,
+          "avoidable_only_steps_pct_of_requests": 29.8,
+          "rough_net_input_increase_pct": {
+            "median": -1.9,
+            "p90": 14.5
+          }
+        },
+        "C": {
+          "avoidable_raw": 2110,
+          "avoidable_raw_pct_of_rereads": 62.2,
+          "avoidable_raw_pct_of_tool_calls": 24.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 68.6,
+          "run_input_tokens_increase_pct": {
+            "median": 31.1,
+            "p90": 108.3
+          },
+          "pooled_input_tokens_increase_pct": 63.0,
+          "run_cost_upper_increase_pct": {
+            "median": 28.8,
+            "p90": 103.5
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -5.7,
+            "p90": 0.3
+          },
+          "cost_cny": {
+            "upper": 187.2,
+            "cached": 36.01
+          },
+          "rejected_requests": 9,
+          "runs_with_rejection": 3,
+          "max_request_tokens": 101739,
+          "avoidable_only_steps": 1938,
+          "avoidable_only_steps_pct_of_requests": 24.0,
+          "rough_net_input_increase_pct": {
+            "median": 1.9,
+            "p90": 39.5
+          }
+        },
+        "BC": {
+          "avoidable_raw": 3027,
+          "avoidable_raw_pct_of_rereads": 89.3,
+          "avoidable_raw_pct_of_tool_calls": 35.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 94.7,
+          "run_input_tokens_increase_pct": {
+            "median": 38.8,
+            "p90": 117.0
+          },
+          "pooled_input_tokens_increase_pct": 72.2,
+          "run_cost_upper_increase_pct": {
+            "median": 36.6,
+            "p90": 110.9
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 18.2,
+            "p90": 44.4
+          },
+          "cost_cny": {
+            "upper": 197.42,
+            "cached": 50.9
+          },
+          "rejected_requests": 11,
+          "runs_with_rejection": 3,
+          "max_request_tokens": 103793,
+          "avoidable_only_steps": 2826,
+          "avoidable_only_steps_pct_of_requests": 35.0,
+          "rough_net_input_increase_pct": {
+            "median": 3.9,
+            "p90": 27.2
+          }
+        },
+        "N": {
+          "avoidable_raw": 3254,
+          "avoidable_raw_pct_of_rereads": 96.0,
+          "avoidable_raw_pct_of_tool_calls": 37.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 68.7,
+            "p90": 161.8
+          },
+          "pooled_input_tokens_increase_pct": 109.8,
+          "run_cost_upper_increase_pct": {
+            "median": 64.1,
+            "p90": 155.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -45.1,
+            "p90": -21.6
+          },
+          "cost_cny": {
+            "upper": 238.96,
+            "cached": 21.66
+          },
+          "rejected_requests": 136,
+          "runs_with_rejection": 18,
+          "max_request_tokens": 133941,
+          "avoidable_only_steps": 3053,
+          "avoidable_only_steps_pct_of_requests": 37.8,
+          "rough_net_input_increase_pct": {
+            "median": 8.7,
+            "p90": 58.2
+          }
+        }
+      }
+    },
+    "CR-2 t": {
+      "runs": 277,
+      "tool_calls": 9711,
+      "reread_calls": 3989,
+      "reread_pct_of_tool_calls": 41.1,
+      "requests": 8454,
+      "rules": {
+        "A": {
+          "avoidable_raw": 335,
+          "avoidable_raw_pct_of_rereads": 8.4,
+          "avoidable_raw_pct_of_tool_calls": 3.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 10.6,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 123.09,
+            "cached": 42.9
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 35921,
+          "avoidable_only_steps": 317,
+          "avoidable_only_steps_pct_of_requests": 3.7,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 3064,
+          "avoidable_raw_pct_of_rereads": 76.8,
+          "avoidable_raw_pct_of_tool_calls": 31.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 83.6,
+          "run_input_tokens_increase_pct": {
+            "median": 16.7,
+            "p90": 27.2
+          },
+          "pooled_input_tokens_increase_pct": 18.8,
+          "run_cost_upper_increase_pct": {
+            "median": 15.4,
+            "p90": 26.1
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 56.8,
+            "p90": 71.0
+          },
+          "cost_cny": {
+            "upper": 145.01,
+            "cached": 68.47
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 42816,
+          "avoidable_only_steps": 2531,
+          "avoidable_only_steps_pct_of_requests": 29.9,
+          "rough_net_input_increase_pct": {
+            "median": -0.5,
+            "p90": 14.5
+          }
+        },
+        "C": {
+          "avoidable_raw": 2715,
+          "avoidable_raw_pct_of_rereads": 68.1,
+          "avoidable_raw_pct_of_tool_calls": 28.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 73.3,
+          "run_input_tokens_increase_pct": {
+            "median": 35.4,
+            "p90": 114.0
+          },
+          "pooled_input_tokens_increase_pct": 63.7,
+          "run_cost_upper_increase_pct": {
+            "median": 32.9,
+            "p90": 108.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -5.5,
+            "p90": 1.2
+          },
+          "cost_cny": {
+            "upper": 197.52,
+            "cached": 37.0
+          },
+          "rejected_requests": 53,
+          "runs_with_rejection": 5,
+          "max_request_tokens": 134973,
+          "avoidable_only_steps": 2227,
+          "avoidable_only_steps_pct_of_requests": 26.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 38.3
+          }
+        },
+        "BC": {
+          "avoidable_raw": 3597,
+          "avoidable_raw_pct_of_rereads": 90.2,
+          "avoidable_raw_pct_of_tool_calls": 37.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 95.1,
+          "run_input_tokens_increase_pct": {
+            "median": 43.1,
+            "p90": 118.7
+          },
+          "pooled_input_tokens_increase_pct": 71.5,
+          "run_cost_upper_increase_pct": {
+            "median": 41.2,
+            "p90": 112.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 25.3,
+            "p90": 48.0
+          },
+          "cost_cny": {
+            "upper": 206.53,
+            "cached": 52.6
+          },
+          "rejected_requests": 57,
+          "runs_with_rejection": 5,
+          "max_request_tokens": 134973,
+          "avoidable_only_steps": 3005,
+          "avoidable_only_steps_pct_of_requests": 35.5,
+          "rough_net_input_increase_pct": {
+            "median": 2.2,
+            "p90": 30.0
+          }
+        },
+        "N": {
+          "avoidable_raw": 3818,
+          "avoidable_raw_pct_of_rereads": 95.7,
+          "avoidable_raw_pct_of_tool_calls": 39.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 77.8,
+            "p90": 152.9
+          },
+          "pooled_input_tokens_increase_pct": 107.8,
+          "run_cost_upper_increase_pct": {
+            "median": 73.6,
+            "p90": 145.9
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -44.9,
+            "p90": -28.4
+          },
+          "cost_cny": {
+            "upper": 248.86,
+            "cached": 23.03
+          },
+          "rejected_requests": 123,
+          "runs_with_rejection": 16,
+          "max_request_tokens": 162126,
+          "avoidable_only_steps": 3214,
+          "avoidable_only_steps_pct_of_requests": 38.0,
+          "rough_net_input_increase_pct": {
+            "median": 11.2,
+            "p90": 64.8
+          }
+        }
+      }
+    },
+    "P4 I": {
+      "runs": 18,
+      "tool_calls": 337,
+      "reread_calls": 102,
+      "reread_pct_of_tool_calls": 30.3,
+      "requests": 301,
+      "rules": {
+        "A": {
+          "avoidable_raw": 2,
+          "avoidable_raw_pct_of_rereads": 2.0,
+          "avoidable_raw_pct_of_tool_calls": 0.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 3.9,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 5.41,
+            "cached": 1.95
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 25840,
+          "avoidable_only_steps": 2,
+          "avoidable_only_steps_pct_of_requests": 0.7,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 74,
+          "avoidable_raw_pct_of_rereads": 72.5,
+          "avoidable_raw_pct_of_tool_calls": 22.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 81.4,
+          "run_input_tokens_increase_pct": {
+            "median": 16.6,
+            "p90": 24.5
+          },
+          "pooled_input_tokens_increase_pct": 17.9,
+          "run_cost_upper_increase_pct": {
+            "median": 16.0,
+            "p90": 23.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 44.7,
+            "p90": 56.1
+          },
+          "cost_cny": {
+            "upper": 6.32,
+            "cached": 2.72
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 33985,
+          "avoidable_only_steps": 66,
+          "avoidable_only_steps_pct_of_requests": 21.9,
+          "rough_net_input_increase_pct": {
+            "median": 1.3,
+            "p90": 9.3
+          }
+        },
+        "C": {
+          "avoidable_raw": 69,
+          "avoidable_raw_pct_of_rereads": 67.6,
+          "avoidable_raw_pct_of_tool_calls": 20.5,
+          "avoidable_raw_or_partial_pct_of_rereads": 74.5,
+          "run_input_tokens_increase_pct": {
+            "median": 19.7,
+            "p90": 45.2
+          },
+          "pooled_input_tokens_increase_pct": 27.2,
+          "run_cost_upper_increase_pct": {
+            "median": 19.0,
+            "p90": 43.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -14.1,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 6.8,
+            "cached": 1.55
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 49614,
+          "avoidable_only_steps": 60,
+          "avoidable_only_steps_pct_of_requests": 19.9,
+          "rough_net_input_increase_pct": {
+            "median": 0.7,
+            "p90": 16.7
+          }
+        },
+        "BC": {
+          "avoidable_raw": 91,
+          "avoidable_raw_pct_of_rereads": 89.2,
+          "avoidable_raw_pct_of_tool_calls": 27.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 96.1,
+          "run_input_tokens_increase_pct": {
+            "median": 28.2,
+            "p90": 51.4
+          },
+          "pooled_input_tokens_increase_pct": 34.4,
+          "run_cost_upper_increase_pct": {
+            "median": 27.3,
+            "p90": 49.6
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 8.0,
+            "p90": 22.1
+          },
+          "cost_cny": {
+            "upper": 7.17,
+            "cached": 1.98
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 49614,
+          "avoidable_only_steps": 81,
+          "avoidable_only_steps_pct_of_requests": 26.9,
+          "rough_net_input_increase_pct": {
+            "median": 1.4,
+            "p90": 13.2
+          }
+        },
+        "N": {
+          "avoidable_raw": 95,
+          "avoidable_raw_pct_of_rereads": 93.1,
+          "avoidable_raw_pct_of_tool_calls": 28.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 40.3,
+            "p90": 63.8
+          },
+          "pooled_input_tokens_increase_pct": 47.1,
+          "run_cost_upper_increase_pct": {
+            "median": 38.4,
+            "p90": 61.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -44.8,
+            "p90": -32.4
+          },
+          "cost_cny": {
+            "upper": 7.82,
+            "cached": 1.02
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 51119,
+          "avoidable_only_steps": 85,
+          "avoidable_only_steps_pct_of_requests": 28.2,
+          "rough_net_input_increase_pct": {
+            "median": 2.5,
+            "p90": 25.5
+          }
+        }
+      }
+    },
+    "P4 M": {
+      "runs": 18,
+      "tool_calls": 366,
+      "reread_calls": 102,
+      "reread_pct_of_tool_calls": 27.9,
+      "requests": 328,
+      "rules": {
+        "A": {
+          "avoidable_raw": 6,
+          "avoidable_raw_pct_of_rereads": 5.9,
+          "avoidable_raw_pct_of_tool_calls": 1.6,
+          "avoidable_raw_or_partial_pct_of_rereads": 8.8,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 6.05,
+            "cached": 2.2
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 28072,
+          "avoidable_only_steps": 6,
+          "avoidable_only_steps_pct_of_requests": 1.8,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 77,
+          "avoidable_raw_pct_of_rereads": 75.5,
+          "avoidable_raw_pct_of_tool_calls": 21.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 87.3,
+          "run_input_tokens_increase_pct": {
+            "median": 18.9,
+            "p90": 26.2
+          },
+          "pooled_input_tokens_increase_pct": 19.5,
+          "run_cost_upper_increase_pct": {
+            "median": 17.6,
+            "p90": 25.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 50.3,
+            "p90": 64.8
+          },
+          "cost_cny": {
+            "upper": 7.18,
+            "cached": 3.28
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 34618,
+          "avoidable_only_steps": 73,
+          "avoidable_only_steps_pct_of_requests": 22.3,
+          "rough_net_input_increase_pct": {
+            "median": 0.6,
+            "p90": 9.1
+          }
+        },
+        "C": {
+          "avoidable_raw": 77,
+          "avoidable_raw_pct_of_rereads": 75.5,
+          "avoidable_raw_pct_of_tool_calls": 21.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 85.3,
+          "run_input_tokens_increase_pct": {
+            "median": 41.1,
+            "p90": 57.2
+          },
+          "pooled_input_tokens_increase_pct": 36.0,
+          "run_cost_upper_increase_pct": {
+            "median": 39.7,
+            "p90": 55.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -14.9,
+            "p90": -5.7
+          },
+          "cost_cny": {
+            "upper": 8.11,
+            "cached": 1.74
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 52511,
+          "avoidable_only_steps": 74,
+          "avoidable_only_steps_pct_of_requests": 22.6,
+          "rough_net_input_increase_pct": {
+            "median": 2.0,
+            "p90": 40.1
+          }
+        },
+        "BC": {
+          "avoidable_raw": 89,
+          "avoidable_raw_pct_of_rereads": 87.3,
+          "avoidable_raw_pct_of_tool_calls": 24.3,
+          "avoidable_raw_or_partial_pct_of_rereads": 95.1,
+          "run_input_tokens_increase_pct": {
+            "median": 45.3,
+            "p90": 60.4
+          },
+          "pooled_input_tokens_increase_pct": 42.1,
+          "run_cost_upper_increase_pct": {
+            "median": 43.9,
+            "p90": 58.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 4.5,
+            "p90": 37.1
+          },
+          "cost_cny": {
+            "upper": 8.46,
+            "cached": 2.29
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 52511,
+          "avoidable_only_steps": 85,
+          "avoidable_only_steps_pct_of_requests": 25.9,
+          "rough_net_input_increase_pct": {
+            "median": 4.4,
+            "p90": 30.8
+          }
+        },
+        "N": {
+          "avoidable_raw": 94,
+          "avoidable_raw_pct_of_rereads": 92.2,
+          "avoidable_raw_pct_of_tool_calls": 25.7,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 53.0,
+            "p90": 70.6
+          },
+          "pooled_input_tokens_increase_pct": 52.0,
+          "run_cost_upper_increase_pct": {
+            "median": 50.8,
+            "p90": 67.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -47.5,
+            "p90": -36.8
+          },
+          "cost_cny": {
+            "upper": 9.04,
+            "cached": 1.13
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 52800,
+          "avoidable_only_steps": 90,
+          "avoidable_only_steps_pct_of_requests": 27.4,
+          "rough_net_input_increase_pct": {
+            "median": 5.5,
+            "p90": 35.2
+          }
+        }
+      }
+    },
+    "P4 N": {
+      "runs": 17,
+      "tool_calls": 358,
+      "reread_calls": 128,
+      "reread_pct_of_tool_calls": 35.8,
+      "requests": 325,
+      "rules": {
+        "A": {
+          "avoidable_raw": 5,
+          "avoidable_raw_pct_of_rereads": 3.9,
+          "avoidable_raw_pct_of_tool_calls": 1.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 4.7,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 6.05,
+            "cached": 2.21
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 27660,
+          "avoidable_only_steps": 5,
+          "avoidable_only_steps_pct_of_requests": 1.5,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 95,
+          "avoidable_raw_pct_of_rereads": 74.2,
+          "avoidable_raw_pct_of_tool_calls": 26.5,
+          "avoidable_raw_or_partial_pct_of_rereads": 85.2,
+          "run_input_tokens_increase_pct": {
+            "median": 20.9,
+            "p90": 25.3
+          },
+          "pooled_input_tokens_increase_pct": 20.2,
+          "run_cost_upper_increase_pct": {
+            "median": 20.2,
+            "p90": 24.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 53.3,
+            "p90": 68.6
+          },
+          "cost_cny": {
+            "upper": 7.22,
+            "cached": 3.41
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 33869,
+          "avoidable_only_steps": 91,
+          "avoidable_only_steps_pct_of_requests": 28.0,
+          "rough_net_input_increase_pct": {
+            "median": -17.5,
+            "p90": -1.1
+          }
+        },
+        "C": {
+          "avoidable_raw": 93,
+          "avoidable_raw_pct_of_rereads": 72.7,
+          "avoidable_raw_pct_of_tool_calls": 26.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 78.1,
+          "run_input_tokens_increase_pct": {
+            "median": 38.0,
+            "p90": 51.8
+          },
+          "pooled_input_tokens_increase_pct": 35.6,
+          "run_cost_upper_increase_pct": {
+            "median": 36.9,
+            "p90": 50.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -18.9,
+            "p90": -8.3
+          },
+          "cost_cny": {
+            "upper": 8.12,
+            "cached": 1.66
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 50793,
+          "avoidable_only_steps": 90,
+          "avoidable_only_steps_pct_of_requests": 27.7,
+          "rough_net_input_increase_pct": {
+            "median": -11.8,
+            "p90": 16.5
+          }
+        },
+        "BC": {
+          "avoidable_raw": 116,
+          "avoidable_raw_pct_of_rereads": 90.6,
+          "avoidable_raw_pct_of_tool_calls": 32.4,
+          "avoidable_raw_or_partial_pct_of_rereads": 96.1,
+          "run_input_tokens_increase_pct": {
+            "median": 44.8,
+            "p90": 54.3
+          },
+          "pooled_input_tokens_increase_pct": 41.6,
+          "run_cost_upper_increase_pct": {
+            "median": 43.2,
+            "p90": 52.3
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 8.4,
+            "p90": 21.0
+          },
+          "cost_cny": {
+            "upper": 8.47,
+            "cached": 2.25
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 50793,
+          "avoidable_only_steps": 112,
+          "avoidable_only_steps_pct_of_requests": 34.5,
+          "rough_net_input_increase_pct": {
+            "median": -17.2,
+            "p90": 5.3
+          }
+        },
+        "N": {
+          "avoidable_raw": 121,
+          "avoidable_raw_pct_of_rereads": 94.5,
+          "avoidable_raw_pct_of_tool_calls": 33.8,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 52.9,
+            "p90": 64.5
+          },
+          "pooled_input_tokens_increase_pct": 50.0,
+          "run_cost_upper_increase_pct": {
+            "median": 51.4,
+            "p90": 62.1
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -50.1,
+            "p90": -43.7
+          },
+          "cost_cny": {
+            "upper": 8.95,
+            "cached": 1.08
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 53723,
+          "avoidable_only_steps": 117,
+          "avoidable_only_steps_pct_of_requests": 36.0,
+          "rough_net_input_increase_pct": {
+            "median": -16.7,
+            "p90": 17.7
+          }
+        }
+      }
+    },
+    "P4 all": {
+      "runs": 53,
+      "tool_calls": 1061,
+      "reread_calls": 332,
+      "reread_pct_of_tool_calls": 31.3,
+      "requests": 954,
+      "rules": {
+        "A": {
+          "avoidable_raw": 13,
+          "avoidable_raw_pct_of_rereads": 3.9,
+          "avoidable_raw_pct_of_tool_calls": 1.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 5.7,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 17.51,
+            "cached": 6.36
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 28072,
+          "avoidable_only_steps": 13,
+          "avoidable_only_steps_pct_of_requests": 1.4,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 246,
+          "avoidable_raw_pct_of_rereads": 74.1,
+          "avoidable_raw_pct_of_tool_calls": 23.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 84.6,
+          "run_input_tokens_increase_pct": {
+            "median": 18.0,
+            "p90": 25.8
+          },
+          "pooled_input_tokens_increase_pct": 19.2,
+          "run_cost_upper_increase_pct": {
+            "median": 17.4,
+            "p90": 25.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 50.0,
+            "p90": 66.6
+          },
+          "cost_cny": {
+            "upper": 20.72,
+            "cached": 9.41
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 34618,
+          "avoidable_only_steps": 230,
+          "avoidable_only_steps_pct_of_requests": 24.1,
+          "rough_net_input_increase_pct": {
+            "median": -8.9,
+            "p90": 9.0
+          }
+        },
+        "C": {
+          "avoidable_raw": 239,
+          "avoidable_raw_pct_of_rereads": 72.0,
+          "avoidable_raw_pct_of_tool_calls": 22.5,
+          "avoidable_raw_or_partial_pct_of_rereads": 79.2,
+          "run_input_tokens_increase_pct": {
+            "median": 30.7,
+            "p90": 55.0
+          },
+          "pooled_input_tokens_increase_pct": 33.1,
+          "run_cost_upper_increase_pct": {
+            "median": 29.6,
+            "p90": 53.2
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -15.7,
+            "p90": -4.1
+          },
+          "cost_cny": {
+            "upper": 23.03,
+            "cached": 4.95
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 52511,
+          "avoidable_only_steps": 224,
+          "avoidable_only_steps_pct_of_requests": 23.5,
+          "rough_net_input_increase_pct": {
+            "median": -0.7,
+            "p90": 19.6
+          }
+        },
+        "BC": {
+          "avoidable_raw": 296,
+          "avoidable_raw_pct_of_rereads": 89.2,
+          "avoidable_raw_pct_of_tool_calls": 27.9,
+          "avoidable_raw_or_partial_pct_of_rereads": 95.8,
+          "run_input_tokens_increase_pct": {
+            "median": 40.3,
+            "p90": 56.0
+          },
+          "pooled_input_tokens_increase_pct": 39.6,
+          "run_cost_upper_increase_pct": {
+            "median": 39.1,
+            "p90": 53.8
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 7.5,
+            "p90": 27.1
+          },
+          "cost_cny": {
+            "upper": 24.1,
+            "cached": 6.51
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 52511,
+          "avoidable_only_steps": 278,
+          "avoidable_only_steps_pct_of_requests": 29.1,
+          "rough_net_input_increase_pct": {
+            "median": -6.2,
+            "p90": 18.6
+          }
+        },
+        "N": {
+          "avoidable_raw": 310,
+          "avoidable_raw_pct_of_rereads": 93.4,
+          "avoidable_raw_pct_of_tool_calls": 29.2,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 50.1,
+            "p90": 66.2
+          },
+          "pooled_input_tokens_increase_pct": 49.8,
+          "run_cost_upper_increase_pct": {
+            "median": 48.8,
+            "p90": 63.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -49.7,
+            "p90": -32.7
+          },
+          "cost_cny": {
+            "upper": 25.81,
+            "cached": 3.24
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 53723,
+          "avoidable_only_steps": 292,
+          "avoidable_only_steps_pct_of_requests": 30.6,
+          "rough_net_input_increase_pct": {
+            "median": -2.2,
+            "p90": 25.9
+          }
+        }
+      }
+    },
+    "P4-first all": {
+      "runs": 1,
+      "tool_calls": 25,
+      "reread_calls": 10,
+      "reread_pct_of_tool_calls": 40.0,
+      "requests": 24,
+      "rules": {
+        "A": {
+          "avoidable_raw": 0,
+          "avoidable_raw_pct_of_rereads": 0.0,
+          "avoidable_raw_pct_of_tool_calls": 0.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 0.0,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 0.42,
+            "cached": 0.17
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 26025,
+          "avoidable_only_steps": 0,
+          "avoidable_only_steps_pct_of_requests": 0.0,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 10,
+          "avoidable_raw_pct_of_rereads": 100.0,
+          "avoidable_raw_pct_of_tool_calls": 40.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 26.7,
+            "p90": 26.7
+          },
+          "pooled_input_tokens_increase_pct": 26.7,
+          "run_cost_upper_increase_pct": {
+            "median": 25.6,
+            "p90": 25.6
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 53.2,
+            "p90": 53.2
+          },
+          "cost_cny": {
+            "upper": 0.53,
+            "cached": 0.27
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 32399,
+          "avoidable_only_steps": 10,
+          "avoidable_only_steps_pct_of_requests": 41.7,
+          "rough_net_input_increase_pct": {
+            "median": -32.2,
+            "p90": -32.2
+          }
+        },
+        "C": {
+          "avoidable_raw": 6,
+          "avoidable_raw_pct_of_rereads": 60.0,
+          "avoidable_raw_pct_of_tool_calls": 24.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 60.0,
+          "run_input_tokens_increase_pct": {
+            "median": 59.3,
+            "p90": 59.3
+          },
+          "pooled_input_tokens_increase_pct": 59.3,
+          "run_cost_upper_increase_pct": {
+            "median": 56.7,
+            "p90": 56.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -5.7,
+            "p90": -5.7
+          },
+          "cost_cny": {
+            "upper": 0.67,
+            "cached": 0.16
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 48983,
+          "avoidable_only_steps": 6,
+          "avoidable_only_steps_pct_of_requests": 25.0,
+          "rough_net_input_increase_pct": {
+            "median": 10.2,
+            "p90": 10.2
+          }
+        },
+        "BC": {
+          "avoidable_raw": 10,
+          "avoidable_raw_pct_of_rereads": 100.0,
+          "avoidable_raw_pct_of_tool_calls": 40.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 65.5,
+            "p90": 65.5
+          },
+          "pooled_input_tokens_increase_pct": 65.5,
+          "run_cost_upper_increase_pct": {
+            "median": 62.7,
+            "p90": 62.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 27.1,
+            "p90": 27.1
+          },
+          "cost_cny": {
+            "upper": 0.69,
+            "cached": 0.22
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 51078,
+          "avoidable_only_steps": 10,
+          "avoidable_only_steps_pct_of_requests": 41.7,
+          "rough_net_input_increase_pct": {
+            "median": -15.2,
+            "p90": -15.2
+          }
+        },
+        "N": {
+          "avoidable_raw": 10,
+          "avoidable_raw_pct_of_rereads": 100.0,
+          "avoidable_raw_pct_of_tool_calls": 40.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 79.8,
+            "p90": 79.8
+          },
+          "pooled_input_tokens_increase_pct": 79.8,
+          "run_cost_upper_increase_pct": {
+            "median": 76.4,
+            "p90": 76.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -51.7,
+            "p90": -51.7
+          },
+          "cost_cny": {
+            "upper": 0.75,
+            "cached": 0.08
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 56556,
+          "avoidable_only_steps": 10,
+          "avoidable_only_steps_pct_of_requests": 41.7,
+          "rough_net_input_increase_pct": {
+            "median": -6.7,
+            "p90": -6.7
+          }
+        }
+      }
+    },
+    "P4-first first": {
+      "runs": 1,
+      "tool_calls": 25,
+      "reread_calls": 10,
+      "reread_pct_of_tool_calls": 40.0,
+      "requests": 24,
+      "rules": {
+        "A": {
+          "avoidable_raw": 0,
+          "avoidable_raw_pct_of_rereads": 0.0,
+          "avoidable_raw_pct_of_tool_calls": 0.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 0.0,
+          "run_input_tokens_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "pooled_input_tokens_increase_pct": 0.0,
+          "run_cost_upper_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          },
+          "cost_cny": {
+            "upper": 0.42,
+            "cached": 0.17
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 26025,
+          "avoidable_only_steps": 0,
+          "avoidable_only_steps_pct_of_requests": 0.0,
+          "rough_net_input_increase_pct": {
+            "median": 0.0,
+            "p90": 0.0
+          }
+        },
+        "B": {
+          "avoidable_raw": 10,
+          "avoidable_raw_pct_of_rereads": 100.0,
+          "avoidable_raw_pct_of_tool_calls": 40.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 26.7,
+            "p90": 26.7
+          },
+          "pooled_input_tokens_increase_pct": 26.7,
+          "run_cost_upper_increase_pct": {
+            "median": 25.6,
+            "p90": 25.6
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 53.2,
+            "p90": 53.2
+          },
+          "cost_cny": {
+            "upper": 0.53,
+            "cached": 0.27
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 32399,
+          "avoidable_only_steps": 10,
+          "avoidable_only_steps_pct_of_requests": 41.7,
+          "rough_net_input_increase_pct": {
+            "median": -32.2,
+            "p90": -32.2
+          }
+        },
+        "C": {
+          "avoidable_raw": 6,
+          "avoidable_raw_pct_of_rereads": 60.0,
+          "avoidable_raw_pct_of_tool_calls": 24.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 60.0,
+          "run_input_tokens_increase_pct": {
+            "median": 59.3,
+            "p90": 59.3
+          },
+          "pooled_input_tokens_increase_pct": 59.3,
+          "run_cost_upper_increase_pct": {
+            "median": 56.7,
+            "p90": 56.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -5.7,
+            "p90": -5.7
+          },
+          "cost_cny": {
+            "upper": 0.67,
+            "cached": 0.16
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 48983,
+          "avoidable_only_steps": 6,
+          "avoidable_only_steps_pct_of_requests": 25.0,
+          "rough_net_input_increase_pct": {
+            "median": 10.2,
+            "p90": 10.2
+          }
+        },
+        "BC": {
+          "avoidable_raw": 10,
+          "avoidable_raw_pct_of_rereads": 100.0,
+          "avoidable_raw_pct_of_tool_calls": 40.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 65.5,
+            "p90": 65.5
+          },
+          "pooled_input_tokens_increase_pct": 65.5,
+          "run_cost_upper_increase_pct": {
+            "median": 62.7,
+            "p90": 62.7
+          },
+          "run_cost_cached_increase_pct": {
+            "median": 27.1,
+            "p90": 27.1
+          },
+          "cost_cny": {
+            "upper": 0.69,
+            "cached": 0.22
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 51078,
+          "avoidable_only_steps": 10,
+          "avoidable_only_steps_pct_of_requests": 41.7,
+          "rough_net_input_increase_pct": {
+            "median": -15.2,
+            "p90": -15.2
+          }
+        },
+        "N": {
+          "avoidable_raw": 10,
+          "avoidable_raw_pct_of_rereads": 100.0,
+          "avoidable_raw_pct_of_tool_calls": 40.0,
+          "avoidable_raw_or_partial_pct_of_rereads": 100.0,
+          "run_input_tokens_increase_pct": {
+            "median": 79.8,
+            "p90": 79.8
+          },
+          "pooled_input_tokens_increase_pct": 79.8,
+          "run_cost_upper_increase_pct": {
+            "median": 76.4,
+            "p90": 76.4
+          },
+          "run_cost_cached_increase_pct": {
+            "median": -51.7,
+            "p90": -51.7
+          },
+          "cost_cny": {
+            "upper": 0.75,
+            "cached": 0.08
+          },
+          "rejected_requests": 0,
+          "runs_with_rejection": 0,
+          "max_request_tokens": 56556,
+          "avoidable_only_steps": 10,
+          "avoidable_only_steps_pct_of_requests": 41.7,
+          "rough_net_input_increase_pct": {
+            "median": -6.7,
+            "p90": -6.7
+          }
+        }
+      }
+    }
+  },
+  "decision": {
+    "group": "CR-2 n",
+    "tests": {
+      "B": {
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "T4": true
+      },
+      "C": {
+        "T1": true,
+        "T2": false,
+        "T3": true,
+        "T4": false
+      },
+      "BC": {
+        "T1": true,
+        "T2": false,
+        "T3": true,
+        "T4": false
+      }
+    },
+    "passing": [],
+    "recommended": null
+  }
+}

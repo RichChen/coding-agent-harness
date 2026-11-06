@@ -8,7 +8,11 @@ outcome, call_io, overlaps, coverage, touches, view_states). Run journals are op
     sim.py summary                                              tables and decision: out/sim_summary.json
 
 Views. The raw history of step s is the prefix of the last state.saved message list with the length of the view
-recorded at s (masking never adds or drops messages); its hash must equal the recorded raw_message_hash.
+recorded at s (masking never adds or drops messages); its hash must equal the recorded raw_message_hash. Where it
+does not, the recorded view itself (equal to raw when nothing was masked) or an earlier saved list is used if its
+hash matches. Step 0 of the A5 b2 runs carries injected policy-candidate messages that are not in the raw history;
+that view has no tool message, so it is used as is under every rule once a shorter prefix of the saved list
+matches the hash. A step with no match drops the run (status excluded:sim_error).
 - A (as run): src.runtime.window.WindowPolicyHooks, strategy masking, keep_recent=4, protection rules v1,
   preserve_tools empty. The simulated view must equal the recorded context.prepared view.
 - B: the same with keep_recent=8.
@@ -54,7 +58,7 @@ import json
 import math
 import sys
 from collections import Counter, defaultdict
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -153,11 +157,55 @@ def analyze_run(args: tuple[dict, tuple[str, ...]]) -> dict:
     row = dict(spec, run_dir=spec["run_dir"].replace("\\", "/"), solved=solved, status=status)
     if status.startswith("excluded"):
         return row
+    try:
+        return _analyze(run_dir, row, rule_names)
+    except Exception as exc:  # recorded per run, reported in the summary
+        return dict(row, status="excluded:sim_error", error=f"{type(exc).__name__}: {exc}")
+
+
+def _raw_history(run_dir: Path, prepared: dict[int, dict], saved: list[dict]) -> tuple[dict[int, list], Counter]:
+    """Raw history per step: the first candidate whose hash equals the recorded raw_message_hash. Candidates: prefix
+    of the last saved message list, the recorded view itself (equal to raw when nothing was masked), prefixes of
+    earlier saved lists. A view without tool messages that is longer than the raw history (messages injected into
+    that request only) is used as is once a shorter prefix of the last saved list matches the hash: nothing in it
+    can be masked, so it is the same under every rule."""
+    loaded: list[list[dict]] = []
+    sources = Counter()
+    out = {}
+
+    def snapshot(i: int) -> list[dict]:
+        while len(loaded) <= i:
+            loaded.append(payload(run_dir, saved[-1 - len(loaded)])["messages"])
+        return loaded[i]
+
+    for s, p in prepared.items():
+        n, want = len(p["view"]), p["raw_message_hash"]
+        found = None
+        if saved and view_hash(snapshot(0)[:n]) == want:
+            found, src = snapshot(0)[:n], "last_saved"
+        elif view_hash(p["view"]) == want:
+            found, src = p["view"], "recorded_view"
+        else:
+            for i in range(1, len(saved)):
+                if len(snapshot(i)) >= n and view_hash(snapshot(i)[:n]) == want:
+                    found, src = snapshot(i)[:n], "earlier_saved"
+                    break
+        if found is None and saved and not any(m.get("role") == "tool" for m in p["view"]):
+            if any(view_hash(snapshot(0)[:k]) == want for k in range(1, n)):
+                found, src = p["view"], "injected_view"
+        if found is None:
+            raise ValueError(f"no raw history matches step {s}")
+        out[s] = found
+        sources[src] += 1
+    return out, sources
+
+
+def _analyze(run_dir: Path, row: dict, rule_names: tuple[str, ...]) -> dict:
     events = read_events(run_dir)
     results = {e["tool_call_id"]: e for e in events if e["event_type"] == "tool.result"}
     prepared: dict[int, dict] = {}
     calls = []
-    last_state = None
+    saved = []
     for e in events:
         kind = e["event_type"]
         if kind == "context.prepared":
@@ -165,7 +213,7 @@ def analyze_run(args: tuple[dict, tuple[str, ...]]) -> dict:
             step = step_number(e)
             prepared[step if step is not None else p["step"]] = p
         elif kind == "state.saved":
-            last_state = e
+            saved.append(e)
         elif kind == "tool.intent":
             p = payload(run_dir, e)
             res = results.get(e["tool_call_id"])
@@ -173,18 +221,9 @@ def analyze_run(args: tuple[dict, tuple[str, ...]]) -> dict:
             output = rp.get("output") if isinstance(rp.get("output"), str) else None
             calls.append(dict(index=len(calls), step=step_number(e), call_id=e["tool_call_id"], name=p["name"],
                               io=call_io(p["name"], p.get("arguments") or {}, output, bool(rp.get("success")))))
-    history = payload(run_dir, last_state)["messages"] if last_state else []
     steps = sorted(prepared)
     usage = _usage_by_step(run_dir, events)
-
-    # raw history per step, checked against the recorded hash
-    raw_by_step, hash_mismatch = {}, 0
-    for s in steps:
-        n = len(prepared[s]["view"])
-        raw = history[:n]
-        if len(raw) != n or view_hash(raw) != prepared[s]["raw_message_hash"]:
-            hash_mismatch += 1
-        raw_by_step[s] = raw
+    raw_by_step, raw_sources = _raw_history(run_dir, prepared, saved)
     stub = ToolStub(prepared[steps[0]]["view"], prepared[steps[0]]["stats"])
     stub_mismatch = 0
     for s in steps:
@@ -334,7 +373,7 @@ def analyze_run(args: tuple[dict, tuple[str, ...]]) -> dict:
         recorded_states=dict(Counter(x["REC"] for x in rereads)),
         reread_call_ids=[x["call_id"] for x in rereads],
         recorded_state_by_call={x["call_id"]: x["REC"] for x in rereads},
-        raw_hash_mismatch=hash_mismatch, tool_stub_mismatch=stub_mismatch, tool_count=len(stub.tools),
+        raw_sources=dict(raw_sources), tool_stub_mismatch=stub_mismatch, tool_count=len(stub.tools),
         replication=replication, recorded=rec, rules=per_rule,
     )
     return row
@@ -349,16 +388,30 @@ def cmd_run(args) -> None:
         seen = Counter()
         specs = [s for s in specs if seen.update([s["experiment"]]) or seen[s["experiment"]] <= args.limit]
     print("runs", dict(Counter(s["experiment"] for s in specs)), "rules", rule_names, flush=True)
-    rows = []
-    with ProcessPoolExecutor(args.workers) as pool:
-        for i, row in enumerate(pool.map(analyze_run, [(s, rule_names) for s in specs], chunksize=2)):
-            rows.append(row)
-            if (i + 1) % 100 == 0:
-                print("simulated", i + 1, flush=True)
     OUT_DIR.mkdir(exist_ok=True)
     name = args.out or "sim_runs.json"
+    partial = OUT_DIR / (name + ".partial.jsonl")
+    done = {}
+    if partial.exists():
+        for line in partial.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                row = json.loads(line)
+                done[row["run_dir"]] = row
+    todo = [s for s in specs if s["run_dir"].replace("\\", "/") not in done]
+    print("resuming with", len(done), "done,", len(todo), "to do", flush=True)
+    with ProcessPoolExecutor(args.workers) as pool, partial.open("a", encoding="utf-8") as fh:
+        futures = [pool.submit(analyze_run, (s, rule_names)) for s in todo]
+        for i, fut in enumerate(as_completed(futures)):
+            row = fut.result()
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+            fh.flush()
+            done[row["run_dir"]] = row
+            if (i + 1) % 100 == 0:
+                print("simulated", i + 1, flush=True)
+    rows = [done[s["run_dir"].replace("\\", "/")] for s in specs]
     (OUT_DIR / name).write_text(json.dumps(rows, ensure_ascii=False) + "\n", encoding="utf-8")
-    print("wrote", OUT_DIR / name)
+    partial.unlink()
+    print("wrote", OUT_DIR / name, flush=True)
 
 
 def main() -> None:
