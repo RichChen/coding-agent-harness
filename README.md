@@ -109,10 +109,10 @@ pytest tests/ -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_export
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 654 passed, 25 skipped, 4 deselected
+# 1307 selected, 4 deselected (pytest --collect-only at ecb1446)
 ```
 
-No API key is needed; tests use a mock LLM. In a clean clone on Windows, 654 pass; of the 25 skipped, 22 need real Linux or Docker and 3 need `runs/a5-main` data that only exists locally.
+No API key is needed; tests use a mock LLM. As of commit `ecb1446`, `pytest --collect-only` finds 1311 tests in 103 git-tracked test modules, 1307 after the four deselects. The pass/skip split has not been re-measured since the older 654 passed / 25 skipped figure; it is not re-run here because some opt-in tests start real containers when a Docker daemon is available. Skips are the tests that need real Linux or Docker, plus a few that need `runs/a5-main` data that only exists locally.
 
 The four deselected tests read local evidence files that were never committed: the A5 memory records, the full Flask source archive, and two R2 seed files. They are not code regressions and they are not skipped. Put those files back under `docs/upgrade/evidence/` and drop the `--deselect` flags to run everything. Details in [docs/INDEX.md](docs/INDEX.md), section 4.
 
@@ -281,7 +281,7 @@ coding-harness/
 │   ├── changes/                    # Two refactor closeout notes cited by the HP-01..04 evidence reports
 │   └── examples/                   # Synthetic demo trace
 ├── reports/                        # Contamination probe, failure taxonomy, SWE-bench Lite validation log
-└── tests/                          # 69 test modules, mock LLM, no API key needed
+└── tests/                          # 103 git-tracked test modules at ecb1446, mock LLM, no API key needed
     └── fixtures/repos/             # 16 small repo tasks + 12 SWE-bench Lite source snapshots
 ```
 

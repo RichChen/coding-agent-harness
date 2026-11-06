@@ -143,7 +143,7 @@ flowchart LR
 ### 4.5 可观测、可调试
 
 - JSONL 逐步轨迹；debug 配置下 lifecycle 事件 + `read_events` 工具。
-- 71 个测试，含 **Mock LLM 集成测**，CI 可不依赖 API Key。
+- 1311 个测试（截至 `ecb1446`，103 个 git 跟踪的测试模块，按 `pytest --collect-only` 计数），含 **Mock LLM 集成测**，CI 可不依赖 API Key。
 
 ### 4.6 可扩展点（已留接口）
 

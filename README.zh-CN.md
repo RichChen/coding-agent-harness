@@ -102,10 +102,10 @@ pytest tests/ -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_export
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 654 passed, 25 skipped, 4 deselected
+# 1307 selected, 4 deselected（ecb1446 上 pytest --collect-only 的计数）
 ```
 
-测试用 Mock LLM，不需要 API Key。在 Windows 上的干净克隆里，654 个通过；25 个跳过的测试里，22 个需要真实 Linux / Docker，3 个需要本机已有的 `runs/a5-main` 运行数据。
+测试用 Mock LLM，不需要 API Key。截至提交 `ecb1446`，`pytest --collect-only` 在 103 个 git 跟踪的测试模块里收集到 1311 个测试，去掉上面 4 项后是 1307 个。通过和跳过的拆分没有重新测：以前的数字是 654 通过、25 跳过，这次没有重跑，因为有些 opt-in 测试在 Docker 守护进程可用时会真的启动容器。跳过的是需要真实 Linux / Docker 的测试，以及少数需要本机 `runs/a5-main` 运行数据的测试。
 
 上面排除的 4 项读取从未提交的本地证据文件：A5 记忆记录、Flask 完整源码包和两个 R2 种子文件。它们不是代码回归，也没有被跳过；把文件放回 `docs/upgrade/evidence/` 下对应路径后，去掉 `--deselect` 即可全跑。明细见 [docs/INDEX.md](docs/INDEX.md) 第 4 节。
 
@@ -223,6 +223,6 @@ Agent 的 system prompt 不再硬编码在 `loop.py`，而是存放在 `prompts/
 - `scripts/`：CLI 入口，分组见英文 README 的 Scripts 表（mini 评测、SWE-bench 准备与运行、A5-main、A6-R、A5 预检与 pilot、H3-H5 与 R2、审计）。每个脚本开头的 docstring 写明是否调用模型。早期 sprint 里没有被 `docs/sprint/` 引用的一次性脚本不放进仓库  
 - `docs/`：`PROJECT-HISTORY`（项目历程）、`PROJECT-OVERVIEW`、`LEARNING`、`CONTAMINATION-NOTES`；`INDEX.md` 是文档分类和阅读顺序，`sprint/` 为 A5 / A6-R 证据链（只追加）；`upgrade/` 为 H3-H5、R1-R2 实现说明，`evidence/` 下是运行记录；`changes/` 为 HP-01..04 证据报告引用的两份重构收口记录；`examples/` 为合成 demo 轨迹  
 - `reports/`：污染探针、失败分类和 SWE-bench Lite 验证日志  
-- `tests/`：69 个测试模块（含 Mock LLM，无需 API Key）；`fixtures/repos/` 有 16 个小型仓库任务和 12 个 SWE-bench Lite 源码快照  
+- `tests/`：103 个测试模块（截至 `ecb1446`，按 git 跟踪的 `test_*.py` 计；含 Mock LLM，无需 API Key）；`fixtures/repos/` 有 16 个小型仓库任务和 12 个 SWE-bench Lite 源码快照  
 
 更细的**阅读顺序与练习**见 [LEARNING.zh-CN.md](docs/LEARNING.zh-CN.md)。

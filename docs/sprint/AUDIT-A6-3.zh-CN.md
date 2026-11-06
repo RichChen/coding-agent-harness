@@ -46,3 +46,11 @@
    - **非预注册的描述**：第 2 节的 parse_error 和 context_overflow。数据直接读 `a6-retry-runs.json` 的 `stop_reason` 和 `status`，计算脚本要提交。
 4. 脚本要是有 bug 必须改，单独提交，并写明改了什么、为什么改；旧的输出保留，不要覆盖。
 5. 写 `docs/sprint/CHECKPOINT-A6-4.md`，内容包括：主分析的那一行结论原文、点估计、p 值、区间、s_obs、X、第二阶段触发与否的判定、次要指标表、跑脚本的完整命令，以及两个期望 sha 的核对结果。写完停下。最终叙述（和 A5 合在一起讲）由审计来写。
+
+## 勘误（2026-11）
+
+日期：2026-11-06。上文原文不改。
+
+第 2 节对 R1 的 11 次 `model_parse_error` 要求写"原因未查明"，并猜测可能是记录里的 diff 和标签格式干扰了工具调用。2026-11 回看查明：这 11 次都是单次运行 1.000 元上限拒绝了下一次调用的预留（`CnyBudgetError`），被 `src/runtime/loop.py`（tag `a6-retry-freeze` 的 L719–736）的通用 `except` 记成了 `MODEL_PARSE_ERROR`，和工具调用的格式无关。"快用完预算"的观察是对的，只是撞上的是人民币上限，不是 40 次调用上限。A5 的 2 次原因相同。另外，第 2 节写的"3 次是 partial"按 runs 文件是 4 次，`AUDIT-A6-4` 已改正。
+
+事实、复算数字和对结论的影响写在 coding-agent `docs/sprint/A6-R-RESULTS.zh-CN.md` 的"勘误（2026-11）"一节。复算脚本是本仓库的 `scripts/audit/errata_2026_11/e2_cny_cap_parse_errors.py`。

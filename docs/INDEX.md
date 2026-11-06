@@ -59,9 +59,9 @@
 
 ## 4. 测试：哪些能直接跑，哪些需要未公开材料
 
-不需要 API key，LLM 全部是 mock。干净克隆里实测：**654 通过、25 跳过、4 失败**。
+不需要 API key，LLM 全部是 mock。截至提交 `ecb1446`，`pytest --collect-only` 在 103 个 git 跟踪的测试模块里收集到 1311 个测试。以前在干净克隆里实测的是 **654 通过、25 跳过、4 失败**，那是更早的代码；之后的通过和跳过拆分没有重新测，因为有些 opt-in 测试在 Docker 守护进程可用时会真的启动容器。
 
-跳过的 25 项里，22 项是需要真实 Linux / Docker 的 opt-in 测试，3 项需要本机 `runs/a5-main` 的运行数据。4 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过：
+跳过的是需要真实 Linux / Docker 的 opt-in 测试，以及需要本机 `runs/a5-main` 运行数据的测试。下面 4 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过：
 
 | 测试 | 缺的文件 | 原因 |
 | --- | --- | --- |
@@ -77,7 +77,7 @@ python -m pytest -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_exp
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 654 passed, 25 skipped, 4 deselected
+# 1307 selected, 4 deselected（ecb1446 上 pytest --collect-only 的计数）
 ```
 
 ## 5. 运行证据（`upgrade/evidence/`）
