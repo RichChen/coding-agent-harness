@@ -349,7 +349,7 @@ def cmd_score(_args) -> None:
                 for m in METRICS}
     for v in ISSUE_VARIANTS:
         for r in RETRIEVERS:
-            if (v, r) != ("full", "hybrid"):
+            if r != "hybrid":
                 paired[f"{v}|{r} - full|hybrid"] = {"hit@5": _boot(_task_table(per_task, v, r, test_tasks),
                                                                    _task_table(per_task, "full", "hybrid", test_tasks))}
     h5 = {(v, r): table[f"{v}|{r}"]["all"]["hit@5"] for v in ISSUE_VARIANTS for r in RETRIEVERS}
@@ -453,8 +453,8 @@ def cmd_score(_args) -> None:
     RESULTS.parent.mkdir(parents=True, exist_ok=True)
     RESULTS.write_text(json.dumps(_round(report), indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     texts = {qid: q for qid, q in queries.items()}
-    _write_jsonl(PER_QUERY, ({**_round(r), "text": None if texts[r["qid"]]["variant"] == "full"
-                              else texts[r["qid"]]["text"][:500]} for r in per_query))
+    _write_jsonl(PER_QUERY, ({**_round(r), "text": None if r["set"] == "test" else texts[r["qid"]]["text"][:500]}
+                             for r in per_query))
     print(json.dumps(_round(report["decision"]), indent=2))
 
 

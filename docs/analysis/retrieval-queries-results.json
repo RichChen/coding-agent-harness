@@ -1,0 +1,2013 @@
+{
+  "r0": {
+    "ok": true,
+    "instances": 400,
+    "mismatches": {
+      "bm25": [],
+      "embedding": [],
+      "hybrid": []
+    }
+  },
+  "frozen_cache_unchanged": true,
+  "vectors": {
+    "query_texts": 2044,
+    "from_frozen_cache": 400,
+    "encoded_new": 1644,
+    "new_truncated": 8,
+    "encode": {
+      "encoded": 1644,
+      "tokens": 71947,
+      "seconds": 5.4974,
+      "truncated": 8
+    },
+    "reencode_check": {
+      "n": 16,
+      "min_cosine": 1.0
+    }
+  },
+  "queries": {
+    "counts": {
+      "cr2:model_first": 552,
+      "cr2:model_first3": 551,
+      "cr2e:retrieve_code": 10,
+      "test:first_para": 400,
+      "test:full": 400,
+      "test:identifiers": 400,
+      "test:title": 400
+    },
+    "cr2_runs_scanned": 560,
+    "cr2_tasks": 56,
+    "cr2_tasks_in_cr1_test": 56,
+    "cr2_tasks_in_cr1_holdout": 56,
+    "run_commands_not_tokenized": 12,
+    "identifiers_fallback_title": 5
+  },
+  "test": {
+    "n_tasks": 400,
+    "table": {
+      "full|bm25": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.4,
+          "hit@5": 0.675,
+          "mrr": 0.52
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.7059,
+            "mrr": 0.5438
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4641,
+            "hit@5": 0.7514,
+            "mrr": 0.5901
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.1923,
+            "hit@5": 0.4231,
+            "mrr": 0.2981
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.125
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.1667
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.1667,
+            "hit@5": 0.6667,
+            "mrr": 0.367
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.2353,
+            "hit@5": 0.6471,
+            "mrr": 0.4146
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.5,
+            "hit@5": 0.5,
+            "mrr": 0.546
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.7647,
+            "mrr": 0.533
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.6071,
+            "hit@5": 0.8929,
+            "mrr": 0.7199
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.1622,
+            "hit@5": 0.4595,
+            "mrr": 0.3021
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.4098,
+            "hit@5": 0.6066,
+            "mrr": 0.4897
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.2968,
+          "hit@5": 0.5348,
+          "mrr": 0.4247
+        }
+      },
+      "full|embedding": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.53,
+          "hit@5": 0.85,
+          "mrr": 0.6648
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.6471,
+            "hit@5": 0.9412,
+            "mrr": 0.7794
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.558,
+            "hit@5": 0.8508,
+            "mrr": 0.6835
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.3462,
+            "hit@5": 0.9231,
+            "mrr": 0.5741
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.1429
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.5
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.3333,
+            "hit@5": 1.0,
+            "mrr": 0.5611
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 1.0,
+            "mrr": 0.6343
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.875,
+            "hit@5": 0.875,
+            "mrr": 0.8782
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.4706,
+            "hit@5": 0.7647,
+            "mrr": 0.5888
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.6429,
+            "hit@5": 0.9643,
+            "mrr": 0.778
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.5135,
+            "hit@5": 0.8649,
+            "mrr": 0.6512
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.4918,
+            "hit@5": 0.7049,
+            "mrr": 0.5957
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4408,
+          "hit@5": 0.8241,
+          "mrr": 0.6139
+        }
+      },
+      "full|hybrid": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.545,
+          "hit@5": 0.8575,
+          "mrr": 0.6845
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.4706,
+            "hit@5": 1.0,
+            "mrr": 0.7108
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.5635,
+            "hit@5": 0.8729,
+            "mrr": 0.7045
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.2692,
+            "hit@5": 0.7692,
+            "mrr": 0.488
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.2
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.25
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.3333,
+            "hit@5": 1.0,
+            "mrr": 0.6167
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 1.0,
+            "mrr": 0.6618
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.75,
+            "hit@5": 0.75,
+            "mrr": 0.7704
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.5882,
+            "hit@5": 0.8824,
+            "mrr": 0.6986
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.75,
+            "hit@5": 0.9643,
+            "mrr": 0.8414
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.5676,
+            "hit@5": 0.7838,
+            "mrr": 0.6623
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.5574,
+            "hit@5": 0.7541,
+            "mrr": 0.6558
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4385,
+          "hit@5": 0.8981,
+          "mrr": 0.605
+        }
+      },
+      "title|bm25": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.465,
+          "hit@5": 0.735,
+          "mrr": 0.5896
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.8824,
+            "mrr": 0.5873
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4641,
+            "hit@5": 0.7293,
+            "mrr": 0.589
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.3462,
+            "hit@5": 0.7308,
+            "mrr": 0.5086
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.5
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.25
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.5,
+            "hit@5": 0.6667,
+            "mrr": 0.6204
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.5294,
+            "hit@5": 0.8824,
+            "mrr": 0.7069
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.5,
+            "hit@5": 0.75,
+            "mrr": 0.6323
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.7647,
+            "mrr": 0.5509
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.7143,
+            "hit@5": 0.8571,
+            "mrr": 0.7912
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.4595,
+            "hit@5": 0.7568,
+            "mrr": 0.5844
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.4262,
+            "hit@5": 0.5902,
+            "mrr": 0.5134
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.3969,
+          "hit@5": 0.8008,
+          "mrr": 0.5695
+        }
+      },
+      "title|embedding": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.5,
+          "hit@5": 0.7925,
+          "mrr": 0.6295
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.7647,
+            "hit@5": 0.9412,
+            "mrr": 0.8431
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4862,
+            "hit@5": 0.7956,
+            "mrr": 0.6219
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.5,
+            "hit@5": 0.8846,
+            "mrr": 0.6391
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.1
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 1.0,
+            "hit@5": 1.0,
+            "mrr": 1.0
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.3333,
+            "hit@5": 0.8333,
+            "mrr": 0.5026
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.8824,
+            "mrr": 0.6446
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.5,
+            "hit@5": 0.875,
+            "mrr": 0.7054
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.7059,
+            "mrr": 0.5556
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.6786,
+            "hit@5": 0.8929,
+            "mrr": 0.7778
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.5946,
+            "hit@5": 0.7838,
+            "mrr": 0.68
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.3934,
+            "hit@5": 0.6557,
+            "mrr": 0.5111
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.5062,
+          "hit@5": 0.7709,
+          "mrr": 0.6318
+        }
+      },
+      "title|hybrid": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.535,
+          "hit@5": 0.84,
+          "mrr": 0.6665
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.7647,
+            "hit@5": 0.9412,
+            "mrr": 0.8431
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.5028,
+            "hit@5": 0.8398,
+            "mrr": 0.6498
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.4615,
+            "hit@5": 0.8846,
+            "mrr": 0.6222
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.1667
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.5
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.3333,
+            "hit@5": 0.8333,
+            "mrr": 0.5449
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.7059,
+            "hit@5": 1.0,
+            "mrr": 0.7961
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.625,
+            "hit@5": 1.0,
+            "mrr": 0.7917
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.7647,
+            "mrr": 0.5966
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.7857,
+            "hit@5": 0.8929,
+            "mrr": 0.8458
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.6486,
+            "hit@5": 0.8919,
+            "mrr": 0.7463
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.4262,
+            "hit@5": 0.7049,
+            "mrr": 0.5448
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4721,
+          "hit@5": 0.8128,
+          "mrr": 0.6373
+        }
+      },
+      "first_para|bm25": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.455,
+          "hit@5": 0.7375,
+          "mrr": 0.5822
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.6471,
+            "hit@5": 0.8824,
+            "mrr": 0.7363
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4641,
+            "hit@5": 0.7127,
+            "mrr": 0.5878
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.3462,
+            "hit@5": 0.7308,
+            "mrr": 0.5079
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.2
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.1667
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.1667,
+            "hit@5": 0.6667,
+            "mrr": 0.3826
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.5882,
+            "hit@5": 0.8824,
+            "mrr": 0.7065
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.5,
+            "hit@5": 0.875,
+            "mrr": 0.6385
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.3529,
+            "hit@5": 0.6471,
+            "mrr": 0.4848
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.5714,
+            "hit@5": 0.8929,
+            "mrr": 0.6931
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.3784,
+            "hit@5": 0.7838,
+            "mrr": 0.5377
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.4426,
+            "hit@5": 0.6557,
+            "mrr": 0.5481
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.3715,
+          "hit@5": 0.7274,
+          "mrr": 0.5158
+        }
+      },
+      "first_para|embedding": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.4775,
+          "hit@5": 0.8125,
+          "mrr": 0.6201
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.5294,
+            "hit@5": 0.9412,
+            "mrr": 0.7353
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4475,
+            "hit@5": 0.8011,
+            "mrr": 0.5986
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.5,
+            "hit@5": 0.8846,
+            "mrr": 0.6262
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.0588
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.5
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.1667,
+            "hit@5": 0.8333,
+            "mrr": 0.3776
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.9412,
+            "mrr": 0.6368
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.75,
+            "hit@5": 1.0,
+            "mrr": 0.8375
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.7059,
+            "mrr": 0.5557
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.6429,
+            "hit@5": 0.8929,
+            "mrr": 0.7591
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.5676,
+            "hit@5": 0.7838,
+            "mrr": 0.6626
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.459,
+            "hit@5": 0.7377,
+            "mrr": 0.5792
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4072,
+          "hit@5": 0.7935,
+          "mrr": 0.5773
+        }
+      },
+      "first_para|hybrid": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.56,
+          "hit@5": 0.84,
+          "mrr": 0.6843
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.6471,
+            "hit@5": 0.9412,
+            "mrr": 0.7949
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4917,
+            "hit@5": 0.8343,
+            "mrr": 0.6428
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.5769,
+            "hit@5": 0.8846,
+            "mrr": 0.6862
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.1111
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.25
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.3333,
+            "hit@5": 0.8333,
+            "mrr": 0.5309
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.5294,
+            "hit@5": 1.0,
+            "mrr": 0.6922
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.75,
+            "hit@5": 0.875,
+            "mrr": 0.8333
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.8235,
+            "mrr": 0.6162
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.8571,
+            "hit@5": 0.8929,
+            "mrr": 0.8824
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.6757,
+            "hit@5": 0.8108,
+            "mrr": 0.7394
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.5902,
+            "hit@5": 0.7705,
+            "mrr": 0.6799
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4886,
+          "hit@5": 0.8055,
+          "mrr": 0.6216
+        }
+      },
+      "identifiers|bm25": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.445,
+          "hit@5": 0.715,
+          "mrr": 0.5632
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.4706,
+            "hit@5": 0.7647,
+            "mrr": 0.5914
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.442,
+            "hit@5": 0.7403,
+            "mrr": 0.5758
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.2308,
+            "hit@5": 0.3846,
+            "mrr": 0.3129
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 1.0,
+            "hit@5": 1.0,
+            "mrr": 1.0
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 1.0,
+            "mrr": 0.3333
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.5,
+            "hit@5": 0.8333,
+            "mrr": 0.6097
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.4118,
+            "hit@5": 0.7647,
+            "mrr": 0.5514
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.25,
+            "hit@5": 0.75,
+            "mrr": 0.4107
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.5882,
+            "hit@5": 0.7647,
+            "mrr": 0.6826
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.6786,
+            "hit@5": 0.8929,
+            "mrr": 0.7772
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.4595,
+            "hit@5": 0.5946,
+            "mrr": 0.5217
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.4098,
+            "hit@5": 0.7049,
+            "mrr": 0.5333
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4534,
+          "hit@5": 0.7662,
+          "mrr": 0.575
+        }
+      },
+      "identifiers|embedding": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.4,
+          "hit@5": 0.6625,
+          "mrr": 0.5213
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.4706,
+            "hit@5": 0.6471,
+            "mrr": 0.5796
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4033,
+            "hit@5": 0.6961,
+            "mrr": 0.5407
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.3077,
+            "hit@5": 0.6154,
+            "mrr": 0.4165
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 1.0,
+            "hit@5": 1.0,
+            "mrr": 1.0
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.0909
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.3333,
+            "hit@5": 0.6667,
+            "mrr": 0.4818
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.2941,
+            "hit@5": 0.5882,
+            "mrr": 0.4039
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.375,
+            "hit@5": 0.625,
+            "mrr": 0.5056
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.5294,
+            "hit@5": 0.7059,
+            "mrr": 0.6034
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.5357,
+            "hit@5": 0.75,
+            "mrr": 0.6277
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.3784,
+            "hit@5": 0.5405,
+            "mrr": 0.4822
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.3607,
+            "hit@5": 0.6393,
+            "mrr": 0.4817
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4157,
+          "hit@5": 0.6229,
+          "mrr": 0.5178
+        }
+      },
+      "identifiers|hybrid": {
+        "all": {
+          "n": 400,
+          "hit@1": 0.4725,
+          "hit@5": 0.755,
+          "mrr": 0.5987
+        },
+        "by_repo": {
+          "astropy/astropy": {
+            "n": 17,
+            "hit@1": 0.5294,
+            "hit@5": 0.7647,
+            "mrr": 0.6357
+          },
+          "django/django": {
+            "n": 181,
+            "hit@1": 0.4751,
+            "hit@5": 0.8011,
+            "mrr": 0.6183
+          },
+          "matplotlib/matplotlib": {
+            "n": 26,
+            "hit@1": 0.2692,
+            "hit@5": 0.6154,
+            "mrr": 0.3983
+          },
+          "mwaskom/seaborn": {
+            "n": 1,
+            "hit@1": 1.0,
+            "hit@5": 1.0,
+            "mrr": 1.0
+          },
+          "pallets/flask": {
+            "n": 1,
+            "hit@1": 0.0,
+            "hit@5": 0.0,
+            "mrr": 0.1111
+          },
+          "psf/requests": {
+            "n": 6,
+            "hit@1": 0.3333,
+            "hit@5": 0.6667,
+            "mrr": 0.4973
+          },
+          "pydata/xarray": {
+            "n": 17,
+            "hit@1": 0.3529,
+            "hit@5": 0.7059,
+            "mrr": 0.5097
+          },
+          "pylint-dev/pylint": {
+            "n": 8,
+            "hit@1": 0.375,
+            "hit@5": 0.75,
+            "mrr": 0.556
+          },
+          "pytest-dev/pytest": {
+            "n": 17,
+            "hit@1": 0.5882,
+            "hit@5": 0.7647,
+            "mrr": 0.6831
+          },
+          "scikit-learn/scikit-learn": {
+            "n": 28,
+            "hit@1": 0.7143,
+            "hit@5": 0.8929,
+            "mrr": 0.7889
+          },
+          "sphinx-doc/sphinx": {
+            "n": 37,
+            "hit@1": 0.4865,
+            "hit@5": 0.6216,
+            "mrr": 0.5658
+          },
+          "sympy/sympy": {
+            "n": 61,
+            "hit@1": 0.4426,
+            "hit@5": 0.7213,
+            "mrr": 0.5668
+          }
+        },
+        "macro": {
+          "n_repos": 12,
+          "hit@1": 0.4639,
+          "hit@5": 0.692,
+          "mrr": 0.5776
+        }
+      }
+    },
+    "paired": {
+      "title|bm25 - full|bm25": {
+        "hit@1": {
+          "diff": 0.065,
+          "lo": 0.0075,
+          "hi": 0.125
+        },
+        "hit@5": {
+          "diff": 0.06,
+          "lo": 0.0075,
+          "hi": 0.11
+        },
+        "mrr": {
+          "diff": 0.0696,
+          "lo": 0.0245,
+          "hi": 0.1163
+        }
+      },
+      "title|embedding - full|embedding": {
+        "hit@1": {
+          "diff": -0.03,
+          "lo": -0.08,
+          "hi": 0.0225
+        },
+        "hit@5": {
+          "diff": -0.0575,
+          "lo": -0.0925,
+          "hi": -0.0225
+        },
+        "mrr": {
+          "diff": -0.0354,
+          "lo": -0.0697,
+          "hi": -0.0005
+        }
+      },
+      "title|hybrid - full|hybrid": {
+        "hit@1": {
+          "diff": -0.01,
+          "lo": -0.065,
+          "hi": 0.045
+        },
+        "hit@5": {
+          "diff": -0.0175,
+          "lo": -0.055,
+          "hi": 0.0175
+        },
+        "mrr": {
+          "diff": -0.018,
+          "lo": -0.0556,
+          "hi": 0.0191
+        }
+      },
+      "first_para|bm25 - full|bm25": {
+        "hit@1": {
+          "diff": 0.055,
+          "lo": 0.0025,
+          "hi": 0.1075
+        },
+        "hit@5": {
+          "diff": 0.0625,
+          "lo": 0.01,
+          "hi": 0.1125
+        },
+        "mrr": {
+          "diff": 0.0622,
+          "lo": 0.0196,
+          "hi": 0.104
+        }
+      },
+      "first_para|embedding - full|embedding": {
+        "hit@1": {
+          "diff": -0.0525,
+          "lo": -0.1001,
+          "hi": -0.005
+        },
+        "hit@5": {
+          "diff": -0.0375,
+          "lo": -0.0675,
+          "hi": -0.0075
+        },
+        "mrr": {
+          "diff": -0.0448,
+          "lo": -0.0766,
+          "hi": -0.0134
+        }
+      },
+      "first_para|hybrid - full|hybrid": {
+        "hit@1": {
+          "diff": 0.015,
+          "lo": -0.0375,
+          "hi": 0.0675
+        },
+        "hit@5": {
+          "diff": -0.0175,
+          "lo": -0.05,
+          "hi": 0.015
+        },
+        "mrr": {
+          "diff": -0.0002,
+          "lo": -0.0347,
+          "hi": 0.0338
+        }
+      },
+      "identifiers|bm25 - full|bm25": {
+        "hit@1": {
+          "diff": 0.045,
+          "lo": -0.0025,
+          "hi": 0.0925
+        },
+        "hit@5": {
+          "diff": 0.04,
+          "lo": -0.0025,
+          "hi": 0.085
+        },
+        "mrr": {
+          "diff": 0.0432,
+          "lo": 0.007,
+          "hi": 0.0797
+        }
+      },
+      "identifiers|embedding - full|embedding": {
+        "hit@1": {
+          "diff": -0.13,
+          "lo": -0.1875,
+          "hi": -0.0725
+        },
+        "hit@5": {
+          "diff": -0.1875,
+          "lo": -0.2325,
+          "hi": -0.1425
+        },
+        "mrr": {
+          "diff": -0.1436,
+          "lo": -0.1849,
+          "hi": -0.1014
+        }
+      },
+      "identifiers|hybrid - full|hybrid": {
+        "hit@1": {
+          "diff": -0.0725,
+          "lo": -0.13,
+          "hi": -0.015
+        },
+        "hit@5": {
+          "diff": -0.1025,
+          "lo": -0.14,
+          "hi": -0.065
+        },
+        "mrr": {
+          "diff": -0.0857,
+          "lo": -0.1245,
+          "hi": -0.0468
+        }
+      },
+      "full|bm25 - full|hybrid": {
+        "hit@5": {
+          "diff": -0.1825,
+          "lo": -0.225,
+          "hi": -0.14
+        }
+      },
+      "full|embedding - full|hybrid": {
+        "hit@5": {
+          "diff": -0.0075,
+          "lo": -0.0375,
+          "hi": 0.0225
+        }
+      },
+      "title|bm25 - full|hybrid": {
+        "hit@5": {
+          "diff": -0.1225,
+          "lo": -0.1675,
+          "hi": -0.08
+        }
+      },
+      "title|embedding - full|hybrid": {
+        "hit@5": {
+          "diff": -0.065,
+          "lo": -0.105,
+          "hi": -0.025
+        }
+      },
+      "first_para|bm25 - full|hybrid": {
+        "hit@5": {
+          "diff": -0.12,
+          "lo": -0.1625,
+          "hi": -0.08
+        }
+      },
+      "first_para|embedding - full|hybrid": {
+        "hit@5": {
+          "diff": -0.045,
+          "lo": -0.0825,
+          "hi": -0.0075
+        }
+      },
+      "identifiers|bm25 - full|hybrid": {
+        "hit@5": {
+          "diff": -0.1425,
+          "lo": -0.1825,
+          "hi": -0.1025
+        }
+      },
+      "identifiers|embedding - full|hybrid": {
+        "hit@5": {
+          "diff": -0.195,
+          "lo": -0.2375,
+          "hi": -0.1525
+        }
+      }
+    },
+    "hit5_range_across_retrievers_per_query": {
+      "full": 0.1825,
+      "title": 0.105,
+      "first_para": 0.1025,
+      "identifiers": 0.0925
+    },
+    "hit5_range_across_queries_per_retriever": {
+      "bm25": 0.0625,
+      "embedding": 0.1875,
+      "hybrid": 0.1025
+    }
+  },
+  "cr2": {
+    "n_tasks": 56,
+    "unretrievable_tasks": [],
+    "tables": {
+      "full|bm25": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.3214,
+        "hit@5": 0.625,
+        "mrr": 0.4529
+      },
+      "full|embedding": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5893,
+        "hit@5": 0.8929,
+        "mrr": 0.7151
+      },
+      "full|hybrid": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.6071,
+        "hit@5": 0.8571,
+        "mrr": 0.7121
+      },
+      "title|bm25": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5357,
+        "hit@5": 0.7321,
+        "mrr": 0.6309
+      },
+      "title|embedding": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5179,
+        "hit@5": 0.7143,
+        "mrr": 0.6233
+      },
+      "title|hybrid": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5357,
+        "hit@5": 0.75,
+        "mrr": 0.6368
+      },
+      "first_para|bm25": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.4464,
+        "hit@5": 0.7321,
+        "mrr": 0.5693
+      },
+      "first_para|embedding": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5357,
+        "hit@5": 0.8036,
+        "mrr": 0.6467
+      },
+      "first_para|hybrid": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.6429,
+        "hit@5": 0.8036,
+        "mrr": 0.7275
+      },
+      "identifiers|bm25": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5179,
+        "hit@5": 0.75,
+        "mrr": 0.6185
+      },
+      "identifiers|embedding": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.4286,
+        "hit@5": 0.6964,
+        "mrr": 0.5486
+      },
+      "identifiers|hybrid": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5714,
+        "hit@5": 0.8036,
+        "mrr": 0.68
+      },
+      "model_first|bm25": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5185,
+        "hit@5": 0.6944,
+        "mrr": 0.6078,
+        "n_runs": 552
+      },
+      "full|bm25|same_tasks_as_model_first": {
+        "n_tasks": 56,
+        "hit@1": 0.3214,
+        "hit@5": 0.625,
+        "mrr": 0.4529
+      },
+      "model_first|embedding": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.3883,
+        "hit@5": 0.5667,
+        "mrr": 0.4777,
+        "n_runs": 552
+      },
+      "full|embedding|same_tasks_as_model_first": {
+        "n_tasks": 56,
+        "hit@1": 0.5893,
+        "hit@5": 0.8929,
+        "mrr": 0.7151
+      },
+      "model_first|hybrid": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.4008,
+        "hit@5": 0.6399,
+        "mrr": 0.5187,
+        "n_runs": 552
+      },
+      "full|hybrid|same_tasks_as_model_first": {
+        "n_tasks": 56,
+        "hit@1": 0.6071,
+        "hit@5": 0.8571,
+        "mrr": 0.7121
+      },
+      "model_first3|bm25": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5929,
+        "hit@5": 0.7873,
+        "mrr": 0.6849,
+        "n_runs": 551
+      },
+      "full|bm25|same_tasks_as_model_first3": {
+        "n_tasks": 56,
+        "hit@1": 0.3214,
+        "hit@5": 0.625,
+        "mrr": 0.4529
+      },
+      "model_first3|embedding": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.4982,
+        "hit@5": 0.7125,
+        "mrr": 0.5994,
+        "n_runs": 551
+      },
+      "full|embedding|same_tasks_as_model_first3": {
+        "n_tasks": 56,
+        "hit@1": 0.5893,
+        "hit@5": 0.8929,
+        "mrr": 0.7151
+      },
+      "model_first3|hybrid": {
+        "n_tasks": 56,
+        "n": 56,
+        "hit@1": 0.5411,
+        "hit@5": 0.7554,
+        "mrr": 0.6453,
+        "n_runs": 551
+      },
+      "full|hybrid|same_tasks_as_model_first3": {
+        "n_tasks": 56,
+        "hit@1": 0.6071,
+        "hit@5": 0.8571,
+        "mrr": 0.7121
+      }
+    },
+    "paired": {
+      "model_first|bm25 - full|bm25": {
+        "hit@1": {
+          "diff": 0.197,
+          "lo": 0.0381,
+          "hi": 0.3512
+        },
+        "hit@5": {
+          "diff": 0.0694,
+          "lo": -0.0681,
+          "hi": 0.2089
+        },
+        "mrr": {
+          "diff": 0.1549,
+          "lo": 0.0261,
+          "hi": 0.2824
+        }
+      },
+      "model_first|bm25 - full|hybrid": {
+        "hit@5": {
+          "diff": -0.1627,
+          "lo": -0.2859,
+          "hi": -0.0429
+        }
+      },
+      "model_first|embedding - full|embedding": {
+        "hit@1": {
+          "diff": -0.201,
+          "lo": -0.3546,
+          "hi": -0.048
+        },
+        "hit@5": {
+          "diff": -0.3262,
+          "lo": -0.4488,
+          "hi": -0.2065
+        },
+        "mrr": {
+          "diff": -0.2374,
+          "lo": -0.3564,
+          "hi": -0.117
+        }
+      },
+      "model_first|embedding - full|hybrid": {
+        "hit@5": {
+          "diff": -0.2905,
+          "lo": -0.4185,
+          "hi": -0.1613
+        }
+      },
+      "model_first|hybrid - full|hybrid": {
+        "hit@5": {
+          "diff": -0.2173,
+          "lo": -0.3446,
+          "hi": -0.0922
+        }
+      },
+      "model_first3|bm25 - full|bm25": {
+        "hit@1": {
+          "diff": 0.2714,
+          "lo": 0.1139,
+          "hi": 0.429
+        },
+        "hit@5": {
+          "diff": 0.1623,
+          "lo": 0.0389,
+          "hi": 0.2865
+        },
+        "mrr": {
+          "diff": 0.232,
+          "lo": 0.1052,
+          "hi": 0.3595
+        }
+      },
+      "model_first3|bm25 - full|hybrid": {
+        "hit@5": {
+          "diff": -0.0698,
+          "lo": -0.177,
+          "hi": 0.0337
+        }
+      },
+      "model_first3|embedding - full|embedding": {
+        "hit@1": {
+          "diff": -0.0911,
+          "lo": -0.231,
+          "hi": 0.0512
+        },
+        "hit@5": {
+          "diff": -0.1804,
+          "lo": -0.2965,
+          "hi": -0.0643
+        },
+        "mrr": {
+          "diff": -0.1158,
+          "lo": -0.2317,
+          "hi": -0.0002
+        }
+      },
+      "model_first3|embedding - full|hybrid": {
+        "hit@5": {
+          "diff": -0.1446,
+          "lo": -0.2589,
+          "hi": -0.0321
+        }
+      },
+      "model_first3|hybrid - full|hybrid": {
+        "hit@5": {
+          "diff": -0.1018,
+          "lo": -0.2125,
+          "hi": 0.0071
+        }
+      }
+    },
+    "model_first_source": {
+      "search_code": 525,
+      "grep": 27
+    },
+    "model_first_step_median": 1.0,
+    "model_first_at_or_after_gold_touch": 85,
+    "model_first_runs": 552,
+    "runs_without_search_query": 8
+  },
+  "cr2e_retrieve_code": [
+    {
+      "instance_id": "django__django-15973",
+      "run": "round1/r2",
+      "step": 1,
+      "text": "migration state resolve many-to-many through string reference to model in another app",
+      "bm25_gold_rank": 2,
+      "embedding_gold_rank": 3,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 7
+    },
+    {
+      "instance_id": "django__django-15973",
+      "run": "round2/r1",
+      "step": 1,
+      "text": "migration state resolve many-to-many through string reference to model",
+      "bm25_gold_rank": 4,
+      "embedding_gold_rank": 4,
+      "hybrid_gold_rank": 2,
+      "full_hybrid_gold_rank": 7
+    },
+    {
+      "instance_id": "django__django-15973",
+      "run": "round2/r2",
+      "step": 1,
+      "text": "ManyToManyField through string reference resolution in migration state",
+      "bm25_gold_rank": 8,
+      "embedding_gold_rank": 8,
+      "hybrid_gold_rank": 8,
+      "full_hybrid_gold_rank": 7
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7440",
+      "run": "round1/r1",
+      "step": 1,
+      "text": "glossary duplicate term case-insensitive duplicate term description",
+      "bm25_gold_rank": 1,
+      "embedding_gold_rank": 1,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 3
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7440",
+      "run": "round2/r1",
+      "step": 1,
+      "text": "glossary duplicate term case-insensitive",
+      "bm25_gold_rank": 1,
+      "embedding_gold_rank": 2,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 3
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7440",
+      "run": "round2/r2",
+      "step": 1,
+      "text": "glossary duplicate term case insensitive",
+      "bm25_gold_rank": 1,
+      "embedding_gold_rank": 2,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 3
+    },
+    {
+      "instance_id": "sympy__sympy-19040",
+      "run": "round1/r1",
+      "step": 1,
+      "text": "factor with extension=True drops a factor, multivariate factorization over extension",
+      "bm25_gold_rank": 2,
+      "embedding_gold_rank": 2,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 11
+    },
+    {
+      "instance_id": "sympy__sympy-19040",
+      "run": "round1/r2",
+      "step": 1,
+      "text": "factor with extension=True drops a factor, multivariate factor over extension",
+      "bm25_gold_rank": 1,
+      "embedding_gold_rank": 2,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 11
+    },
+    {
+      "instance_id": "sympy__sympy-19040",
+      "run": "round2/r1",
+      "step": 1,
+      "text": "factor with extension=True drops a factor, multivariate factor over extension",
+      "bm25_gold_rank": 1,
+      "embedding_gold_rank": 2,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 11
+    },
+    {
+      "instance_id": "sympy__sympy-19040",
+      "run": "round2/r2",
+      "step": 1,
+      "text": "factor with extension=True drops a factor, multivariate factorization over extension",
+      "bm25_gold_rank": 2,
+      "embedding_gold_rank": 2,
+      "hybrid_gold_rank": 1,
+      "full_hybrid_gold_rank": 11
+    }
+  ],
+  "potential": {
+    "n_runs": 280,
+    "first_gold_step_quantiles": {
+      "50": 2.0,
+      "75": 4.0,
+      "90": 5.0
+    },
+    "by_k": {
+      "4": {
+        "slow_runs": 34,
+        "slow_tasks": 13,
+        "slow_runs_never_touched": 18,
+        "configs": {
+          "full|bm25": {
+            "slow_runs_hit5": 0.3235,
+            "slow_tasks_hit5": 0.3846,
+            "fast_runs_hit5": 0.6667
+          },
+          "full|embedding": {
+            "slow_runs_hit5": 0.7941,
+            "slow_tasks_hit5": 0.7692,
+            "fast_runs_hit5": 0.9065
+          },
+          "full|hybrid": {
+            "slow_runs_hit5": 0.5588,
+            "slow_tasks_hit5": 0.6923,
+            "fast_runs_hit5": 0.8984
+          },
+          "title|bm25": {
+            "slow_runs_hit5": 0.4118,
+            "slow_tasks_hit5": 0.6154,
+            "fast_runs_hit5": 0.7764
+          },
+          "title|embedding": {
+            "slow_runs_hit5": 0.5294,
+            "slow_tasks_hit5": 0.6154,
+            "fast_runs_hit5": 0.7398
+          },
+          "title|hybrid": {
+            "slow_runs_hit5": 0.5294,
+            "slow_tasks_hit5": 0.6154,
+            "fast_runs_hit5": 0.7805
+          },
+          "first_para|bm25": {
+            "slow_runs_hit5": 0.5588,
+            "slow_tasks_hit5": 0.6923,
+            "fast_runs_hit5": 0.7561
+          },
+          "first_para|embedding": {
+            "slow_runs_hit5": 0.8235,
+            "slow_tasks_hit5": 0.8462,
+            "fast_runs_hit5": 0.8008
+          },
+          "first_para|hybrid": {
+            "slow_runs_hit5": 0.4118,
+            "slow_tasks_hit5": 0.6154,
+            "fast_runs_hit5": 0.8577
+          },
+          "identifiers|bm25": {
+            "slow_runs_hit5": 0.5,
+            "slow_tasks_hit5": 0.5385,
+            "fast_runs_hit5": 0.7846
+          },
+          "identifiers|embedding": {
+            "slow_runs_hit5": 0.4706,
+            "slow_tasks_hit5": 0.4615,
+            "fast_runs_hit5": 0.7276
+          },
+          "identifiers|hybrid": {
+            "slow_runs_hit5": 0.4706,
+            "slow_tasks_hit5": 0.4615,
+            "fast_runs_hit5": 0.8496
+          }
+        },
+        "slow_tasks_list": [
+          "django__django-11211",
+          "django__django-15973",
+          "pytest-dev__pytest-10081",
+          "pytest-dev__pytest-5840",
+          "sphinx-doc__sphinx-10323",
+          "sphinx-doc__sphinx-10614",
+          "sphinx-doc__sphinx-7440",
+          "sphinx-doc__sphinx-8459",
+          "sympy__sympy-13091",
+          "sympy__sympy-19040",
+          "sympy__sympy-20428",
+          "sympy__sympy-21596",
+          "sympy__sympy-22714"
+        ]
+      },
+      "2": {
+        "slow_runs": 120,
+        "slow_tasks": 32,
+        "slow_runs_never_touched": 18,
+        "configs": {
+          "full|bm25": {
+            "slow_runs_hit5": 0.4917,
+            "slow_tasks_hit5": 0.5312,
+            "fast_runs_hit5": 0.725
+          },
+          "full|embedding": {
+            "slow_runs_hit5": 0.8167,
+            "slow_tasks_hit5": 0.8438,
+            "fast_runs_hit5": 0.95
+          },
+          "full|hybrid": {
+            "slow_runs_hit5": 0.75,
+            "slow_tasks_hit5": 0.8125,
+            "fast_runs_hit5": 0.9375
+          },
+          "title|bm25": {
+            "slow_runs_hit5": 0.6333,
+            "slow_tasks_hit5": 0.7188,
+            "fast_runs_hit5": 0.8063
+          },
+          "title|embedding": {
+            "slow_runs_hit5": 0.7,
+            "slow_tasks_hit5": 0.75,
+            "fast_runs_hit5": 0.725
+          },
+          "title|hybrid": {
+            "slow_runs_hit5": 0.7,
+            "slow_tasks_hit5": 0.75,
+            "fast_runs_hit5": 0.7875
+          },
+          "first_para|bm25": {
+            "slow_runs_hit5": 0.6333,
+            "slow_tasks_hit5": 0.7188,
+            "fast_runs_hit5": 0.8063
+          },
+          "first_para|embedding": {
+            "slow_runs_hit5": 0.8333,
+            "slow_tasks_hit5": 0.875,
+            "fast_runs_hit5": 0.7812
+          },
+          "first_para|hybrid": {
+            "slow_runs_hit5": 0.7083,
+            "slow_tasks_hit5": 0.7812,
+            "fast_runs_hit5": 0.875
+          },
+          "identifiers|bm25": {
+            "slow_runs_hit5": 0.575,
+            "slow_tasks_hit5": 0.625,
+            "fast_runs_hit5": 0.8812
+          },
+          "identifiers|embedding": {
+            "slow_runs_hit5": 0.6,
+            "slow_tasks_hit5": 0.625,
+            "fast_runs_hit5": 0.7688
+          },
+          "identifiers|hybrid": {
+            "slow_runs_hit5": 0.6833,
+            "slow_tasks_hit5": 0.6875,
+            "fast_runs_hit5": 0.8938
+          }
+        },
+        "slow_tasks_list": [
+          "django__django-11211",
+          "django__django-13512",
+          "django__django-15022",
+          "django__django-15499",
+          "django__django-15973",
+          "pytest-dev__pytest-10081",
+          "pytest-dev__pytest-5262",
+          "pytest-dev__pytest-5840",
+          "pytest-dev__pytest-7490",
+          "pytest-dev__pytest-7521",
+          "pytest-dev__pytest-8399",
+          "scikit-learn__scikit-learn-10908",
+          "scikit-learn__scikit-learn-12585",
+          "scikit-learn__scikit-learn-13142",
+          "scikit-learn__scikit-learn-13439",
+          "scikit-learn__scikit-learn-9288",
+          "sphinx-doc__sphinx-10323",
+          "sphinx-doc__sphinx-10614",
+          "sphinx-doc__sphinx-7440",
+          "sphinx-doc__sphinx-8459",
+          "sphinx-doc__sphinx-8593",
+          "sphinx-doc__sphinx-9258",
+          "sphinx-doc__sphinx-9461",
+          "sympy__sympy-13091",
+          "sympy__sympy-13757",
+          "sympy__sympy-14248",
+          "sympy__sympy-16766",
+          "sympy__sympy-17655",
+          "sympy__sympy-19040",
+          "sympy__sympy-20428",
+          "sympy__sympy-21596",
+          "sympy__sympy-22714"
+        ]
+      },
+      "10": {
+        "slow_runs": 23,
+        "slow_tasks": 9,
+        "slow_runs_never_touched": 18,
+        "configs": {
+          "full|bm25": {
+            "slow_runs_hit5": 0.2609,
+            "slow_tasks_hit5": 0.3333,
+            "fast_runs_hit5": 0.6576
+          },
+          "full|embedding": {
+            "slow_runs_hit5": 0.7391,
+            "slow_tasks_hit5": 0.7778,
+            "fast_runs_hit5": 0.9066
+          },
+          "full|hybrid": {
+            "slow_runs_hit5": 0.3478,
+            "slow_tasks_hit5": 0.5556,
+            "fast_runs_hit5": 0.9027
+          },
+          "title|bm25": {
+            "slow_runs_hit5": 0.3043,
+            "slow_tasks_hit5": 0.4444,
+            "fast_runs_hit5": 0.7704
+          },
+          "title|embedding": {
+            "slow_runs_hit5": 0.4783,
+            "slow_tasks_hit5": 0.4444,
+            "fast_runs_hit5": 0.7354
+          },
+          "title|hybrid": {
+            "slow_runs_hit5": 0.4783,
+            "slow_tasks_hit5": 0.4444,
+            "fast_runs_hit5": 0.7743
+          },
+          "first_para|bm25": {
+            "slow_runs_hit5": 0.3478,
+            "slow_tasks_hit5": 0.5556,
+            "fast_runs_hit5": 0.7665
+          },
+          "first_para|embedding": {
+            "slow_runs_hit5": 0.7391,
+            "slow_tasks_hit5": 0.7778,
+            "fast_runs_hit5": 0.8093
+          },
+          "first_para|hybrid": {
+            "slow_runs_hit5": 0.3043,
+            "slow_tasks_hit5": 0.4444,
+            "fast_runs_hit5": 0.8482
+          },
+          "identifiers|bm25": {
+            "slow_runs_hit5": 0.3478,
+            "slow_tasks_hit5": 0.5556,
+            "fast_runs_hit5": 0.786
+          },
+          "identifiers|embedding": {
+            "slow_runs_hit5": 0.3043,
+            "slow_tasks_hit5": 0.4444,
+            "fast_runs_hit5": 0.7315
+          },
+          "identifiers|hybrid": {
+            "slow_runs_hit5": 0.3043,
+            "slow_tasks_hit5": 0.4444,
+            "fast_runs_hit5": 0.8482
+          }
+        },
+        "slow_tasks_list": [
+          "django__django-11211",
+          "django__django-15973",
+          "sphinx-doc__sphinx-10614",
+          "sphinx-doc__sphinx-8459",
+          "sympy__sympy-13091",
+          "sympy__sympy-19040",
+          "sympy__sympy-20428",
+          "sympy__sympy-21596",
+          "sympy__sympy-22714"
+        ]
+      }
+    },
+    "check_full_hybrid_vs_prefetch": {
+      "prefetch_top5_has_gold": 48,
+      "full_hybrid_hit5": 48,
+      "tasks": 56
+    }
+  },
+  "decision": {
+    "D1": [],
+    "D2": [],
+    "D3": [
+      "full|embedding",
+      "title|embedding",
+      "title|hybrid",
+      "first_para|bm25",
+      "first_para|embedding",
+      "identifiers|bm25"
+    ],
+    "wire_into_experiment": true
+  }
+}
