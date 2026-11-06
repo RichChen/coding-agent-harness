@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import asyncio
+import math
 from dataclasses import asdict, dataclass
 from src.policy.plugin import NoOpPolicyPlugin, json_data, validate_decision, version
 from src.policy.registry import RegisteredPolicyPlugin
@@ -26,14 +27,31 @@ def view_hash(value):
     return hashlib.sha256(encoded(value)).hexdigest()
 
 
-def request_size(messages, tools=(), output_tokens=0):
-    size = len(encoded({'messages': messages, 'tools': tools}))
-    # Conservative byte-based admission for text/JSON. This is not measured
-    # provider usage or a universal tokenizer guarantee; protocol overhead is reserved.
+ADMISSION_ESTIMATES = ('utf8_bytes', 'calibrated_v1')
+# calibrated_v1: ASCII bytes per token, fitted on provider prompt_tokens of the
+# A5/A6-R/CR-2 requests (scripts/audit/fix2_2026_11) with a safety margin so that
+# no recorded request was underestimated. Non-ASCII bytes count one token each.
+CALIBRATED_ASCII_BYTES_PER_TOKEN = 2.1
+
+
+def request_size(messages, tools=(), output_tokens=0, admission='utf8_bytes'):
+    data = encoded({'messages': messages, 'tools': tools})
+    size = len(data)
+    allowance = 512+32*len(messages)+128*len(tools)
+    if admission == 'utf8_bytes':
+        # Conservative byte-based admission for text/JSON. This is not measured
+        # provider usage or a universal tokenizer guarantee; protocol overhead is reserved.
+        admission_tokens, method = size+allowance, 'utf8_bytes_plus_protocol_allowance'
+    elif admission == 'calibrated_v1':
+        non_ascii = len(data.translate(None, bytes(range(128))))
+        admission_tokens = math.ceil((size-non_ascii)/CALIBRATED_ASCII_BYTES_PER_TOKEN)+non_ascii+allowance
+        method = 'ascii_bytes_calibrated_v1_plus_non_ascii_bytes_plus_protocol_allowance'
+    else:
+        raise ValueError(f'unknown admission estimate: {admission}')
     return dict(serialized_bytes=size, estimated_input_tokens=(size+3)//4,
-                admission_input_tokens=size+512+32*len(messages)+128*len(tools),
+                admission_input_tokens=admission_tokens,
                 reserved_output_tokens=output_tokens, estimate_method='utf8_bytes_div_4_estimated',
-                admission_method='utf8_bytes_plus_protocol_allowance')
+                admission_method=method)
 
 
 class ContextWindowError(RuntimeError):
@@ -65,9 +83,9 @@ def validate_pairs(messages):
     if pending: raise ContextWindowError('incomplete tool batch')
 
 
-def admit(messages, tools, output_tokens, limit, stats=None):
+def admit(messages, tools, output_tokens, limit, stats=None, admission='utf8_bytes'):
     validate_pairs(messages)
-    stats = dict(stats or {}, **request_size(messages, tools, output_tokens))
+    stats = dict(stats or {}, **request_size(messages, tools, output_tokens, admission))
     stats['max_tokens'] = limit
     if stats['admission_input_tokens'] + output_tokens > limit:
         stats['overflow'] = True
@@ -116,11 +134,13 @@ def summarize_fixture(messages):
 
 class WindowPolicyHooks(LoopHooks):
     def __init__(self, policy: WindowPolicy, plugin=None, *, dispatcher=None, summary_provider=None,
-                 protection_rules='v1'):
-        # Not a WindowPolicy field: asdict(policy) feeds recorded config hashes.
+                 protection_rules='v1', admission='utf8_bytes'):
+        # Not WindowPolicy fields: asdict(policy) feeds recorded config hashes.
         if protection_rules not in PROTECTION_RULES: raise ValueError(f'unknown protection rules: {protection_rules}')
+        if admission not in ADMISSION_ESTIMATES: raise ValueError(f'unknown admission estimate: {admission}')
         self.policy = policy
         self.protection_rules = protection_rules
+        self.admission = admission
         self.plugin = plugin or NoOpPolicyPlugin()
         self.dispatcher = dispatcher
         self.summary_provider = summary_provider
@@ -141,6 +161,9 @@ class WindowPolicyHooks(LoopHooks):
                     summary_prompt_version=PROMPT_VERSION, summary_config_version=CONFIG_VERSION,
                     runner_version='r2-lite-view-1')
         if self.protection_rules != 'v1': fingerprint['protection_rules'] = self.protection_rules
+        if self.admission != 'utf8_bytes':
+            fingerprint['admission'] = dict(estimate=self.admission,
+                                            ascii_bytes_per_token=CALIBRATED_ASCII_BYTES_PER_TOKEN)
         return fingerprint
 
     def restore(self, state):
@@ -221,7 +244,7 @@ class WindowPolicyHooks(LoopHooks):
                 if mask.did_compact:
                     stats['actually_injected'] = 'mask-then-summary' if cached else 'masking'
         def fits(candidate):
-            sizes=request_size(candidate, tools, output)
+            sizes=request_size(candidate, tools, output, self.admission)
             return sizes['admission_input_tokens']+output <= self.policy.max_tokens
         if not fits(view) and self.policy.strategy in ('summary','mask-then-summary'):
             available = [(a,b) for a,b in groups if not any(r['source_start']<=a<r['source_end'] for r in cached)]
@@ -274,7 +297,7 @@ class WindowPolicyHooks(LoopHooks):
                      summary_accounting=summary_totals(self.state), manager_state=copy.deepcopy(self.state))
         # Base/task/protected observations must fit before optional plugin additions.
         try:
-            admit(view,tools,output,self.policy.max_tokens,stats)
+            admit(view,tools,output,self.policy.max_tokens,stats,self.admission)
         except ContextWindowError as exc:
             ctx.extra['context_stats']=exc.stats
             raise
@@ -360,7 +383,7 @@ class WindowPolicyHooks(LoopHooks):
                     view=candidate_view; used+=meta['bytes']; record['actually_injected'].append(meta)
         except Exception as exc:
             record.update(method_degraded=True,policy_error=type(exc).__name__)
-        stats.update(admit(view,tools,output,self.policy.max_tokens),view_hash=view_hash(view),
+        stats.update(admit(view,tools,output,self.policy.max_tokens,admission=self.admission),view_hash=view_hash(view),
                      view_serialized_bytes=len(encoded(view)),manager_state=copy.deepcopy(self.state))
         ctx.extra['context_stats']=stats
         return view

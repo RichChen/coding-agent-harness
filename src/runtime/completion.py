@@ -246,7 +246,8 @@ class CompletionController:
             max_out = int(getattr(loop.llm, "max_tokens", 4096) or 4096)
             schemas = loop.tools.schemas(loop.enabled_tools)
             stats = admit(messages+[message], schemas, max_out,
-                          getattr(getattr(loop.hooks, "policy", None), "max_tokens", DEFAULT_WINDOW))
+                          getattr(getattr(loop.hooks, "policy", None), "max_tokens", DEFAULT_WINDOW),
+                          admission=getattr(loop.hooks, "admission", "utf8_bytes"))
             ledger = loop.model_ledger
             if ledger:
                 ledger.check_can_start_paid_call()

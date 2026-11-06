@@ -1,0 +1,399 @@
+{
+  "schema": "fix2.admission-summary.v1",
+  "source_rows": {
+    "prepared_paired": 57274,
+    "rejected": 5,
+    "by_experiment": {
+      "a5": 9390,
+      "a6r": 10353,
+      "cr2": 37531
+    },
+    "runs": 2005,
+    "models": [
+      "deepseek-flash",
+      "unknown"
+    ]
+  },
+  "implied_ascii_bytes_per_token": {
+    "p0": 2.3647,
+    "p1": 4.5483,
+    "p5": 5.0317,
+    "p25": 5.8361,
+    "p50": 6.4573,
+    "p75": 7.3678,
+    "p95": 10.4871,
+    "p99": 27.6773,
+    "p100": 363.7857
+  },
+  "rows_any_d_safe": 135,
+  "d_max_no_underestimate": 2.3647,
+  "margin": 0.9,
+  "d_chosen": 2.1,
+  "d_in_window_py": 2.1,
+  "held_out_by_experiment": {
+    "a5": {
+      "d_fitted_on_others": 2.1,
+      "underestimated": 0,
+      "requests": 9390
+    },
+    "a6r": {
+      "d_fitted_on_others": 2.55,
+      "underestimated": 8,
+      "requests": 10353
+    },
+    "cr2": {
+      "d_fitted_on_others": 2.1,
+      "underestimated": 0,
+      "requests": 37531
+    }
+  },
+  "default_utf8_bytes": {
+    "all": {
+      "requests": 57274,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 2.2677,
+        "p1": 3.4882,
+        "p5": 3.7384,
+        "p25": 4.015,
+        "p50": 4.1629,
+        "p75": 4.3041,
+        "p95": 4.5503,
+        "p99": 4.7443,
+        "p100": 5.1508
+      },
+      "error_tokens": {
+        "p0": 4964,
+        "p1": 5901,
+        "p5": 8357,
+        "p25": 15345,
+        "p50": 20851,
+        "p75": 26894,
+        "p95": 36610,
+        "p99": 43711,
+        "p100": 66645
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/a6-retry/sphinx-doc__sphinx-7590/r0/b0r1/r3",
+        "step": 11,
+        "prompt_tokens": 33380,
+        "estimate": 75697,
+        "ratio": 2.2677
+      }
+    },
+    "a5": {
+      "requests": 9390,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 3.2929,
+        "p1": 3.5041,
+        "p5": 3.7783,
+        "p25": 4.0396,
+        "p50": 4.183,
+        "p75": 4.3305,
+        "p95": 4.5575,
+        "p99": 4.7629,
+        "p100": 5.1508
+      },
+      "error_tokens": {
+        "p0": 4964,
+        "p1": 5625,
+        "p5": 7800,
+        "p25": 13496,
+        "p50": 19095,
+        "p75": 25676,
+        "p95": 36577,
+        "p99": 43235,
+        "p100": 58411
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/a5-main/sympy__sympy-20428/b2/r1",
+        "step": 19,
+        "prompt_tokens": 10564,
+        "estimate": 34786,
+        "ratio": 3.2929
+      }
+    },
+    "a6r": {
+      "requests": 10353,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 2.2677,
+        "p1": 3.4332,
+        "p5": 3.6359,
+        "p25": 3.9404,
+        "p50": 4.1098,
+        "p75": 4.257,
+        "p95": 4.5036,
+        "p99": 4.7215,
+        "p100": 5.1508
+      },
+      "error_tokens": {
+        "p0": 4987,
+        "p1": 6069,
+        "p5": 9108,
+        "p25": 16539,
+        "p50": 23056,
+        "p75": 30979,
+        "p95": 40795,
+        "p99": 48156,
+        "p100": 66645
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/a6-retry/sphinx-doc__sphinx-7590/r0/b0r1/r3",
+        "step": 11,
+        "prompt_tokens": 33380,
+        "estimate": 75697,
+        "ratio": 2.2677
+      }
+    },
+    "cr2": {
+      "requests": 37531,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 2.6297,
+        "p1": 3.5183,
+        "p5": 3.7808,
+        "p25": 4.0325,
+        "p50": 4.1717,
+        "p75": 4.3055,
+        "p95": 4.5633,
+        "p99": 4.7427,
+        "p100": 5.1508
+      },
+      "error_tokens": {
+        "p0": 4964,
+        "p1": 5901,
+        "p5": 8375,
+        "p25": 15525,
+        "p50": 20803,
+        "p75": 26314,
+        "p95": 34524,
+        "p99": 41670,
+        "p100": 60153
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/cr2-main/sympy__sympy-21596/t/r5",
+        "step": 1,
+        "prompt_tokens": 7064,
+        "estimate": 18576,
+        "ratio": 2.6297
+      }
+    }
+  },
+  "calibrated_v1": {
+    "all": {
+      "requests": 57274,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 1.1171,
+        "p1": 1.8277,
+        "p5": 1.9609,
+        "p25": 2.1176,
+        "p50": 2.2052,
+        "p75": 2.3011,
+        "p95": 2.4601,
+        "p99": 2.6187,
+        "p100": 2.8105
+      },
+      "error_tokens": {
+        "p0": 2396,
+        "p1": 2681,
+        "p5": 3436,
+        "p25": 5840,
+        "p50": 7874,
+        "p75": 10145,
+        "p95": 13475,
+        "p99": 16095,
+        "p100": 24205
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/a6-retry/sphinx-doc__sphinx-7590/r0/b0r1/r3",
+        "step": 11,
+        "prompt_tokens": 33380,
+        "estimate": 37289,
+        "ratio": 1.1171
+      }
+    },
+    "a5": {
+      "requests": 9390,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 1.7105,
+        "p1": 1.8383,
+        "p5": 1.9825,
+        "p25": 2.1352,
+        "p50": 2.2207,
+        "p75": 2.3156,
+        "p95": 2.4876,
+        "p99": 2.6497,
+        "p100": 2.8105
+      },
+      "error_tokens": {
+        "p0": 2396,
+        "p1": 2560,
+        "p5": 3264,
+        "p25": 5227,
+        "p50": 7192,
+        "p75": 9671,
+        "p95": 13560,
+        "p99": 15972,
+        "p100": 20831
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/a5-main/sympy__sympy-20428/b2/r1",
+        "step": 19,
+        "prompt_tokens": 10564,
+        "estimate": 18070,
+        "ratio": 1.7105
+      }
+    },
+    "a6r": {
+      "requests": 10353,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 1.1171,
+        "p1": 1.7939,
+        "p5": 1.9089,
+        "p25": 2.0699,
+        "p50": 2.1538,
+        "p75": 2.2553,
+        "p95": 2.4084,
+        "p99": 2.6167,
+        "p100": 2.7547
+      },
+      "error_tokens": {
+        "p0": 2396,
+        "p1": 2776,
+        "p5": 3661,
+        "p25": 6174,
+        "p50": 8512,
+        "p75": 11340,
+        "p95": 14861,
+        "p99": 17467,
+        "p100": 24205
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/a6-retry/sphinx-doc__sphinx-7590/r0/b0r1/r3",
+        "step": 11,
+        "prompt_tokens": 33380,
+        "estimate": 37289,
+        "ratio": 1.1171
+      }
+    },
+    "cr2": {
+      "requests": 37531,
+      "ratio_estimate_over_prompt_tokens": {
+        "p0": 1.3522,
+        "p1": 1.8431,
+        "p5": 1.9832,
+        "p25": 2.1278,
+        "p50": 2.2151,
+        "p75": 2.306,
+        "p95": 2.463,
+        "p99": 2.6036,
+        "p100": 2.8105
+      },
+      "error_tokens": {
+        "p0": 2396,
+        "p1": 2689,
+        "p5": 3457,
+        "p25": 5916,
+        "p50": 7889,
+        "p75": 9973,
+        "p95": 12791,
+        "p99": 15456,
+        "p100": 21451
+      },
+      "underestimated": 0,
+      "underestimated_rate": 0.0,
+      "worst_case": {
+        "run": "runs/cr2-main/sphinx-doc__sphinx-10323/n/r1",
+        "step": 1,
+        "prompt_tokens": 29700,
+        "estimate": 40160,
+        "ratio": 1.3522
+      }
+    }
+  },
+  "rejected_requests": [
+    {
+      "run": "runs/a6-retry/django__django-13964/r1/b0r2/r1",
+      "step": 34,
+      "rebuilt_matches": true,
+      "default_estimate": 92548,
+      "rebuilt_default_estimate": 92548,
+      "calibrated_estimate": 46081,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "previous_prompt_tokens": 17843,
+      "admitted_by_calibrated": true
+    },
+    {
+      "run": "runs/a6-retry/pytest-dev__pytest-5840/r1/b0r2/r3",
+      "step": 36,
+      "rebuilt_matches": true,
+      "default_estimate": 89463,
+      "rebuilt_default_estimate": 89463,
+      "calibrated_estimate": 45125,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "previous_prompt_tokens": 20758,
+      "admitted_by_calibrated": true
+    },
+    {
+      "run": "runs/a6-retry/sphinx-doc__sphinx-7590/r0/b0r1/r3",
+      "step": 18,
+      "rebuilt_matches": true,
+      "default_estimate": 87823,
+      "rebuilt_default_estimate": 87823,
+      "calibrated_estimate": 43304,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "previous_prompt_tokens": 35329,
+      "admitted_by_calibrated": true
+    },
+    {
+      "run": "runs/a6-retry/sphinx-doc__sphinx-8120/r1/b0r3/r3",
+      "step": 40,
+      "rebuilt_matches": true,
+      "default_estimate": 88306,
+      "rebuilt_default_estimate": 88306,
+      "calibrated_estimate": 44316,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "previous_prompt_tokens": 19744,
+      "admitted_by_calibrated": true
+    },
+    {
+      "run": "runs/cr2-main/pytest-dev__pytest-8399/n/r2",
+      "step": 31,
+      "rebuilt_matches": true,
+      "default_estimate": 92472,
+      "rebuilt_default_estimate": 92472,
+      "calibrated_estimate": 45921,
+      "reserved_output_tokens": 8192,
+      "max_tokens": 96000,
+      "previous_prompt_tokens": 23897,
+      "admitted_by_calibrated": true
+    }
+  ],
+  "window_check": {
+    "configured_limits": [
+      96000
+    ],
+    "model_window": 1000000,
+    "max_prompt_tokens_seen": 35329,
+    "byte_bound_per_limit": {
+      "96000": 201600
+    },
+    "bound_below_model_window": true
+  }
+}

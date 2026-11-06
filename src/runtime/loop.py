@@ -353,7 +353,8 @@ class AgentLoop:
                 deadline=self.deadline, cancel_event=self.cancel_event)
         stats = dict(hook_ctx.extra.get('context_stats') or {})
         limit = self.hooks.policy.max_tokens if isinstance(self.hooks, WindowPolicyHooks) else DEFAULT_WINDOW
-        stats.update(admit(view,tool_schemas,max_output,limit),step=step,raw_message_hash=raw_hash,view_hash=view_hash(view))
+        admission = self.hooks.admission if isinstance(self.hooks, WindowPolicyHooks) else 'utf8_bytes'
+        stats.update(admit(view,tool_schemas,max_output,limit,admission=admission),step=step,raw_message_hash=raw_hash,view_hash=view_hash(view))
         if not isinstance(self.hooks, WindowPolicyHooks):
             stats.setdefault('strategy','legacy-hook' if self.hooks else 'none')
         if isinstance(self.hooks, WindowPolicyHooks) or stats.get('did_compact'):

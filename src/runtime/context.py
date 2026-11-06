@@ -42,6 +42,7 @@ class ContextPolicyConfig:
     dispatcher: str = "disabled"
     dispatcher_max_calls: int = 0
     protection_rules: str = "v1"
+    admission_estimate: str = "utf8_bytes"
 
     @classmethod
     def from_runtime_config(
@@ -64,10 +65,12 @@ class ContextPolicyConfig:
             plugin=runtime_context.get("plugin", "noop"),
             plugin_candidates=tuple(runtime_context.get('plugin_candidates', [])),
             max_injection_bytes=runtime_context.get('max_injection_bytes',4096),
-            explicit_window=runtime_context.get('strategy') is not None or runtime_context.get('max_tokens') is not None or runtime_context.get('plugin','noop')!='noop',
+            explicit_window=runtime_context.get('strategy') is not None or runtime_context.get('max_tokens') is not None or runtime_context.get('plugin','noop')!='noop'
+                or runtime_context.get('admission_estimate', 'utf8_bytes') != 'utf8_bytes',
             dispatcher=runtime_context.get('dispatcher','disabled'),
             dispatcher_max_calls=runtime_context.get('dispatcher_max_calls',0),
             protection_rules=runtime_context.get('protection_rules', 'v1'),
+            admission_estimate=runtime_context.get('admission_estimate', 'utf8_bytes'),
         )
 
     def to_trace_metadata(self) -> dict[str, Any]:
@@ -88,6 +91,8 @@ class ContextPolicyConfig:
         }
         if self.protection_rules != "v1":
             metadata["protection_rules"] = self.protection_rules
+        if self.admission_estimate != "utf8_bytes":
+            metadata["admission_estimate"] = self.admission_estimate
         return metadata
 
 
@@ -129,4 +134,5 @@ def build_context_hooks(config: ContextPolicyConfig, *, plugin_registry=None, di
         max_injection_bytes=config.max_injection_bytes,
         dispatcher=config.dispatcher,
         dispatcher_max_calls=config.dispatcher_max_calls,
-    ), plugin, dispatcher=dispatcher, summary_provider=summary_provider, protection_rules=config.protection_rules)
+    ), plugin, dispatcher=dispatcher, summary_provider=summary_provider, protection_rules=config.protection_rules,
+       admission=config.admission_estimate)

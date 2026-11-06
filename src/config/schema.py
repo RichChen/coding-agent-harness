@@ -60,7 +60,7 @@ class RetryConfig(BaseModel):
 
 class RuntimeContextConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
-    omit_when_default = ("protection_rules",)
+    omit_when_default = ("protection_rules", "admission_estimate")
 
     strategy: str | None = Field(default=None, pattern="^(none|masking|summary|mask-then-summary)$")
     max_tokens: int | None = Field(default=None, gt=0)
@@ -85,6 +85,9 @@ class RuntimeContextConfig(OmitNewDefaults):
     dispatcher_max_calls: int = Field(default=0, ge=0, le=256)
     # v2: a status trailer alone is not a failure; run_command edits count as modifications.
     protection_rules: Literal["v1", "v2"] = "v1"
+    # calibrated_v1: max_tokens is compared with an estimate fitted to provider prompt_tokens
+    # instead of with raw UTF-8 bytes (which run 2.3-5.2x above the provider count).
+    admission_estimate: Literal["utf8_bytes", "calibrated_v1"] = "utf8_bytes"
 
 
 class RuntimePlannerConfig(BaseModel):
