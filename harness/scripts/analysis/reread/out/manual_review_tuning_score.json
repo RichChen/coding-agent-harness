@@ -1,0 +1,119 @@
+{
+  "sample": "tuning",
+  "reviewer_note": "Verdicts were written by the analyst reading each item against the raw call list; one reviewer, no blinding. Strata are drawn at fixed sizes, so the rates are per stratum of the classifier's own labels, not population rates.",
+  "items": 84,
+  "strata": {
+    "A5 after_write": {
+      "n": 3,
+      "manual_reread": 0
+    },
+    "A5 not_reread": {
+      "n": 6,
+      "manual_reread": 1
+    },
+    "A5 reread": {
+      "n": 12,
+      "manual_reread": 11
+    },
+    "A6-R after_write": {
+      "n": 3,
+      "manual_reread": 0
+    },
+    "A6-R not_reread": {
+      "n": 6,
+      "manual_reread": 0
+    },
+    "A6-R reread": {
+      "n": 12,
+      "manual_reread": 12
+    },
+    "CR-2 after_write": {
+      "n": 3,
+      "manual_reread": 0
+    },
+    "CR-2 not_reread": {
+      "n": 6,
+      "manual_reread": 0
+    },
+    "CR-2 reread": {
+      "n": 12,
+      "manual_reread": 11
+    },
+    "P4 after_write": {
+      "n": 3,
+      "manual_reread": 0
+    },
+    "P4 not_reread": {
+      "n": 6,
+      "manual_reread": 0
+    },
+    "P4 reread": {
+      "n": 12,
+      "manual_reread": 11
+    }
+  },
+  "classifier_at_draw": {
+    "flagged": 48,
+    "false_positives": 3,
+    "false_positive_rate": 0.062,
+    "unflagged": 36,
+    "false_negatives": 1,
+    "false_negative_rate": 0.028,
+    "view_state_checked": 45,
+    "view_state_wrong": 7,
+    "view_state_accuracy": 0.844,
+    "masked_vs_visible_wrong": 7,
+    "false_positive_ids": [
+      "A5-reread-016",
+      "CR-2-reread-057",
+      "P4-reread-072"
+    ],
+    "false_negative_ids": [
+      "A5-not_reread-006"
+    ],
+    "view_state_wrong_ids": [
+      "A6-R-reread-032",
+      "A6-R-reread-037",
+      "P4-reread-073",
+      "P4-reread-078",
+      "P4-reread-079",
+      "P4-reread-081",
+      "P4-reread-083"
+    ]
+  },
+  "classifier_current": {
+    "flagged": 45,
+    "false_positives": 0,
+    "false_positive_rate": 0.0,
+    "unflagged": 39,
+    "false_negatives": 1,
+    "false_negative_rate": 0.026,
+    "view_state_checked": 45,
+    "view_state_wrong": 0,
+    "view_state_accuracy": 1.0,
+    "masked_vs_visible_wrong": 0,
+    "false_positive_ids": [],
+    "false_negative_ids": [
+      "A5-not_reread-006"
+    ],
+    "view_state_wrong_ids": []
+  },
+  "notes": {
+    "A5-not_reread-005": "近似重复：搜索模式是之前模式的超集，按定义不算",
+    "A5-not_reread-006": "漏判：grep 的 BRE 写法 \\| 与之前 search_code 的 | 是同一组模式",
+    "A5-reread-016": "误报：grep 的通配路径没按当前目录展开，两个不同临时目录被当成同一路径；中间重新构建了输出目录",
+    "A6-R-reread-032": "仍可见的原文只与本次重叠 1 行，实际应为 elided",
+    "A6-R-reread-037": "仍可见的原文只与本次重叠 1 行，实际应为 elided",
+    "CR-2-not_reread-046": "近似重复：模式只差一项，按定义不算",
+    "CR-2-not_reread-049": "近似重复：def normcase 与 normcase，按定义不算",
+    "CR-2-reread-057": "误报：顺序翻页，只与上一段重叠 1 行",
+    "P4-not_reread-066": "近似重复：def docname_to_domain 与 docname_to_domain，按定义不算",
+    "P4-reread-072": "误报：read_file 每次最多 100 行，模型以上一段末行为 offset 继续翻页，只重叠 1 行",
+    "P4-reread-073": "仍可见的原文只与本次重叠 1 行，实际应为 elided",
+    "P4-reread-077": "连续三次相同 grep，前两次结果仍原样可见",
+    "P4-reread-078": "仍可见的原文只与本次重叠 1 行，实际应为 elided",
+    "P4-reread-079": "仍可见的原文只与本次重叠 1 行，实际应为 elided",
+    "P4-reread-081": "仍可见的原文只与本次重叠 1 行，实际应为 elided",
+    "P4-reread-083": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+  }
+}

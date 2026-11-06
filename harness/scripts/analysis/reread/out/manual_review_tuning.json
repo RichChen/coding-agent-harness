@@ -1,0 +1,422 @@
+{
+ "A5-after_write-000": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-after_write-001": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-after_write-002": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-003": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-004": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-005": {
+  "reread": false,
+  "view_state": null,
+  "note": "近似重复：搜索模式是之前模式的超集，按定义不算"
+ },
+ "A5-not_reread-006": {
+  "reread": true,
+  "view_state": "raw",
+  "note": "漏判：grep 的 BRE 写法 \\| 与之前 search_code 的 | 是同一组模式"
+ },
+ "A5-not_reread-007": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-008": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-reread-009": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-010": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-011": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-012": {
+  "reread": true,
+  "view_state": "raw",
+  "note": ""
+ },
+ "A5-reread-013": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-014": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-015": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-016": {
+  "reread": false,
+  "view_state": null,
+  "note": "误报：grep 的通配路径没按当前目录展开，两个不同临时目录被当成同一路径；中间重新构建了输出目录"
+ },
+ "A5-reread-017": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-018": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-019": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-020": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-after_write-021": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-after_write-022": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-after_write-023": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-024": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-025": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-026": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-027": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-028": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-029": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-reread-030": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-031": {
+  "reread": true,
+  "view_state": "raw",
+  "note": ""
+ },
+ "A6-R-reread-032": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+ },
+ "A6-R-reread-033": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-034": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-035": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-036": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-037": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+ },
+ "A6-R-reread-038": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-039": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-040": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-041": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-after_write-042": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-after_write-043": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-after_write-044": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-not_reread-045": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-not_reread-046": {
+  "reread": false,
+  "view_state": null,
+  "note": "近似重复：模式只差一项，按定义不算"
+ },
+ "CR-2-not_reread-047": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-not_reread-048": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-not_reread-049": {
+  "reread": false,
+  "view_state": null,
+  "note": "近似重复：def normcase 与 normcase，按定义不算"
+ },
+ "CR-2-not_reread-050": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-reread-051": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-052": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-053": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-054": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-055": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-056": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-057": {
+  "reread": false,
+  "view_state": null,
+  "note": "误报：顺序翻页，只与上一段重叠 1 行"
+ },
+ "CR-2-reread-058": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-059": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-060": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-061": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-062": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-after_write-063": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-after_write-064": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-after_write-065": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-066": {
+  "reread": false,
+  "view_state": null,
+  "note": "近似重复：def docname_to_domain 与 docname_to_domain，按定义不算"
+ },
+ "P4-not_reread-067": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-068": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-069": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-070": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-071": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-reread-072": {
+  "reread": false,
+  "view_state": null,
+  "note": "误报：read_file 每次最多 100 行，模型以上一段末行为 offset 继续翻页，只重叠 1 行"
+ },
+ "P4-reread-073": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+ },
+ "P4-reread-074": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-075": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-076": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-077": {
+  "reread": true,
+  "view_state": "raw",
+  "note": "连续三次相同 grep，前两次结果仍原样可见"
+ },
+ "P4-reread-078": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+ },
+ "P4-reread-079": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+ },
+ "P4-reread-080": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-081": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+ },
+ "P4-reread-082": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-083": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "仍可见的原文只与本次重叠 1 行，实际应为 elided"
+ }
+}

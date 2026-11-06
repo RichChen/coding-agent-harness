@@ -1,0 +1,2719 @@
+{
+  "schema": "p4-prompt-timing-process.v1",
+  "threshold_cny": "0.225",
+  "checks": {
+    "prompt_matches_record": 53,
+    "rows": 53,
+    "m_prompt_matches_cost_rule": 16,
+    "m_with_prompt": 16,
+    "i_prompt_at_request_1": 18,
+    "mismatches": []
+  },
+  "edit_timing": {
+    "N": {
+      "n": 17,
+      "counts": {
+        "no_edit": 15,
+        "edit_before_split": 1,
+        "no_split": 1
+      },
+      "gaps_after_split": []
+    },
+    "I": {
+      "n": 18,
+      "counts": {
+        "edit_before_split": 2,
+        "no_edit": 11,
+        "no_split": 4,
+        "edit_no_split": 1
+      },
+      "gaps_after_split": []
+    },
+    "M": {
+      "n": 18,
+      "counts": {
+        "edit_before_split": 3,
+        "no_edit": 11,
+        "edit_after_split": 2,
+        "no_split": 2
+      },
+      "gaps_after_split": [
+        1,
+        2
+      ]
+    }
+  },
+  "edit_timing_by_outcome": {
+    "N passed": {
+      "n": 1,
+      "counts": {
+        "edit_before_split": 1
+      },
+      "gaps_after_split": []
+    },
+    "N behavior_failed": {
+      "n": 16,
+      "counts": {
+        "no_edit": 15,
+        "no_split": 1
+      },
+      "gaps_after_split": []
+    },
+    "I passed": {
+      "n": 3,
+      "counts": {
+        "edit_before_split": 2,
+        "edit_no_split": 1
+      },
+      "gaps_after_split": []
+    },
+    "I behavior_failed": {
+      "n": 15,
+      "counts": {
+        "no_edit": 11,
+        "no_split": 4
+      },
+      "gaps_after_split": []
+    },
+    "M passed": {
+      "n": 5,
+      "counts": {
+        "edit_before_split": 3,
+        "edit_after_split": 2
+      },
+      "gaps_after_split": [
+        1,
+        2
+      ]
+    },
+    "M behavior_failed": {
+      "n": 13,
+      "counts": {
+        "no_edit": 11,
+        "no_split": 2
+      },
+      "gaps_after_split": []
+    }
+  },
+  "phase_mix": {
+    "N passed before": {
+      "runs": 1,
+      "calls": 15,
+      "pct": {
+        "read": 66.7,
+        "edit": 13.3,
+        "test_or_run": 6.7,
+        "list": 13.3,
+        "other": 0.0
+      },
+      "reread_pct": 13.3
+    },
+    "N passed after": {
+      "runs": 1,
+      "calls": 3,
+      "pct": {
+        "read": 33.3,
+        "edit": 0.0,
+        "test_or_run": 66.7,
+        "list": 0.0,
+        "other": 0.0
+      },
+      "reread_pct": 0.0
+    },
+    "N behavior_failed before": {
+      "runs": 16,
+      "calls": 255,
+      "pct": {
+        "read": 86.3,
+        "edit": 0.0,
+        "test_or_run": 4.3,
+        "list": 9.4,
+        "other": 0.0
+      },
+      "reread_pct": 24.7
+    },
+    "N behavior_failed after": {
+      "runs": 16,
+      "calls": 85,
+      "pct": {
+        "read": 100.0,
+        "edit": 0.0,
+        "test_or_run": 0.0,
+        "list": 0.0,
+        "other": 0.0
+      },
+      "reread_pct": 74.1
+    },
+    "I passed before": {
+      "runs": 3,
+      "calls": 44,
+      "pct": {
+        "read": 56.8,
+        "edit": 13.6,
+        "test_or_run": 15.9,
+        "list": 11.4,
+        "other": 2.3
+      },
+      "reread_pct": 4.5
+    },
+    "I passed after": {
+      "runs": 3,
+      "calls": 9,
+      "pct": {
+        "read": 22.2,
+        "edit": 11.1,
+        "test_or_run": 66.7,
+        "list": 0.0,
+        "other": 0.0
+      },
+      "reread_pct": 0.0
+    },
+    "I behavior_failed before": {
+      "runs": 15,
+      "calls": 217,
+      "pct": {
+        "read": 87.6,
+        "edit": 0.0,
+        "test_or_run": 4.6,
+        "list": 7.8,
+        "other": 0.0
+      },
+      "reread_pct": 21.7
+    },
+    "I behavior_failed after": {
+      "runs": 15,
+      "calls": 67,
+      "pct": {
+        "read": 97.0,
+        "edit": 0.0,
+        "test_or_run": 3.0,
+        "list": 0.0,
+        "other": 0.0
+      },
+      "reread_pct": 79.1
+    },
+    "M passed before": {
+      "runs": 5,
+      "calls": 73,
+      "pct": {
+        "read": 75.3,
+        "edit": 5.5,
+        "test_or_run": 8.2,
+        "list": 11.0,
+        "other": 0.0
+      },
+      "reread_pct": 16.4
+    },
+    "M passed after": {
+      "runs": 5,
+      "calls": 20,
+      "pct": {
+        "read": 60.0,
+        "edit": 10.0,
+        "test_or_run": 25.0,
+        "list": 5.0,
+        "other": 0.0
+      },
+      "reread_pct": 20.0
+    },
+    "M behavior_failed before": {
+      "runs": 13,
+      "calls": 207,
+      "pct": {
+        "read": 85.5,
+        "edit": 0.0,
+        "test_or_run": 4.3,
+        "list": 8.7,
+        "other": 1.4
+      },
+      "reread_pct": 22.2
+    },
+    "M behavior_failed after": {
+      "runs": 13,
+      "calls": 66,
+      "pct": {
+        "read": 80.3,
+        "edit": 0.0,
+        "test_or_run": 18.2,
+        "list": 0.0,
+        "other": 1.5
+      },
+      "reread_pct": 60.6
+    }
+  },
+  "phase_mix_by_condition": {
+    "N before": {
+      "runs": 17,
+      "calls": 270,
+      "pct": {
+        "read": 85.2,
+        "edit": 0.7,
+        "test_or_run": 4.4,
+        "list": 9.6,
+        "other": 0.0
+      },
+      "reread_pct": 24.1
+    },
+    "N after": {
+      "runs": 17,
+      "calls": 88,
+      "pct": {
+        "read": 97.7,
+        "edit": 0.0,
+        "test_or_run": 2.3,
+        "list": 0.0,
+        "other": 0.0
+      },
+      "reread_pct": 71.6
+    },
+    "I before": {
+      "runs": 18,
+      "calls": 261,
+      "pct": {
+        "read": 82.4,
+        "edit": 2.3,
+        "test_or_run": 6.5,
+        "list": 8.4,
+        "other": 0.4
+      },
+      "reread_pct": 18.8
+    },
+    "I after": {
+      "runs": 18,
+      "calls": 76,
+      "pct": {
+        "read": 88.2,
+        "edit": 1.3,
+        "test_or_run": 10.5,
+        "list": 0.0,
+        "other": 0.0
+      },
+      "reread_pct": 69.7
+    },
+    "M before": {
+      "runs": 18,
+      "calls": 280,
+      "pct": {
+        "read": 82.9,
+        "edit": 1.4,
+        "test_or_run": 5.4,
+        "list": 9.3,
+        "other": 1.1
+      },
+      "reread_pct": 20.7
+    },
+    "M after": {
+      "runs": 18,
+      "calls": 86,
+      "pct": {
+        "read": 75.6,
+        "edit": 2.3,
+        "test_or_run": 19.8,
+        "list": 1.2,
+        "other": 1.2
+      },
+      "reread_pct": 51.2
+    }
+  },
+  "first_native_edit_requests": {
+    "N": [],
+    "I": [
+      5,
+      5,
+      9
+    ],
+    "M": [
+      10,
+      11,
+      14,
+      15
+    ]
+  },
+  "rows": [
+    {
+      "batch": "v3",
+      "run_index": 9,
+      "task": "public-sphinx-issue-8637",
+      "condition": "I",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 21,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 15,
+      "settled_cny": "0.366114",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 15,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 14,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 3
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 7
+        }
+      },
+      "tool_calls": 23,
+      "reread_calls": 10
+    },
+    {
+      "batch": "v3",
+      "run_index": 11,
+      "task": "public-sphinx-issue-8637",
+      "condition": "I",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 15,
+      "settled_cny": "0.347902",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 15,
+      "phases": {
+        "before": {
+          "calls": 15,
+          "requests": 14,
+          "kinds": {
+            "read": 13,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 6
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 5
+        }
+      },
+      "tool_calls": 20,
+      "reread_calls": 11
+    },
+    {
+      "batch": "v3",
+      "run_index": 40,
+      "task": "public-sphinx-issue-8637",
+      "condition": "I",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 20,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 15,
+      "settled_cny": "0.355084",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 15,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 14,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 8
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 6,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 11
+    },
+    {
+      "batch": "v3",
+      "run_index": 7,
+      "task": "public-sphinx-issue-8637",
+      "condition": "M",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": 15,
+      "recorded_prompt_request": 15,
+      "prompt_count": 1,
+      "cost_trigger_request": 15,
+      "settled_cny": "0.349060",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 15,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 14,
+          "kinds": {
+            "read": 13,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 3,
+            "other": 0
+          },
+          "reread": 7
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 5
+        }
+      },
+      "tool_calls": 21,
+      "reread_calls": 12
+    },
+    {
+      "batch": "v3",
+      "run_index": 12,
+      "task": "public-sphinx-issue-8637",
+      "condition": "M",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.349696",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 13,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 4
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 6,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 10
+    },
+    {
+      "batch": "v3",
+      "run_index": 41,
+      "task": "public-sphinx-issue-8637",
+      "condition": "M",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 20,
+      "prompt_request": 15,
+      "recorded_prompt_request": 15,
+      "prompt_count": 1,
+      "cost_trigger_request": 15,
+      "settled_cny": "0.361880",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 15,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 14,
+          "kinds": {
+            "read": 13,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 3,
+            "other": 0
+          },
+          "reread": 6
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 6,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 12
+    },
+    {
+      "batch": "v3",
+      "run_index": 8,
+      "task": "public-sphinx-issue-8637",
+      "condition": "N",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 20,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 15,
+      "settled_cny": "0.363698",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 15,
+      "phases": {
+        "before": {
+          "calls": 18,
+          "requests": 14,
+          "kinds": {
+            "read": 16,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 7
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 6,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 24,
+      "reread_calls": 13
+    },
+    {
+      "batch": "v3",
+      "run_index": 10,
+      "task": "public-sphinx-issue-8637",
+      "condition": "N",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 15,
+      "settled_cny": "0.349482",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 15,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 14,
+          "kinds": {
+            "read": 13,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 3,
+            "other": 0
+          },
+          "reread": 5
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 5
+        }
+      },
+      "tool_calls": 21,
+      "reread_calls": 10
+    },
+    {
+      "batch": "v3",
+      "run_index": 42,
+      "task": "public-sphinx-issue-8637",
+      "condition": "N",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.358534",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 13,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 4
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 6,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 10
+    },
+    {
+      "batch": "v2",
+      "run_index": 6,
+      "task": "public-sphinx-issue-8756",
+      "condition": "I",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 6,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": null,
+      "settled_cny": "0.099588",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 6,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 6,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v3",
+      "run_index": 15,
+      "task": "public-sphinx-issue-8756",
+      "condition": "I",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 6,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": null,
+      "settled_cny": "0.099610",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 6,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 6,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v3",
+      "run_index": 32,
+      "task": "public-sphinx-issue-8756",
+      "condition": "I",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 6,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": null,
+      "settled_cny": "0.099610",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 6,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 6,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v3",
+      "run_index": 0,
+      "task": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.349166",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 14,
+          "requests": 13,
+          "kinds": {
+            "read": 13,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 4
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        }
+      },
+      "tool_calls": 19,
+      "reread_calls": 6
+    },
+    {
+      "batch": "v3",
+      "run_index": 14,
+      "task": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 6,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": null,
+      "settled_cny": "0.099156",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 6,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 6,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v3",
+      "run_index": 31,
+      "task": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 6,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": null,
+      "settled_cny": "0.099564",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 6,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 6,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v2",
+      "run_index": 7,
+      "task": "public-sphinx-issue-8756",
+      "condition": "N",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 17,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.343340",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 13,
+          "kinds": {
+            "read": 15,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 5
+        },
+        "after": {
+          "calls": 4,
+          "requests": 4,
+          "kinds": {
+            "read": 4,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 20,
+      "reread_calls": 8
+    },
+    {
+      "batch": "v3",
+      "run_index": 13,
+      "task": "public-sphinx-issue-8756",
+      "condition": "N",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.342990",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 13,
+          "kinds": {
+            "read": 15,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 5
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        }
+      },
+      "tool_calls": 21,
+      "reread_calls": 7
+    },
+    {
+      "batch": "v3",
+      "run_index": 33,
+      "task": "public-sphinx-issue-8756",
+      "condition": "N",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 6,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": null,
+      "settled_cny": "0.099214",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 6,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 1
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 6,
+      "reread_calls": 1
+    },
+    {
+      "batch": "v2",
+      "run_index": 3,
+      "task": "public-sphinx-issue-8775",
+      "condition": "I",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.347472",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 21,
+          "requests": 13,
+          "kinds": {
+            "read": 16,
+            "edit": 0,
+            "test_or_run": 5,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        },
+        "after": {
+          "calls": 7,
+          "requests": 5,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 7
+        }
+      },
+      "tool_calls": 28,
+      "reread_calls": 10
+    },
+    {
+      "batch": "v3",
+      "run_index": 23,
+      "task": "public-sphinx-issue-8775",
+      "condition": "I",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.351508",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 23,
+          "requests": 13,
+          "kinds": {
+            "read": 22,
+            "edit": 0,
+            "test_or_run": 1,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 7
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 5
+        }
+      },
+      "tool_calls": 28,
+      "reread_calls": 12
+    },
+    {
+      "batch": "v3",
+      "run_index": 39,
+      "task": "public-sphinx-issue-8775",
+      "condition": "I",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.362482",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 13,
+          "kinds": {
+            "read": 12,
+            "edit": 0,
+            "test_or_run": 4,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 4,
+            "edit": 0,
+            "test_or_run": 2,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 6
+    },
+    {
+      "batch": "v2",
+      "run_index": 5,
+      "task": "public-sphinx-issue-8775",
+      "condition": "M",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.347370",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 20,
+          "requests": 13,
+          "kinds": {
+            "read": 17,
+            "edit": 0,
+            "test_or_run": 2,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 3,
+            "edit": 0,
+            "test_or_run": 2,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 1
+        }
+      },
+      "tool_calls": 25,
+      "reread_calls": 3
+    },
+    {
+      "batch": "v3",
+      "run_index": 22,
+      "task": "public-sphinx-issue-8775",
+      "condition": "M",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.356466",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 20,
+          "requests": 13,
+          "kinds": {
+            "read": 16,
+            "edit": 0,
+            "test_or_run": 4,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 4
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 2,
+            "edit": 0,
+            "test_or_run": 4,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        }
+      },
+      "tool_calls": 26,
+      "reread_calls": 6
+    },
+    {
+      "batch": "v3",
+      "run_index": 38,
+      "task": "public-sphinx-issue-8775",
+      "condition": "M",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 19,
+      "prompt_request": 13,
+      "recorded_prompt_request": 13,
+      "prompt_count": 1,
+      "cost_trigger_request": 13,
+      "settled_cny": "0.365980",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 13,
+      "phases": {
+        "before": {
+          "calls": 17,
+          "requests": 12,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 3,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 1,
+            "edit": 0,
+            "test_or_run": 6,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 1
+        }
+      },
+      "tool_calls": 24,
+      "reread_calls": 4
+    },
+    {
+      "batch": "v2",
+      "run_index": 4,
+      "task": "public-sphinx-issue-8775",
+      "condition": "N",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.366514",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 18,
+          "requests": 13,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 3,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 5
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 23,
+      "reread_calls": 8
+    },
+    {
+      "batch": "v3",
+      "run_index": 24,
+      "task": "public-sphinx-issue-8775",
+      "condition": "N",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.351170",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 17,
+          "requests": 13,
+          "kinds": {
+            "read": 12,
+            "edit": 0,
+            "test_or_run": 5,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 4
+    },
+    {
+      "batch": "v3",
+      "run_index": 37,
+      "task": "public-sphinx-issue-8775",
+      "condition": "N",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.345326",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 13,
+          "kinds": {
+            "read": 13,
+            "edit": 0,
+            "test_or_run": 3,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 21,
+      "reread_calls": 2
+    },
+    {
+      "batch": "v3",
+      "run_index": 5,
+      "task": "public-sphinx-issue-8800",
+      "condition": "I",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 24,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 18,
+      "settled_cny": "0.353296",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 18,
+      "phases": {
+        "before": {
+          "calls": 19,
+          "requests": 17,
+          "kinds": {
+            "read": 17,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 8
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 7
+        }
+      },
+      "tool_calls": 26,
+      "reread_calls": 15
+    },
+    {
+      "batch": "v3",
+      "run_index": 27,
+      "task": "public-sphinx-issue-8800",
+      "condition": "I",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 24,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 17,
+      "settled_cny": "0.381200",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 17,
+      "phases": {
+        "before": {
+          "calls": 20,
+          "requests": 16,
+          "kinds": {
+            "read": 18,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 4
+        },
+        "after": {
+          "calls": 8,
+          "requests": 8,
+          "kinds": {
+            "read": 8,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 28,
+      "reread_calls": 7
+    },
+    {
+      "batch": "v3",
+      "run_index": 34,
+      "task": "public-sphinx-issue-8800",
+      "condition": "I",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 24,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 19,
+      "settled_cny": "0.351664",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 19,
+      "phases": {
+        "before": {
+          "calls": 19,
+          "requests": 18,
+          "kinds": {
+            "read": 18,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 6,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 25,
+      "reread_calls": 8
+    },
+    {
+      "batch": "v3",
+      "run_index": 6,
+      "task": "public-sphinx-issue-8800",
+      "condition": "M",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 22,
+      "prompt_request": 16,
+      "recorded_prompt_request": 16,
+      "prompt_count": 1,
+      "cost_trigger_request": 16,
+      "settled_cny": "0.371658",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 16,
+      "phases": {
+        "before": {
+          "calls": 20,
+          "requests": 15,
+          "kinds": {
+            "read": 19,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 9
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 27,
+      "reread_calls": 15
+    },
+    {
+      "batch": "v3",
+      "run_index": 25,
+      "task": "public-sphinx-issue-8800",
+      "condition": "M",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 24,
+      "prompt_request": 18,
+      "recorded_prompt_request": 18,
+      "prompt_count": 1,
+      "cost_trigger_request": 18,
+      "settled_cny": "0.356802",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 18,
+      "phases": {
+        "before": {
+          "calls": 20,
+          "requests": 17,
+          "kinds": {
+            "read": 18,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 1
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 5
+        }
+      },
+      "tool_calls": 27,
+      "reread_calls": 7
+    },
+    {
+      "batch": "v3",
+      "run_index": 35,
+      "task": "public-sphinx-issue-8800",
+      "condition": "M",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 24,
+      "prompt_request": 18,
+      "recorded_prompt_request": 18,
+      "prompt_count": 1,
+      "cost_trigger_request": 18,
+      "settled_cny": "0.366762",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 18,
+      "phases": {
+        "before": {
+          "calls": 22,
+          "requests": 17,
+          "kinds": {
+            "read": 18,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 2
+          },
+          "reread": 3
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 6,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 1
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 29,
+      "reread_calls": 9
+    },
+    {
+      "batch": "v3",
+      "run_index": 4,
+      "task": "public-sphinx-issue-8800",
+      "condition": "N",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 23,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 17,
+      "settled_cny": "0.352988",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 17,
+      "phases": {
+        "before": {
+          "calls": 18,
+          "requests": 16,
+          "kinds": {
+            "read": 16,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 4
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 25,
+      "reread_calls": 10
+    },
+    {
+      "batch": "v3",
+      "run_index": 26,
+      "task": "public-sphinx-issue-8800",
+      "condition": "N",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 23,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 17,
+      "settled_cny": "0.363202",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 17,
+      "phases": {
+        "before": {
+          "calls": 20,
+          "requests": 16,
+          "kinds": {
+            "read": 18,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 7
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 7
+        }
+      },
+      "tool_calls": 27,
+      "reread_calls": 14
+    },
+    {
+      "batch": "v3",
+      "run_index": 36,
+      "task": "public-sphinx-issue-8800",
+      "condition": "N",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 24,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 17,
+      "settled_cny": "0.369834",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 17,
+      "phases": {
+        "before": {
+          "calls": 18,
+          "requests": 16,
+          "kinds": {
+            "read": 16,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 6
+        },
+        "after": {
+          "calls": 8,
+          "requests": 8,
+          "kinds": {
+            "read": 8,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 8
+        }
+      },
+      "tool_calls": 26,
+      "reread_calls": 14
+    },
+    {
+      "batch": "v3",
+      "run_index": 3,
+      "task": "public-sphinx-issue-8945",
+      "condition": "I",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 6,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": null,
+      "settled_cny": "0.121476",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 8,
+          "requests": 6,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 8,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v3",
+      "run_index": 16,
+      "task": "public-sphinx-issue-8945",
+      "condition": "I",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 17,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 13,
+      "settled_cny": "0.351652",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 13,
+      "phases": {
+        "before": {
+          "calls": 13,
+          "requests": 12,
+          "kinds": {
+            "read": 12,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        }
+      },
+      "tool_calls": 18,
+      "reread_calls": 2
+    },
+    {
+      "batch": "v3",
+      "run_index": 29,
+      "task": "public-sphinx-issue-8945",
+      "condition": "I",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 17,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 13,
+      "settled_cny": "0.347848",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 13,
+      "phases": {
+        "before": {
+          "calls": 13,
+          "requests": 12,
+          "kinds": {
+            "read": 12,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 3
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 5
+        }
+      },
+      "tool_calls": 18,
+      "reread_calls": 8
+    },
+    {
+      "batch": "v3",
+      "run_index": 1,
+      "task": "public-sphinx-issue-8945",
+      "condition": "M",
+      "repeat": 1,
+      "outcome": "passed",
+      "requests": 16,
+      "prompt_request": 12,
+      "recorded_prompt_request": 12,
+      "prompt_count": 1,
+      "cost_trigger_request": 12,
+      "settled_cny": "0.364240",
+      "first_edit_request": 14,
+      "first_native_edit_request": 14,
+      "split_request": 12,
+      "phases": {
+        "before": {
+          "calls": 13,
+          "requests": 11,
+          "kinds": {
+            "read": 11,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 1
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 2,
+            "edit": 1,
+            "test_or_run": 1,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 1
+        }
+      },
+      "tool_calls": 18,
+      "reread_calls": 2
+    },
+    {
+      "batch": "v3",
+      "run_index": 17,
+      "task": "public-sphinx-issue-8945",
+      "condition": "M",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.353624",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 14,
+          "requests": 13,
+          "kinds": {
+            "read": 12,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 19,
+      "reread_calls": 2
+    },
+    {
+      "batch": "v3",
+      "run_index": 30,
+      "task": "public-sphinx-issue-8945",
+      "condition": "M",
+      "repeat": 3,
+      "outcome": "passed",
+      "requests": 19,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.370092",
+      "first_edit_request": 15,
+      "first_native_edit_request": 15,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 14,
+          "requests": 13,
+          "kinds": {
+            "read": 12,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 6,
+          "requests": 6,
+          "kinds": {
+            "read": 5,
+            "edit": 1,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 2
+        }
+      },
+      "tool_calls": 20,
+      "reread_calls": 4
+    },
+    {
+      "batch": "v3",
+      "run_index": 2,
+      "task": "public-sphinx-issue-8945",
+      "condition": "N",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 17,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 13,
+      "settled_cny": "0.352340",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 13,
+      "phases": {
+        "before": {
+          "calls": 15,
+          "requests": 12,
+          "kinds": {
+            "read": 13,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 20,
+      "reread_calls": 5
+    },
+    {
+      "batch": "v3",
+      "run_index": 18,
+      "task": "public-sphinx-issue-8945",
+      "condition": "N",
+      "repeat": 2,
+      "outcome": "behavior_failed",
+      "requests": 16,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 12,
+      "settled_cny": "0.352520",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 12,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 11,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 3
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 21,
+      "reread_calls": 6
+    },
+    {
+      "batch": "v3",
+      "run_index": 28,
+      "task": "public-sphinx-issue-8945",
+      "condition": "N",
+      "repeat": 3,
+      "outcome": "behavior_failed",
+      "requests": 18,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.354592",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 14,
+          "requests": 13,
+          "kinds": {
+            "read": 12,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 1
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 5,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 3
+        }
+      },
+      "tool_calls": 19,
+      "reread_calls": 4
+    },
+    {
+      "batch": "v2",
+      "run_index": 2,
+      "task": "public-sphinx-issue-9030",
+      "condition": "I",
+      "repeat": 1,
+      "outcome": "passed",
+      "requests": 19,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.348928",
+      "first_edit_request": 9,
+      "first_native_edit_request": 9,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 15,
+          "requests": 13,
+          "kinds": {
+            "read": 10,
+            "edit": 1,
+            "test_or_run": 1,
+            "list": 3,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 7,
+          "requests": 6,
+          "kinds": {
+            "read": 1,
+            "edit": 1,
+            "test_or_run": 5,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 2
+    },
+    {
+      "batch": "v3",
+      "run_index": 20,
+      "task": "public-sphinx-issue-9030",
+      "condition": "I",
+      "repeat": 2,
+      "outcome": "passed",
+      "requests": 16,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.300742",
+      "first_edit_request": 5,
+      "first_native_edit_request": 5,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 16,
+          "requests": 13,
+          "kinds": {
+            "read": 8,
+            "edit": 4,
+            "test_or_run": 3,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 2,
+          "requests": 2,
+          "kinds": {
+            "read": 1,
+            "edit": 0,
+            "test_or_run": 1,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 18,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v3",
+      "run_index": 43,
+      "task": "public-sphinx-issue-9030",
+      "condition": "I",
+      "repeat": 3,
+      "outcome": "passed",
+      "requests": 12,
+      "prompt_request": 1,
+      "recorded_prompt_request": 1,
+      "prompt_count": 1,
+      "cost_trigger_request": null,
+      "settled_cny": "0.224438",
+      "first_edit_request": 5,
+      "first_native_edit_request": 5,
+      "split_request": null,
+      "phases": {
+        "before": {
+          "calls": 13,
+          "requests": 11,
+          "kinds": {
+            "read": 7,
+            "edit": 1,
+            "test_or_run": 3,
+            "list": 1,
+            "other": 1
+          },
+          "reread": 0
+        },
+        "after": {
+          "calls": 0,
+          "requests": 0,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 13,
+      "reread_calls": 0
+    },
+    {
+      "batch": "v2",
+      "run_index": 1,
+      "task": "public-sphinx-issue-9030",
+      "condition": "M",
+      "repeat": 1,
+      "outcome": "passed",
+      "requests": 14,
+      "prompt_request": 13,
+      "recorded_prompt_request": 13,
+      "prompt_count": 1,
+      "cost_trigger_request": 13,
+      "settled_cny": "0.271028",
+      "first_edit_request": 8,
+      "first_native_edit_request": null,
+      "split_request": 13,
+      "phases": {
+        "before": {
+          "calls": 14,
+          "requests": 12,
+          "kinds": {
+            "read": 8,
+            "edit": 1,
+            "test_or_run": 4,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 1,
+          "requests": 1,
+          "kinds": {
+            "read": 1,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 1
+        }
+      },
+      "tool_calls": 15,
+      "reread_calls": 3
+    },
+    {
+      "batch": "v3",
+      "run_index": 19,
+      "task": "public-sphinx-issue-9030",
+      "condition": "M",
+      "repeat": 2,
+      "outcome": "passed",
+      "requests": 17,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.332310",
+      "first_edit_request": 10,
+      "first_native_edit_request": 10,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 15,
+          "requests": 13,
+          "kinds": {
+            "read": 11,
+            "edit": 1,
+            "test_or_run": 1,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 3,
+          "requests": 3,
+          "kinds": {
+            "read": 0,
+            "edit": 0,
+            "test_or_run": 3,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 18,
+      "reread_calls": 2
+    },
+    {
+      "batch": "v4",
+      "run_index": 0,
+      "task": "public-sphinx-issue-9030",
+      "condition": "M",
+      "repeat": 3,
+      "outcome": "passed",
+      "requests": 19,
+      "prompt_request": 14,
+      "recorded_prompt_request": 14,
+      "prompt_count": 1,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.349242",
+      "first_edit_request": 11,
+      "first_native_edit_request": 11,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 17,
+          "requests": 13,
+          "kinds": {
+            "read": 13,
+            "edit": 2,
+            "test_or_run": 1,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 5
+        },
+        "after": {
+          "calls": 5,
+          "requests": 5,
+          "kinds": {
+            "read": 4,
+            "edit": 0,
+            "test_or_run": 1,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 5
+    },
+    {
+      "batch": "v2",
+      "run_index": 0,
+      "task": "public-sphinx-issue-9030",
+      "condition": "N",
+      "repeat": 1,
+      "outcome": "behavior_failed",
+      "requests": 20,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.363498",
+      "first_edit_request": null,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 15,
+          "requests": 13,
+          "kinds": {
+            "read": 14,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 1,
+            "other": 0
+          },
+          "reread": 4
+        },
+        "after": {
+          "calls": 7,
+          "requests": 7,
+          "kinds": {
+            "read": 7,
+            "edit": 0,
+            "test_or_run": 0,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 6
+        }
+      },
+      "tool_calls": 22,
+      "reread_calls": 10
+    },
+    {
+      "batch": "v3",
+      "run_index": 21,
+      "task": "public-sphinx-issue-9030",
+      "condition": "N",
+      "repeat": 2,
+      "outcome": "passed",
+      "requests": 17,
+      "prompt_request": null,
+      "recorded_prompt_request": null,
+      "prompt_count": 0,
+      "cost_trigger_request": 14,
+      "settled_cny": "0.306448",
+      "first_edit_request": 10,
+      "first_native_edit_request": null,
+      "split_request": 14,
+      "phases": {
+        "before": {
+          "calls": 15,
+          "requests": 13,
+          "kinds": {
+            "read": 10,
+            "edit": 2,
+            "test_or_run": 1,
+            "list": 2,
+            "other": 0
+          },
+          "reread": 2
+        },
+        "after": {
+          "calls": 3,
+          "requests": 3,
+          "kinds": {
+            "read": 1,
+            "edit": 0,
+            "test_or_run": 2,
+            "list": 0,
+            "other": 0
+          },
+          "reread": 0
+        }
+      },
+      "tool_calls": 18,
+      "reread_calls": 2
+    }
+  ]
+}

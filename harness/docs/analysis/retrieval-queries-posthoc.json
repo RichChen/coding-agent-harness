@@ -1,0 +1,580 @@
+{
+  "slow_k": 4,
+  "slow_tasks": [
+    {
+      "task": "django__django-11211",
+      "prefetch_top5_has_gold": false,
+      "n_steps": [
+        4,
+        41,
+        4,
+        4,
+        4
+      ],
+      "n_mean": 11.4,
+      "p_steps": [
+        41,
+        41,
+        41,
+        10,
+        6
+      ],
+      "p_mean": 27.8,
+      "t_steps": [
+        41,
+        21,
+        8,
+        6,
+        20
+      ],
+      "t_mean": 19.2,
+      "o_steps": [
+        3,
+        3,
+        3,
+        41,
+        3
+      ],
+      "o_mean": 10.6
+    },
+    {
+      "task": "django__django-15973",
+      "prefetch_top5_has_gold": false,
+      "n_steps": [
+        41,
+        41,
+        41,
+        41,
+        41
+      ],
+      "n_mean": 41.0,
+      "p_steps": [
+        41,
+        41,
+        41,
+        41,
+        41
+      ],
+      "p_mean": 41.0,
+      "t_steps": [
+        41,
+        41,
+        41,
+        41,
+        41
+      ],
+      "t_mean": 41.0,
+      "o_steps": [
+        41,
+        13,
+        41,
+        2,
+        27
+      ],
+      "o_mean": 24.8
+    },
+    {
+      "task": "pytest-dev__pytest-10081",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        1,
+        1,
+        3,
+        5,
+        4
+      ],
+      "n_mean": 2.8,
+      "p_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.0,
+      "t_steps": [
+        3,
+        1,
+        3,
+        4,
+        1
+      ],
+      "t_mean": 2.4,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "pytest-dev__pytest-5840",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        5,
+        2,
+        2,
+        4,
+        2
+      ],
+      "n_mean": 3.0,
+      "p_steps": [
+        2,
+        2,
+        5,
+        5,
+        5
+      ],
+      "p_mean": 3.8,
+      "t_steps": [
+        23,
+        41,
+        4,
+        41,
+        4
+      ],
+      "t_mean": 22.6,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "sphinx-doc__sphinx-10323",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        4,
+        2,
+        5,
+        2,
+        2
+      ],
+      "n_mean": 3.0,
+      "p_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.0,
+      "t_steps": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "t_mean": 2.0,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "sphinx-doc__sphinx-10614",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        1,
+        2,
+        2,
+        41,
+        2
+      ],
+      "n_mean": 9.6,
+      "p_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.0,
+      "t_steps": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "t_mean": 1.2,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "sphinx-doc__sphinx-7440",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        4,
+        5,
+        2,
+        2,
+        2
+      ],
+      "n_mean": 3.0,
+      "p_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.0,
+      "t_steps": [
+        2,
+        4,
+        5,
+        5,
+        5
+      ],
+      "t_mean": 4.2,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "sphinx-doc__sphinx-8459",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        41,
+        5,
+        7,
+        24,
+        12
+      ],
+      "n_mean": 17.8,
+      "p_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.0,
+      "t_steps": [
+        31,
+        7,
+        17,
+        8,
+        14
+      ],
+      "t_mean": 15.4,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "sympy__sympy-13091",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        3,
+        41,
+        41,
+        3,
+        6
+      ],
+      "n_mean": 18.8,
+      "p_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.0,
+      "t_steps": [
+        3,
+        3,
+        3,
+        3,
+        41
+      ],
+      "t_mean": 10.6,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "sympy__sympy-19040",
+      "prefetch_top5_has_gold": false,
+      "n_steps": [
+        41,
+        41,
+        11,
+        4,
+        18
+      ],
+      "n_mean": 23.0,
+      "p_steps": [
+        21,
+        15,
+        14,
+        15,
+        10
+      ],
+      "p_mean": 15.0,
+      "t_steps": [
+        13,
+        11,
+        17,
+        5,
+        27
+      ],
+      "t_mean": 14.6,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    },
+    {
+      "task": "sympy__sympy-20428",
+      "prefetch_top5_has_gold": false,
+      "n_steps": [
+        41,
+        41,
+        41,
+        41,
+        41
+      ],
+      "n_mean": 41.0,
+      "p_steps": [
+        41,
+        41,
+        41,
+        41,
+        41
+      ],
+      "p_mean": 41.0,
+      "t_steps": [
+        41,
+        41,
+        41,
+        17,
+        41
+      ],
+      "t_mean": 36.2,
+      "o_steps": [
+        1,
+        41,
+        41,
+        41,
+        41
+      ],
+      "o_mean": 33.0
+    },
+    {
+      "task": "sympy__sympy-21596",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        8,
+        5,
+        5,
+        17,
+        7
+      ],
+      "n_mean": 8.4,
+      "p_steps": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.2,
+      "t_steps": [
+        41,
+        5,
+        20,
+        14,
+        41
+      ],
+      "t_mean": 24.2,
+      "o_steps": [
+        1,
+        1,
+        1,
+        2,
+        1
+      ],
+      "o_mean": 1.2
+    },
+    {
+      "task": "sympy__sympy-22714",
+      "prefetch_top5_has_gold": true,
+      "n_steps": [
+        1,
+        41,
+        1,
+        1,
+        1
+      ],
+      "n_mean": 9.0,
+      "p_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "p_mean": 1.0,
+      "t_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "t_mean": 1.0,
+      "o_steps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "o_mean": 1.0
+    }
+  ],
+  "groups_on_slow_tasks": {
+    "prefetch_hit": {
+      "tasks": 9,
+      "n_mean": 8.377777777777778,
+      "p_mean": 1.3333333333333333,
+      "t_mean": 9.288888888888888,
+      "o_mean": 1.0222222222222221,
+      "p_minus_t": {
+        "diff": -7.955555555555555,
+        "lo": -13.644444444444446,
+        "hi": -2.8
+      },
+      "p_faster_than_t_tasks": 8,
+      "p_slower_than_t_tasks": 0
+    },
+    "prefetch_miss": {
+      "tasks": 4,
+      "n_mean": 29.1,
+      "p_mean": 31.2,
+      "t_mean": 27.75,
+      "o_mean": 17.35,
+      "p_minus_t": {
+        "diff": 3.4499999999999997,
+        "lo": 0.20000000000000018,
+        "hi": 6.699999999999999
+      },
+      "p_faster_than_t_tasks": 0,
+      "p_slower_than_t_tasks": 3
+    }
+  },
+  "groups_on_other_tasks": {
+    "prefetch_hit": {
+      "tasks": 39,
+      "n_mean": 2.4051282051282055,
+      "p_mean": 3.758974358974359,
+      "t_mean": 2.4615384615384617,
+      "o_mean": 1.6564102564102565,
+      "p_minus_t": {
+        "diff": 1.2974358974358977,
+        "lo": -0.805128205128205,
+        "hi": 3.8410256410256407
+      },
+      "p_faster_than_t_tasks": 24,
+      "p_slower_than_t_tasks": 8
+    },
+    "prefetch_miss": {
+      "tasks": 4,
+      "n_mean": 2.65,
+      "p_mean": 2.8499999999999996,
+      "t_mean": 2.75,
+      "o_mean": 4.4,
+      "p_minus_t": {
+        "diff": 0.09999999999999987,
+        "lo": 0.0,
+        "hi": 0.2999999999999996
+      },
+      "p_faster_than_t_tasks": 0,
+      "p_slower_than_t_tasks": 1
+    }
+  },
+  "d3_configs_vs_full_hybrid": {
+    "full|embedding": {
+      "hit_where_ref_misses": [
+        "django__django-15973",
+        "sympy__sympy-19040"
+      ],
+      "miss_where_ref_hits": [
+        "pytest-dev__pytest-5840"
+      ]
+    },
+    "title|embedding": {
+      "hit_where_ref_misses": [
+        "django__django-15973"
+      ],
+      "miss_where_ref_hits": [
+        "sympy__sympy-21596",
+        "sympy__sympy-22714"
+      ]
+    },
+    "title|hybrid": {
+      "hit_where_ref_misses": [
+        "django__django-15973"
+      ],
+      "miss_where_ref_hits": [
+        "sympy__sympy-21596",
+        "sympy__sympy-22714"
+      ]
+    },
+    "first_para|bm25": {
+      "hit_where_ref_misses": [],
+      "miss_where_ref_hits": []
+    },
+    "first_para|embedding": {
+      "hit_where_ref_misses": [
+        "django__django-15973",
+        "sympy__sympy-19040"
+      ],
+      "miss_where_ref_hits": []
+    },
+    "identifiers|bm25": {
+      "hit_where_ref_misses": [],
+      "miss_where_ref_hits": [
+        "pytest-dev__pytest-5840",
+        "sphinx-doc__sphinx-10323"
+      ]
+    }
+  }
+}
