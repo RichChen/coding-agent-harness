@@ -59,9 +59,9 @@
 
 ## 4. 测试：哪些能直接跑，哪些需要未公开材料
 
-不需要 API key，LLM 全部是 mock。截至提交 `ecb1446`，`pytest --collect-only` 在 103 个 git 跟踪的测试模块里收集到 1311 个测试。以前在干净克隆里实测的是 **654 通过、25 跳过、4 失败**，那是更早的代码；之后的通过和跳过拆分没有重新测，因为有些 opt-in 测试在 Docker 守护进程可用时会真的启动容器。
+不需要 API key，LLM 全部是 mock。截至提交 `108baa6`，`pytest --collect-only` 在 110 个 git 跟踪的测试模块里收集到 1424 个测试。在这个提交上、原开发机器（Windows，有下表的私有文件）实测，不设 `HARNESS_DOCKER_TESTS`、不加 `--deselect`：**1384 通过、40 跳过、0 失败**。`tests/test_container_py36.py` 的 2 个测试只在 Docker 守护进程和 `python:3.6.15-slim-buster` 镜像都可用时运行，否则是 1382 通过、42 跳过。以前在干净克隆里实测的 654 通过、25 跳过、4 失败是更早的代码。
 
-跳过的是需要真实 Linux / Docker 的 opt-in 测试，以及需要本机 `runs/a5-main` 运行数据的测试。下面 4 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过：
+跳过的是需要真实 Linux / Docker 的 opt-in 测试，以及需要本机 `runs/a5-main` 运行数据的测试。在干净克隆里，下面 4 个测试会失败：它们读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过：
 
 | 测试 | 缺的文件 | 原因 |
 | --- | --- | --- |
@@ -77,7 +77,7 @@ python -m pytest -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_exp
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 1307 selected, 4 deselected（ecb1446 上 pytest --collect-only 的计数）
+# 1420 selected, 4 deselected（108baa6 上 pytest --collect-only 的计数）
 ```
 
 ## 5. 运行证据（`upgrade/evidence/`）
