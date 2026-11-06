@@ -310,6 +310,33 @@ class DockerExecutionBackend:
                                    elapsed_s=self.cleanup_elapsed_s))
         return self.cleanup_ok
 
+    async def _settle_exec(self, proc, tasks, kind):
+        if tasks:
+            await asyncio.wait(tasks, timeout=.2)
+        cli_cleanup_error = None
+        prior_kind = kind
+        try:
+            await _reap_cli(proc, tasks)
+        except (Exception, asyncio.CancelledError) as exc:
+            if prior_kind not in ("tool_timeout", "user_cancelled"):
+                kind = 'cleanup_failed'
+            cli_cleanup_error = exc
+            self.lifecycle.append(dict(event='cli_cleanup_error', error=repr(exc)))
+        for t in tasks:
+            if not t.done(): t.cancel()
+        if kind and kind not in ("tool_timeout", "user_cancelled"):
+            # A command timeout or a parent deadline must leave the container
+            # up: the model needs the timeout result, and the loop exports
+            # the workspace before it destroys the session.
+            await self.close()
+        if cli_cleanup_error is not None and kind not in ("tool_timeout", "user_cancelled"):
+            self.cleanup_ok = False
+        captured = [None, None]
+        for idx, t in enumerate(tasks[:2]):
+            if t.done() and not t.cancelled() and t.exception() is None:
+                captured[idx] = t.result()
+        return kind, captured
+
     async def execute(self, request: ExecutionRequest):
         start = time.monotonic()
         def result(status, kind=None, **kw):
@@ -392,31 +419,20 @@ class DockerExecutionBackend:
         except (Exception,):
             kind = "docker_exec_failed"
         finally:
-            if tasks:
-                await asyncio.wait(tasks, timeout=.2)
-            cli_cleanup_error = None
-            prior_kind = kind
+            # The outer tool deadline fires at the same instant as ours, so its
+            # cancel can land here. Cleanup still runs to the end, and the
+            # timeout result is returned rather than lost.
+            settle = asyncio.ensure_future(self._settle_exec(proc, tasks, kind))
             try:
-                await _reap_cli(proc, tasks)
-            except (Exception, asyncio.CancelledError) as exc:
-                if prior_kind not in ("tool_timeout", "user_cancelled"):
-                    kind = 'cleanup_failed'
-                cli_cleanup_error = exc
-                self.lifecycle.append(dict(event='cli_cleanup_error', error=repr(exc)))
-            if kind and kind not in ("tool_timeout", "user_cancelled"):
-                # A command timeout or a parent deadline must leave the container
-                # up: the model needs the timeout result, and the loop exports
-                # the workspace before it destroys the session.
-                await self.close()
-            if cli_cleanup_error is not None and kind not in ("tool_timeout", "user_cancelled"):
-                self.cleanup_ok = False
-            if tasks:
-                for idx in (0,1):
-                    t = tasks[idx]
-                    if not t.cancelled() and t.exception() is None:
-                        if idx == 0: out = t.result()
-                        else: err = t.result()
-            self._busy = False
+                while True:
+                    try:
+                        kind, captured = await asyncio.shield(settle)
+                        break
+                    except asyncio.CancelledError:
+                        if settle.done(): raise
+                out, err = captured[0] or out, captured[1] or err
+            finally:
+                self._busy = False
         if kind and not self.cleanup_ok and kind not in ("tool_timeout", "user_cancelled"):
             status, kind = ExecutionStatus.OUTCOME_UNKNOWN, "cleanup_failed"
         elif kind == "user_cancelled": status = ExecutionStatus.CANCELLED
