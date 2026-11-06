@@ -1,0 +1,4619 @@
+{
+  "schema": "reread-analysis.v1",
+  "definitions": "- A read call is a tool call with at least one read unit.\n- A read unit is repeated when earlier read units, issued at earlier model steps (calls in the same step were\n  proposed together and could not see each other's results), already cover at least 20% of it: same file and\n  overlapping line ranges, or the same search pattern on the same paths; counting only earlier reads that no\n  write touched in between (a write to a file, to a directory above it, or under the searched paths; a command\n  that ran code touches files outside the workspace and under build/output directories). Reads that reach 20%\n  only with earlier reads invalidated by a write are counted separately as reread_after_write and are not\n  re-reads. The 20% floor keeps sequential paging (next page starting at the previous page's last line) out.\n- A re-read call has at least one repeated unit. Covered re-read: every unit of the call is repeated and at\n  least 80% of each line range was already read (whole-file reads need a known file length).\n- View state of a re-read: the view sent to the model at that step (context.prepared) is searched for the tool\n  messages of the earlier calls counted above. Per repeated unit: raw = the earlier results still verbatim in\n  the view cover at least 80% of it; partial = they cover 20-80%; elided = less than 20% verbatim and at least\n  one \"[Elided result of ...]\" placeholder; absent = otherwise (the earlier tool messages are gone from the\n  view). A call is raw if all its repeated units are raw, partial if any unit is raw or partial, otherwise\n  elided or absent.\n- Position: early if step < model_calls / 2. Masking started: the view at that step already holds a placeholder.\n- Gap: tool calls between a re-read and the latest earlier call that alone covers at least 20% of a repeated\n  unit (1 = the previous call; smallest over the repeated units). Micro-compact\n  keeps the latest keep_recent=4 tool results verbatim, so a gap above about 4 means the earlier result was\n  normally elided by then.",
+  "coverage_threshold": 0.8,
+  "excluded": {
+    "A5 excluded:infra_retired": 7,
+    "A6-R excluded:infra_retired": 31,
+    "CR-2 excluded:infra_error": 12,
+    "CR-2 excluded:infra_retired": 159,
+    "P4 excluded:invalid_candidate": 1,
+    "P4 excluded:unknown": 1
+  },
+  "groups": {
+    "A5 all": {
+      "runs": 392,
+      "tool_calls": 10995,
+      "read_calls": 6617,
+      "reread_calls": 1701,
+      "covered_calls": 1521,
+      "reread_after_write_calls": 674,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 15.5,
+      "reread_pct_of_read_calls": 25.7,
+      "covered_pct_of_tool_calls": 13.8,
+      "masked_reread_pct_of_tool_calls": 13.2,
+      "masked_or_partial_reread_pct_of_tool_calls": 14.1,
+      "mean_run_reread_pct": 10.4,
+      "gap_to_latest_prior": {
+        "median": 6,
+        "p75": 9,
+        "le_4_pct": 13.9,
+        "le_8_pct": 74.4,
+        "le_16_pct": 94.9,
+        "histogram": {
+          "1": 136,
+          "2": 49,
+          "3": 25,
+          "4": 26,
+          "5": 287,
+          "6": 448,
+          "7": 177,
+          "8": 118,
+          "9": 89,
+          "10": 69,
+          "11": 64,
+          "12": 31,
+          "13": 26,
+          "14": 29,
+          "15": 19,
+          "16": 21,
+          ">16": 87
+        }
+      },
+      "view_state": {
+        "elided": 1448,
+        "raw": 149,
+        "partial": 104
+      },
+      "view_state_pct": {
+        "elided": 85.1,
+        "raw": 8.8,
+        "partial": 6.1
+      },
+      "view_state_after_first_mask": {
+        "elided": 1448,
+        "raw": 133,
+        "partial": 85
+      },
+      "by_source": {
+        "cat": {
+          "partial": 1,
+          "raw": 10,
+          "elided": 13
+        },
+        "read_file": {
+          "elided": 1368,
+          "partial": 102,
+          "raw": 44
+        },
+        "search": {
+          "raw": 95,
+          "elided": 62
+        },
+        "sed": {
+          "elided": 5,
+          "partial": 1
+        }
+      },
+      "read_calls_by_source": {
+        "search": 2729,
+        "read_file": 3795,
+        "grep": 11,
+        "head": 9,
+        "sed": 15,
+        "cat": 55,
+        "tail": 3
+      },
+      "position": {
+        "early": 990,
+        "late": 711
+      },
+      "mask_position": {
+        "after_first_mask": 1666,
+        "before_first_mask": 35
+      },
+      "runs_with_masking": 392,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 381
+    },
+    "A5 b0": {
+      "runs": 224,
+      "tool_calls": 6244,
+      "read_calls": 3737,
+      "reread_calls": 932,
+      "covered_calls": 835,
+      "reread_after_write_calls": 389,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 14.9,
+      "reread_pct_of_read_calls": 24.9,
+      "covered_pct_of_tool_calls": 13.4,
+      "masked_reread_pct_of_tool_calls": 12.6,
+      "masked_or_partial_reread_pct_of_tool_calls": 13.4,
+      "mean_run_reread_pct": 10.2,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 9,
+        "le_4_pct": 14.8,
+        "le_8_pct": 74.5,
+        "le_16_pct": 94.5,
+        "histogram": {
+          "1": 86,
+          "2": 30,
+          "3": 13,
+          "4": 9,
+          "5": 150,
+          "6": 250,
+          "7": 99,
+          "8": 57,
+          "9": 38,
+          "10": 48,
+          "11": 37,
+          "12": 17,
+          "13": 15,
+          "14": 17,
+          "15": 8,
+          "16": 7,
+          ">16": 51
+        }
+      },
+      "view_state": {
+        "elided": 785,
+        "raw": 93,
+        "partial": 54
+      },
+      "view_state_pct": {
+        "elided": 84.2,
+        "raw": 10.0,
+        "partial": 5.8
+      },
+      "view_state_after_first_mask": {
+        "elided": 785,
+        "raw": 84,
+        "partial": 41
+      },
+      "by_source": {
+        "cat": {
+          "elided": 4,
+          "raw": 7
+        },
+        "read_file": {
+          "elided": 756,
+          "partial": 54,
+          "raw": 25
+        },
+        "search": {
+          "raw": 61,
+          "elided": 24
+        },
+        "sed": {
+          "elided": 1
+        }
+      },
+      "read_calls_by_source": {
+        "search": 1530,
+        "read_file": 2155,
+        "sed": 10,
+        "grep": 2,
+        "head": 4,
+        "cat": 34,
+        "tail": 2
+      },
+      "position": {
+        "early": 553,
+        "late": 379
+      },
+      "mask_position": {
+        "after_first_mask": 910,
+        "before_first_mask": 22
+      },
+      "runs_with_masking": 224,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 214
+    },
+    "A5 b2": {
+      "runs": 168,
+      "tool_calls": 4751,
+      "read_calls": 2880,
+      "reread_calls": 769,
+      "covered_calls": 686,
+      "reread_after_write_calls": 285,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 16.2,
+      "reread_pct_of_read_calls": 26.7,
+      "covered_pct_of_tool_calls": 14.4,
+      "masked_reread_pct_of_tool_calls": 14.0,
+      "masked_or_partial_reread_pct_of_tool_calls": 15.0,
+      "mean_run_reread_pct": 10.6,
+      "gap_to_latest_prior": {
+        "median": 6,
+        "p75": 9,
+        "le_4_pct": 12.7,
+        "le_8_pct": 74.4,
+        "le_16_pct": 95.3,
+        "histogram": {
+          "1": 50,
+          "2": 19,
+          "3": 12,
+          "4": 17,
+          "5": 137,
+          "6": 198,
+          "7": 78,
+          "8": 61,
+          "9": 51,
+          "10": 21,
+          "11": 27,
+          "12": 14,
+          "13": 11,
+          "14": 12,
+          "15": 11,
+          "16": 14,
+          ">16": 36
+        }
+      },
+      "view_state": {
+        "elided": 663,
+        "raw": 56,
+        "partial": 50
+      },
+      "view_state_pct": {
+        "elided": 86.2,
+        "raw": 7.3,
+        "partial": 6.5
+      },
+      "view_state_after_first_mask": {
+        "elided": 663,
+        "raw": 49,
+        "partial": 44
+      },
+      "by_source": {
+        "cat": {
+          "partial": 1,
+          "raw": 3,
+          "elided": 9
+        },
+        "read_file": {
+          "elided": 612,
+          "raw": 19,
+          "partial": 48
+        },
+        "search": {
+          "raw": 34,
+          "elided": 38
+        },
+        "sed": {
+          "partial": 1,
+          "elided": 4
+        }
+      },
+      "read_calls_by_source": {
+        "search": 1199,
+        "read_file": 1640,
+        "grep": 9,
+        "head": 5,
+        "cat": 21,
+        "sed": 5,
+        "tail": 1
+      },
+      "position": {
+        "early": 437,
+        "late": 332
+      },
+      "mask_position": {
+        "after_first_mask": 756,
+        "before_first_mask": 13
+      },
+      "runs_with_masking": 168,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 167
+    },
+    "A6-R all": {
+      "runs": 318,
+      "tool_calls": 13404,
+      "read_calls": 9405,
+      "reread_calls": 4101,
+      "covered_calls": 3878,
+      "reread_after_write_calls": 642,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 30.6,
+      "reread_pct_of_read_calls": 43.6,
+      "covered_pct_of_tool_calls": 28.9,
+      "masked_reread_pct_of_tool_calls": 28.2,
+      "masked_or_partial_reread_pct_of_tool_calls": 29.2,
+      "mean_run_reread_pct": 21.8,
+      "gap_to_latest_prior": {
+        "median": 7,
+        "p75": 8,
+        "le_4_pct": 7.4,
+        "le_8_pct": 75.7,
+        "le_16_pct": 95.4,
+        "histogram": {
+          "1": 108,
+          "2": 73,
+          "3": 64,
+          "4": 59,
+          "5": 463,
+          "6": 1272,
+          "7": 551,
+          "8": 513,
+          "9": 248,
+          "10": 142,
+          "11": 101,
+          "12": 87,
+          "13": 64,
+          "14": 72,
+          "15": 48,
+          "16": 48,
+          ">16": 188
+        }
+      },
+      "view_state": {
+        "elided": 3780,
+        "partial": 129,
+        "raw": 192
+      },
+      "view_state_pct": {
+        "elided": 92.2,
+        "partial": 3.1,
+        "raw": 4.7
+      },
+      "view_state_after_first_mask": {
+        "elided": 3780,
+        "partial": 122,
+        "raw": 174
+      },
+      "by_source": {
+        "cat": {
+          "elided": 29,
+          "raw": 7
+        },
+        "grep": {
+          "elided": 3
+        },
+        "read_file": {
+          "elided": 3550,
+          "partial": 127,
+          "raw": 77
+        },
+        "search": {
+          "elided": 152,
+          "raw": 89
+        },
+        "sed": {
+          "elided": 46,
+          "partial": 2,
+          "raw": 19
+        }
+      },
+      "read_calls_by_source": {
+        "search": 2905,
+        "read_file": 6312,
+        "sed": 105,
+        "cat": 74,
+        "head": 5,
+        "grep": 4
+      },
+      "position": {
+        "early": 1980,
+        "late": 2121
+      },
+      "mask_position": {
+        "after_first_mask": 4076,
+        "before_first_mask": 25
+      },
+      "runs_with_masking": 318,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 303
+    },
+    "A6-R r0": {
+      "runs": 159,
+      "tool_calls": 6432,
+      "read_calls": 4392,
+      "reread_calls": 1602,
+      "covered_calls": 1502,
+      "reread_after_write_calls": 286,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 24.9,
+      "reread_pct_of_read_calls": 36.5,
+      "covered_pct_of_tool_calls": 23.4,
+      "masked_reread_pct_of_tool_calls": 23.0,
+      "masked_or_partial_reread_pct_of_tool_calls": 23.8,
+      "mean_run_reread_pct": 18.2,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 9,
+        "le_4_pct": 7.2,
+        "le_8_pct": 74.3,
+        "le_16_pct": 94.1,
+        "histogram": {
+          "1": 52,
+          "2": 24,
+          "3": 21,
+          "4": 18,
+          "5": 214,
+          "6": 504,
+          "7": 193,
+          "8": 165,
+          "9": 79,
+          "10": 63,
+          "11": 56,
+          "12": 34,
+          "13": 24,
+          "14": 26,
+          "15": 16,
+          "16": 19,
+          ">16": 94
+        }
+      },
+      "view_state": {
+        "elided": 1480,
+        "raw": 74,
+        "partial": 48
+      },
+      "view_state_pct": {
+        "elided": 92.4,
+        "raw": 4.6,
+        "partial": 3.0
+      },
+      "view_state_after_first_mask": {
+        "elided": 1480,
+        "raw": 63,
+        "partial": 47
+      },
+      "by_source": {
+        "cat": {
+          "elided": 12,
+          "raw": 1
+        },
+        "grep": {
+          "elided": 1
+        },
+        "read_file": {
+          "elided": 1416,
+          "partial": 48,
+          "raw": 35
+        },
+        "search": {
+          "raw": 38,
+          "elided": 42
+        },
+        "sed": {
+          "elided": 9
+        }
+      },
+      "read_calls_by_source": {
+        "search": 1500,
+        "read_file": 2829,
+        "sed": 28,
+        "cat": 31,
+        "head": 3,
+        "grep": 1
+      },
+      "position": {
+        "early": 772,
+        "late": 830
+      },
+      "mask_position": {
+        "after_first_mask": 1590,
+        "before_first_mask": 12
+      },
+      "runs_with_masking": 159,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 151
+    },
+    "A6-R r1": {
+      "runs": 159,
+      "tool_calls": 6972,
+      "read_calls": 5013,
+      "reread_calls": 2499,
+      "covered_calls": 2376,
+      "reread_after_write_calls": 356,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 35.8,
+      "reread_pct_of_read_calls": 49.9,
+      "covered_pct_of_tool_calls": 34.1,
+      "masked_reread_pct_of_tool_calls": 33.0,
+      "masked_or_partial_reread_pct_of_tool_calls": 34.2,
+      "mean_run_reread_pct": 25.4,
+      "gap_to_latest_prior": {
+        "median": 7,
+        "p75": 8,
+        "le_4_pct": 7.6,
+        "le_8_pct": 76.5,
+        "le_16_pct": 96.2,
+        "histogram": {
+          "1": 56,
+          "2": 49,
+          "3": 43,
+          "4": 41,
+          "5": 249,
+          "6": 768,
+          "7": 358,
+          "8": 348,
+          "9": 169,
+          "10": 79,
+          "11": 45,
+          "12": 53,
+          "13": 40,
+          "14": 46,
+          "15": 32,
+          "16": 29,
+          ">16": 94
+        }
+      },
+      "view_state": {
+        "elided": 2300,
+        "partial": 81,
+        "raw": 118
+      },
+      "view_state_pct": {
+        "elided": 92.0,
+        "partial": 3.2,
+        "raw": 4.7
+      },
+      "view_state_after_first_mask": {
+        "elided": 2300,
+        "partial": 75,
+        "raw": 111
+      },
+      "by_source": {
+        "cat": {
+          "raw": 6,
+          "elided": 17
+        },
+        "grep": {
+          "elided": 2
+        },
+        "read_file": {
+          "elided": 2134,
+          "partial": 79,
+          "raw": 42
+        },
+        "search": {
+          "elided": 110,
+          "raw": 51
+        },
+        "sed": {
+          "elided": 37,
+          "partial": 2,
+          "raw": 19
+        }
+      },
+      "read_calls_by_source": {
+        "search": 1405,
+        "read_file": 3483,
+        "sed": 77,
+        "cat": 43,
+        "head": 2,
+        "grep": 3
+      },
+      "position": {
+        "early": 1208,
+        "late": 1291
+      },
+      "mask_position": {
+        "after_first_mask": 2486,
+        "before_first_mask": 13
+      },
+      "runs_with_masking": 159,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 152
+    },
+    "CR-2 all": {
+      "runs": 1108,
+      "tool_calls": 36989,
+      "read_calls": 29360,
+      "reread_calls": 14925,
+      "covered_calls": 13476,
+      "reread_after_write_calls": 777,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 40.3,
+      "reread_pct_of_read_calls": 50.8,
+      "covered_pct_of_tool_calls": 36.4,
+      "masked_reread_pct_of_tool_calls": 35.4,
+      "masked_or_partial_reread_pct_of_tool_calls": 36.3,
+      "mean_run_reread_pct": 30.9,
+      "gap_to_latest_prior": {
+        "median": 6,
+        "p75": 7,
+        "le_4_pct": 11.5,
+        "le_8_pct": 82.7,
+        "le_16_pct": 96.5,
+        "histogram": {
+          "1": 1095,
+          "2": 315,
+          "3": 169,
+          "4": 142,
+          "5": 4906,
+          "6": 3441,
+          "7": 1456,
+          "8": 817,
+          "9": 517,
+          "10": 463,
+          "11": 338,
+          "12": 234,
+          "13": 173,
+          "14": 126,
+          "15": 110,
+          "16": 100,
+          ">16": 523
+        }
+      },
+      "view_state": {
+        "elided": 13089,
+        "raw": 1504,
+        "partial": 332
+      },
+      "view_state_pct": {
+        "elided": 87.7,
+        "raw": 10.1,
+        "partial": 2.2
+      },
+      "view_state_after_first_mask": {
+        "elided": 13089,
+        "raw": 1429,
+        "partial": 308
+      },
+      "by_source": {
+        "awk": {
+          "elided": 7
+        },
+        "cat": {
+          "elided": 62,
+          "raw": 25,
+          "partial": 1
+        },
+        "grep": {
+          "elided": 85,
+          "raw": 42,
+          "partial": 14
+        },
+        "head": {
+          "raw": 1
+        },
+        "read_file": {
+          "elided": 4728,
+          "raw": 21,
+          "partial": 105
+        },
+        "search": {
+          "elided": 4664,
+          "raw": 1253,
+          "partial": 78
+        },
+        "sed": {
+          "elided": 3543,
+          "raw": 162,
+          "partial": 134
+        }
+      },
+      "read_calls_by_source": {
+        "search": 14877,
+        "read_file": 9327,
+        "sed": 4789,
+        "head": 22,
+        "grep": 192,
+        "cat": 144,
+        "tail": 2,
+        "awk": 7
+      },
+      "position": {
+        "early": 5536,
+        "late": 9389
+      },
+      "mask_position": {
+        "after_first_mask": 14826,
+        "before_first_mask": 99
+      },
+      "runs_with_masking": 1102,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 1047
+    },
+    "CR-2 n": {
+      "runs": 275,
+      "tool_calls": 9739,
+      "read_calls": 7721,
+      "reread_calls": 3898,
+      "covered_calls": 3526,
+      "reread_after_write_calls": 190,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 40.0,
+      "reread_pct_of_read_calls": 50.5,
+      "covered_pct_of_tool_calls": 36.2,
+      "masked_reread_pct_of_tool_calls": 35.8,
+      "masked_or_partial_reread_pct_of_tool_calls": 36.7,
+      "mean_run_reread_pct": 31.2,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 8,
+        "le_4_pct": 9.8,
+        "le_8_pct": 80.8,
+        "le_16_pct": 95.6,
+        "histogram": {
+          "1": 205,
+          "2": 89,
+          "3": 50,
+          "4": 38,
+          "5": 1126,
+          "6": 998,
+          "7": 384,
+          "8": 260,
+          "9": 136,
+          "10": 147,
+          "11": 80,
+          "12": 64,
+          "13": 57,
+          "14": 33,
+          "15": 27,
+          "16": 31,
+          ">16": 173
+        }
+      },
+      "view_state": {
+        "elided": 3484,
+        "raw": 320,
+        "partial": 94
+      },
+      "view_state_pct": {
+        "elided": 89.4,
+        "raw": 8.2,
+        "partial": 2.4
+      },
+      "view_state_after_first_mask": {
+        "elided": 3484,
+        "raw": 301,
+        "partial": 89
+      },
+      "by_source": {
+        "awk": {
+          "elided": 2
+        },
+        "cat": {
+          "elided": 14,
+          "raw": 15
+        },
+        "grep": {
+          "elided": 21,
+          "partial": 6,
+          "raw": 4
+        },
+        "head": {
+          "raw": 1
+        },
+        "read_file": {
+          "elided": 1342,
+          "raw": 12,
+          "partial": 40
+        },
+        "search": {
+          "elided": 1223,
+          "raw": 236,
+          "partial": 16
+        },
+        "sed": {
+          "elided": 882,
+          "raw": 52,
+          "partial": 32
+        }
+      },
+      "read_calls_by_source": {
+        "search": 3855,
+        "read_file": 2577,
+        "sed": 1195,
+        "head": 8,
+        "cat": 42,
+        "grep": 42,
+        "awk": 2
+      },
+      "position": {
+        "early": 1394,
+        "late": 2504
+      },
+      "mask_position": {
+        "after_first_mask": 3874,
+        "before_first_mask": 24
+      },
+      "runs_with_masking": 275,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 263
+    },
+    "CR-2 o": {
+      "runs": 277,
+      "tool_calls": 8884,
+      "read_calls": 7077,
+      "reread_calls": 3647,
+      "covered_calls": 3264,
+      "reread_after_write_calls": 202,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 41.1,
+      "reread_pct_of_read_calls": 51.5,
+      "covered_pct_of_tool_calls": 36.7,
+      "masked_reread_pct_of_tool_calls": 34.2,
+      "masked_or_partial_reread_pct_of_tool_calls": 35.0,
+      "mean_run_reread_pct": 31.7,
+      "gap_to_latest_prior": {
+        "median": 5,
+        "p75": 7,
+        "le_4_pct": 16.0,
+        "le_8_pct": 84.5,
+        "le_16_pct": 97.1,
+        "histogram": {
+          "1": 411,
+          "2": 90,
+          "3": 43,
+          "4": 40,
+          "5": 1301,
+          "6": 712,
+          "7": 323,
+          "8": 163,
+          "9": 110,
+          "10": 88,
+          "11": 87,
+          "12": 43,
+          "13": 38,
+          "14": 38,
+          "15": 31,
+          "16": 23,
+          ">16": 106
+        }
+      },
+      "view_state": {
+        "elided": 3040,
+        "raw": 535,
+        "partial": 72
+      },
+      "view_state_pct": {
+        "elided": 83.4,
+        "raw": 14.7,
+        "partial": 2.0
+      },
+      "view_state_after_first_mask": {
+        "elided": 3040,
+        "raw": 519,
+        "partial": 71
+      },
+      "by_source": {
+        "awk": {
+          "elided": 1
+        },
+        "cat": {
+          "elided": 6,
+          "raw": 9,
+          "partial": 1
+        },
+        "grep": {
+          "elided": 14,
+          "raw": 21,
+          "partial": 4
+        },
+        "read_file": {
+          "elided": 817,
+          "partial": 9,
+          "raw": 4
+        },
+        "search": {
+          "elided": 1219,
+          "raw": 440,
+          "partial": 26
+        },
+        "sed": {
+          "elided": 983,
+          "raw": 61,
+          "partial": 32
+        }
+      },
+      "read_calls_by_source": {
+        "read_file": 1818,
+        "search": 3765,
+        "sed": 1397,
+        "grep": 55,
+        "cat": 35,
+        "tail": 2,
+        "head": 4,
+        "awk": 1
+      },
+      "position": {
+        "early": 1367,
+        "late": 2280
+      },
+      "mask_position": {
+        "after_first_mask": 3630,
+        "before_first_mask": 17
+      },
+      "runs_with_masking": 276,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 266
+    },
+    "CR-2 p": {
+      "runs": 279,
+      "tool_calls": 8655,
+      "read_calls": 6698,
+      "reread_calls": 3391,
+      "covered_calls": 3026,
+      "reread_after_write_calls": 190,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 39.2,
+      "reread_pct_of_read_calls": 50.6,
+      "covered_pct_of_tool_calls": 35.0,
+      "masked_reread_pct_of_tool_calls": 34.6,
+      "masked_or_partial_reread_pct_of_tool_calls": 35.6,
+      "mean_run_reread_pct": 28.9,
+      "gap_to_latest_prior": {
+        "median": 6,
+        "p75": 7,
+        "le_4_pct": 10.9,
+        "le_8_pct": 83.1,
+        "le_16_pct": 96.9,
+        "histogram": {
+          "1": 228,
+          "2": 71,
+          "3": 40,
+          "4": 31,
+          "5": 1235,
+          "6": 779,
+          "7": 303,
+          "8": 130,
+          "9": 120,
+          "10": 102,
+          "11": 77,
+          "12": 58,
+          "13": 38,
+          "14": 21,
+          "15": 28,
+          "16": 25,
+          ">16": 105
+        }
+      },
+      "view_state": {
+        "elided": 2997,
+        "raw": 314,
+        "partial": 80
+      },
+      "view_state_pct": {
+        "elided": 88.4,
+        "raw": 9.3,
+        "partial": 2.4
+      },
+      "view_state_after_first_mask": {
+        "elided": 2997,
+        "raw": 289,
+        "partial": 72
+      },
+      "by_source": {
+        "awk": {
+          "elided": 1
+        },
+        "cat": {
+          "elided": 25,
+          "raw": 1
+        },
+        "grep": {
+          "elided": 36,
+          "raw": 17,
+          "partial": 4
+        },
+        "read_file": {
+          "elided": 811,
+          "partial": 16,
+          "raw": 2
+        },
+        "search": {
+          "elided": 1124,
+          "raw": 272,
+          "partial": 23
+        },
+        "sed": {
+          "elided": 1000,
+          "partial": 37,
+          "raw": 22
+        }
+      },
+      "read_calls_by_source": {
+        "read_file": 1887,
+        "search": 3408,
+        "sed": 1279,
+        "head": 4,
+        "grep": 76,
+        "cat": 43,
+        "awk": 1
+      },
+      "position": {
+        "early": 1258,
+        "late": 2133
+      },
+      "mask_position": {
+        "after_first_mask": 3358,
+        "before_first_mask": 33
+      },
+      "runs_with_masking": 276,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 256
+    },
+    "CR-2 t": {
+      "runs": 277,
+      "tool_calls": 9711,
+      "read_calls": 7864,
+      "reread_calls": 3989,
+      "covered_calls": 3660,
+      "reread_after_write_calls": 195,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 41.1,
+      "reread_pct_of_read_calls": 50.7,
+      "covered_pct_of_tool_calls": 37.7,
+      "masked_reread_pct_of_tool_calls": 36.7,
+      "masked_or_partial_reread_pct_of_tool_calls": 37.6,
+      "mean_run_reread_pct": 31.8,
+      "gap_to_latest_prior": {
+        "median": 6,
+        "p75": 7,
+        "le_4_pct": 9.7,
+        "le_8_pct": 82.5,
+        "le_16_pct": 96.5,
+        "histogram": {
+          "1": 251,
+          "2": 65,
+          "3": 36,
+          "4": 33,
+          "5": 1244,
+          "6": 952,
+          "7": 446,
+          "8": 264,
+          "9": 151,
+          "10": 126,
+          "11": 94,
+          "12": 69,
+          "13": 40,
+          "14": 34,
+          "15": 24,
+          "16": 21,
+          ">16": 139
+        }
+      },
+      "view_state": {
+        "elided": 3568,
+        "partial": 86,
+        "raw": 335
+      },
+      "view_state_pct": {
+        "elided": 89.4,
+        "partial": 2.2,
+        "raw": 8.4
+      },
+      "view_state_after_first_mask": {
+        "elided": 3568,
+        "partial": 76,
+        "raw": 320
+      },
+      "by_source": {
+        "awk": {
+          "elided": 3
+        },
+        "cat": {
+          "elided": 17
+        },
+        "grep": {
+          "elided": 14
+        },
+        "read_file": {
+          "elided": 1758,
+          "partial": 40,
+          "raw": 3
+        },
+        "search": {
+          "elided": 1098,
+          "raw": 305,
+          "partial": 13
+        },
+        "sed": {
+          "elided": 678,
+          "raw": 27,
+          "partial": 33
+        }
+      },
+      "read_calls_by_source": {
+        "search": 3849,
+        "read_file": 3045,
+        "sed": 918,
+        "cat": 24,
+        "grep": 19,
+        "head": 6,
+        "awk": 3
+      },
+      "position": {
+        "early": 1517,
+        "late": 2472
+      },
+      "mask_position": {
+        "after_first_mask": 3964,
+        "before_first_mask": 25
+      },
+      "runs_with_masking": 275,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 262
+    },
+    "P4 I": {
+      "runs": 18,
+      "tool_calls": 337,
+      "read_calls": 282,
+      "reread_calls": 102,
+      "covered_calls": 92,
+      "reread_after_write_calls": 3,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 30.3,
+      "reread_pct_of_read_calls": 36.2,
+      "covered_pct_of_tool_calls": 27.3,
+      "masked_reread_pct_of_tool_calls": 29.1,
+      "masked_or_partial_reread_pct_of_tool_calls": 29.7,
+      "mean_run_reread_pct": 24.1,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 8,
+        "le_4_pct": 3.9,
+        "le_8_pct": 78.4,
+        "le_16_pct": 98.0,
+        "histogram": {
+          "1": 2,
+          "2": 0,
+          "3": 1,
+          "4": 1,
+          "5": 27,
+          "6": 28,
+          "7": 10,
+          "8": 11,
+          "9": 6,
+          "10": 4,
+          "11": 2,
+          "12": 1,
+          "13": 1,
+          "14": 0,
+          "15": 3,
+          "16": 3,
+          ">16": 2
+        }
+      },
+      "view_state": {
+        "elided": 98,
+        "raw": 2,
+        "partial": 2
+      },
+      "view_state_pct": {
+        "elided": 96.1,
+        "raw": 2.0,
+        "partial": 2.0
+      },
+      "view_state_after_first_mask": {
+        "elided": 98,
+        "raw": 2,
+        "partial": 2
+      },
+      "by_source": {
+        "read_file": {
+          "elided": 24,
+          "partial": 1
+        },
+        "search": {
+          "elided": 27,
+          "raw": 2
+        },
+        "sed": {
+          "elided": 47,
+          "partial": 1
+        }
+      },
+      "read_calls_by_source": {
+        "read_file": 71,
+        "search": 124,
+        "sed": 87
+      },
+      "position": {
+        "early": 22,
+        "late": 80
+      },
+      "mask_position": {
+        "after_first_mask": 102
+      },
+      "runs_with_masking": 18,
+      "median_first_masked_step": 4,
+      "read_file_elided_in_final_view_runs": 14
+    },
+    "P4 M": {
+      "runs": 18,
+      "tool_calls": 366,
+      "read_calls": 298,
+      "reread_calls": 102,
+      "covered_calls": 87,
+      "reread_after_write_calls": 1,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 27.9,
+      "reread_pct_of_read_calls": 34.2,
+      "covered_pct_of_tool_calls": 23.8,
+      "masked_reread_pct_of_tool_calls": 25.4,
+      "masked_or_partial_reread_pct_of_tool_calls": 26.2,
+      "mean_run_reread_pct": 24.9,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 7,
+        "le_4_pct": 5.9,
+        "le_8_pct": 85.3,
+        "le_16_pct": 98.0,
+        "histogram": {
+          "1": 6,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 24,
+          "6": 33,
+          "7": 22,
+          "8": 2,
+          "9": 2,
+          "10": 3,
+          "11": 4,
+          "12": 0,
+          "13": 0,
+          "14": 1,
+          "15": 2,
+          "16": 1,
+          ">16": 2
+        }
+      },
+      "view_state": {
+        "elided": 93,
+        "partial": 3,
+        "raw": 6
+      },
+      "view_state_pct": {
+        "elided": 91.2,
+        "partial": 2.9,
+        "raw": 5.9
+      },
+      "view_state_after_first_mask": {
+        "elided": 93,
+        "partial": 3,
+        "raw": 6
+      },
+      "by_source": {
+        "read_file": {
+          "elided": 52
+        },
+        "search": {
+          "elided": 15,
+          "raw": 5
+        },
+        "sed": {
+          "elided": 26,
+          "partial": 3,
+          "raw": 1
+        }
+      },
+      "read_calls_by_source": {
+        "read_file": 125,
+        "grep": 3,
+        "search": 121,
+        "sed": 49
+      },
+      "position": {
+        "early": 33,
+        "late": 69
+      },
+      "mask_position": {
+        "after_first_mask": 102
+      },
+      "runs_with_masking": 18,
+      "median_first_masked_step": 3,
+      "read_file_elided_in_final_view_runs": 14
+    },
+    "P4 N": {
+      "runs": 17,
+      "tool_calls": 358,
+      "read_calls": 317,
+      "reread_calls": 128,
+      "covered_calls": 116,
+      "reread_after_write_calls": 1,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 35.8,
+      "reread_pct_of_read_calls": 40.4,
+      "covered_pct_of_tool_calls": 32.4,
+      "masked_reread_pct_of_tool_calls": 34.1,
+      "masked_or_partial_reread_pct_of_tool_calls": 34.4,
+      "mean_run_reread_pct": 33.9,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 8,
+        "le_4_pct": 4.7,
+        "le_8_pct": 84.4,
+        "le_16_pct": 100.0,
+        "histogram": {
+          "1": 4,
+          "2": 1,
+          "3": 1,
+          "4": 0,
+          "5": 35,
+          "6": 33,
+          "7": 21,
+          "8": 13,
+          "9": 11,
+          "10": 5,
+          "11": 3,
+          "12": 0,
+          "13": 0,
+          "14": 1,
+          "15": 0,
+          "16": 0,
+          ">16": 0
+        }
+      },
+      "view_state": {
+        "elided": 122,
+        "raw": 5,
+        "partial": 1
+      },
+      "view_state_pct": {
+        "elided": 95.3,
+        "raw": 3.9,
+        "partial": 0.8
+      },
+      "view_state_after_first_mask": {
+        "elided": 122,
+        "raw": 5,
+        "partial": 1
+      },
+      "by_source": {
+        "read_file": {
+          "elided": 50
+        },
+        "search": {
+          "elided": 30,
+          "raw": 4
+        },
+        "sed": {
+          "elided": 42,
+          "raw": 1,
+          "partial": 1
+        }
+      },
+      "read_calls_by_source": {
+        "read_file": 115,
+        "grep": 2,
+        "search": 137,
+        "sed": 63
+      },
+      "position": {
+        "early": 31,
+        "late": 97
+      },
+      "mask_position": {
+        "after_first_mask": 128
+      },
+      "runs_with_masking": 17,
+      "median_first_masked_step": 4,
+      "read_file_elided_in_final_view_runs": 15
+    },
+    "P4 all": {
+      "runs": 53,
+      "tool_calls": 1061,
+      "read_calls": 897,
+      "reread_calls": 332,
+      "covered_calls": 295,
+      "reread_after_write_calls": 5,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 31.3,
+      "reread_pct_of_read_calls": 37.0,
+      "covered_pct_of_tool_calls": 27.8,
+      "masked_reread_pct_of_tool_calls": 29.5,
+      "masked_or_partial_reread_pct_of_tool_calls": 30.1,
+      "mean_run_reread_pct": 27.5,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 7,
+        "le_4_pct": 4.8,
+        "le_8_pct": 82.8,
+        "le_16_pct": 98.8,
+        "histogram": {
+          "1": 12,
+          "2": 1,
+          "3": 2,
+          "4": 1,
+          "5": 86,
+          "6": 94,
+          "7": 53,
+          "8": 26,
+          "9": 19,
+          "10": 12,
+          "11": 9,
+          "12": 1,
+          "13": 1,
+          "14": 2,
+          "15": 5,
+          "16": 4,
+          ">16": 4
+        }
+      },
+      "view_state": {
+        "elided": 313,
+        "partial": 6,
+        "raw": 13
+      },
+      "view_state_pct": {
+        "elided": 94.3,
+        "partial": 1.8,
+        "raw": 3.9
+      },
+      "view_state_after_first_mask": {
+        "elided": 313,
+        "partial": 6,
+        "raw": 13
+      },
+      "by_source": {
+        "read_file": {
+          "elided": 126,
+          "partial": 1
+        },
+        "search": {
+          "elided": 72,
+          "raw": 11
+        },
+        "sed": {
+          "elided": 115,
+          "partial": 5,
+          "raw": 2
+        }
+      },
+      "read_calls_by_source": {
+        "read_file": 311,
+        "grep": 5,
+        "search": 382,
+        "sed": 199
+      },
+      "position": {
+        "early": 86,
+        "late": 246
+      },
+      "mask_position": {
+        "after_first_mask": 332
+      },
+      "runs_with_masking": 53,
+      "median_first_masked_step": 4,
+      "read_file_elided_in_final_view_runs": 43
+    },
+    "P4-first all": {
+      "runs": 1,
+      "tool_calls": 25,
+      "read_calls": 22,
+      "reread_calls": 10,
+      "covered_calls": 9,
+      "reread_after_write_calls": 0,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 40.0,
+      "reread_pct_of_read_calls": 45.5,
+      "covered_pct_of_tool_calls": 36.0,
+      "masked_reread_pct_of_tool_calls": 40.0,
+      "masked_or_partial_reread_pct_of_tool_calls": 40.0,
+      "mean_run_reread_pct": 40.0,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 7,
+        "le_4_pct": 0.0,
+        "le_8_pct": 100.0,
+        "le_16_pct": 100.0,
+        "histogram": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 2,
+          "6": 4,
+          "7": 2,
+          "8": 2,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0,
+          ">16": 0
+        }
+      },
+      "view_state": {
+        "elided": 10
+      },
+      "view_state_pct": {
+        "elided": 100.0
+      },
+      "view_state_after_first_mask": {
+        "elided": 10
+      },
+      "by_source": {
+        "search": {
+          "elided": 4
+        },
+        "sed": {
+          "elided": 6
+        }
+      },
+      "read_calls_by_source": {
+        "cat": 1,
+        "search": 13,
+        "sed": 8
+      },
+      "position": {
+        "early": 3,
+        "late": 7
+      },
+      "mask_position": {
+        "after_first_mask": 10
+      },
+      "runs_with_masking": 1,
+      "median_first_masked_step": 4,
+      "read_file_elided_in_final_view_runs": 0
+    },
+    "P4-first first": {
+      "runs": 1,
+      "tool_calls": 25,
+      "read_calls": 22,
+      "reread_calls": 10,
+      "covered_calls": 9,
+      "reread_after_write_calls": 0,
+      "unparsed_commands": 0,
+      "reread_pct_of_tool_calls": 40.0,
+      "reread_pct_of_read_calls": 45.5,
+      "covered_pct_of_tool_calls": 36.0,
+      "masked_reread_pct_of_tool_calls": 40.0,
+      "masked_or_partial_reread_pct_of_tool_calls": 40.0,
+      "mean_run_reread_pct": 40.0,
+      "gap_to_latest_prior": {
+        "median": 6.0,
+        "p75": 7,
+        "le_4_pct": 0.0,
+        "le_8_pct": 100.0,
+        "le_16_pct": 100.0,
+        "histogram": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 2,
+          "6": 4,
+          "7": 2,
+          "8": 2,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0,
+          ">16": 0
+        }
+      },
+      "view_state": {
+        "elided": 10
+      },
+      "view_state_pct": {
+        "elided": 100.0
+      },
+      "view_state_after_first_mask": {
+        "elided": 10
+      },
+      "by_source": {
+        "search": {
+          "elided": 4
+        },
+        "sed": {
+          "elided": 6
+        }
+      },
+      "read_calls_by_source": {
+        "cat": 1,
+        "search": 13,
+        "sed": 8
+      },
+      "position": {
+        "early": 3,
+        "late": 7
+      },
+      "mask_position": {
+        "after_first_mask": 10
+      },
+      "runs_with_masking": 1,
+      "median_first_masked_step": 4,
+      "read_file_elided_in_final_view_runs": 0
+    }
+  },
+  "solved_relation": {
+    "A5 all": {
+      "tasks_total": 56,
+      "tasks_mixed": 19,
+      "tasks_all_solved": 26,
+      "tasks_none_solved": 11,
+      "mean_diff_pp": -0.3,
+      "tasks_solved_lower": 9,
+      "tasks_solved_higher": 10,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 17.9,
+          "unsolved": 2.4,
+          "diff": 15.5
+        },
+        "django__django-11749": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 10.9,
+          "unsolved": 9.1,
+          "diff": 1.8
+        },
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 5,
+          "solved": 9.0,
+          "unsolved": 23.1,
+          "diff": -14.1
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 9.5,
+          "unsolved": 7.0,
+          "diff": 2.5
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 7.0,
+          "unsolved": 3.0,
+          "diff": 4.0
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 9.8,
+          "unsolved": 6.8,
+          "diff": 3.0
+        },
+        "scikit-learn__scikit-learn-9288": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 0.0,
+          "unsolved": 2.6,
+          "diff": -2.6
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 24.3,
+          "unsolved": 25.0,
+          "diff": -0.7
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 4,
+          "n_unsolved": 3,
+          "solved": 12.3,
+          "unsolved": 7.4,
+          "diff": 4.9
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 10.6,
+          "unsolved": 4.0,
+          "diff": 6.6
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 13.2,
+          "unsolved": 8.7,
+          "diff": 4.5
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 5,
+          "n_unsolved": 2,
+          "solved": 12.2,
+          "unsolved": 5.7,
+          "diff": 6.5
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 5,
+          "n_unsolved": 2,
+          "solved": 11.9,
+          "unsolved": 14.4,
+          "diff": -2.5
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 5,
+          "n_unsolved": 2,
+          "solved": 8.0,
+          "unsolved": 9.1,
+          "diff": -1.1
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 9.1,
+          "unsolved": 23.9,
+          "diff": -14.8
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 8.9,
+          "unsolved": 20.0,
+          "diff": -11.1
+        },
+        "sympy__sympy-15599": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 2.4,
+          "unsolved": 4.9,
+          "diff": -2.5
+        },
+        "sympy__sympy-19040": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 8.3,
+          "unsolved": 7.7,
+          "diff": 0.6
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 3,
+          "n_unsolved": 4,
+          "solved": 17.0,
+          "unsolved": 22.6,
+          "diff": -5.6
+        }
+      }
+    },
+    "A5 b0": {
+      "tasks_total": 56,
+      "tasks_mixed": 10,
+      "tasks_all_solved": 33,
+      "tasks_none_solved": 13,
+      "mean_diff_pp": 3.9,
+      "tasks_solved_lower": 2,
+      "tasks_solved_higher": 8,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 23.5,
+          "unsolved": 2.4,
+          "diff": 21.1
+        },
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 2,
+          "solved": 9.0,
+          "unsolved": 7.0,
+          "diff": 2.0
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 9.5,
+          "unsolved": 9.2,
+          "diff": 0.3
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 7.7,
+          "unsolved": 3.0,
+          "diff": 4.7
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 16.8,
+          "unsolved": 6.8,
+          "diff": 10.0
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 10.0,
+          "unsolved": 7.4,
+          "diff": 2.6
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 2,
+          "n_unsolved": 2,
+          "solved": 16.9,
+          "unsolved": 5.7,
+          "diff": 11.2
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 7.5,
+          "unsolved": 18.2,
+          "diff": -10.7
+        },
+        "sympy__sympy-19040": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 8.3,
+          "unsolved": 6.9,
+          "diff": 1.4
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 19.4,
+          "unsolved": 23.4,
+          "diff": -4.0
+        }
+      }
+    },
+    "A5 b2": {
+      "tasks_total": 56,
+      "tasks_mixed": 11,
+      "tasks_all_solved": 31,
+      "tasks_none_solved": 14,
+      "mean_diff_pp": -2.2,
+      "tasks_solved_lower": 6,
+      "tasks_solved_higher": 5,
+      "per_task": {
+        "django__django-11749": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 10.1,
+          "unsolved": 9.1,
+          "diff": 1.0
+        },
+        "scikit-learn__scikit-learn-9288": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 0.0,
+          "unsolved": 2.6,
+          "diff": -2.6
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 30.1,
+          "unsolved": 25.0,
+          "diff": 5.1
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 10.3,
+          "unsolved": 4.0,
+          "diff": 6.3
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 18.0,
+          "unsolved": 8.7,
+          "diff": 9.3
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 8.7,
+          "unsolved": 14.4,
+          "diff": -5.7
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 8.8,
+          "unsolved": 0.0,
+          "diff": 8.8
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 9.1,
+          "unsolved": 40.8,
+          "diff": -31.7
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 11.6,
+          "unsolved": 20.0,
+          "diff": -8.4
+        },
+        "sympy__sympy-15599": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 2.4,
+          "unsolved": 4.3,
+          "diff": -1.9
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 15.8,
+          "unsolved": 20.0,
+          "diff": -4.2
+        }
+      }
+    },
+    "A6-R all": {
+      "tasks_total": 22,
+      "tasks_mixed": 13,
+      "tasks_all_solved": 0,
+      "tasks_none_solved": 9,
+      "mean_diff_pp": -1.2,
+      "tasks_solved_lower": 8,
+      "tasks_solved_higher": 5,
+      "per_task": {
+        "django__django-13512": {
+          "n_solved": 2,
+          "n_unsolved": 16,
+          "solved": 12.7,
+          "unsolved": 4.4,
+          "diff": 8.3
+        },
+        "django__django-13964": {
+          "n_solved": 3,
+          "n_unsolved": 3,
+          "solved": 8.3,
+          "unsolved": 13.4,
+          "diff": -5.1
+        },
+        "django__django-15022": {
+          "n_solved": 3,
+          "n_unsolved": 9,
+          "solved": 20.0,
+          "unsolved": 9.1,
+          "diff": 10.9
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 16,
+          "solved": 18.1,
+          "unsolved": 32.3,
+          "diff": -14.2
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 3,
+          "n_unsolved": 15,
+          "solved": 4.6,
+          "unsolved": 11.4,
+          "diff": -6.8
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 5,
+          "n_unsolved": 1,
+          "solved": 7.4,
+          "unsolved": 7.7,
+          "diff": -0.3
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 5,
+          "n_unsolved": 1,
+          "solved": 14.8,
+          "unsolved": 0.0,
+          "diff": 14.8
+        },
+        "scikit-learn__scikit-learn-12973": {
+          "n_solved": 1,
+          "n_unsolved": 17,
+          "solved": 0.0,
+          "unsolved": 1.6,
+          "diff": -1.6
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 5,
+          "n_unsolved": 7,
+          "solved": 9.9,
+          "unsolved": 11.8,
+          "diff": -1.9
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 9,
+          "n_unsolved": 3,
+          "solved": 14.2,
+          "unsolved": 12.2,
+          "diff": 2.0
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 1,
+          "n_unsolved": 5,
+          "solved": 0.0,
+          "unsolved": 6.3,
+          "diff": -6.3
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 3,
+          "n_unsolved": 15,
+          "solved": 40.2,
+          "unsolved": 31.4,
+          "diff": 8.8
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 5,
+          "n_unsolved": 7,
+          "solved": 21.5,
+          "unsolved": 46.2,
+          "diff": -24.7
+        }
+      }
+    },
+    "A6-R r0": {
+      "tasks_total": 22,
+      "tasks_mixed": 8,
+      "tasks_all_solved": 2,
+      "tasks_none_solved": 12,
+      "mean_diff_pp": 0.6,
+      "tasks_solved_lower": 3,
+      "tasks_solved_higher": 4,
+      "per_task": {
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 3.1,
+          "unsolved": 6.8,
+          "diff": -3.7
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 18.1,
+          "unsolved": 23.4,
+          "diff": -5.3
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 1,
+          "n_unsolved": 8,
+          "solved": 5.0,
+          "unsolved": 1.0,
+          "diff": 4.0
+        },
+        "scikit-learn__scikit-learn-12973": {
+          "n_solved": 1,
+          "n_unsolved": 8,
+          "solved": 0.0,
+          "unsolved": 0.0,
+          "diff": 0.0
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 5,
+          "n_unsolved": 1,
+          "solved": 9.9,
+          "unsolved": 6.5,
+          "diff": 3.4
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 5,
+          "n_unsolved": 1,
+          "solved": 12.1,
+          "unsolved": 9.1,
+          "diff": 3.0
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 35.7,
+          "unsolved": 28.4,
+          "diff": 7.3
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 3,
+          "n_unsolved": 3,
+          "solved": 20.7,
+          "unsolved": 25.0,
+          "diff": -4.3
+        }
+      }
+    },
+    "A6-R r1": {
+      "tasks_total": 22,
+      "tasks_mixed": 10,
+      "tasks_all_solved": 0,
+      "tasks_none_solved": 12,
+      "mean_diff_pp": -2.5,
+      "tasks_solved_lower": 3,
+      "tasks_solved_higher": 7,
+      "per_task": {
+        "django__django-13512": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 12.7,
+          "unsolved": 10.1,
+          "diff": 2.6
+        },
+        "django__django-13964": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 18.6,
+          "unsolved": 16.7,
+          "diff": 1.9
+        },
+        "django__django-15022": {
+          "n_solved": 3,
+          "n_unsolved": 3,
+          "solved": 20.0,
+          "unsolved": 4.3,
+          "diff": 15.7
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 4.4,
+          "unsolved": 23.3,
+          "diff": -18.9
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 9.4,
+          "unsolved": 7.7,
+          "diff": 1.7
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 1.3,
+          "unsolved": 0.0,
+          "diff": 1.3
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 4,
+          "n_unsolved": 2,
+          "solved": 16.9,
+          "unsolved": 13.8,
+          "diff": 3.1
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 0.0,
+          "unsolved": 8.7,
+          "diff": -8.7
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 1,
+          "n_unsolved": 8,
+          "solved": 49.2,
+          "unsolved": 33.9,
+          "diff": 15.3
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 2,
+          "n_unsolved": 4,
+          "solved": 22.7,
+          "unsolved": 62.1,
+          "diff": -39.4
+        }
+      }
+    },
+    "CR-2 all": {
+      "tasks_total": 56,
+      "tasks_mixed": 32,
+      "tasks_all_solved": 14,
+      "tasks_none_solved": 10,
+      "mean_diff_pp": -17.9,
+      "tasks_solved_lower": 29,
+      "tasks_solved_higher": 3,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 70.2,
+          "unsolved": 64.1,
+          "diff": 6.1
+        },
+        "django__django-11749": {
+          "n_solved": 17,
+          "n_unsolved": 3,
+          "solved": 12.1,
+          "unsolved": 23.2,
+          "diff": -11.1
+        },
+        "django__django-13109": {
+          "n_solved": 18,
+          "n_unsolved": 2,
+          "solved": 6.8,
+          "unsolved": 5.0,
+          "diff": 1.8
+        },
+        "django__django-13512": {
+          "n_solved": 4,
+          "n_unsolved": 15,
+          "solved": 6.1,
+          "unsolved": 9.6,
+          "diff": -3.5
+        },
+        "django__django-13964": {
+          "n_solved": 12,
+          "n_unsolved": 8,
+          "solved": 24.2,
+          "unsolved": 62.7,
+          "diff": -38.5
+        },
+        "django__django-14434": {
+          "n_solved": 10,
+          "n_unsolved": 10,
+          "solved": 50.5,
+          "unsolved": 72.9,
+          "diff": -22.4
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 23.3,
+          "unsolved": 55.1,
+          "diff": -31.8
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 18,
+          "solved": 23.2,
+          "unsolved": 47.1,
+          "diff": -23.9
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 13.9,
+          "unsolved": 38.7,
+          "diff": -24.8
+        },
+        "pytest-dev__pytest-5262": {
+          "n_solved": 19,
+          "n_unsolved": 1,
+          "solved": 19.9,
+          "unsolved": 59.5,
+          "diff": -39.6
+        },
+        "pytest-dev__pytest-5631": {
+          "n_solved": 18,
+          "n_unsolved": 2,
+          "solved": 3.5,
+          "unsolved": 4.9,
+          "diff": -1.4
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 5,
+          "n_unsolved": 15,
+          "solved": 24.2,
+          "unsolved": 61.7,
+          "diff": -37.5
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 17,
+          "n_unsolved": 3,
+          "solved": 9.9,
+          "unsolved": 11.9,
+          "diff": -2.0
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 27.3,
+          "unsolved": 18.3,
+          "diff": 9.0
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 6,
+          "n_unsolved": 14,
+          "solved": 15.7,
+          "unsolved": 46.0,
+          "diff": -30.3
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 12,
+          "n_unsolved": 8,
+          "solved": 19.5,
+          "unsolved": 56.0,
+          "diff": -36.5
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 10,
+          "n_unsolved": 9,
+          "solved": 19.0,
+          "unsolved": 63.0,
+          "diff": -44.0
+        },
+        "scikit-learn__scikit-learn-12973": {
+          "n_solved": 17,
+          "n_unsolved": 3,
+          "solved": 2.9,
+          "unsolved": 4.8,
+          "diff": -1.9
+        },
+        "scikit-learn__scikit-learn-9288": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 11.8,
+          "unsolved": 54.1,
+          "diff": -42.3
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 12,
+          "n_unsolved": 8,
+          "solved": 18.8,
+          "unsolved": 49.5,
+          "diff": -30.7
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 52.1,
+          "unsolved": 52.9,
+          "diff": -0.8
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 6,
+          "n_unsolved": 14,
+          "solved": 17.6,
+          "unsolved": 25.5,
+          "diff": -7.9
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 8,
+          "n_unsolved": 12,
+          "solved": 50.5,
+          "unsolved": 56.6,
+          "diff": -6.1
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 10,
+          "n_unsolved": 10,
+          "solved": 45.3,
+          "unsolved": 46.5,
+          "diff": -1.2
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 9,
+          "n_unsolved": 11,
+          "solved": 24.2,
+          "unsolved": 51.5,
+          "diff": -27.3
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 33.5,
+          "unsolved": 41.2,
+          "diff": -7.7
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 62.8,
+          "unsolved": 66.3,
+          "diff": -3.5
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 19.9,
+          "unsolved": 72.8,
+          "diff": -52.9
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 8,
+          "n_unsolved": 12,
+          "solved": 23.3,
+          "unsolved": 49.4,
+          "diff": -26.1
+        },
+        "sympy__sympy-17655": {
+          "n_solved": 3,
+          "n_unsolved": 17,
+          "solved": 36.2,
+          "unsolved": 48.8,
+          "diff": -12.6
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 8,
+          "n_unsolved": 12,
+          "solved": 15.3,
+          "unsolved": 26.0,
+          "diff": -10.7
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 3,
+          "n_unsolved": 17,
+          "solved": 45.6,
+          "unsolved": 56.0,
+          "diff": -10.4
+        }
+      }
+    },
+    "CR-2 n": {
+      "tasks_total": 55,
+      "tasks_mixed": 21,
+      "tasks_all_solved": 16,
+      "tasks_none_solved": 18,
+      "mean_diff_pp": -13.0,
+      "tasks_solved_lower": 15,
+      "tasks_solved_higher": 6,
+      "per_task": {
+        "django__django-13109": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 3.8,
+          "unsolved": 0.0,
+          "diff": 3.8
+        },
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 52.2,
+          "unsolved": 66.0,
+          "diff": -13.8
+        },
+        "django__django-14434": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 61.1,
+          "unsolved": 70.5,
+          "diff": -9.4
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 2.5,
+          "unsolved": 43.5,
+          "diff": -41.0
+        },
+        "pytest-dev__pytest-5631": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 2.6,
+          "unsolved": 2.4,
+          "diff": 0.2
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 7.2,
+          "unsolved": 60.2,
+          "diff": -53.0
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 4.7,
+          "unsolved": 10.8,
+          "diff": -6.1
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 23.8,
+          "unsolved": 17.1,
+          "diff": 6.7
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 2.3,
+          "unsolved": 42.9,
+          "diff": -40.6
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 16.7,
+          "unsolved": 57.8,
+          "diff": -41.1
+        },
+        "scikit-learn__scikit-learn-12973": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 9.9,
+          "unsolved": 0.0,
+          "diff": 9.9
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 36.0,
+          "unsolved": 63.0,
+          "diff": -27.0
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 52.1,
+          "unsolved": 52.0,
+          "diff": 0.1
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 47.8,
+          "unsolved": 48.3,
+          "diff": -0.5
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 45.6,
+          "unsolved": 56.5,
+          "diff": -10.9
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 43.2,
+          "unsolved": 46.5,
+          "diff": -3.3
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 62.8,
+          "unsolved": 64.8,
+          "diff": -2.0
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 28.6,
+          "unsolved": 54.8,
+          "diff": -26.2
+        },
+        "sympy__sympy-17655": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 28.7,
+          "unsolved": 54.0,
+          "diff": -25.3
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 27.9,
+          "unsolved": 17.1,
+          "diff": 10.8
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 45.8,
+          "unsolved": 49.4,
+          "diff": -3.6
+        }
+      }
+    },
+    "CR-2 o": {
+      "tasks_total": 56,
+      "tasks_mixed": 22,
+      "tasks_all_solved": 17,
+      "tasks_none_solved": 17,
+      "mean_diff_pp": -18.0,
+      "tasks_solved_lower": 18,
+      "tasks_solved_higher": 4,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 70.2,
+          "unsolved": 63.5,
+          "diff": 6.7
+        },
+        "django__django-11749": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 10.6,
+          "unsolved": 32.6,
+          "diff": -22.0
+        },
+        "django__django-13109": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 7.2,
+          "unsolved": 10.0,
+          "diff": -2.8
+        },
+        "django__django-13512": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 6.1,
+          "unsolved": 0.0,
+          "diff": 6.1
+        },
+        "django__django-13964": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 24.9,
+          "unsolved": 56.7,
+          "diff": -31.8
+        },
+        "django__django-14434": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 19.1,
+          "unsolved": 72.1,
+          "diff": -53.0
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 23.2,
+          "unsolved": 54.1,
+          "diff": -30.9
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 44.7,
+          "unsolved": 57.3,
+          "diff": -12.6
+        },
+        "pytest-dev__pytest-5262": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 23.1,
+          "unsolved": 59.5,
+          "diff": -36.4
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 17.8,
+          "unsolved": 11.1,
+          "diff": 6.7
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 22.1,
+          "unsolved": 50.0,
+          "diff": -27.9
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 26.7,
+          "unsolved": 59.4,
+          "diff": -32.7
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 12.0,
+          "unsolved": 65.8,
+          "diff": -53.8
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 24.2,
+          "unsolved": 25.2,
+          "diff": -1.0
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 43.5,
+          "unsolved": 52.9,
+          "diff": -9.4
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 51.1,
+          "unsolved": 61.4,
+          "diff": -10.3
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 22.6,
+          "unsolved": 59.4,
+          "diff": -36.8
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 27.6,
+          "unsolved": 35.1,
+          "diff": -7.5
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 19.9,
+          "unsolved": 16.7,
+          "diff": 3.2
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 31.7,
+          "unsolved": 48.7,
+          "diff": -17.0
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 5.6,
+          "unsolved": 21.1,
+          "diff": -15.5
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 46.5,
+          "unsolved": 63.0,
+          "diff": -16.5
+        }
+      }
+    },
+    "CR-2 p": {
+      "tasks_total": 56,
+      "tasks_mixed": 15,
+      "tasks_all_solved": 21,
+      "tasks_none_solved": 20,
+      "mean_diff_pp": -17.3,
+      "tasks_solved_lower": 12,
+      "tasks_solved_higher": 2,
+      "per_task": {
+        "django__django-14434": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 41.3,
+          "unsolved": 72.2,
+          "diff": -30.9
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 23.8,
+          "unsolved": 54.0,
+          "diff": -30.2
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 4.3,
+          "unsolved": 16.4,
+          "diff": -12.1
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 20.0,
+          "unsolved": 58.6,
+          "diff": -38.6
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 26.6,
+          "unsolved": 56.5,
+          "diff": -29.9
+        },
+        "scikit-learn__scikit-learn-12973": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 0.0,
+          "unsolved": 0.0,
+          "diff": 0.0
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 8.3,
+          "unsolved": 36.2,
+          "diff": -27.9
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 15.0,
+          "unsolved": 7.3,
+          "diff": 7.7
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 70.1,
+          "unsolved": 53.7,
+          "diff": 16.4
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 23.9,
+          "unsolved": 45.0,
+          "diff": -21.1
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 17.6,
+          "unsolved": 56.1,
+          "diff": -38.5
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 39.3,
+          "unsolved": 43.8,
+          "diff": -4.5
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 23.7,
+          "unsolved": 49.9,
+          "diff": -26.2
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.6,
+          "unsolved": 27.2,
+          "diff": -13.6
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 44.4,
+          "unsolved": 53.8,
+          "diff": -9.4
+        }
+      }
+    },
+    "CR-2 t": {
+      "tasks_total": 56,
+      "tasks_mixed": 22,
+      "tasks_all_solved": 16,
+      "tasks_none_solved": 18,
+      "mean_diff_pp": -18.8,
+      "tasks_solved_lower": 17,
+      "tasks_solved_higher": 5,
+      "per_task": {
+        "django__django-11749": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 14.6,
+          "unsolved": 4.3,
+          "diff": 10.3
+        },
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 11.7,
+          "unsolved": 63.3,
+          "diff": -51.6
+        },
+        "django__django-14434": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 58.7,
+          "unsolved": 75.1,
+          "diff": -16.4
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 23.3,
+          "unsolved": 55.0,
+          "diff": -31.7
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 5.9,
+          "unsolved": 21.5,
+          "diff": -15.6
+        },
+        "pytest-dev__pytest-5631": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 9.3,
+          "unsolved": 7.3,
+          "diff": 2.0
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 59.1,
+          "unsolved": 63.7,
+          "diff": -4.6
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 9.8,
+          "unsolved": 13.8,
+          "diff": -4.0
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 40.5,
+          "unsolved": 36.0,
+          "diff": 4.5
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 13.9,
+          "unsolved": 29.4,
+          "diff": -15.5
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 18.8,
+          "unsolved": 48.9,
+          "diff": -30.1
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 11.5,
+          "unsolved": 68.0,
+          "diff": -56.5
+        },
+        "scikit-learn__scikit-learn-12973": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 0.0,
+          "unsolved": 14.3,
+          "diff": -14.3
+        },
+        "scikit-learn__scikit-learn-9288": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 11.8,
+          "unsolved": 56.8,
+          "diff": -45.0
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 16.7,
+          "unsolved": 56.1,
+          "diff": -39.4
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 12.2,
+          "unsolved": 25.8,
+          "diff": -13.6
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 38.4,
+          "unsolved": 70.1,
+          "diff": -31.7
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 44.5,
+          "unsolved": 27.3,
+          "diff": 17.2
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 25.6,
+          "unsolved": 44.9,
+          "diff": -19.3
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 13.3,
+          "unsolved": 44.7,
+          "diff": -31.4
+        },
+        "sympy__sympy-17655": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 51.2,
+          "unsolved": 46.8,
+          "diff": 4.4
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 14.0,
+          "unsolved": 44.5,
+          "diff": -30.5
+        }
+      }
+    },
+    "P4 I": {
+      "tasks_total": 6,
+      "tasks_mixed": 0,
+      "tasks_all_solved": 1,
+      "tasks_none_solved": 5,
+      "mean_diff_pp": null,
+      "tasks_solved_lower": 0,
+      "tasks_solved_higher": 0,
+      "per_task": {}
+    },
+    "P4 M": {
+      "tasks_total": 6,
+      "tasks_mixed": 1,
+      "tasks_all_solved": 1,
+      "tasks_none_solved": 4,
+      "mean_diff_pp": 5.1,
+      "tasks_solved_lower": 0,
+      "tasks_solved_higher": 1,
+      "per_task": {
+        "public-sphinx-issue-8945": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 15.6,
+          "unsolved": 10.5,
+          "diff": 5.1
+        }
+      }
+    },
+    "P4 N": {
+      "tasks_total": 6,
+      "tasks_mixed": 1,
+      "tasks_all_solved": 0,
+      "tasks_none_solved": 5,
+      "mean_diff_pp": -34.4,
+      "tasks_solved_lower": 1,
+      "tasks_solved_higher": 0,
+      "per_task": {
+        "public-sphinx-issue-9030": {
+          "n_solved": 1,
+          "n_unsolved": 1,
+          "solved": 11.1,
+          "unsolved": 45.5,
+          "diff": -34.4
+        }
+      }
+    },
+    "P4 all": {
+      "tasks_total": 6,
+      "tasks_mixed": 2,
+      "tasks_all_solved": 0,
+      "tasks_none_solved": 4,
+      "mean_diff_pp": -19.7,
+      "tasks_solved_lower": 2,
+      "tasks_solved_higher": 0,
+      "per_task": {
+        "public-sphinx-issue-8945": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 15.6,
+          "unsolved": 20.1,
+          "diff": -4.5
+        },
+        "public-sphinx-issue-9030": {
+          "n_solved": 7,
+          "n_unsolved": 1,
+          "solved": 10.6,
+          "unsolved": 45.5,
+          "diff": -34.9
+        }
+      }
+    }
+  },
+  "solved_relation_first_calls": {
+    "A5 all": {
+      "tasks_total": 46,
+      "tasks_mixed": 18,
+      "tasks_all_solved": 18,
+      "tasks_none_solved": 10,
+      "mean_diff_pp": 2.2,
+      "tasks_solved_lower": 6,
+      "tasks_solved_higher": 10,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 11.1,
+          "unsolved": 6.7,
+          "diff": 4.4
+        },
+        "django__django-11749": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 11.1,
+          "unsolved": 13.3,
+          "diff": -2.2
+        },
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 5,
+          "solved": 10.0,
+          "unsolved": 14.7,
+          "diff": -4.7
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 20.0,
+          "unsolved": 10.0,
+          "diff": 10.0
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 6.7,
+          "unsolved": 6.7,
+          "diff": 0.0
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 1,
+          "solved": 20.0,
+          "unsolved": 20.0,
+          "diff": 0.0
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 21.1,
+          "unsolved": 26.7,
+          "diff": -5.6
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 4,
+          "n_unsolved": 3,
+          "solved": 5.0,
+          "unsolved": 8.9,
+          "diff": -3.9
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 7.8,
+          "unsolved": 6.7,
+          "diff": 1.1
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 15.6,
+          "unsolved": 6.7,
+          "diff": 8.9
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 5,
+          "n_unsolved": 2,
+          "solved": 9.3,
+          "unsolved": 3.3,
+          "diff": 6.0
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 5,
+          "n_unsolved": 2,
+          "solved": 14.7,
+          "unsolved": 13.3,
+          "diff": 1.4
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 20.0,
+          "unsolved": 6.7,
+          "diff": 13.3
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 33.3,
+          "unsolved": 25.6,
+          "diff": 7.7
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 5.6,
+          "unsolved": 0.0,
+          "diff": 5.6
+        },
+        "sympy__sympy-15599": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 6.7,
+          "unsolved": 7.8,
+          "diff": -1.1
+        },
+        "sympy__sympy-19040": {
+          "n_solved": 1,
+          "n_unsolved": 6,
+          "solved": 6.7,
+          "unsolved": 8.9,
+          "diff": -2.2
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 3,
+          "n_unsolved": 4,
+          "solved": 8.9,
+          "unsolved": 8.3,
+          "diff": 0.6
+        }
+      }
+    },
+    "A5 b0": {
+      "tasks_total": 45,
+      "tasks_mixed": 10,
+      "tasks_all_solved": 24,
+      "tasks_none_solved": 11,
+      "mean_diff_pp": 1.8,
+      "tasks_solved_lower": 3,
+      "tasks_solved_higher": 4,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 15.6,
+          "unsolved": 6.7,
+          "diff": 8.9
+        },
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 2,
+          "solved": 10.0,
+          "unsolved": 13.3,
+          "diff": -3.3
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 20.0,
+          "unsolved": 11.1,
+          "diff": 8.9
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 6.7,
+          "unsolved": 6.7,
+          "diff": 0.0
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 1,
+          "solved": 20.0,
+          "unsolved": 20.0,
+          "diff": 0.0
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 0.0,
+          "unsolved": 8.9,
+          "diff": -8.9
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 2,
+          "n_unsolved": 2,
+          "solved": 13.3,
+          "unsolved": 3.3,
+          "diff": 10.0
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 13.3,
+          "unsolved": 6.7,
+          "diff": 6.6
+        },
+        "sympy__sympy-19040": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 6.7,
+          "unsolved": 11.1,
+          "diff": -4.4
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 6.7,
+          "unsolved": 6.7,
+          "diff": 0.0
+        }
+      }
+    },
+    "A5 b2": {
+      "tasks_total": 43,
+      "tasks_mixed": 9,
+      "tasks_all_solved": 21,
+      "tasks_none_solved": 13,
+      "mean_diff_pp": 2.2,
+      "tasks_solved_lower": 4,
+      "tasks_solved_higher": 3,
+      "per_task": {
+        "django__django-11749": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 10.0,
+          "unsolved": 13.3,
+          "diff": -3.3
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 23.3,
+          "unsolved": 26.7,
+          "diff": -3.4
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 0.0,
+          "unsolved": 6.7,
+          "diff": -6.7
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 20.0,
+          "unsolved": 6.7,
+          "diff": 13.3
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 13.3,
+          "unsolved": 13.3,
+          "diff": 0.0
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 33.3,
+          "unsolved": 16.7,
+          "diff": 16.6
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 6.7,
+          "unsolved": 0.0,
+          "diff": 6.7
+        },
+        "sympy__sympy-15599": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 6.7,
+          "unsolved": 6.7,
+          "diff": 0.0
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 10.0,
+          "unsolved": 13.3,
+          "diff": -3.3
+        }
+      }
+    },
+    "A6-R all": {
+      "tasks_total": 21,
+      "tasks_mixed": 11,
+      "tasks_all_solved": 1,
+      "tasks_none_solved": 9,
+      "mean_diff_pp": -2.2,
+      "tasks_solved_lower": 7,
+      "tasks_solved_higher": 4,
+      "per_task": {
+        "django__django-13512": {
+          "n_solved": 2,
+          "n_unsolved": 6,
+          "solved": 3.3,
+          "unsolved": 12.2,
+          "diff": -8.9
+        },
+        "django__django-13964": {
+          "n_solved": 3,
+          "n_unsolved": 3,
+          "solved": 8.9,
+          "unsolved": 11.1,
+          "diff": -2.2
+        },
+        "django__django-15022": {
+          "n_solved": 3,
+          "n_unsolved": 9,
+          "solved": 8.9,
+          "unsolved": 8.1,
+          "diff": 0.8
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 16,
+          "solved": 10.0,
+          "unsolved": 5.4,
+          "diff": 4.6
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 3,
+          "n_unsolved": 15,
+          "solved": 6.7,
+          "unsolved": 14.2,
+          "diff": -7.5
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 20.0,
+          "unsolved": 0.0,
+          "diff": 20.0
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 5,
+          "n_unsolved": 7,
+          "solved": 9.3,
+          "unsolved": 20.0,
+          "diff": -10.7
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 9,
+          "n_unsolved": 3,
+          "solved": 14.1,
+          "unsolved": 15.6,
+          "diff": -1.5
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 1,
+          "n_unsolved": 5,
+          "solved": 0.0,
+          "unsolved": 10.7,
+          "diff": -10.7
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 3,
+          "n_unsolved": 15,
+          "solved": 24.4,
+          "unsolved": 21.8,
+          "diff": 2.6
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 5,
+          "n_unsolved": 7,
+          "solved": 12.0,
+          "unsolved": 22.9,
+          "diff": -10.9
+        }
+      }
+    },
+    "A6-R r0": {
+      "tasks_total": 20,
+      "tasks_mixed": 7,
+      "tasks_all_solved": 2,
+      "tasks_none_solved": 11,
+      "mean_diff_pp": 4.2,
+      "tasks_solved_lower": 0,
+      "tasks_solved_higher": 5,
+      "per_task": {
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 6.7,
+          "unsolved": 6.7,
+          "diff": 0.0
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 10.0,
+          "unsolved": 3.8,
+          "diff": 6.2
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 1,
+          "n_unsolved": 8,
+          "solved": 6.7,
+          "unsolved": 0.0,
+          "diff": 6.7
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 5,
+          "n_unsolved": 1,
+          "solved": 9.3,
+          "unsolved": 6.7,
+          "diff": 2.6
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 5,
+          "n_unsolved": 1,
+          "solved": 9.3,
+          "unsolved": 6.7,
+          "diff": 2.6
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 33.3,
+          "unsolved": 21.9,
+          "diff": 11.4
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 3,
+          "n_unsolved": 3,
+          "solved": 11.1,
+          "unsolved": 11.1,
+          "diff": 0.0
+        }
+      }
+    },
+    "A6-R r1": {
+      "tasks_total": 21,
+      "tasks_mixed": 9,
+      "tasks_all_solved": 1,
+      "tasks_none_solved": 11,
+      "mean_diff_pp": -7.5,
+      "tasks_solved_lower": 5,
+      "tasks_solved_higher": 2,
+      "per_task": {
+        "django__django-13512": {
+          "n_solved": 2,
+          "n_unsolved": 6,
+          "solved": 3.3,
+          "unsolved": 12.2,
+          "diff": -8.9
+        },
+        "django__django-13964": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 13.3,
+          "unsolved": 13.3,
+          "diff": 0.0
+        },
+        "django__django-15022": {
+          "n_solved": 3,
+          "n_unsolved": 3,
+          "solved": 8.9,
+          "unsolved": 6.7,
+          "diff": 2.2
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 2,
+          "n_unsolved": 7,
+          "solved": 6.7,
+          "unsolved": 30.5,
+          "diff": -23.8
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 1,
+          "solved": 6.7,
+          "unsolved": 0.0,
+          "diff": 6.7
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 4,
+          "n_unsolved": 2,
+          "solved": 20.0,
+          "unsolved": 20.0,
+          "diff": 0.0
+        },
+        "sympy__sympy-11618": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 0.0,
+          "unsolved": 10.0,
+          "diff": -10.0
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 1,
+          "n_unsolved": 8,
+          "solved": 6.7,
+          "unsolved": 21.7,
+          "diff": -15.0
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 2,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 31.7,
+          "diff": -18.4
+        }
+      }
+    },
+    "CR-2 all": {
+      "tasks_total": 54,
+      "tasks_mixed": 31,
+      "tasks_all_solved": 13,
+      "tasks_none_solved": 10,
+      "mean_diff_pp": -2.4,
+      "tasks_solved_lower": 18,
+      "tasks_solved_higher": 12,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 40.0,
+          "unsolved": 27.0,
+          "diff": 13.0
+        },
+        "django__django-11749": {
+          "n_solved": 17,
+          "n_unsolved": 3,
+          "solved": 14.5,
+          "unsolved": 15.6,
+          "diff": -1.1
+        },
+        "django__django-13109": {
+          "n_solved": 14,
+          "n_unsolved": 2,
+          "solved": 7.1,
+          "unsolved": 3.3,
+          "diff": 3.8
+        },
+        "django__django-13512": {
+          "n_solved": 4,
+          "n_unsolved": 8,
+          "solved": 8.3,
+          "unsolved": 11.7,
+          "diff": -3.4
+        },
+        "django__django-13964": {
+          "n_solved": 5,
+          "n_unsolved": 8,
+          "solved": 29.3,
+          "unsolved": 25.0,
+          "diff": 4.3
+        },
+        "django__django-14434": {
+          "n_solved": 10,
+          "n_unsolved": 10,
+          "solved": 24.0,
+          "unsolved": 38.7,
+          "diff": -14.7
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 26.7,
+          "unsolved": 15.4,
+          "diff": 11.3
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 18,
+          "solved": 3.3,
+          "unsolved": 15.6,
+          "diff": -12.3
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 10.0,
+          "unsolved": 34.6,
+          "diff": -24.6
+        },
+        "pytest-dev__pytest-5262": {
+          "n_solved": 16,
+          "n_unsolved": 1,
+          "solved": 21.7,
+          "unsolved": 26.7,
+          "diff": -5.0
+        },
+        "pytest-dev__pytest-5631": {
+          "n_solved": 8,
+          "n_unsolved": 2,
+          "solved": 5.8,
+          "unsolved": 6.7,
+          "diff": -0.9
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 5,
+          "n_unsolved": 15,
+          "solved": 18.7,
+          "unsolved": 23.6,
+          "diff": -4.9
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 17,
+          "n_unsolved": 3,
+          "solved": 13.3,
+          "unsolved": 26.7,
+          "diff": -13.4
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 21.7,
+          "unsolved": 19.6,
+          "diff": 2.1
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 6,
+          "n_unsolved": 14,
+          "solved": 26.7,
+          "unsolved": 27.1,
+          "diff": -0.4
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 12,
+          "n_unsolved": 8,
+          "solved": 10.0,
+          "unsolved": 16.7,
+          "diff": -6.7
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 6,
+          "n_unsolved": 9,
+          "solved": 18.9,
+          "unsolved": 25.9,
+          "diff": -7.0
+        },
+        "scikit-learn__scikit-learn-9288": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 13.3,
+          "unsolved": 22.8,
+          "diff": -9.5
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 12,
+          "n_unsolved": 8,
+          "solved": 13.3,
+          "unsolved": 20.8,
+          "diff": -7.5
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 33.3,
+          "unsolved": 20.7,
+          "diff": 12.6
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 6,
+          "n_unsolved": 14,
+          "solved": 23.3,
+          "unsolved": 16.2,
+          "diff": 7.1
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 8,
+          "n_unsolved": 12,
+          "solved": 25.8,
+          "unsolved": 20.6,
+          "diff": 5.2
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 10,
+          "n_unsolved": 10,
+          "solved": 19.3,
+          "unsolved": 19.3,
+          "diff": 0.0
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 9,
+          "n_unsolved": 11,
+          "solved": 14.8,
+          "unsolved": 11.5,
+          "diff": 3.3
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 18.3,
+          "unsolved": 17.1,
+          "diff": 1.2
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 1,
+          "n_unsolved": 19,
+          "solved": 6.7,
+          "unsolved": 23.5,
+          "diff": -16.8
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 4,
+          "n_unsolved": 16,
+          "solved": 26.7,
+          "unsolved": 30.4,
+          "diff": -3.7
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 8,
+          "n_unsolved": 12,
+          "solved": 10.8,
+          "unsolved": 11.1,
+          "diff": -0.3
+        },
+        "sympy__sympy-17655": {
+          "n_solved": 3,
+          "n_unsolved": 17,
+          "solved": 2.2,
+          "unsolved": 17.6,
+          "diff": -15.4
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 5,
+          "n_unsolved": 12,
+          "solved": 17.3,
+          "unsolved": 11.1,
+          "diff": 6.2
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 3,
+          "n_unsolved": 17,
+          "solved": 24.4,
+          "unsolved": 20.0,
+          "diff": 4.4
+        }
+      }
+    },
+    "CR-2 n": {
+      "tasks_total": 50,
+      "tasks_mixed": 20,
+      "tasks_all_solved": 12,
+      "tasks_none_solved": 18,
+      "mean_diff_pp": -2.5,
+      "tasks_solved_lower": 9,
+      "tasks_solved_higher": 10,
+      "per_task": {
+        "django__django-13109": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 6.7,
+          "unsolved": 0.0,
+          "diff": 6.7
+        },
+        "django__django-13964": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 30.0,
+          "unsolved": 22.2,
+          "diff": 7.8
+        },
+        "django__django-14434": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 26.7,
+          "unsolved": 26.7,
+          "diff": 0.0
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 3.3,
+          "unsolved": 33.3,
+          "diff": -30.0
+        },
+        "pytest-dev__pytest-5631": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 3.3,
+          "unsolved": 6.7,
+          "diff": -3.4
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 10.0,
+          "unsolved": 15.6,
+          "diff": -5.6
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 11.7,
+          "unsolved": 26.7,
+          "diff": -15.0
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 20.0,
+          "unsolved": 15.0,
+          "diff": 5.0
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 6.7,
+          "unsolved": 26.7,
+          "diff": -20.0
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 20.0,
+          "unsolved": 30.0,
+          "diff": -10.0
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 13.3,
+          "unsolved": 6.7,
+          "diff": 6.6
+        },
+        "sphinx-doc__sphinx-7440": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 33.3,
+          "unsolved": 13.3,
+          "diff": 20.0
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 24.4,
+          "unsolved": 16.7,
+          "diff": 7.7
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 6.7,
+          "unsolved": 15.6,
+          "diff": -8.9
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 8.3,
+          "diff": 5.0
+        },
+        "sphinx-doc__sphinx-9673": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 6.7,
+          "unsolved": 16.7,
+          "diff": -10.0
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 10.0,
+          "unsolved": 6.7,
+          "diff": 3.3
+        },
+        "sympy__sympy-17655": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 0.0,
+          "unsolved": 17.8,
+          "diff": -17.8
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 16.7,
+          "unsolved": 8.9,
+          "diff": 7.8
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 11.7,
+          "diff": 1.6
+        }
+      }
+    },
+    "CR-2 o": {
+      "tasks_total": 48,
+      "tasks_mixed": 20,
+      "tasks_all_solved": 10,
+      "tasks_none_solved": 18,
+      "mean_diff_pp": -1.5,
+      "tasks_solved_lower": 11,
+      "tasks_solved_higher": 9,
+      "per_task": {
+        "django__django-11211": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 40.0,
+          "unsolved": 28.3,
+          "diff": 11.7
+        },
+        "django__django-11749": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 13.3,
+          "unsolved": 16.7,
+          "diff": -3.4
+        },
+        "django__django-13109": {
+          "n_solved": 3,
+          "n_unsolved": 1,
+          "solved": 11.1,
+          "unsolved": 6.7,
+          "diff": 4.4
+        },
+        "django__django-13964": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 26.7,
+          "unsolved": 30.0,
+          "diff": -3.3
+        },
+        "django__django-14434": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 41.7,
+          "diff": -28.4
+        },
+        "django__django-15973": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 3.3,
+          "unsolved": 11.1,
+          "diff": -7.8
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 33.3,
+          "unsolved": 30.0,
+          "diff": 3.3
+        },
+        "pytest-dev__pytest-5262": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 23.3,
+          "unsolved": 26.7,
+          "diff": -3.4
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 13.3,
+          "unsolved": 26.7,
+          "diff": -13.4
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 33.3,
+          "unsolved": 31.1,
+          "diff": 2.2
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 21.7,
+          "diff": -8.4
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 2,
+          "solved": 6.7,
+          "unsolved": 23.3,
+          "diff": -16.6
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 26.7,
+          "unsolved": 17.8,
+          "diff": 8.9
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 33.3,
+          "unsolved": 21.7,
+          "diff": 11.6
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 28.3,
+          "unsolved": 20.0,
+          "diff": 8.3
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 23.3,
+          "unsolved": 11.1,
+          "diff": 12.2
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 16.7,
+          "unsolved": 20.0,
+          "diff": -3.3
+        },
+        "sympy__sympy-13091": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 26.7,
+          "unsolved": 33.3,
+          "diff": -6.6
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 6.7,
+          "unsolved": 13.3,
+          "diff": -6.6
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 33.3,
+          "unsolved": 25.0,
+          "diff": 8.3
+        }
+      }
+    },
+    "CR-2 p": {
+      "tasks_total": 46,
+      "tasks_mixed": 14,
+      "tasks_all_solved": 13,
+      "tasks_none_solved": 19,
+      "mean_diff_pp": -0.8,
+      "tasks_solved_lower": 6,
+      "tasks_solved_higher": 7,
+      "per_task": {
+        "django__django-14434": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 22.2,
+          "unsolved": 40.0,
+          "diff": -17.8
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 20.0,
+          "unsolved": 24.4,
+          "diff": -4.4
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 18.3,
+          "diff": -5.0
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 40.0,
+          "unsolved": 31.7,
+          "diff": 8.3
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 15.6,
+          "unsolved": 13.3,
+          "diff": 2.3
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 13.3,
+          "unsolved": 24.4,
+          "diff": -11.1
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 20.0,
+          "unsolved": 13.3,
+          "diff": 6.7
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 36.7,
+          "unsolved": 22.2,
+          "diff": 14.5
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 26.7,
+          "unsolved": 26.7,
+          "diff": 0.0
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 6.7,
+          "unsolved": 20.0,
+          "diff": -13.3
+        },
+        "sphinx-doc__sphinx-9258": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 20.0,
+          "unsolved": 15.6,
+          "diff": 4.4
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 11.1,
+          "unsolved": 13.3,
+          "diff": -2.2
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 10.0,
+          "diff": 3.3
+        },
+        "sympy__sympy-23950": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 26.7,
+          "unsolved": 23.3,
+          "diff": 3.4
+        }
+      }
+    },
+    "CR-2 t": {
+      "tasks_total": 50,
+      "tasks_mixed": 21,
+      "tasks_all_solved": 11,
+      "tasks_none_solved": 18,
+      "mean_diff_pp": -1.0,
+      "tasks_solved_lower": 10,
+      "tasks_solved_higher": 11,
+      "per_task": {
+        "django__django-11749": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 16.7,
+          "unsolved": 13.3,
+          "diff": 3.4
+        },
+        "django__django-13964": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 20.0,
+          "unsolved": 24.4,
+          "diff": -4.4
+        },
+        "django__django-14434": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 26.7,
+          "unsolved": 37.8,
+          "diff": -11.1
+        },
+        "django__django-15022": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 26.7,
+          "unsolved": 5.0,
+          "diff": 21.7
+        },
+        "pytest-dev__pytest-10081": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 0.0,
+          "unsolved": 33.3,
+          "diff": -33.3
+        },
+        "pytest-dev__pytest-5631": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 8.3,
+          "unsolved": 6.7,
+          "diff": 1.6
+        },
+        "pytest-dev__pytest-6202": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 33.3,
+          "unsolved": 25.0,
+          "diff": 8.3
+        },
+        "pytest-dev__pytest-7205": {
+          "n_solved": 4,
+          "n_unsolved": 1,
+          "solved": 16.7,
+          "unsolved": 26.7,
+          "diff": -10.0
+        },
+        "pytest-dev__pytest-7324": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 26.7,
+          "unsolved": 28.9,
+          "diff": -2.2
+        },
+        "pytest-dev__pytest-7490": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 23.3,
+          "unsolved": 17.8,
+          "diff": 5.5
+        },
+        "pytest-dev__pytest-8399": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 6.7,
+          "unsolved": 10.0,
+          "diff": -3.3
+        },
+        "scikit-learn__scikit-learn-10908": {
+          "n_solved": 1,
+          "n_unsolved": 3,
+          "solved": 20.0,
+          "unsolved": 22.2,
+          "diff": -2.2
+        },
+        "scikit-learn__scikit-learn-9288": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 13.3,
+          "unsolved": 18.3,
+          "diff": -5.0
+        },
+        "sphinx-doc__sphinx-10323": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 26.7,
+          "unsolved": 21.7,
+          "diff": 5.0
+        },
+        "sphinx-doc__sphinx-7910": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 26.7,
+          "unsolved": 16.7,
+          "diff": 10.0
+        },
+        "sphinx-doc__sphinx-8120": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 13.3,
+          "unsolved": 20.0,
+          "diff": -6.7
+        },
+        "sphinx-doc__sphinx-8459": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 13.3,
+          "unsolved": 10.0,
+          "diff": 3.3
+        },
+        "sphinx-doc__sphinx-8593": {
+          "n_solved": 3,
+          "n_unsolved": 2,
+          "solved": 17.8,
+          "unsolved": 10.0,
+          "diff": 7.8
+        },
+        "sympy__sympy-13757": {
+          "n_solved": 2,
+          "n_unsolved": 3,
+          "solved": 13.3,
+          "unsolved": 11.1,
+          "diff": 2.2
+        },
+        "sympy__sympy-17655": {
+          "n_solved": 1,
+          "n_unsolved": 4,
+          "solved": 6.7,
+          "unsolved": 21.7,
+          "diff": -15.0
+        },
+        "sympy__sympy-22714": {
+          "n_solved": 2,
+          "n_unsolved": 2,
+          "solved": 20.0,
+          "unsolved": 16.7,
+          "diff": 3.3
+        }
+      }
+    },
+    "P4 I": {
+      "tasks_total": 5,
+      "tasks_mixed": 0,
+      "tasks_all_solved": 1,
+      "tasks_none_solved": 4,
+      "mean_diff_pp": null,
+      "tasks_solved_lower": 0,
+      "tasks_solved_higher": 0,
+      "per_task": {}
+    },
+    "P4 M": {
+      "tasks_total": 6,
+      "tasks_mixed": 1,
+      "tasks_all_solved": 1,
+      "tasks_none_solved": 4,
+      "mean_diff_pp": 0.0,
+      "tasks_solved_lower": 0,
+      "tasks_solved_higher": 0,
+      "per_task": {
+        "public-sphinx-issue-8945": {
+          "n_solved": 2,
+          "n_unsolved": 1,
+          "solved": 13.3,
+          "unsolved": 13.3,
+          "diff": 0.0
+        }
+      }
+    },
+    "P4 N": {
+      "tasks_total": 6,
+      "tasks_mixed": 1,
+      "tasks_all_solved": 0,
+      "tasks_none_solved": 5,
+      "mean_diff_pp": -13.4,
+      "tasks_solved_lower": 1,
+      "tasks_solved_higher": 0,
+      "per_task": {
+        "public-sphinx-issue-9030": {
+          "n_solved": 1,
+          "n_unsolved": 1,
+          "solved": 13.3,
+          "unsolved": 26.7,
+          "diff": -13.4
+        }
+      }
+    },
+    "P4 all": {
+      "tasks_total": 6,
+      "tasks_mixed": 2,
+      "tasks_all_solved": 0,
+      "tasks_none_solved": 4,
+      "mean_diff_pp": -6.1,
+      "tasks_solved_lower": 2,
+      "tasks_solved_higher": 0,
+      "per_task": {
+        "public-sphinx-issue-8945": {
+          "n_solved": 2,
+          "n_unsolved": 6,
+          "solved": 13.3,
+          "unsolved": 14.4,
+          "diff": -1.1
+        },
+        "public-sphinx-issue-9030": {
+          "n_solved": 6,
+          "n_unsolved": 1,
+          "solved": 15.6,
+          "unsolved": 26.7,
+          "diff": -11.1
+        }
+      }
+    }
+  },
+  "first_calls": 15,
+  "tool_calls_by_outcome": {
+    "A5 all": {
+      "solved_median": 18.0,
+      "unsolved_median": 44.0
+    },
+    "A5 b0": {
+      "solved_median": 18.0,
+      "unsolved_median": 44.0
+    },
+    "A5 b2": {
+      "solved_median": 18.0,
+      "unsolved_median": 44.5
+    },
+    "A6-R all": {
+      "solved_median": 34,
+      "unsolved_median": 45
+    },
+    "A6-R r0": {
+      "solved_median": 32,
+      "unsolved_median": 45.0
+    },
+    "A6-R r1": {
+      "solved_median": 36.5,
+      "unsolved_median": 45
+    },
+    "CR-2 all": {
+      "solved_median": 17.0,
+      "unsolved_median": 43.0
+    },
+    "CR-2 n": {
+      "solved_median": 19.5,
+      "unsolved_median": 43
+    },
+    "CR-2 o": {
+      "solved_median": 14.0,
+      "unsolved_median": 43
+    },
+    "CR-2 p": {
+      "solved_median": 13.0,
+      "unsolved_median": 43
+    },
+    "CR-2 t": {
+      "solved_median": 19.0,
+      "unsolved_median": 44
+    },
+    "P4 I": {
+      "solved_median": 18,
+      "unsolved_median": 22
+    },
+    "P4 M": {
+      "solved_median": 18,
+      "unsolved_median": 22
+    },
+    "P4 N": {
+      "solved_median": 18,
+      "unsolved_median": 21.5
+    },
+    "P4 all": {
+      "solved_median": 18,
+      "unsolved_median": 22.0
+    }
+  },
+  "top_runs": [
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-13091/r1/b0r2/r3",
+      "experiment": "A6-R",
+      "config": "r1",
+      "reread_calls": 122,
+      "tool_calls": 133,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-14248/r1/b0r2/r3",
+      "experiment": "A6-R",
+      "config": "r1",
+      "reread_calls": 106,
+      "tool_calls": 119,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-14248/r1/b0r1/r3",
+      "experiment": "A6-R",
+      "config": "r1",
+      "reread_calls": 99,
+      "tool_calls": 113,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-14248/r1/b0r1/r2",
+      "experiment": "A6-R",
+      "config": "r1",
+      "reread_calls": 96,
+      "tool_calls": 107,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-13091/r0/b0r2/r1",
+      "experiment": "A6-R",
+      "config": "r0",
+      "reread_calls": 87,
+      "tool_calls": 101,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-14248/r1/b0r2/r1",
+      "experiment": "A6-R",
+      "config": "r1",
+      "reread_calls": 81,
+      "tool_calls": 107,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-14248/r1/b0r3/r3",
+      "experiment": "A6-R",
+      "config": "r1",
+      "reread_calls": 78,
+      "tool_calls": 105,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a6-retry/sympy__sympy-14248/r1/b0r3/r1",
+      "experiment": "A6-R",
+      "config": "r1",
+      "reread_calls": 73,
+      "tool_calls": 93,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/cr2-main/sphinx-doc__sphinx-9461/p/r4",
+      "experiment": "CR-2",
+      "config": "p",
+      "reread_calls": 70,
+      "tool_calls": 80,
+      "solved": false
+    },
+    {
+      "run_dir": "D:/crq/src/coding-harness/runs/a5-main/sympy__sympy-14248/b0/r1",
+      "experiment": "A5",
+      "config": "b0",
+      "reread_calls": 68,
+      "tool_calls": 89,
+      "solved": false
+    }
+  ]
+}

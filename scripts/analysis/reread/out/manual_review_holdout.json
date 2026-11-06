@@ -1,0 +1,282 @@
+{
+ "A5-after_write-000": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-after_write-001": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-002": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-003": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-004": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-not_reread-005": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A5-reread-006": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-007": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-008": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-009": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-010": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-011": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-012": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A5-reread-013": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-after_write-014": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-after_write-015": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-016": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-017": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-018": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-not_reread-019": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "A6-R-reread-020": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-021": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-022": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-023": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-024": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-025": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-026": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "A6-R-reread-027": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-after_write-028": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-after_write-029": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-not_reread-030": {
+  "reread": false,
+  "view_state": null,
+  "note": "近似重复：def __new__ 是之前多选模式中的一项，按定义不算"
+ },
+ "CR-2-not_reread-031": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-not_reread-032": {
+  "reread": true,
+  "view_state": "raw",
+  "note": "漏判：两次 search_code 的模式是同样三项换了顺序"
+ },
+ "CR-2-not_reread-033": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "CR-2-reread-034": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-035": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-036": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-037": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-038": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-039": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "CR-2-reread-040": {
+  "reread": true,
+  "view_state": "elided",
+  "note": "判定正确；另见解析缺口：之前某步 grep 输出接 cat -A 时，grep 没被识别为读取"
+ },
+ "CR-2-reread-041": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-after_write-042": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-after_write-043": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-044": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-045": {
+  "reread": false,
+  "view_state": null,
+  "note": "近似重复：模式在之前基础上多了一项，按定义不算"
+ },
+ "P4-not_reread-046": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-not_reread-047": {
+  "reread": false,
+  "view_state": null,
+  "note": ""
+ },
+ "P4-reread-048": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-049": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-050": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-051": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-052": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-053": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-054": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ },
+ "P4-reread-055": {
+  "reread": true,
+  "view_state": "elided",
+  "note": ""
+ }
+}

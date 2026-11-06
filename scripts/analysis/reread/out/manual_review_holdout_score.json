@@ -1,0 +1,95 @@
+{
+  "sample": "holdout",
+  "reviewer_note": "Verdicts were written by the analyst reading each item against the raw call list; one reviewer, no blinding. Strata are drawn at fixed sizes, so the rates are per stratum of the classifier's own labels, not population rates.",
+  "items": 56,
+  "strata": {
+    "A5 after_write": {
+      "n": 2,
+      "manual_reread": 0
+    },
+    "A5 not_reread": {
+      "n": 4,
+      "manual_reread": 0
+    },
+    "A5 reread": {
+      "n": 8,
+      "manual_reread": 8
+    },
+    "A6-R after_write": {
+      "n": 2,
+      "manual_reread": 0
+    },
+    "A6-R not_reread": {
+      "n": 4,
+      "manual_reread": 0
+    },
+    "A6-R reread": {
+      "n": 8,
+      "manual_reread": 8
+    },
+    "CR-2 after_write": {
+      "n": 2,
+      "manual_reread": 0
+    },
+    "CR-2 not_reread": {
+      "n": 4,
+      "manual_reread": 1
+    },
+    "CR-2 reread": {
+      "n": 8,
+      "manual_reread": 8
+    },
+    "P4 after_write": {
+      "n": 2,
+      "manual_reread": 0
+    },
+    "P4 not_reread": {
+      "n": 4,
+      "manual_reread": 0
+    },
+    "P4 reread": {
+      "n": 8,
+      "manual_reread": 8
+    }
+  },
+  "classifier_at_draw": {
+    "flagged": 32,
+    "false_positives": 0,
+    "false_positive_rate": 0.0,
+    "unflagged": 24,
+    "false_negatives": 1,
+    "false_negative_rate": 0.042,
+    "view_state_checked": 32,
+    "view_state_wrong": 0,
+    "view_state_accuracy": 1.0,
+    "masked_vs_visible_wrong": 0,
+    "false_positive_ids": [],
+    "false_negative_ids": [
+      "CR-2-not_reread-032"
+    ],
+    "view_state_wrong_ids": []
+  },
+  "classifier_current": {
+    "flagged": 32,
+    "false_positives": 0,
+    "false_positive_rate": 0.0,
+    "unflagged": 24,
+    "false_negatives": 1,
+    "false_negative_rate": 0.042,
+    "view_state_checked": 32,
+    "view_state_wrong": 0,
+    "view_state_accuracy": 1.0,
+    "masked_vs_visible_wrong": 0,
+    "false_positive_ids": [],
+    "false_negative_ids": [
+      "CR-2-not_reread-032"
+    ],
+    "view_state_wrong_ids": []
+  },
+  "notes": {
+    "CR-2-not_reread-030": "近似重复：def __new__ 是之前多选模式中的一项，按定义不算",
+    "CR-2-not_reread-032": "漏判：两次 search_code 的模式是同样三项换了顺序",
+    "CR-2-reread-040": "判定正确；另见解析缺口：之前某步 grep 输出接 cat -A 时，grep 没被识别为读取",
+    "P4-not_reread-045": "近似重复：模式在之前基础上多了一项，按定义不算"
+  }
+}
