@@ -1,0 +1,867 @@
+{
+  "schema": "errata-2026-11.e3.v1",
+  "batches": {
+    "v2": {
+      "root": "D:/crq/artifacts/p4-prompt-timing-scale54-v2-20261031-01",
+      "fees_sha256": "4f66f5198c850710256269462d581deda6e4ab112299752536bf350231fc0e98",
+      "planned_rows": 54,
+      "started": 9,
+      "checks_bound": 8,
+      "stops": [
+        {
+          "run_index": 8,
+          "reason": "send_or_evidence_unknown",
+          "error_type": "ReadTimeout"
+        }
+      ],
+      "known_settled_cny": "2.688078",
+      "unknown_held_cny": "0.097986",
+      "historical_peak_cny_at_start": "6.155520",
+      "cumulative_cap_cny": "31"
+    },
+    "v3": {
+      "root": "D:/crq/artifacts/p4-prompt-timing-scale54-v3-recovery46-20261101-01",
+      "fees_sha256": "aa2940dadb0582591e1c937e307f4c6931a8fec0fc08e9d9d4a910a1cb9933be",
+      "planned_rows": 46,
+      "started": 45,
+      "checks_bound": 44,
+      "stops": [
+        {
+          "run_index": 44,
+          "reason": "environment_delivery_validation_or_cleanup_anomaly",
+          "error_type": null
+        }
+      ],
+      "known_settled_cny": "14.238794",
+      "unknown_held_cny": "0",
+      "historical_peak_cny_at_start": "8.941584",
+      "cumulative_cap_cny": "31"
+    },
+    "v4": {
+      "root": "D:/crq/artifacts/p4-prompt-timing-scale54-v4-single-row-20261101-01",
+      "fees_sha256": "fd838a27e7e666c2e5d84593590c5bd6ca845e1223a578cc3f78d0184eb0856d",
+      "planned_rows": 1,
+      "started": 1,
+      "checks_bound": 1,
+      "stops": [],
+      "known_settled_cny": "0.349242",
+      "unknown_held_cny": "0",
+      "historical_peak_cny_at_start": "8.941584",
+      "cumulative_cap_cny": "31"
+    }
+  },
+  "allocations_total": 55,
+  "source_rows_covered": 54,
+  "source_rows_repeated": [
+    8
+  ],
+  "outcomes": {
+    "behavior_failed": 44,
+    "passed": 9,
+    "unknown": 1,
+    "invalid_candidate": 1
+  },
+  "by_condition_valid": {
+    "N": {
+      "passed": 1,
+      "valid": 17
+    },
+    "I": {
+      "passed": 3,
+      "valid": 18
+    },
+    "M": {
+      "passed": 5,
+      "valid": 18
+    }
+  },
+  "by_task_condition": {
+    "public-sphinx-issue-8637": {
+      "I": {
+        "behavior_failed": 3
+      },
+      "M": {
+        "behavior_failed": 3
+      },
+      "N": {
+        "behavior_failed": 3
+      }
+    },
+    "public-sphinx-issue-8756": {
+      "I": {
+        "behavior_failed": 3
+      },
+      "M": {
+        "unknown": 1,
+        "behavior_failed": 3
+      },
+      "N": {
+        "behavior_failed": 3
+      }
+    },
+    "public-sphinx-issue-8775": {
+      "I": {
+        "behavior_failed": 3
+      },
+      "M": {
+        "behavior_failed": 3
+      },
+      "N": {
+        "behavior_failed": 3
+      }
+    },
+    "public-sphinx-issue-8800": {
+      "I": {
+        "behavior_failed": 3
+      },
+      "M": {
+        "behavior_failed": 3
+      },
+      "N": {
+        "behavior_failed": 3
+      }
+    },
+    "public-sphinx-issue-8945": {
+      "I": {
+        "behavior_failed": 3
+      },
+      "M": {
+        "passed": 2,
+        "behavior_failed": 1
+      },
+      "N": {
+        "behavior_failed": 3
+      }
+    },
+    "public-sphinx-issue-9030": {
+      "I": {
+        "passed": 3
+      },
+      "M": {
+        "passed": 3
+      },
+      "N": {
+        "behavior_failed": 1,
+        "passed": 1,
+        "invalid_candidate": 1
+      }
+    }
+  },
+  "termination_of_valid_by_condition": {
+    "N": {
+      "insufficient_reserve": 14,
+      "None": 1,
+      "response_nonexecutable": 1,
+      "step_limit": 1
+    },
+    "I": {
+      "insufficient_reserve": 9,
+      "response_nonexecutable": 3,
+      "context_overflow": 1,
+      "step_limit": 3,
+      "None": 2
+    },
+    "M": {
+      "None": 3,
+      "insufficient_reserve": 11,
+      "response_nonexecutable": 2,
+      "step_limit": 2
+    }
+  },
+  "v2_stop": {
+    "status": "STOPPED_UNKNOWN_USAGE_NOT_RESUMABLE",
+    "stop": {
+      "run_index": 8,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 1,
+      "request_number": 12,
+      "reason": "send_or_evidence_unknown",
+      "error_type": "ReadTimeout"
+    },
+    "unknown_reserve_cny": "0.097986"
+  },
+  "v3_stop": {
+    "stop_reason": "environment_delivery_validation_or_cleanup_anomaly",
+    "stderr_error": "fees.IntegrityError: normal workspace delivery/cleanup obligations not met",
+    "root_cause": "harness_contract_mismatch",
+    "violations": [
+      {
+        "path": "doc/usage/configuration.rst",
+        "reason": "unsupported_change"
+      }
+    ],
+    "development_validation": [
+      "not_run",
+      "protected_change"
+    ]
+  },
+  "cost": {
+    "historical_peak_before_v2_cny": "6.155520",
+    "new_known_settled_cny": "17.276114",
+    "new_unknown_held_cny": "0.097986",
+    "cumulative_peak_cny": "23.529620"
+  },
+  "allocations": [
+    {
+      "batch": "v2",
+      "run_index": 0,
+      "source_row": 0,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "N",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v2",
+      "run_index": 1,
+      "source_row": 1,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "M",
+      "repeat": 1,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": null
+    },
+    {
+      "batch": "v2",
+      "run_index": 2,
+      "source_row": 2,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "I",
+      "repeat": 1,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v2",
+      "run_index": 3,
+      "source_row": 3,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "I",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v2",
+      "run_index": 4,
+      "source_row": 4,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "N",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v2",
+      "run_index": 5,
+      "source_row": 5,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "M",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v2",
+      "run_index": 6,
+      "source_row": 6,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "I",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "response_nonexecutable"
+    },
+    {
+      "batch": "v2",
+      "run_index": 7,
+      "source_row": 7,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "N",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v2",
+      "run_index": 8,
+      "source_row": 8,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 1,
+      "check_status": null,
+      "outcome": "unknown",
+      "termination": "billing_usage_unknown"
+    },
+    {
+      "batch": "v3",
+      "run_index": 0,
+      "source_row": 8,
+      "replacement_of": "old-stopped-row-8",
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 1,
+      "source_row": 9,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "M",
+      "repeat": 1,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 2,
+      "source_row": 10,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "N",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 3,
+      "source_row": 11,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "I",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "context_overflow"
+    },
+    {
+      "batch": "v3",
+      "run_index": 4,
+      "source_row": 12,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "N",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 5,
+      "source_row": 13,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "I",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "step_limit"
+    },
+    {
+      "batch": "v3",
+      "run_index": 6,
+      "source_row": 14,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "M",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 7,
+      "source_row": 15,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "M",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 8,
+      "source_row": 16,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "N",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 9,
+      "source_row": 17,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "I",
+      "repeat": 1,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 10,
+      "source_row": 18,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "N",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 11,
+      "source_row": 19,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "I",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 12,
+      "source_row": 20,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "M",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 13,
+      "source_row": 21,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "N",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 14,
+      "source_row": 22,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "response_nonexecutable"
+    },
+    {
+      "batch": "v3",
+      "run_index": 15,
+      "source_row": 23,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "I",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "response_nonexecutable"
+    },
+    {
+      "batch": "v3",
+      "run_index": 16,
+      "source_row": 24,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "I",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 17,
+      "source_row": 25,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "M",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 18,
+      "source_row": 26,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "N",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 19,
+      "source_row": 27,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "M",
+      "repeat": 2,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": null
+    },
+    {
+      "batch": "v3",
+      "run_index": 20,
+      "source_row": 28,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "I",
+      "repeat": 2,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": null
+    },
+    {
+      "batch": "v3",
+      "run_index": 21,
+      "source_row": 29,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "N",
+      "repeat": 2,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": null
+    },
+    {
+      "batch": "v3",
+      "run_index": 22,
+      "source_row": 30,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "M",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 23,
+      "source_row": 31,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "I",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 24,
+      "source_row": 32,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "N",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 25,
+      "source_row": 33,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "M",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "step_limit"
+    },
+    {
+      "batch": "v3",
+      "run_index": 26,
+      "source_row": 34,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "N",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 27,
+      "source_row": 35,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "I",
+      "repeat": 2,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "step_limit"
+    },
+    {
+      "batch": "v3",
+      "run_index": 28,
+      "source_row": 36,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "N",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 29,
+      "source_row": 37,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "I",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 30,
+      "source_row": 38,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8945",
+      "condition": "M",
+      "repeat": 3,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 31,
+      "source_row": 39,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "M",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "response_nonexecutable"
+    },
+    {
+      "batch": "v3",
+      "run_index": 32,
+      "source_row": 40,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "I",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "response_nonexecutable"
+    },
+    {
+      "batch": "v3",
+      "run_index": 33,
+      "source_row": 41,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8756",
+      "condition": "N",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "response_nonexecutable"
+    },
+    {
+      "batch": "v3",
+      "run_index": 34,
+      "source_row": 42,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "I",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "step_limit"
+    },
+    {
+      "batch": "v3",
+      "run_index": 35,
+      "source_row": 43,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "M",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "step_limit"
+    },
+    {
+      "batch": "v3",
+      "run_index": 36,
+      "source_row": 44,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8800",
+      "condition": "N",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "step_limit"
+    },
+    {
+      "batch": "v3",
+      "run_index": 37,
+      "source_row": 45,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "N",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 38,
+      "source_row": 46,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "M",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 39,
+      "source_row": 47,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8775",
+      "condition": "I",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 40,
+      "source_row": 48,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "I",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 41,
+      "source_row": 49,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "M",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 42,
+      "source_row": 50,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-8637",
+      "condition": "N",
+      "repeat": 3,
+      "check_status": "behavior_failed",
+      "outcome": "behavior_failed",
+      "termination": "insufficient_reserve"
+    },
+    {
+      "batch": "v3",
+      "run_index": 43,
+      "source_row": 51,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "I",
+      "repeat": 3,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": null
+    },
+    {
+      "batch": "v3",
+      "run_index": 44,
+      "source_row": 52,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "N",
+      "repeat": 3,
+      "check_status": null,
+      "outcome": "invalid_candidate",
+      "termination": null
+    },
+    {
+      "batch": "v4",
+      "run_index": 0,
+      "source_row": 53,
+      "replacement_of": null,
+      "task_id": "public-sphinx-issue-9030",
+      "condition": "M",
+      "repeat": 3,
+      "check_status": "passed",
+      "outcome": "passed",
+      "termination": null
+    }
+  ]
+}

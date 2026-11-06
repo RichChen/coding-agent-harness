@@ -1,0 +1,386 @@
+{
+  "schema": "errata-2026-11.e2.v1",
+  "inputs": {
+    "a6_runs": "docs/sprint/a6-retry-runs.json",
+    "a6_runs_sha256": "d46b6bc011c5b21a35407a0aa4aa3461bab15ae92ae875e3da1f16d42811aff3",
+    "profile": "configs/sprint/b0-v2.yaml",
+    "max_output_tokens": 8192,
+    "max_model_calls": 40,
+    "cap_cny": "1.000",
+    "price_cache_miss_per_million": "2.000",
+    "price_completion_per_million": "8.000"
+  },
+  "a6_parse_error_runs": 11,
+  "a6_parse_error_by_arm": {
+    "r0": 0,
+    "r1": 11
+  },
+  "a6_parse_error_cost_span_cny": [
+    "0.903",
+    "0.940"
+  ],
+  "a6_parse_error_reserve_span_cny": [
+    "0.093",
+    "0.104"
+  ],
+  "a6_parse_error_all_exceed_cap": true,
+  "a6_parse_error_any_call_cap": false,
+  "a6_parse_error_all_tail_signature": true,
+  "a6_parse_error_estimates_all_match": true,
+  "a6_parse_error_calls_short_span": [
+    1,
+    6
+  ],
+  "a6_parse_error_status": {
+    "fail": 6,
+    "partial": 4,
+    "pass": 1
+  },
+  "a6_arm_cost": {
+    "r0": {
+      "runs": 159,
+      "mean_cost_cny": "0.497",
+      "runs_at_or_above_0_9": 0,
+      "max_cost_cny": "0.882"
+    },
+    "r1": {
+      "runs": 159,
+      "mean_cost_cny": "0.589",
+      "runs_at_or_above_0_9": 12,
+      "max_cost_cny": "0.940"
+    }
+  },
+  "a6_tail_signature_by_arm_and_stop": {
+    "r0:completed": {
+      "runs": 71,
+      "tail_signature": 0
+    },
+    "r1:completed": {
+      "runs": 66,
+      "tail_signature": 0
+    },
+    "r1:max_model_calls": {
+      "runs": 79,
+      "tail_signature": 79
+    },
+    "r0:max_model_calls": {
+      "runs": 87,
+      "tail_signature": 87
+    },
+    "r1:context_overflow": {
+      "runs": 3,
+      "tail_signature": 0
+    },
+    "r1:model_parse_error": {
+      "runs": 11,
+      "tail_signature": 11
+    },
+    "r0:context_overflow": {
+      "runs": 1,
+      "tail_signature": 0
+    }
+  },
+  "a6_parse_error_detail": [
+    {
+      "slot": "sphinx-doc__sphinx-10614/r1/b0r2/r1",
+      "arm": "r1",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.907",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 15041,
+      "final_reserve_cny": "0.096",
+      "cost_committed_cny": "0.907",
+      "committed_plus_reserve_cny": "1.003",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sphinx-doc__sphinx-10614/r1/b0r2/r2",
+      "arm": "r1",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.903",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 15998,
+      "final_reserve_cny": "0.098",
+      "cost_committed_cny": "0.903",
+      "committed_plus_reserve_cny": "1.001",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sphinx-doc__sphinx-10614/r1/b0r2/r3",
+      "arm": "r1",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.928",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 17287,
+      "final_reserve_cny": "0.100",
+      "cost_committed_cny": "0.928",
+      "committed_plus_reserve_cny": "1.028",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-13091/r1/b0r2/r2",
+      "arm": "r1",
+      "status": "partial",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.918",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 15745,
+      "final_reserve_cny": "0.097",
+      "cost_committed_cny": "0.918",
+      "committed_plus_reserve_cny": "1.015",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-13091/r1/b0r2/r3",
+      "arm": "r1",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 34,
+      "calls_short_of_40": 6,
+      "cost_cny": "0.940",
+      "model_calls_started": 34,
+      "cny_calls_started": 34,
+      "estimate_check": {
+        "attempts": 34,
+        "matched": 34,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 19235,
+      "final_reserve_cny": "0.104",
+      "cost_committed_cny": "0.940",
+      "committed_plus_reserve_cny": "1.044",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-13091/r1/b0r3/r1",
+      "arm": "r1",
+      "status": "partial",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.918",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 14932,
+      "final_reserve_cny": "0.095",
+      "cost_committed_cny": "0.918",
+      "committed_plus_reserve_cny": "1.013",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-13091/r1/b0r3/r3",
+      "arm": "r1",
+      "status": "pass",
+      "solved": true,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.931",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 14355,
+      "final_reserve_cny": "0.094",
+      "cost_committed_cny": "0.931",
+      "committed_plus_reserve_cny": "1.025",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-14248/r1/b0r2/r1",
+      "arm": "r1",
+      "status": "partial",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.908",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 15972,
+      "final_reserve_cny": "0.097",
+      "cost_committed_cny": "0.908",
+      "committed_plus_reserve_cny": "1.005",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-14248/r1/b0r2/r3",
+      "arm": "r1",
+      "status": "partial",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.913",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 15784,
+      "final_reserve_cny": "0.097",
+      "cost_committed_cny": "0.913",
+      "committed_plus_reserve_cny": "1.010",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-15599/r1/b0r3/r2",
+      "arm": "r1",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 39,
+      "calls_short_of_40": 1,
+      "cost_cny": "0.939",
+      "model_calls_started": 39,
+      "cny_calls_started": 39,
+      "estimate_check": {
+        "attempts": 39,
+        "matched": 39,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 13957,
+      "final_reserve_cny": "0.093",
+      "cost_committed_cny": "0.939",
+      "committed_plus_reserve_cny": "1.032",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-20428/r1/b0r1/r2",
+      "arm": "r1",
+      "status": "fail",
+      "solved": false,
+      "model_calls": 35,
+      "calls_short_of_40": 5,
+      "cost_cny": "0.934",
+      "model_calls_started": 35,
+      "cny_calls_started": 35,
+      "estimate_check": {
+        "attempts": 35,
+        "matched": 35,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 16897,
+      "final_reserve_cny": "0.099",
+      "cost_committed_cny": "0.934",
+      "committed_plus_reserve_cny": "1.033",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    }
+  ],
+  "a5_parse_error_detail": [
+    {
+      "slot": "scikit-learn__scikit-learn-9288/b2/r2",
+      "status": "fail",
+      "model_calls": 38,
+      "cost_cny": "0.923",
+      "model_calls_started": 38,
+      "cny_calls_started": 38,
+      "estimate_check": {
+        "attempts": 38,
+        "matched": 38,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 18358,
+      "final_reserve_cny": "0.102",
+      "cost_committed_cny": "0.923",
+      "committed_plus_reserve_cny": "1.025",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    },
+    {
+      "slot": "sympy__sympy-15599/b0/r3",
+      "status": "fail",
+      "model_calls": 37,
+      "cost_cny": "0.937",
+      "model_calls_started": 37,
+      "cny_calls_started": 37,
+      "estimate_check": {
+        "attempts": 37,
+        "matched": 37,
+        "mismatches": []
+      },
+      "final_estimated_input_tokens": 12691,
+      "final_reserve_cny": "0.091",
+      "cost_committed_cny": "0.937",
+      "committed_plus_reserve_cny": "1.028",
+      "exceeds_cap": true,
+      "call_cap_reached": false,
+      "tail_signature": true
+    }
+  ],
+  "log_cap_message": "CNY hard cap would be exceeded",
+  "log_hits": {
+    "runs/a6-retry-logs/main.out": 10,
+    "runs/a6-retry-logs/rerun-2.out": 1,
+    "runs/a5-main-logs/b2-full-stop2.log": 1
+  }
+}

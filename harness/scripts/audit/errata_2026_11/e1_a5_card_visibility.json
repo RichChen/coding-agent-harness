@@ -1,0 +1,68 @@
+{
+  "schema": "errata-2026-11.e1.v1",
+  "inputs": {
+    "runs": "runs/a5-main/<task>/{b0,b2}/r1..r3",
+    "predicted_injection": "docs/sprint/b2-predicted-injection.json",
+    "predicted_injection_sha256": "a2fcd4ef236fc8798d6f441cbb73fd9755d7f82f99ec6ccfe207dc6c4f388e15",
+    "cards": "coding-agent/benchmarks/a5/memory-cards-v6.jsonl",
+    "cards_sha256": "3416eb9d8f6119081330fb3b0a2d612b8fde4678d6ec1c73a7fc681cedfcfc70",
+    "mention_regex": "historical attempt|memory card|\\bcards?\\b|navigation hint|policy candidate|previous (?:attempt|fix)|earlier (?:issue|fix|attempt)|validated_fix|(?<!type )\\bhints?\\b"
+  },
+  "b2_runs": 168,
+  "injection_matches_prediction": 168,
+  "injection_mismatches": [],
+  "b2_runs_with_injection": 153,
+  "tasks_with_injection": 51,
+  "card_steps_histogram": {
+    "[0]": 153,
+    "[]": 15
+  },
+  "injected_runs_cards_only_at_step0": 153,
+  "injected_runs_step1_view_has_card_text": 0,
+  "injected_runs_with_step1": 153,
+  "step0_reply_mentions_card": 0,
+  "step0_reply_mention_details": [],
+  "card_file_touches": {
+    "path": {
+      "b0": {
+        "runs": 153,
+        "runs_touching_at_step0": 19,
+        "runs_touching_any_step": 42,
+        "tool_intents_at_step0": 27,
+        "tool_intents_any_step": 394
+      },
+      "b2": {
+        "runs": 153,
+        "runs_touching_at_step0": 21,
+        "runs_touching_any_step": 40,
+        "tool_intents_at_step0": 27,
+        "tool_intents_any_step": 427
+      }
+    },
+    "basename": {
+      "b0": {
+        "runs": 153,
+        "runs_touching_at_step0": 22,
+        "runs_touching_any_step": 65,
+        "tool_intents_at_step0": 30,
+        "tool_intents_any_step": 762
+      },
+      "b2": {
+        "runs": 153,
+        "runs_touching_at_step0": 26,
+        "runs_touching_any_step": 70,
+        "tool_intents_at_step0": 37,
+        "tool_intents_any_step": 745
+      }
+    }
+  },
+  "parse_error_check": [
+    "scikit-learn__scikit-learn-9288/b2/r2"
+  ],
+  "a6r_r1_record_visibility": {
+    "r1_runs": 159,
+    "views": 5191,
+    "views_with_record": 5191,
+    "runs_record_in_every_view": 159
+  }
+}

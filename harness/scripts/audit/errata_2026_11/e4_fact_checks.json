@@ -1,0 +1,76 @@
+{
+  "schema": "errata-2026-11.e4.v1",
+  "harness_tests": {
+    "tracked_test_modules": 103,
+    "untracked_test_modules_ignored": [],
+    "tracked_test_modules_with_uncommitted_edits": [],
+    "collected": 1311,
+    "head": "ecb1446ed7dae3284e065da01df979c9dcd1ee52"
+  },
+  "agent_tests": {
+    "tracked_test_modules": 51,
+    "untracked_test_modules_ignored": [],
+    "tracked_test_modules_with_uncommitted_edits": [],
+    "collected": 367,
+    "head": "2688025cffe079426711bcab9025ceefeff57a4e"
+  },
+  "docker_profile_checks": {
+    "file": "src/execution/docker.py (DockerExecutionBackend.start)",
+    "checked_fields": [
+      "ReadonlyRootfs",
+      "Privileged",
+      "Binds",
+      "Memory",
+      "PidsLimit",
+      "MemorySwap",
+      "LogConfig",
+      "CapDrop",
+      "SecurityOpt",
+      "NetworkMode",
+      "User",
+      "NanoCpus",
+      "Mounts"
+    ],
+    "count": 13
+  },
+  "event_store": {
+    "events_columns": [
+      "seq",
+      "event_id",
+      "body",
+      "hash"
+    ],
+    "has_previous_hash_column": false,
+    "per_row_hash": true,
+    "sequence_check": true
+  },
+  "tool_output_max_chars": {
+    "configs/baseline.yaml": 50000,
+    "configs/baseline_modelB.yaml": 50000,
+    "configs/context_compact.yaml": 50000,
+    "configs/context_compact_threshold.yaml": 50000,
+    "configs/debug.yaml": 50000,
+    "configs/deepseek.yaml": 16000,
+    "configs/docker.yaml": 16000,
+    "configs/hardened.yaml": 50000,
+    "configs/hardened_argv.yaml": 50000,
+    "configs/memory-smoke-a5.yaml": 12000,
+    "configs/plan_act.yaml": 50000,
+    "configs/plan_act_permissive.yaml": 50000,
+    "configs/retrieval/cr2-t.yaml": 16000,
+    "configs/retrieval/cr2e-t2-r2.yaml": 16000,
+    "configs/retrieval/cr2e-t2.yaml": 16000,
+    "configs/sprint/b0-v1.yaml": 16000,
+    "configs/sprint/b0-v2.yaml": 16000,
+    "configs/sprint/b0.yaml": 16000,
+    "configs/subagent_readonly.yaml": 50000,
+    "configs/workspace/p4-sphinx-deepseek-delayed-mask.yaml": 12000,
+    "configs/workspace/p4-sphinx-deepseek.yaml": 12000,
+    "configs/workspace/sphinx-bm25.yaml": 12000
+  },
+  "recovery_scope": {
+    "write_file_only_proof": true,
+    "unknown_outcome_status": true,
+    "docker_resume_refused": true
+  }
+}

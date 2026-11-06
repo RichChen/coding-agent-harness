@@ -182,3 +182,62 @@
 | sphinx-doc__sphinx-8120/r1/b0r3/r3 | R1 | 40 | fail |
 
 **两个计数的口径不同。** 次要指标 4 里的"用满 40 次"按 `model_calls ≥ 40` 计，R0 89、R1 87；上表 stop_reason 为 `max_model_calls` 的是 R0 87、R1 79。差额是用满 40 次调用、但 stop_reason 是 completed（R0 2、R1 7）或 context_overflow（R1 1）的运行，两者不是同一个量。
+
+## 勘误（2026-11）
+
+日期：2026-11-06。上文原文（包括脚本生成的部分）不改，本节补充 2026-11 回看时查明的原因。数字来自 harness `scripts/audit/errata_2026_11/` 下的复算脚本：第一项是 `e2_cny_cap_parse_errors.py`，第二项是 `e5_a6r_context_overflow.py`，输出是同目录同名的 `.json`。脚本只读 `runs/a6-retry/`、`runs/a5-main/` 和对应日志，都不调用模型；`e2` 离线构建一次 agent，只为拿到工具 schema。
+
+### R1 的 11 次 `model_parse_error` 是单次运行 1 元上限拦截
+
+**原来的说法。** 上文"非预注册的描述"一节写 R1 的 11 次 `model_parse_error`"原因未查明"。`MEMORY-FINAL-REPORT.zh-CN.md` 第 5.4 节、harness `AUDIT-A6-3.zh-CN.md` 和 `AUDIT-A6-4.zh-CN.md` 沿用了这个说法。
+
+**实际情况。** 这 11 次不是模型输出解析失败，是单次运行的人民币预算上限拒绝了下一次调用的预留。下面的行号都按运行时的 harness tag `a6-retry-freeze`：
+
+- 每次模型调用之前，`src/runtime/retry.py`（L123–134）按估算的输入 token 数向 `CnyBudgetLedger` 预留费用。输入按缓存未命中价 2 元/百万 token 计，输出按 max_output 8192 token × 8 元/百万计。
+- 单次运行的账本由 `scripts/run_swe_task.py` 的 `make_ledger`（L418 起）建立，上限 1.000 元。已结算花费加上这笔预留超过上限时，`src/policy/cny_budget.py` 的 `reserve`（L121–131）抛出 `CnyBudgetError("CNY hard cap would be exceeded")`。
+- `src/runtime/loop.py` L719–736 的通用 `except` 把这个异常记成 `MODEL_PARSE_ERROR` 结束运行，错误原文只写进日志（`LLM call failed: ...`），不进 summary 和事件。2026-11 的 harness 提交 `846e3a0` 起，这种情况单独标记为预算上限，不再混进 `model_parse_error`；这次勘误不涉及那项代码修改。
+
+**复算结果。**
+
+- 11 次都在 R1，R0 0 次。累计花费 0.903–0.940 元。按事件重建失败那一步的预留是 0.093–0.104 元，两者相加 1.001–1.044 元，11 次全部超过 1.000 元。重建方法先在之前每一次调用上验证过：重建的输入 token 估算和 `model.settled` 记录里的 `estimated_input_tokens` 全部相等。
+- 11 次都没有到 40 次调用上限，分别少了 1 到 6 次调用（9 次只少 1 次）。最终 status：pass 1、partial 4、fail 6。
+- 日志里 `CNY hard cap would be exceeded` 出现的次数：harness `runs/a6-retry-logs/main.out` 10 次，`rerun-2.out` 1 次，和"10 次在第一轮、1 次是 402 之后的重跑"对得上。
+- 事件上的形态：最后一次 `model.settled` 之后有 `context.prepared`，没有 `model.started`。这个形态不是独有的：166 次 `max_model_calls` 运行（R0 87、R1 79）结尾也是这样，`completed` 和 `context_overflow` 的运行没有。能区分两者的是调用次数不到 40。
+- 两组的花费：R1 平均每次 0.589 元，R0 0.497 元；花费 ≥0.9 元的运行 R1 12 次，R0 0 次；R0 最高 0.882 元，R1 最高 0.940 元。
+- A5 的 2 次 `model_parse_error` 原因相同：scikit-learn-9288 B2 r2 花费 0.923 元、预留 0.102 元；sympy-15599 B0 r3 花费 0.937 元、预留 0.091 元，相加都超过 1.000 元。harness `runs/a5-main-logs/` 里只找到 1 条同样的日志行（`b2-full-stop2.log`），另一次的判断只依据账本和事件重建。
+
+**对结论的影响。**
+
+- 这是一个没有声明的组间预算不对称。上限对两组相同，但 R1 的 prompt 带着最长 8192 字节的上次记录，每次请求都要重发，所以每次运行更贵，更容易撞上 1 元上限。
+- 这 11 次被提前截断，少了 1 到 6 次调用，其中 1 次仍然解出，4 次 partial。偏差的方向对 R1 不利，会让 R1 的解出数偏低；偏低多少，现有数据估计不出来。
+- 主分析按预注册执行，这些运行按 grader 给出的 solved 计入，主结论不变。引用 R1−R0 时应同时写明这项偏差。
+
+### 4 次 `context_overflow` 是 harness 按字节估算的准入拦截，模型窗口没有满
+
+**原来的说法。** 上文"非预注册的描述"一节写 `context_overflow`（R0 1 次，R1 3 次）"原因未查明"。`MEMORY-FINAL-REPORT.zh-CN.md` 第 5.4 节沿用了这个说法，第 6.2 节第 3 条把"R1 的 context_overflow 更多"列为负担更重的表现之一。
+
+**实际情况。** 被拦下的请求没有发给模型，是 harness 在发送前的准入检查拒绝的。下面的行号按运行时的 harness tag `a6-retry-freeze`：
+
+- `src/runtime/window.py` 的 `request_size`（L29–36）把整个请求（消息加工具 schema）序列化成 UTF-8，按 1 字节算 1 个 token，再加协议余量（512，每条消息 32，每个工具 128），得到 `admission_input_tokens`。代码注释写明这是保守的字节估算，不是实测用量。
+- `admit`（L68–75）在估算加上预留输出 8,192 超过 profile `configs/sprint/b0-v2.yaml` 的窗口 `max_tokens: 96000` 时抛出 `ContextOverflowError`。
+- `src/runtime/loop.py` L648–657 把这次拒绝写成 `context.rejected` 事件，以 `context_overflow` 结束运行。被拒的那一步没有 `context.prepared`；最后一条 `context.prepared` 是上一步已经放行的请求，只看它会以为上下文没有超限。
+
+**复算结果。**
+
+- 4 次运行都只有 1 条 `context.rejected`，它的 step 紧接在最后一条 `context.prepared` 之后，最后一条 `context.prepared` 没有超限标记。
+- 被拒请求的准入估算是 87,823–92,548，加上预留输出 8,192，全部超过 96,000。
+- 同一次运行里，前一次成功调用的真实 `prompt_tokens`（服务商返回）是 17,843–35,329，也是各自运行里的最大值。字节估算是它的 2.49–5.19 倍。被拒请求只比前一次多一轮回复和工具输出，它的真实大小没有记录；模型本身的上下文窗口（DeepSeek 官方文档为 1M）远大于 96,000。
+- 402 退役的运行里没有 `context_overflow`；A5 的 392 次运行里也是 0 次。
+
+| 槽位 | 组 | 成功调用 | 准入估算 | 前一次 prompt_tokens | 上次记录字节 |
+| --- | --- | --- | --- | --- | --- |
+| django__django-13964/r1/b0r2/r1 | R1 | 34 | 92,548 | 17,843 | 673 |
+| pytest-dev__pytest-5840/r1/b0r2/r3 | R1 | 36 | 89,463 | 20,758 | 4,793 |
+| sphinx-doc__sphinx-7590/r0/b0r1/r3 | R0 | 18 | 87,823 | 35,329 | 0 |
+| sphinx-doc__sphinx-8120/r1/b0r3/r3 | R1 | 40 | 88,306 | 19,744 | 1,330 |
+
+**对结论的影响。**
+
+- 这 4 次运行是被 harness 自己的保守估算截断的，不是上下文真的装不下。sphinx-8120 被拒时已经用满 40 次调用，没有损失；另外 3 次少了调用：django-13964 少 6 次，pytest-5840 少 4 次，R0 的 sphinx-7590 少 22 次。4 次最终都是 fail。
+- 3 次在 R1，和上一项的 1 元上限一样，是没有声明的组间不对称，来源也有一部分相同：R1 的任务 prompt 带着上次记录（R1 平均 2,881 字节，最长 8,173 字节；R0 没有），每次请求都重发，而准入估算按 1 字节 1 token 计。粗算把记录的字节从被拒请求的估算里去掉，pytest-5840 和 sphinx-8120 那一步会放行，django-13964 仍然超限；sphinx-8120 放行后也已经到调用上限。所以记录本身只能解释 pytest-5840 这 1 次的截断。4 次太少，看不出 R1 是否系统性地更容易溢出。
+- 截断的调用数 R0 多于 R1，偏差方向不确定，量也很小。主分析按预注册执行，主结论不变。`MEMORY-FINAL-REPORT.zh-CN.md` 第 6.2 节第 3 条里的"context_overflow 更多"不应作为 R1 负担更重的证据。

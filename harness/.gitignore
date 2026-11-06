@@ -40,6 +40,11 @@ reports/examples/*
 /scripts/audit/*
 !/scripts/audit/README.md
 !/scripts/audit/case_mem.py
+!/scripts/audit/errata_2026_11/
+/scripts/audit/errata_2026_11/__pycache__/
+!/scripts/audit/fix2_2026_11/
+/scripts/audit/fix2_2026_11/__pycache__/
+/scripts/audit/fix2_2026_11/requests.jsonl
 /scripts/diagnostics/
 /scripts/a5_memory_provenance_review.py
 /scripts/audit_a5_h3_dual_end.py
