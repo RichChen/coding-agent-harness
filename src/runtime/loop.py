@@ -23,6 +23,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from src.llm.client import LLMClient, LLMError, LLMErrorKind, LLMResponse, ToolCall
+from src.llm.redact import redact_secrets
 from src.policy.budget import Budget, BudgetExhausted
 from src.policy.cny_budget import CnyBudgetError
 from src.policy.model_budget import BudgetLedgerError, ModelBudgetLedger
@@ -257,10 +258,7 @@ class AgentLoop:
         return result
 
     def _error_text(self, error: BaseException) -> str:
-        text = str(error)
-        key = getattr(self.llm, "api_key", None)
-        if isinstance(key, str) and key:
-            text = text.replace(key, "[redacted]")
+        text = redact_secrets(str(error), (getattr(self.llm, "api_key", None),))
         return text.encode("utf-8")[:ERROR_MESSAGE_BYTES].decode("utf-8", "ignore")
 
     def _check_cancelled(
@@ -768,8 +766,9 @@ class AgentLoop:
                 except StoreError:
                     raise  # A journal failure must never permit another external effect.
                 except Exception as e:
-                    logger.error(f"LLM call failed: {e}")
-                    state.record_failure(str(e))
+                    error_text = redact_secrets(str(e), (getattr(self.llm, "api_key", None),))
+                    logger.error(f"LLM call failed: {error_text}")
+                    state.record_failure(error_text)
                     steps.append(
                         StepRecord(
                             step=state.step_number,

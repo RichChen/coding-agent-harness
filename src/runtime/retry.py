@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 from typing import Any, Callable
 
 from src.llm.client import LLMError, LLMErrorKind, provider_metadata
+from src.llm.redact import redact_secrets
 from src.policy.model_budget import BudgetLedgerError, ModelBudgetLedger
 from src.runtime.awaitctl import await_with_control, estimate_input_tokens
 from src.runtime.deadline import DeadlineClock, DeadlineExceeded, UserCancelled
@@ -173,6 +174,7 @@ class RetryPolicy:
             started_at = datetime.now(timezone.utc).isoformat()
             owner = getattr(fn, '__self__', None)
             client = getattr(owner, 'llm', owner)
+            key = getattr(client, 'api_key', None)
             if strict and hasattr(client, 'last_provider_metadata'):
                 client.last_provider_metadata = {}
             def audit(response=None):
@@ -206,7 +208,7 @@ class RetryPolicy:
                         attempt=attempt,
                         success=False,
                         error_kind=type(e).__name__,
-                        message=(type(e).__name__ if strict else str(e)[:500]),
+                        message=(type(e).__name__ if strict else redact_secrets(str(e), (key,))[:500]),
                         elapsed_ms=elapsed_ms,
                         usage={"provenance": "unknown"},
                         usage_provenance="unknown",
@@ -240,7 +242,7 @@ class RetryPolicy:
                         success=False,
                         error_kind=kind,
                         status_code=status_code,
-                        message=(type(e).__name__ if strict else str(e)[:500]),
+                        message=(type(e).__name__ if strict else redact_secrets(str(e), (key,))[:500]),
                         elapsed_ms=elapsed_ms,
                         usage={"provenance": "unknown"},
                         usage_provenance="unknown",
@@ -265,7 +267,7 @@ class RetryPolicy:
                     delay = min(delay, remaining)
                 logger.warning(
                     f"Retry attempt {attempt + 1}/{self.config.max_retries} "
-                    f"after error: {e}. Waiting {delay:.1f}s."
+                    f"after error: {redact_secrets(str(e), (key,))}. Waiting {delay:.1f}s."
                 )
                 await self._sleep_interruptible(delay)
                 continue
