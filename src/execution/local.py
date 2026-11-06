@@ -400,12 +400,8 @@ class LocalExecutionBackend:
 
         truncated = bool(stdout_cap.truncated or stderr_cap.truncated)
         bytes_seen = stdout_cap.bytes_seen + stderr_cap.bytes_seen
-        bytes_kept = (
-            stdout_cap.bytes_kept_memory
-            + stderr_cap.bytes_kept_memory
-            + stdout_cap.bytes_kept_artifact
-            + stderr_cap.bytes_kept_artifact
-        )
+        bytes_kept = stdout_cap.bytes_kept_artifact + stderr_cap.bytes_kept_artifact
+        bytes_kept_memory = stdout_cap.bytes_kept_memory + stderr_cap.bytes_kept_memory
         cleanup_state = {
             "cleaned": CleanupState.CLEANED,
             "cleanup_failed": CleanupState.CLEANUP_FAILED,
@@ -421,6 +417,8 @@ class LocalExecutionBackend:
             stderr=stderr_cap,
             bytes_seen=bytes_seen,
             bytes_kept=bytes_kept,
+            bytes_kept_memory=bytes_kept_memory,
+            legacy_trailer_bytes_kept=bytes_kept_memory + bytes_kept,
             cleanup_state=cleanup_state,
             cleanup_elapsed_s=cleanup.elapsed_s,
             error_kind=error_kind,

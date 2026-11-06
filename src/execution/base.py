@@ -133,6 +133,7 @@ class ExecutionResult:
     stdout: StreamCapture = field(default_factory=StreamCapture)
     stderr: StreamCapture = field(default_factory=StreamCapture)
     bytes_seen: int = 0
+    # Bytes persisted to the per-tool artifact files. Not RunOutputMeter.bytes_kept.
     bytes_kept: int = 0
     cleanup_state: CleanupState = CleanupState.NOT_REQUIRED
     cleanup_elapsed_s: float = 0.0
@@ -141,9 +142,17 @@ class ExecutionResult:
     duration_ms: float = 0.0
     platform: str = ""
     profile: str = ""
+    bytes_kept_memory: int = 0
+    # What the trailer showed before bytes_kept was corrected (memory + artifact).
+    legacy_trailer_bytes_kept: int | None = None
 
-    def observation_text(self) -> str:
+    def observation_text(self, trailer_bytes_kept: str = "legacy") -> str:
         """Safe model-visible observation including partial stdout/stderr on failure."""
+        if trailer_bytes_kept not in ("legacy", "persisted"):
+            raise ValueError(f"unknown trailer_bytes_kept: {trailer_bytes_kept}")
+        shown = self.bytes_kept
+        if trailer_bytes_kept == "legacy" and self.legacy_trailer_bytes_kept is not None:
+            shown = self.legacy_trailer_bytes_kept
         parts: list[str] = []
         if self.stdout.text_preview:
             parts.append(self.stdout.text_preview)
@@ -152,7 +161,7 @@ class ExecutionResult:
         meta = (
             f"[exit_code={self.exit_code if self.exit_code is not None else 'null'} "
             f"status={self.status.value} truncated={str(self.truncated).lower()} "
-            f"bytes_seen={self.bytes_seen} bytes_kept={self.bytes_kept} "
+            f"bytes_seen={self.bytes_seen} bytes_kept={shown} "
             f"cleanup={self.cleanup_state.value} duration_ms={self.duration_ms:.0f}]"
         )
         parts.append(meta)

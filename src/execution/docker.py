@@ -451,7 +451,9 @@ class DockerExecutionBackend:
             status = ExecutionStatus.FAILED if self.cleanup_ok else ExecutionStatus.OUTCOME_UNKNOWN
         return result(status, kind, exit_code=exit_code, stdout=out, stderr=err,
             truncated=out.truncated or err.truncated, bytes_seen=out.bytes_seen+err.bytes_seen,
-            bytes_kept=out.bytes_kept_memory+err.bytes_kept_memory+out.bytes_kept_artifact+err.bytes_kept_artifact,
+            bytes_kept=out.bytes_kept_artifact+err.bytes_kept_artifact,
+            bytes_kept_memory=out.bytes_kept_memory+err.bytes_kept_memory,
+            legacy_trailer_bytes_kept=out.bytes_kept_memory+err.bytes_kept_memory+out.bytes_kept_artifact+err.bytes_kept_artifact,
             cleanup_state=(CleanupState.CLEANED if self.cleanup_ok else CleanupState.CLEANUP_FAILED) if self.closed else CleanupState.NOT_REQUIRED,
             cleanup_elapsed_s=self.cleanup_elapsed_s,
             error_message=kind if status != ExecutionStatus.SUCCEEDED else None)

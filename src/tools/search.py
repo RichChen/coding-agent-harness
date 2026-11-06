@@ -96,8 +96,9 @@ class SearchCodeTool(Tool):
         "additionalProperties": False,
     }
 
-    def __init__(self, execution_backend=None):
+    def __init__(self, execution_backend=None, observation_bytes_kept="legacy"):
         self.backend = execution_backend
+        self.observation_bytes_kept = observation_bytes_kept
 
     async def execute(self, params: dict, ctx: ToolContext) -> ToolResult:
         call_id = self.resolve_call_id(params, ctx)
@@ -127,7 +128,7 @@ class SearchCodeTool(Tool):
         )
         result = await self.backend.execute(request)
         return ToolResult(
-            call_id, self.name, result.status.value == "succeeded", result.observation_text(),
+            call_id, self.name, result.status.value == "succeeded", result.observation_text(self.observation_bytes_kept),
             error=result.error_message, status=RunCommandTool._map_status(result.status),
             error_kind=result.error_kind, exit_code=result.exit_code,
         )

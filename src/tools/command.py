@@ -54,8 +54,10 @@ class RunCommandTool(Tool):
         execution_backend: ExecutionBackend | None = None,
         execution_profile: str | None = None,
         output_quotas: OutputQuotas | None = None,
+        observation_bytes_kept: str = "legacy",
     ):
         self.command_policy = command_policy
+        self.observation_bytes_kept = observation_bytes_kept
         self.timeout_seconds = timeout_seconds
         self.env_whitelist = env_whitelist or []
         self.prefer_argv = prefer_argv
@@ -219,7 +221,7 @@ class RunCommandTool(Tool):
         duration_ms = result.duration_ms or (time.monotonic() - start) * 1000
         tool_status = self._map_status(result.status)
         success = tool_status == ToolStatus.SUCCEEDED
-        observation = result.observation_text()
+        observation = result.observation_text(self.observation_bytes_kept)
         if result.status == ExecutionStatus.TIMED_OUT:
             observation = f"命令在 {self.timeout_seconds} 秒后超时，输出已截断\n" + observation
         # Truncate body but always retain trailing status/truncation markers.

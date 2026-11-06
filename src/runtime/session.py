@@ -55,6 +55,8 @@ def runtime_fingerprint(loop):
         for key in ("timeout_seconds", "env_whitelist", "prefer_argv", "output_quotas"):
             if hasattr(tool, key):
                 info[key] = plain(getattr(tool, key))
+        if getattr(tool, "observation_bytes_kept", "legacy") != "legacy":
+            info["observation_bytes_kept"] = tool.observation_bytes_kept
         if hasattr(tool, "backend"):
             info["backend"] = tool.backend.capabilities
         policy = getattr(tool, "command_policy", None)

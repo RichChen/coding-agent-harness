@@ -139,8 +139,9 @@ class SandboxConfig(BaseModel):
     workspace_root: str | None = None
 
 
-class CommandConfig(BaseModel):
+class CommandConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
+    omit_when_default = ("observation_bytes_kept",)
 
     allow_all: bool = True
     allowed_prefixes: list[str] = Field(default_factory=list)
@@ -163,6 +164,9 @@ class CommandConfig(BaseModel):
     docker_network: str = Field(default="none", pattern="^(none|bridge)$")
     docker_tmpfs_bytes: int = Field(default=16 * 1024 * 1024, gt=0)
     docker_workspace_bytes: int = Field(default=64 * 1024 * 1024, gt=0)
+    # bytes_kept shown in the model-visible command trailer. "legacy" is the old
+    # memory+artifact sum; "persisted" is the artifact bytes reported in events.
+    observation_bytes_kept: Literal["legacy", "persisted"] = "legacy"
 
 
 class PolicyConfig(BaseModel):

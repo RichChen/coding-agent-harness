@@ -40,6 +40,7 @@ def test_config_hash_and_fingerprint_unchanged(rel, tmp_path):
 
 @pytest.mark.parametrize("section, key, value", [
     ("context", "protection_rules", "v2"),
+    ("command", "observation_bytes_kept", "persisted"),
 ])
 def test_enabling_a_new_option_changes_hash_and_fingerprint(section, key, value, tmp_path):
     base = load_config(ROOT / MASKING)
@@ -48,3 +49,14 @@ def test_enabling_a_new_option_changes_hash_and_fingerprint(section, key, value,
     (changed["runtime"]["context"] if section == "context" else changed["policy"]["command"])[key] = value
     assert canonical_hash(changed) != canonical_hash(base)
     assert fingerprint(changed, tmp_path / "on") != fingerprint(base, tmp_path / "off")
+
+
+def test_observation_bytes_kept_reaches_every_trailer_tool(tmp_path):
+    config = load_config(ROOT / "configs/docker.yaml")
+    config["tools"]["enabled"] = ["read_file", "write_file", "run_command", "search_code"]
+    names = {"read_file", "write_file", "run_command", "search_code"}
+    tools = {t.name: t for t in build_agent(config, tmp_path / "off").tools.tools()}
+    assert {n: tools[n].observation_bytes_kept for n in names} == dict.fromkeys(names, "legacy")
+    config["policy"]["command"]["observation_bytes_kept"] = "persisted"
+    tools = {t.name: t for t in build_agent(config, tmp_path / "on").tools.tools()}
+    assert {n: tools[n].observation_bytes_kept for n in names} == dict.fromkeys(names, "persisted")

@@ -82,6 +82,7 @@ class WorkspaceExecutionBackend:
                 exit_code=result.exit_code, stdout=streams[0], stderr=streams[1],
                 truncated=any(s.truncated for s in streams), bytes_seen=sum(s.bytes_seen for s in streams),
                 bytes_kept=sum(s.bytes_kept_artifact for s in streams),
+                bytes_kept_memory=sum(s.bytes_kept_memory for s in streams),
                 duration_ms=(time.monotonic()-started)*1000, platform=self.platform, profile=self.profile)
         except CaptureError as exc:
             status = (ExecutionStatus.CANCELLED if exc.reason=="cancelled" else ExecutionStatus.TIMED_OUT
