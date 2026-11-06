@@ -82,11 +82,12 @@ else:
 
 
 class ContainerFileTool(Tool):
-    def __init__(self, original, backend, *, preserve_mode=False):
+    def __init__(self, original, backend, *, preserve_mode=False, observation_bytes_kept="legacy"):
         self.name, self.description = original.name, original.description
         self.parameters, self.side_effect = original.parameters, original.side_effect
         self.backend = backend
         self.preserve_mode = preserve_mode
+        self.observation_bytes_kept = observation_bytes_kept
 
     async def execute(self, params, ctx):
         deadline = ctx.extra.get("deadline")
@@ -101,7 +102,7 @@ class ContainerFileTool(Tool):
             artifact_dir=(Path(ctx.extra['artifact_dir']) / ctx.extra['operation_id'])
                 if ctx.extra.get('artifact_dir') and ctx.extra.get('operation_id') else None)
         result = await self.backend.execute(request)
-        output = result.observation_text()
+        output = result.observation_text(self.observation_bytes_kept)
         if ctx.tool_output_max_chars is not None and self.name != "read_file":
             output = output[:ctx.tool_output_max_chars]
         return ToolResult(ctx.call_id, self.name, result.status.value=="succeeded", output,

@@ -106,9 +106,57 @@ while True: time.sleep(.1)
         if mode == 'task_cancel': work.cancel()
         r = await asyncio.wait_for(work, 15)
         assert r.status == (ExecutionStatus.TIMED_OUT if mode == 'timeout' else ExecutionStatus.CANCELLED)
-        assert b.closed and b.cleanup_ok
+        # A timeout or cancel keeps the container for the timeout result and the workspace export.
+        assert not b.closed
+        assert await b.close() and b.cleanup_ok
         assert not (await b._ok('ps','-aq','--filter',f'name=^/{b.name}$')).strip()
         evidence('cleanup-'+mode, dict(status=r.status.value, cleanup_elapsed_s=r.cleanup_elapsed_s, lifecycle=b.lifecycle))
+    finally:
+        if not work.done(): work.cancel()
+        await asyncio.gather(work, return_exceptions=True)
+        await b.close()
+
+
+PROCS = '''import os
+for p in os.listdir('/proc'):
+    if p.isdigit():
+        try: print(open('/proc/'+p+'/cmdline','rb').read().replace(b'\\0',b' ').decode())
+        except OSError: pass
+'''
+
+
+@pytest.mark.parametrize('mode', ['cancel', 'timeout', 'task_cancel'])
+async def test_reap_on_timeout_kills_setsid_descendants(mode):
+    b = backend(reap_on_timeout=True)
+    await b.start()
+    event = asyncio.Event()
+    req = request('''import os,signal,time,pathlib
+if os.fork()==0:
+    os.setsid(); signal.signal(signal.SIGTERM,signal.SIG_IGN)
+    pathlib.Path('ready').write_text(str(os.getpid()))
+    while True: time.sleep(.1)
+while True: time.sleep(.1)
+''', cancel_event=event)
+    if mode == 'timeout': req.deadline_mono = time.monotonic()+2
+    work = asyncio.create_task(b.execute(req))
+    try:
+        for _ in range(50):
+            code, _, _ = await b._control('exec', b.name, '/bin/test', '-f', '/workspace/ready')
+            if code == 0: break
+            await asyncio.sleep(.05)
+        else: pytest.fail('descendant not ready')
+        if mode == 'cancel': event.set()
+        if mode == 'task_cancel': work.cancel()
+        r = await asyncio.wait_for(work, 15)
+        assert r.status == (ExecutionStatus.TIMED_OUT if mode == 'timeout' else ExecutionStatus.CANCELLED)
+        assert not b.closed
+        reaped = [e for e in b.lifecycle if e['event'] == 'exec_reaped']
+        assert len(reaped) == 1 and reaped[0]['killed'] >= 2
+        listing = (await b._ok('exec', b.name, b.python_bin, '-I', '-S', '-c', PROCS)).decode()
+        assert 'os.setsid()' not in listing
+        after = await b.execute(request('print("still usable")'))
+        assert after.status == ExecutionStatus.SUCCEEDED and 'still usable' in after.stdout.text_preview
+        evidence('reap-'+mode, dict(status=r.status.value, lifecycle=b.lifecycle))
     finally:
         if not work.done(): work.cancel()
         await asyncio.gather(work, return_exceptions=True)

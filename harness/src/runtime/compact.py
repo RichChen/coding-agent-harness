@@ -92,11 +92,49 @@ def _tool_content_indicates_failure(content: str) -> bool:
     return lowered.startswith("error:") or "failed" in lowered or "traceback" in lowered
 
 
+# v1 matches the run_command trailer itself ("status=failed", "Error: nonzero_exit"),
+# so a grep with no match counts as a failure. v2 needs failure content.
+PROTECTION_RULES = ("v1", "v2")
+_SUBSTANTIVE_FAILURE = re.compile(
+    r"Traceback \(most recent call last\)"
+    r"|\bAssertionError\b"
+    r"|^E {3,}\S"
+    r"|^=+ (?:FAILURES|ERRORS) =+$"
+    r"|^(?:FAILED|ERROR)\b"
+    r"|\b[1-9]\d* (?:failed|errors?)\b",
+    re.MULTILINE,
+)
+# Over-counting only keeps an extra observation verbatim; missing an edit loses it.
+_REDIRECT_TARGET = re.compile(r"(?<![-=<>])(?:&|\d+)?>>?(?![=>])\|?[ \t]*([^\s;|<>]*)")
+_WRITING_COMMAND = re.compile(
+    r"\btee\b|\bpatch\b|\btruncate\b|\bgit\s+(?:apply|am)\b"
+    r"|\bsed\b[^;|&\n]*\s(?:-[a-zA-Z]*i|--in-place)"
+    r"|\bperl\b[^;|&\n]*\s-[a-zA-Z]*i"
+)
+
+
+def _shows_substantive_failure(content: str) -> bool:
+    return _SUBSTANTIVE_FAILURE.search(content) is not None
+
+
+def _command_writes_files(command: str) -> bool:
+    for target in _REDIRECT_TARGET.findall(command):
+        if not target.startswith("&") and target not in ("/dev/null", "/dev/stdout", "/dev/stderr"):
+            return True
+    return _WRITING_COMMAND.search(command) is not None
+
+
+def _command_text(messages: list[dict], call_id: str) -> str:
+    args = _call_arguments(messages, call_id)
+    return str(args.get("command") or " ".join(str(part) for part in (args.get("argv") or [])))
+
+
 def _protected_tool_indices(
     messages: list[dict],
     tool_indices: list[int],
     *,
     keep_recent_modified: int = 2,
+    rules: str = "v1",
 ) -> set[int]:
     """Return tool-message indices that should stay verbatim for safety.
 
@@ -105,11 +143,14 @@ def _protected_tool_indices(
     the tool observations most likely to be needed after compaction: the latest
     failure and recent file modification results.
     """
+    if rules not in PROTECTION_RULES:
+        raise ValueError(f"unknown protection rules: {rules}")
+    failed = _tool_content_indicates_failure if rules == "v1" else _shows_substantive_failure
     protected: set[int] = set()
 
     for idx in reversed(tool_indices):
         content = str(messages[idx].get("content", "") or "")
-        if _tool_content_indicates_failure(content):
+        if failed(content):
             protected.add(idx)
             break
 
@@ -117,7 +158,9 @@ def _protected_tool_indices(
     for idx in reversed(tool_indices):
         call_id = messages[idx].get("tool_call_id", "")
         tool_name = _tool_name_for_call_id(messages, call_id)
-        if tool_name not in MODIFICATION_TOOLS:
+        modified = tool_name in MODIFICATION_TOOLS or (
+            rules == "v2" and tool_name == "run_command" and _command_writes_files(_command_text(messages, call_id)))
+        if not modified:
             continue
         protected.add(idx)
         modified_kept += 1
@@ -173,6 +216,7 @@ def micro_compact_openai_messages_with_stats(
     *,
     keep_recent: int = 3,
     preserve_tools: set[str] | None = None,
+    protection_rules: str = "v1",
 ) -> tuple[list[dict], ContextStats]:
     """Compress old tool messages in-place and return observable stats.
 
@@ -213,7 +257,7 @@ def micro_compact_openai_messages_with_stats(
 
     # The last `keep_recent` tool messages are safe
     safe_indices = set(tool_indices[-keep_recent:]) if keep_recent > 0 else set()
-    protected_indices = _protected_tool_indices(messages, tool_indices)
+    protected_indices = _protected_tool_indices(messages, tool_indices, rules=protection_rules)
 
     for idx in tool_indices:
         if idx in safe_indices or idx in protected_indices:
@@ -277,10 +321,14 @@ class MicroCompactHooks(LoopHooks):
         keep_recent: int = 3,
         preserve_tools: set[str] | None = None,
         token_threshold: int | None = None,
+        protection_rules: str = "v1",
     ):
+        if protection_rules not in PROTECTION_RULES:
+            raise ValueError(f"unknown protection rules: {protection_rules}")
         self.keep_recent = keep_recent
         self.preserve_tools = preserve_tools
         self.token_threshold = token_threshold
+        self.protection_rules = protection_rules
 
     async def before_llm(self, messages: list[dict], ctx: HookContext) -> list[dict]:
         tokens_before = estimate_tokens(messages)
@@ -304,6 +352,7 @@ class MicroCompactHooks(LoopHooks):
             messages,
             keep_recent=self.keep_recent,
             preserve_tools=self.preserve_tools,
+            protection_rules=self.protection_rules,
         )
         ctx.extra["context_stats"] = stats.to_dict()
         return compacted

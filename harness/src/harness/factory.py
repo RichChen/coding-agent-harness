@@ -182,6 +182,7 @@ def build_agent(
     enabled = tools_cfg.get("enabled", ["read_file", "write_file", "list_dir"])
     cmd_cfg = policy_cfg.get("command", {})
     exec_profile = cmd_cfg.get("execution_profile", "legacy_host")
+    observation_bytes_kept = cmd_cfg.get("observation_bytes_kept", "legacy")
     docker_backend = None
     if exec_profile == "docker_linux":
         # retrieve_code is the one host-side tool allowed here: it reads only the CR cache, never the workspace.
@@ -189,6 +190,8 @@ def build_agent(
                            "retrieve_code", *( ["validate_patch"] if workspace_controller else [])}:
             raise ValueError("Docker profile rejects host-only/debug/subagent tools")
         if workspace_controller is not None:
+            if cmd_cfg.get("docker_reap_on_timeout", False):
+                raise ValueError("docker_reap_on_timeout is not supported by the workspace transport")
             from src.execution.workspace import WorkspaceExecutionBackend
             docker_backend = WorkspaceExecutionBackend(workspace_controller)
         elif execution_backend is not None:
@@ -202,9 +205,11 @@ def build_agent(
                 pids_limit=cmd_cfg.get("docker_pids_limit", 128),
                 network=cmd_cfg.get("docker_network", "none"),
                 tmpfs_bytes=cmd_cfg.get("docker_tmpfs_bytes", 16*1024*1024),
-                workspace_bytes=cmd_cfg.get("docker_workspace_bytes", 64*1024*1024))
+                workspace_bytes=cmd_cfg.get("docker_workspace_bytes", 64*1024*1024),
+                reap_on_timeout=cmd_cfg.get("docker_reap_on_timeout", False))
     def file_tool(tool):
-        return ContainerFileTool(tool, docker_backend, preserve_mode=workspace_controller is not None) if docker_backend else tool
+        return ContainerFileTool(tool, docker_backend, preserve_mode=workspace_controller is not None,
+                                 observation_bytes_kept=observation_bytes_kept) if docker_backend else tool
     if "read_file" in enabled:
         tools.register(file_tool(ReadFileTool()))
     if "write_file" in enabled:
@@ -233,6 +238,7 @@ def build_agent(
                 prefer_argv=cmd_cfg.get("prefer_argv", False),
                 execution_backend=backend,
                 output_quotas=quotas,
+                observation_bytes_kept=observation_bytes_kept,
             )
         )
     if "search_replace" in enabled:
@@ -240,7 +246,7 @@ def build_agent(
     if "edit_file" in enabled:
         tools.register(file_tool(EditFileTool()))
     if "search_code" in enabled:
-        tools.register(SearchCodeTool(execution_backend=docker_backend))
+        tools.register(SearchCodeTool(execution_backend=docker_backend, observation_bytes_kept=observation_bytes_kept))
     if "retrieve_code" in enabled:
         if workspace_controller is not None:
             from src.tools.workspace import WorkspaceRetrieveTool

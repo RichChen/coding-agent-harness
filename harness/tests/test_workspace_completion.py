@@ -121,6 +121,9 @@ def setup(tmp_path, rows, *, max_calls=10, context_limit=None):
     model = Replies(rows)
     loop = build_agent(config, workspace, llm_client=model)
     controller = loop.workspace_controller
+    # Fixture captures are in memory. The 20s wall-clock capture limit (measured from before the
+    # journal append) failed one explicit check under heavy machine load and freed the final slot.
+    controller.config["capture_timeout_seconds"] = 150
     profile, executor = Profile(), Executor()
     controller.profile, controller.provider_factory = profile, Provider
     controller.executor_factory = lambda store, p: executor

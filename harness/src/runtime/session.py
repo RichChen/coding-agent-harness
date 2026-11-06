@@ -55,6 +55,8 @@ def runtime_fingerprint(loop):
         for key in ("timeout_seconds", "env_whitelist", "prefer_argv", "output_quotas"):
             if hasattr(tool, key):
                 info[key] = plain(getattr(tool, key))
+        if getattr(tool, "observation_bytes_kept", "legacy") != "legacy":
+            info["observation_bytes_kept"] = tool.observation_bytes_kept
         if hasattr(tool, "backend"):
             info["backend"] = tool.backend.capabilities
         policy = getattr(tool, "command_policy", None)
@@ -66,6 +68,8 @@ def runtime_fingerprint(loop):
         hook = dict(type=type(loop.hooks).__qualname__, keep_recent=getattr(loop.hooks, "keep_recent", None),
                     token_threshold=getattr(loop.hooks, "token_threshold", None),
                     preserve_tools=sorted(getattr(loop.hooks, "preserve_tools", None) or []))
+        if getattr(loop.hooks, "protection_rules", "v1") != "v1":
+            hook["protection_rules"] = loop.hooks.protection_rules
         from src.runtime.window import WindowPolicyHooks
         if type(loop.hooks) is WindowPolicyHooks:
             hook['window'] = loop.hooks.fingerprint()

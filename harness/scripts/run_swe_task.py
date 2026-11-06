@@ -648,7 +648,7 @@ def grader_infra_reason(evaluation: dict):
     return None
 
 
-def clean_backend(image: str) -> BaselineImageBackend:
+def clean_backend(image: str, reap_on_timeout: bool = False) -> BaselineImageBackend:
     return BaselineImageBackend(
         image=image,
         context="desktop-linux",
@@ -656,6 +656,7 @@ def clean_backend(image: str) -> BaselineImageBackend:
         workspace_bytes=256 * 1024**2,
         tmpfs_bytes=64 * 1024**2,
         network="none",
+        reap_on_timeout=reap_on_timeout,
     )
 
 
@@ -668,8 +669,8 @@ async def tool_smoke(image: str, profile: Path) -> dict:
     from src.eval.tool_errors import traceback_exception
     from src.tools.base import ToolContext
 
-    backend = clean_backend(image)
     config = load_config(profile)
+    backend = clean_backend(image, config["policy"]["command"].get("docker_reap_on_timeout", False))
     config["llm"]["api_key"] = config["llm"]["api_key"] or "smoke"
     calls = []
     record = {"calls": calls, "passed": False, "error": None, "python": None}
@@ -731,8 +732,8 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
     spec, image, clean, failure = prerun_check(task, mock=mock, legacy_image=legacy_image)
     if failure:
         return _isolation_stop(task, variant, failure, mock=mock, profile=profile, output=output)
-    backend = clean_backend(image)
     config = load_config(profile)
+    backend = clean_backend(image, config["policy"]["command"].get("docker_reap_on_timeout", False))
     # CNY ledger is the only budget that stops a run. Do not set max_cost_usd here.
     if mock:
         config["llm"]["api_key"] = config["llm"]["api_key"] or "mock"

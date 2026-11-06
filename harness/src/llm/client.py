@@ -19,6 +19,7 @@ import httpx
 # CancelledError is BaseException — must not be swallowed as a stream error.
 from asyncio import CancelledError as _CancelledError
 
+from src.llm.redact import redact_secrets
 from src.llm.stream import OpenAIStreamAggregator, StreamFailKind
 from src.tools.validation import (
     DEFAULT_MAX_ARGUMENT_BYTES,
@@ -396,12 +397,12 @@ class LLMClient:
             body = e.response.text[:500] if e.response is not None else "(no body)"
             status_code = e.response.status_code if e.response is not None else None
             raise LLMError(
-                f"LLM API error {status_code}: {body}",
+                redact_secrets(f"LLM API error {status_code}: {body}", (self.api_key,)),
                 kind=LLMErrorKind.HTTP,
                 status_code=status_code,
             )
         except httpx.HTTPError as e:
-            raise LLMError(f"LLM network error: {e}", kind=LLMErrorKind.NETWORK)
+            raise LLMError(redact_secrets(f"LLM network error: {e}", (self.api_key,)), kind=LLMErrorKind.NETWORK)
 
         try:
             data = resp.json()
@@ -493,7 +494,7 @@ class LLMClient:
                 body = (await response_cm.aread())[:500].decode("utf-8", errors="replace")
                 status_code = e.response.status_code if e.response is not None else None
                 raise LLMError(
-                    f"LLM API error {status_code}: {body}",
+                    redact_secrets(f"LLM API error {status_code}: {body}", (self.api_key,)),
                     kind=LLMErrorKind.HTTP,
                     status_code=status_code,
                 )
@@ -539,7 +540,7 @@ class LLMClient:
                 "llm_error",
                 {
                     "kind": LLMErrorKind.NETWORK.value,
-                    "message": "network" if self.audit_metadata else f"LLM network error: {e}",
+                    "message": "network" if self.audit_metadata else redact_secrets(f"LLM network error: {e}", (self.api_key,)),
                     "capability": StreamCapability.STREAMING.value,
                 },
             )
@@ -549,7 +550,7 @@ class LLMClient:
                 "llm_error",
                 {
                     "kind": LLMErrorKind.UNKNOWN.value,
-                    "message": type(e).__name__ if self.audit_metadata else str(e),
+                    "message": type(e).__name__ if self.audit_metadata else redact_secrets(str(e), (self.api_key,)),
                     "capability": StreamCapability.STREAMING.value,
                 },
             )

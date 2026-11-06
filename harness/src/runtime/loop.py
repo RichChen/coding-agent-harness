@@ -23,7 +23,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from src.llm.client import LLMClient, LLMError, LLMErrorKind, LLMResponse, ToolCall
+from src.llm.redact import redact_secrets
 from src.policy.budget import Budget, BudgetExhausted
+from src.policy.cny_budget import CnyBudgetError
 from src.policy.model_budget import BudgetLedgerError, ModelBudgetLedger
 from src.policy.sandbox import Sandbox
 from src.execution.base import RUN_OUTPUT_TOTAL_BYTES, RunOutputMeter
@@ -89,6 +91,30 @@ class FailureReason(str, enum.Enum):
     UNKNOWN = "unknown"
     CONTEXT_OVERFLOW = "context_overflow"
     CONTEXT_INVALID = "context_invalid"
+    PAID_CALL_STOPPED = "paid_call_stopped"
+    PROVIDER_ERROR = "provider_error"
+
+
+ERROR_MESSAGE_BYTES = 512
+
+
+def model_call_failure(error: Exception) -> tuple[FailureReason, str | None]:
+    """(failure_reason, termination_kind) for an exception raised while asking the model."""
+    if isinstance(error, CnyBudgetError):
+        if error.reason in ("cny_hard_cap", "cny_call_cap"):
+            return FailureReason.BUDGET_EXHAUSTED, error.reason
+        return FailureReason.UNKNOWN, error.reason
+    if isinstance(error, LLMError):
+        if error.kind == LLMErrorKind.TIMEOUT:
+            return FailureReason.REQUEST_TIMEOUT, None
+        if error.kind == LLMErrorKind.PARSE:
+            return FailureReason.MODEL_PARSE_ERROR, None
+        if error.kind == LLMErrorKind.HTTP:
+            code = error.status_code
+            return FailureReason.PROVIDER_ERROR, "provider_http" + (f"_{code}" if code is not None else "")
+        if error.kind in (LLMErrorKind.NETWORK, LLMErrorKind.INCOMPLETE):
+            return FailureReason.PROVIDER_ERROR, "provider_" + error.kind.value
+    return FailureReason.UNKNOWN, "model_call_error"
 
 
 @dataclass
@@ -114,6 +140,8 @@ class AgentRunResult:
     execution: dict | None = None
     summary: dict | None = None
     workspace_v1: dict | None = None
+    error_type: str | None = None
+    error_message: str | None = None
 
 
 class AgentLoop:
@@ -194,6 +222,7 @@ class AgentLoop:
         subagent_traces: list | None = None,
         start_time: float,
         termination_kind: str | None = None,
+        error: BaseException | None = None,
     ) -> AgentRunResult:
         result = AgentRunResult(
             task_id=task_id,
@@ -217,6 +246,8 @@ class AgentLoop:
             model_budget=self.model_ledger.snapshot() if self.model_ledger else None,
             run_output=self.run_output_meter.snapshot(),
             summary=summary_totals(self.hooks.state) if isinstance(self.hooks, WindowPolicyHooks) else None,
+            error_type=type(error).__name__ if error is not None else None,
+            error_message=self._error_text(error) if error is not None else None,
         )
         if result.summary:
             # Legacy total_tokens remains the known-token sum, never an estimate.
@@ -225,6 +256,10 @@ class AgentLoop:
         if self.session and self.execution_backend is None:
             self.session.finish(result)
         return result
+
+    def _error_text(self, error: BaseException) -> str:
+        text = redact_secrets(str(error), (getattr(self.llm, "api_key", None),))
+        return text.encode("utf-8")[:ERROR_MESSAGE_BYTES].decode("utf-8", "ignore")
 
     def _check_cancelled(
         self,
@@ -318,7 +353,8 @@ class AgentLoop:
                 deadline=self.deadline, cancel_event=self.cancel_event)
         stats = dict(hook_ctx.extra.get('context_stats') or {})
         limit = self.hooks.policy.max_tokens if isinstance(self.hooks, WindowPolicyHooks) else DEFAULT_WINDOW
-        stats.update(admit(view,tool_schemas,max_output,limit),step=step,raw_message_hash=raw_hash,view_hash=view_hash(view))
+        admission = self.hooks.admission if isinstance(self.hooks, WindowPolicyHooks) else 'utf8_bytes'
+        stats.update(admit(view,tool_schemas,max_output,limit,admission=admission),step=step,raw_message_hash=raw_hash,view_hash=view_hash(view))
         if not isinstance(self.hooks, WindowPolicyHooks):
             stats.setdefault('strategy','legacy-hook' if self.hooks else 'none')
         if isinstance(self.hooks, WindowPolicyHooks) or stats.get('did_compact'):
@@ -459,7 +495,7 @@ class AgentLoop:
             raise
         except Exception as exc:
             result = self._result(task_id=task_id, success=False, failure_reason=FailureReason.UNKNOWN,
-                                  start_time=started, termination_kind="backend_unavailable")
+                                  start_time=started, termination_kind="backend_unavailable", error=exc)
             backend.unavailable_error = str(exc)[:1000]
         finally:
             cleanup = asyncio.create_task(self._close_backend(backend, result))
@@ -705,10 +741,10 @@ class AgentLoop:
                     )
                 except PaidCallStopped as stop:
                     return self._result(task_id=task_id, success=False,
-                        failure_reason=FailureReason.MODEL_PARSE_ERROR, steps=steps,
+                        failure_reason=FailureReason.PAID_CALL_STOPPED, steps=steps,
                         total_tokens=total_tokens, tool_failures=tool_failures, policy_blocks=policy_blocks,
                         total_tool_invocations=total_tool_invocations, context_events=context_events,
-                        start_time=start_time, termination_kind=stop.reason)
+                        start_time=start_time, termination_kind=stop.reason, error=stop)
                 except BudgetLedgerError as be:
                     if self.event_bus:
                         self.event_bus.emit("run_end", success=False, reason=be.reason.value)
@@ -726,12 +762,14 @@ class AgentLoop:
                         subagent_traces=subagent_traces,
                         start_time=start_time,
                         termination_kind=be.reason.value,
+                        error=be,
                     )
                 except StoreError:
                     raise  # A journal failure must never permit another external effect.
                 except Exception as e:
-                    logger.error(f"LLM call failed: {e}")
-                    state.record_failure(str(e))
+                    error_text = redact_secrets(str(e), (getattr(self.llm, "api_key", None),))
+                    logger.error(f"LLM call failed: {error_text}")
+                    state.record_failure(error_text)
                     steps.append(
                         StepRecord(
                             step=state.step_number,
@@ -743,12 +781,9 @@ class AgentLoop:
                             elapsed_ms=(time.monotonic() - step_start) * 1000,
                         )
                     )
-                    # Distinguish timeout-ish LLM errors from parse errors.
-                    fr = FailureReason.MODEL_PARSE_ERROR
-                    if isinstance(e, LLMError) and e.kind == LLMErrorKind.TIMEOUT:
-                        fr = FailureReason.REQUEST_TIMEOUT
+                    fr, kind = model_call_failure(e)
                     if self.event_bus:
-                        self.event_bus.emit("run_end", success=False, reason=fr.value)
+                        self.event_bus.emit("run_end", success=False, reason=kind or fr.value)
                     return self._result(
                         task_id=task_id,
                         success=False,
@@ -762,6 +797,8 @@ class AgentLoop:
                         context_events=context_events,
                         subagent_traces=subagent_traces,
                         start_time=start_time,
+                        termination_kind=kind,
+                        error=e,
                     )
 
                 total_tokens += self._usage_tokens(response.usage)

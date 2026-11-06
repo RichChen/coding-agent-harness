@@ -21,6 +21,16 @@ from scripts.handoff_sha import handoff_sha256  # noqa: E402
 
 ARMS = ("r0", "r1")
 LISTED = ("model_parse_error", "context_overflow")
+# Stop labels the harness writes since its failure-label fix (846e3a0). Before it, CNY-cap stops
+# were recorded as model_parse_error and provider failures had no stop_reason of their own.
+PAID_STOPS = ("budget_exhausted", "cny_hard_cap", "cny_call_cap")
+PROVIDER_STOPS = ("provider_network", "provider_incomplete", "model_call_error")
+
+
+def _is_new_label(reason: object) -> bool:
+    return isinstance(reason, str) and (
+        reason in PAID_STOPS or reason in PROVIDER_STOPS or reason.startswith("provider_http_")
+    )
 
 
 def _slot(row: dict) -> str:
@@ -85,6 +95,10 @@ def render(runs_path: Path, retired_path: Path | None) -> str:
     ]
     for reason in LISTED:
         lines.extend(["", f"## stop_reason = {reason} 的运行", "", *_listing(rows, reason)])
+    new_labels = sorted({row["stop_reason"] for row in rows if _is_new_label(row.get("stop_reason"))})
+    for reason in new_labels:
+        kind = "人民币上限停机" if reason in PAID_STOPS else "服务商错误停机"
+        lines.extend(["", f"## stop_reason = {reason} 的运行（{kind}）", "", *_listing(rows, reason)])
     if retired_path is not None:
         lines.extend(["", "## provider 402 退役的槽位", "", *_retired(retired_path)])
     lines.append("")
