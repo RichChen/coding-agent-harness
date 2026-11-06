@@ -86,7 +86,9 @@ class CnyReservation:
 
 
 class CnyBudgetError(RuntimeError):
-    pass
+    def __init__(self, message, reason="cny_budget_error"):
+        super().__init__(message)
+        self.reason = reason
 
 
 @dataclass
@@ -125,10 +127,10 @@ class CnyBudgetLedger:
             raise CnyBudgetError("invalid phase")
         cap_calls = self.plan.build_calls if phase == "build" else self.plan.pilot_calls
         if self.phase_calls[phase] >= cap_calls:
-            raise CnyBudgetError(f"{phase} call cap reached")
+            raise CnyBudgetError(f"{phase} call cap reached", reason="cny_call_cap")
         amount = self.estimate(prompt_tokens, max_output_tokens)
         if self.phase_cost[phase] + amount > self._cap(phase) or self.cost_committed + amount > self.plan.total_cny - self.plan.reserve_cny:
-            raise CnyBudgetError("CNY hard cap would be exceeded")
+            raise CnyBudgetError("CNY hard cap would be exceeded", reason="cny_hard_cap")
         self._next_id += 1
         reservation = CnyReservation(self._next_id, phase, operation_id, component, amount, prompt_tokens, max_output_tokens)
         self.outstanding[self._next_id] = reservation
