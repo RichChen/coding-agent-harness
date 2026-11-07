@@ -250,3 +250,13 @@ Complexity Trap 是计划里要求重点核实的一篇，这里单独写清楚�
 | 20 | ReasoningBank、SWE-Exp、Agent KB | 见 coding-agent `docs/memory-v2/DIAGNOSIS-AND-LITERATURE.zh-CN.md` 第 2、7 节 | 沿用此前的阅读记录，本次未重读 |
 
 检索时看到、但没有读也没有引用的：What Resolve Rate Hides（arXiv 2607.06184）、You don't need long context（arXiv 2611.05306）、CacheWise（arXiv 2606.16824）、Penelope（arXiv 2611.00391）。“长窗口模型是否还需要遮蔽”这个问题，本文的依据是 Empirical Study 和 Same Model 的窗口扫描，没有用这几篇。
+
+## 勘误
+
+**2026-11-07，准入口径。** 开头“松绑”实验的说明和第 3 节对比表的“本项目”一行，都把本项目的准入写成“96,000 `calibrated_v1`（约 4 万 provider token）”。这是错的。
+
+- `configs/sprint/b0-v2.yaml` 没有设 `admission_estimate`，按 schema 默认用的是 `utf8_bytes`，即把序列化字节数（加协议余量）当 token 数。
+- 按字节的估计约是 provider token 的 2.5–5.2 倍（A6-R 实测 2.49–5.19）。96,000 的准入线减去 8192 的输出预留，约合 1.7 万–3.5 万 provider token，比原文写的更紧。
+- 第 2、4 节据此得出的方向性判断（现行准入远低于模型窗口）不受影响。
+
+松绑试点的 A 组按 b0-v2 原样沿用 `utf8_bytes`，见 `docs/analysis/UNLEASH-PILOT-DESIGN.zh-CN.md` 第 2.5 节。
