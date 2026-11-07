@@ -192,13 +192,17 @@ class ToolsConfig(BaseModel):
     max_argument_bytes: int = Field(default=65536, ge=1)
 
 
-class TracingConfig(BaseModel):
+class TracingConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
+    omit_when_default = ("request_telemetry",)
 
     format: str = "jsonl"
     output_dir: str = "traces"
     lifecycle_events: bool = False
     llm_stream_events: bool = False
+    # Adds replaced messages, admission estimate vs provider prompt_tokens, cache hits and
+    # reasoning tokens to context.prepared / model.settled.
+    request_telemetry: bool = False
 
 
 class WorkspaceConfig(BaseModel):

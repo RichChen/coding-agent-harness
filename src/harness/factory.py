@@ -373,6 +373,7 @@ def build_agent(
             "run_output_limit_bytes", 16 * 1024 * 1024
         ),
         estimated_input_tokens=budget_cfg.get("estimated_input_tokens", 512),
+        request_telemetry=bool(tracing_cfg.get("request_telemetry", False)),
     )
     agent.execution_backend = docker_backend
     agent.workspace_controller = workspace_controller

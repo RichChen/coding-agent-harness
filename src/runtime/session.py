@@ -214,12 +214,14 @@ class RunSession:
     def model_started(self, ledger, operation_id, attempt_id):
         self.append("model.started", {"budget": ledger.snapshot()}, operation_id=operation_id, attempt_id=attempt_id)
 
-    def model_settled(self, ledger, operation_id, attempt_id, record):
+    def model_settled(self, ledger, operation_id, attempt_id, record, telemetry=None):
         record = plain(record)
         # Error classification is enough for recovery. Arbitrary provider error text
         # can contain authentication material and is not a session credential store.
         if record.get("message"):
             record["message"] = record.get("error_kind") or "model request failed"
+        if telemetry is not None:
+            record["telemetry"] = telemetry
         self.append("model.settled", {"budget": ledger.snapshot(), "record": record}, operation_id=operation_id, attempt_id=attempt_id)
 
     def intent(self, operation_id, *, name, arguments, side_effect, call_id, replacement=None):

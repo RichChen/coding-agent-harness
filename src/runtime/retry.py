@@ -16,6 +16,7 @@ from src.llm.redact import redact_secrets
 from src.policy.model_budget import BudgetLedgerError, ModelBudgetLedger
 from src.runtime.awaitctl import await_with_control, estimate_input_tokens
 from src.runtime.deadline import DeadlineClock, DeadlineExceeded, UserCancelled
+from src.runtime.telemetry import settled_telemetry
 
 logger = logging.getLogger(__name__)
 
@@ -89,6 +90,8 @@ class RetryPolicy:
         self.cny_component = "agent"
         self.session = None
         self.billing_stop_reason = None
+        # request_context of the current model view; set by the loop only with tracing.request_telemetry.
+        self.telemetry = None
 
     def should_retry(self, error: Exception) -> bool:
         if isinstance(error, (UserCancelled, DeadlineExceeded, asyncio.CancelledError, BudgetLedgerError)):
@@ -137,8 +140,10 @@ class RetryPolicy:
         for attempt in range(self.config.max_retries + 1):
             attempt_id = uuid.uuid4().hex
             if self.session:
+                context = self.telemetry
                 self.sink.on_record = lambda record: self.session.model_settled(
-                    self.model_ledger, operation_id, attempt_id, record)
+                    self.model_ledger, operation_id, attempt_id, record,
+                    telemetry=None if context is None else settled_telemetry(context, record.usage))
             if self.deadline is not None:
                 self.deadline.raise_if_expired_or_cancelled()
 

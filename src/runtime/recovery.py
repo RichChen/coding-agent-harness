@@ -65,7 +65,8 @@ def reduce_events(events) -> RecoveredState:
         elif kind == "model.settled":
             state.budget = p["budget"]
             if "record" in p:
-                state.attempts.append(p["record"])
+                # telemetry is an opt-in report field, not part of AttemptRecord
+                state.attempts.append({k: v for k, v in p["record"].items() if k != "telemetry"})
             # Until the full response is committed in state.saved, it cannot be used.
         elif kind == "tool.intent":
             op = event["operation_id"]

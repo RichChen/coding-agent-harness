@@ -44,6 +44,7 @@ from src.runtime.retry import AttemptSink, RetryConfig, RetryPolicy, PaidCallSto
 from src.runtime.state import AgentState, LoopPhase
 from src.runtime.session import decode_response, decode_result, plain
 from src.runtime.summary import summary_totals
+from src.runtime.telemetry import request_context
 from src.tracing.store import StoreError, digest
 from src.tools.base import ToolContext, ToolResult, ToolStatus
 from src.tools.registry import ToolRegistry
@@ -170,6 +171,7 @@ class AgentLoop:
         model_ledger: ModelBudgetLedger | None = None,
         run_output_limit_bytes: int = RUN_OUTPUT_TOTAL_BYTES,
         estimated_input_tokens: int = 512,
+        request_telemetry: bool = False,
     ):
         self.llm = llm
         self.tools = tools
@@ -200,6 +202,7 @@ class AgentLoop:
         self.max_tool_argument_bytes = max_tool_argument_bytes
         self.run_output_meter = RunOutputMeter(limit_bytes=run_output_limit_bytes)
         self.estimated_input_tokens = estimated_input_tokens
+        self.request_telemetry = request_telemetry
         self._cleanup_elapsed_s: float | None = None
         self.session = None
         self.execution_backend = None
@@ -321,6 +324,7 @@ class AgentLoop:
     async def _model_view(self, messages, tool_schemas, task_description, task_id, step, context_events):
         """Prepare a disposable view; persist raw history before entering here."""
         raw_hash = view_hash(messages)
+        self.retry.telemetry = None
         saved = self.session.state.context if self.session else {}
         if saved and saved['step'] == step and saved['raw_message_hash'] == raw_hash:
             view = copy.deepcopy(saved['view'])
@@ -330,6 +334,8 @@ class AgentLoop:
                 self.hooks.restore(saved['stats']['manager_state'])
             if (isinstance(self.hooks, WindowPolicyHooks) or saved['stats'].get('did_compact')) and (not context_events or context_events[-1] != saved['stats']):
                 context_events.append(copy.deepcopy(saved['stats']))
+            if self.request_telemetry:
+                self.retry.telemetry = saved['stats'].get('request_telemetry')
             return self._with_remaining_calls(view)
         view = copy.deepcopy(messages)
         max_output = int(getattr(self.llm, 'max_tokens', 4096) or 4096)
@@ -357,6 +363,9 @@ class AgentLoop:
         stats.update(admit(view,tool_schemas,max_output,limit,admission=admission),step=step,raw_message_hash=raw_hash,view_hash=view_hash(view))
         if not isinstance(self.hooks, WindowPolicyHooks):
             stats.setdefault('strategy','legacy-hook' if self.hooks else 'none')
+        if self.request_telemetry:
+            stats['request_telemetry'] = request_context(messages, view, stats)
+            self.retry.telemetry = stats['request_telemetry']
         if isinstance(self.hooks, WindowPolicyHooks) or stats.get('did_compact'):
             context_events.append(stats)
         if self.session:
