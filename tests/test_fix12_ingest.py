@@ -30,6 +30,25 @@ def test_half_of_p2p_excluded_is_still_accepted():
     assert failed_clauses(isolation_ok=True, runs=runs(), stable=True, repaired=True, excluded=5, p2p=10) == []
 
 
+def task_row(issue, **fields):
+    return {"instance_id": "o__r-1", "repo": "o/r", "base_commit": "abc", "problem_statement": issue,
+            "FAIL_TO_PASS": '["t::a"]', "PASS_TO_PASS": "[]", "patch": "diff --git a/x b/x", "test_patch": "",
+            **fields}
+
+
+def test_empty_id_list_is_not_a_leak(tmp_path, monkeypatch):
+    from scripts.rebench import prepare
+
+    monkeypatch.setattr(prepare, "PUBLIC", tmp_path / "public")
+    monkeypatch.setattr(prepare, "PRIVATE", tmp_path / "private")
+    monkeypatch.setattr(prepare, "rel", str)
+    prepare.write_task_files(task_row("calling f([]) raises"))
+    with pytest.raises(ValueError, match="PASS_TO_PASS"):
+        prepare.write_task_files(task_row('see ["t::b"]', PASS_TO_PASS='["t::b"]'))
+    with pytest.raises(ValueError, match="patch"):
+        prepare.write_task_files(task_row("apply diff --git a/x b/x"))
+
+
 def record(keep=True, memory=None):
     cal = {"options": ["-p", "no:cacheprovider"], "f2p": ["t::a"], "p2p": ["t::b"], "p2p_excluded": [],
            "summary": {"gold_f2p": [1, 1]}, "keep_original_files": keep}

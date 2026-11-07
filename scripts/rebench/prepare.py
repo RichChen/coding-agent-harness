@@ -142,8 +142,10 @@ def write_task_files(row: dict) -> dict:
     for folder, value in ((PUBLIC, public), (PRIVATE, private)):
         folder.mkdir(parents=True, exist_ok=True)
         (folder / (row["instance_id"] + ".json")).write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+    haystack = issue + "\n" + json.dumps(public)
     leaks = [key for key in ("patch", "test_patch", "FAIL_TO_PASS", "PASS_TO_PASS", "hints_text")
-             if key in public or (row.get(key) and str(row[key])[:200] in json.dumps(public))]
+             if key in public or (str(row.get(key) or "").strip() not in ("", "[]")
+                                  and str(row[key])[:200] in haystack)]
     if leaks:
         raise ValueError("public task contains private fields: " + ", ".join(leaks))
     return {"task_files": {"public": rel(PUBLIC / (row["instance_id"] + ".json")),
