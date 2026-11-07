@@ -1,0 +1,421 @@
+{
+  "model_calls": 0,
+  "paid": false,
+  "prepare": {
+    "pypa__twine-1309": {
+      "accepted": true,
+      "official_digest": "swerebench/sweb.eval.x86_64.pypa_1776_twine-1309@sha256:0ab70a15a784fc15cfeb1840e0634284c71de499e507a75847a268617668f9d3",
+      "clean_digest": "coding-harness-rebench-clean@sha256:4b41029a7a8d86ff0afc9f80cb8c9540ae71696e33b6d29214bb0e33e3bb89f7",
+      "answer_isolation_pass": true,
+      "repeats": 3,
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "f2p_repaired": [
+        "tests/test_main.py::test_http_exception_handling[599-Unknown"
+      ],
+      "p2p_excluded": [],
+      "empty_f2p": [
+        0,
+        1
+      ],
+      "empty_p2p": [
+        3,
+        3
+      ],
+      "gold_f2p": [
+        1,
+        1
+      ],
+      "gold_p2p": [
+        3,
+        3
+      ],
+      "empty_f2p_fails_every_run": true,
+      "gold_f2p_passes_every_run": true,
+      "f2p_outcomes_stable": true
+    },
+    "delgan__loguru-1451": {
+      "accepted": true,
+      "official_digest": "swerebench/sweb.eval.x86_64.delgan_1776_loguru-1451@sha256:181bd51aa34ebe84d749819dfbe9a2d3d215ff8f6406d897d790f876bc5f36db",
+      "clean_digest": "coding-harness-rebench-clean@sha256:c74dbecc16e4bdeb600e615aad23e3648d0a1f7015e334fcad6616be9c01fa06",
+      "answer_isolation_pass": true,
+      "repeats": 3,
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "f2p_repaired": [],
+      "p2p_excluded": [],
+      "empty_f2p": [
+        0,
+        2
+      ],
+      "empty_p2p": [
+        22,
+        22
+      ],
+      "gold_f2p": [
+        2,
+        2
+      ],
+      "gold_p2p": [
+        22,
+        22
+      ],
+      "empty_f2p_fails_every_run": true,
+      "gold_f2p_passes_every_run": true,
+      "f2p_outcomes_stable": true
+    },
+    "pycqa__isort-2491": {
+      "accepted": true,
+      "official_digest": "swerebench/sweb.eval.x86_64.pycqa_1776_isort-2491@sha256:8f6c834300883cb779eb720b8d9af2bd5f5c38c67f615748eb87a2c019851e4b",
+      "clean_digest": "coding-harness-rebench-clean@sha256:1a115879be7d3576252b9ede4d7175e787dfc8412de0a01c0dabef178fec5c82",
+      "answer_isolation_pass": true,
+      "repeats": 3,
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "f2p_repaired": [],
+      "p2p_excluded": [],
+      "empty_f2p": [
+        0,
+        1
+      ],
+      "empty_p2p": [
+        73,
+        73
+      ],
+      "gold_f2p": [
+        1,
+        1
+      ],
+      "gold_p2p": [
+        73,
+        73
+      ],
+      "empty_f2p_fails_every_run": true,
+      "gold_f2p_passes_every_run": true,
+      "f2p_outcomes_stable": true
+    },
+    "holoviz__param-1117": {
+      "accepted": true,
+      "official_digest": "swerebench/sweb.eval.x86_64.holoviz_1776_param-1117@sha256:c10bc0ad51b00c59ed8fa4366ee722c38e83dfaa620a7cc229f78489ccbaf010",
+      "clean_digest": "coding-harness-rebench-clean@sha256:8de351eb8c1afe071c6af79d3b2b3a10c5aca8cce031a758bebd853d638095b5",
+      "answer_isolation_pass": true,
+      "repeats": 3,
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "f2p_repaired": [],
+      "p2p_excluded": [],
+      "empty_f2p": [
+        0,
+        2
+      ],
+      "empty_p2p": [
+        94,
+        94
+      ],
+      "gold_f2p": [
+        2,
+        2
+      ],
+      "gold_p2p": [
+        94,
+        94
+      ],
+      "empty_f2p_fails_every_run": true,
+      "gold_f2p_passes_every_run": true,
+      "f2p_outcomes_stable": true
+    },
+    "pypa__build-1027": {
+      "accepted": false,
+      "official_digest": "swerebench/sweb.eval.x86_64.pypa_1776_build-1027@sha256:740e391fead0b931c80ae2ad4279d20822f385d84c26c4b2c80d70426f9f2250",
+      "clean_digest": "coding-harness-rebench-clean@sha256:9e52350b8ec4f29395585008e0e41cab649d14e38870d3b27e5307c3be869b75",
+      "answer_isolation_pass": true,
+      "repeats": 3,
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "f2p_repaired": [
+        "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep"
+      ],
+      "p2p_excluded": [
+        "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]"
+      ],
+      "empty_f2p": [
+        0,
+        4
+      ],
+      "empty_p2p": [
+        63,
+        64
+      ],
+      "gold_f2p": [
+        0,
+        4
+      ],
+      "gold_p2p": [
+        63,
+        64
+      ],
+      "empty_f2p_fails_every_run": true,
+      "gold_f2p_passes_every_run": false,
+      "f2p_outcomes_stable": true
+    }
+  },
+  "mock_e2e_manifest": {
+    "tasks": 4,
+    "all_expected": true,
+    "results": {
+      "delgan__loguru-1451": {
+        "empty": {
+          "status": "fail",
+          "solved": false,
+          "grader_status": "fail",
+          "grader_ids": {
+            "f2p": 2,
+            "p2p": 22,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 1,
+          "tool_calls": 0,
+          "harness_tool_errors": 0,
+          "changed_files": [],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:c74dbecc16e4bdeb600e615aad23e3648d0a1f7015e334fcad6616be9c01fa06",
+          "grader_candidate_error": null
+        },
+        "gold": {
+          "status": "pass",
+          "solved": true,
+          "grader_status": "pass",
+          "grader_ids": {
+            "f2p": 2,
+            "p2p": 22,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 2,
+          "tool_calls": 2,
+          "harness_tool_errors": 0,
+          "changed_files": [
+            "loguru/_handler.py"
+          ],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:c74dbecc16e4bdeb600e615aad23e3648d0a1f7015e334fcad6616be9c01fa06",
+          "grader_candidate_error": null
+        }
+      },
+      "holoviz__param-1117": {
+        "empty": {
+          "status": "fail",
+          "solved": false,
+          "grader_status": "fail",
+          "grader_ids": {
+            "f2p": 2,
+            "p2p": 94,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 1,
+          "tool_calls": 0,
+          "harness_tool_errors": 0,
+          "changed_files": [],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:8de351eb8c1afe071c6af79d3b2b3a10c5aca8cce031a758bebd853d638095b5",
+          "grader_candidate_error": null
+        },
+        "gold": {
+          "status": "pass",
+          "solved": true,
+          "grader_status": "pass",
+          "grader_ids": {
+            "f2p": 2,
+            "p2p": 94,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 2,
+          "tool_calls": 9,
+          "harness_tool_errors": 0,
+          "changed_files": [
+            "param/reactive.py"
+          ],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:8de351eb8c1afe071c6af79d3b2b3a10c5aca8cce031a758bebd853d638095b5",
+          "grader_candidate_error": null
+        }
+      },
+      "pycqa__isort-2491": {
+        "empty": {
+          "status": "fail",
+          "solved": false,
+          "grader_status": "fail",
+          "grader_ids": {
+            "f2p": 1,
+            "p2p": 73,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 1,
+          "tool_calls": 0,
+          "harness_tool_errors": 0,
+          "changed_files": [],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:1a115879be7d3576252b9ede4d7175e787dfc8412de0a01c0dabef178fec5c82",
+          "grader_candidate_error": null
+        },
+        "gold": {
+          "status": "pass",
+          "solved": true,
+          "grader_status": "pass",
+          "grader_ids": {
+            "f2p": 1,
+            "p2p": 73,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 2,
+          "tool_calls": 6,
+          "harness_tool_errors": 0,
+          "changed_files": [
+            "isort/output.py"
+          ],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:1a115879be7d3576252b9ede4d7175e787dfc8412de0a01c0dabef178fec5c82",
+          "grader_candidate_error": null
+        }
+      },
+      "pypa__twine-1309": {
+        "empty": {
+          "status": "fail",
+          "solved": false,
+          "grader_status": "fail",
+          "grader_ids": {
+            "f2p": 1,
+            "p2p": 3,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 1,
+          "tool_calls": 0,
+          "harness_tool_errors": 0,
+          "changed_files": [],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:4b41029a7a8d86ff0afc9f80cb8c9540ae71696e33b6d29214bb0e33e3bb89f7",
+          "grader_candidate_error": null
+        },
+        "gold": {
+          "status": "pass",
+          "solved": true,
+          "grader_status": "pass",
+          "grader_ids": {
+            "f2p": 1,
+            "p2p": 3,
+            "missing": 0,
+            "reason": null
+          },
+          "model_calls": 2,
+          "tool_calls": 1,
+          "harness_tool_errors": 0,
+          "changed_files": [
+            "twine/__main__.py"
+          ],
+          "cost_cny": "0.000",
+          "stop_reason": "completed",
+          "run_error": null,
+          "infra_reason": null,
+          "answer_isolation_pass": true,
+          "clean_image_digest": "coding-harness-rebench-clean@sha256:4b41029a7a8d86ff0afc9f80cb8c9540ae71696e33b6d29214bb0e33e3bb89f7",
+          "grader_candidate_error": null
+        }
+      }
+    }
+  },
+  "rejected_task_through_run_path": {
+    "pypa__build-1027": {
+      "empty": {
+        "status": "fail",
+        "solved": false,
+        "grader_status": "fail",
+        "grader_ids": {
+          "f2p": 4,
+          "p2p": 63,
+          "missing": 0,
+          "reason": null
+        },
+        "model_calls": 1,
+        "tool_calls": 0,
+        "harness_tool_errors": 0,
+        "changed_files": [],
+        "cost_cny": "0.000",
+        "stop_reason": "completed",
+        "run_error": null,
+        "infra_reason": null,
+        "answer_isolation_pass": true,
+        "clean_image_digest": "coding-harness-rebench-clean@sha256:9e52350b8ec4f29395585008e0e41cab649d14e38870d3b27e5307c3be869b75",
+        "grader_candidate_error": null
+      },
+      "gold": {
+        "status": "fail",
+        "solved": false,
+        "grader_status": "fail",
+        "grader_ids": {
+          "f2p": 4,
+          "p2p": 63,
+          "missing": 0,
+          "reason": null
+        },
+        "model_calls": 2,
+        "tool_calls": 4,
+        "harness_tool_errors": 0,
+        "changed_files": [
+          "docs/changelog/860.bugfix.rst"
+        ],
+        "cost_cny": "0.000",
+        "stop_reason": "completed",
+        "run_error": null,
+        "infra_reason": null,
+        "answer_isolation_pass": true,
+        "clean_image_digest": "coding-harness-rebench-clean@sha256:9e52350b8ec4f29395585008e0e41cab649d14e38870d3b27e5307c3be869b75",
+        "grader_candidate_error": null
+      }
+    },
+    "cause": "is_export_skipped drops every path with a directory named build; the package lives in src/build/, so gold edits are not exported or graded"
+  }
+}

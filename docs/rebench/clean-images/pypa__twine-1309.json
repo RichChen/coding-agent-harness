@@ -1,0 +1,21 @@
+{
+  "task_id": "pypa__twine-1309",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:4b41029a7a8d86ff0afc9f80cb8c9540ae71696e33b6d29214bb0e33e3bb89f7",
+  "clean_image_id": "sha256:4b41029a7a8d86ff0afc9f80cb8c9540ae71696e33b6d29214bb0e33e3bb89f7",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.pypa_1776_twine-1309@sha256:0ab70a15a784fc15cfeb1840e0634284c71de499e507a75847a268617668f9d3",
+  "source_only_match": true,
+  "image_source_only_hash": "eb7884d72fcefc1d09e6e48fa6a0e89fcea4a68198a954d0721add830ac00a6f",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "0f38cc5e4fe0b380ab98c1262e2eecb98fe888d11654d2144913310cdb9b1f60"
+}

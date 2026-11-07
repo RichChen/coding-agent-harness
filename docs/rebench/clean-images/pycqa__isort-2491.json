@@ -1,0 +1,21 @@
+{
+  "task_id": "pycqa__isort-2491",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:1a115879be7d3576252b9ede4d7175e787dfc8412de0a01c0dabef178fec5c82",
+  "clean_image_id": "sha256:1a115879be7d3576252b9ede4d7175e787dfc8412de0a01c0dabef178fec5c82",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.pycqa_1776_isort-2491@sha256:8f6c834300883cb779eb720b8d9af2bd5f5c38c67f615748eb87a2c019851e4b",
+  "source_only_match": true,
+  "image_source_only_hash": "f4e00b32cbc6a3bf4c14a09bbb632b19206b222c1928ca70a11488a7b7be9edd",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "ad5693eb562690c40d41bee3a64c21b3a9fe8ee30ad13618b9a4386eb8142a89"
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "delgan__loguru-1451",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:c74dbecc16e4bdeb600e615aad23e3648d0a1f7015e334fcad6616be9c01fa06",
+  "clean_image_id": "sha256:c74dbecc16e4bdeb600e615aad23e3648d0a1f7015e334fcad6616be9c01fa06",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.delgan_1776_loguru-1451@sha256:181bd51aa34ebe84d749819dfbe9a2d3d215ff8f6406d897d790f876bc5f36db",
+  "source_only_match": true,
+  "image_source_only_hash": "d327b31d4aa524d66a13a4fe280788bcf36897ad8a1a879d251c72b31c4f2523",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "ba0fc9d349e43f0fe2a3a684b147a0a07e6219da188bbdc028e00bfc8f12b751"
+}

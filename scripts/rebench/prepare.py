@@ -1,13 +1,20 @@
-"""Pilot ingestion of SWE-rebench leaderboard tasks into the existing clean-image path. No model calls.
+"""Batch, resumable ingestion of SWE-rebench tasks into the clean-image path. No model calls.
 
-For each task: download the GitHub archive at base_commit, write public/private task files in the
-sprint5 format, derive a clean image from the official swerebench image (source moved to /opt/repo
-without .git, /workspace left empty, /testbed pointing at /workspace), run the answer-isolation checks
-from build_clean_baseline, then grade the empty delta and the gold delta with the unchanged ImageGrader
-several times.
+For each task, in stages that are recorded in runs/rebench/work/<id>/state.json and skipped on a rerun:
 
-Usage: python scripts/rebench/prepare.py [--repeats N] [--skip-build] [ids...]
-Large artifacts go under runs/rebench/; per-task result records go to scripts/rebench/out/pilot/.
+    source       GitHub archive at base_commit and its manifest
+    task_files   public/private task files in the sprint5 format
+    image        official image pinned by digest, clean image derived FROM that digest (source moved to
+                 /opt/repo without .git, /workspace empty, /testbed pointing at /workspace)
+    isolation    answer-isolation checks from build_clean_baseline
+    calibration  ImageGrader with the rebench options: collect, repair truncated node ids, grade the empty
+                 delta and the gold delta several times, exclude P2P that fail under gold in the sandbox
+    outputs      receipt and staging trees under runs/rebench/work/<id>/, clean record under
+                 docs/rebench/clean-images/, manifest row in configs/rebench/tasks.yaml
+
+Images are referenced by digest only: swerebench republishes :latest.
+
+    prepare.py [--repeats N] [--redo STAGE ...] [--ids-file F] [ids...]   (default ids: the five pilot tasks)
 """
 
 from __future__ import annotations
@@ -17,32 +24,34 @@ import asyncio
 import base64
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-import pandas as pd
+import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from scripts.build_clean_baseline import docker_python, filesystem_scan, source_only_check  # noqa: E402
-from scripts.calibrate_clean_image import counts  # noqa: E402
-from scripts.preflight_a5_repo_baseline import apply_patch_tree, image_build, patch_paths  # noqa: E402
-from scripts.rebench.grader import RebenchGrader, repair_nodeids, test_cmd_options  # noqa: E402
 from scripts.run_swe_task import parse_id_list, usable_nodeid  # noqa: E402
-from scripts.sprint5_prepare_main import download_archive  # noqa: E402
-from src.eval.a5_image_tree import archive_manifest  # noqa: E402
-from src.eval.image_grader import ImageGrader  # noqa: E402
 
 DATA = ROOT / "runs" / "rebench" / "data" / "test-0.parquet"
 WORK = ROOT / "runs" / "rebench" / "work"
 PUBLIC = ROOT / "runs" / "rebench" / "public"
 PRIVATE = ROOT / "runs" / "rebench" / "private"
-OUT = Path(__file__).resolve().parent / "out" / "pilot"
+CLEAN_RECORDS = ROOT / "docs" / "rebench" / "clean-images"
+MANIFEST = ROOT / "configs" / "rebench" / "tasks.yaml"
 CONTEXT = "desktop-linux"
 PILOT = ["pypa__twine-1309", "delgan__loguru-1451", "pycqa__isort-2491", "holoviz__param-1117", "pypa__build-1027"]
 CONDA_PYTHON = "/opt/conda/envs/testbed/bin/python"
+GRADER_TIMEOUT = 600
+DIGEST = re.compile(r"^[^@\s]+@sha256:[0-9a-f]{64}$")
+STAGES = ("source", "task_files", "image", "isolation", "calibration", "outputs")
+
+
+def rel(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
 
 
 def docker(*argv: str, timeout: int = 600) -> str:
@@ -53,12 +62,71 @@ def docker(*argv: str, timeout: int = 600) -> str:
     return result.stdout
 
 
+def pinned(ref) -> str:
+    if not isinstance(ref, str) or not DIGEST.match(ref):
+        raise ValueError("image must be pinned by sha256 digest: " + repr(ref))
+    return ref
+
+
+# ---- resumable stages ----
+
+def run_stages(path: Path, stages, redo=()) -> dict:
+    """Run (name, fn(state) -> dict) stages in order, skipping finished ones. fn results merge into state."""
+    state = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {"done": []}
+    redo = set(redo)
+    if redo:
+        names = [name for name, _ in stages]
+        first = min(names.index(name) for name in redo if name in names)
+        state["done"] = [name for name in state["done"] if names.index(name) < first]
+    state.pop("error", None)
+    for name, fn in stages:
+        if name in state["done"]:
+            continue
+        try:
+            state.update(fn(state) or {})
+        except Exception as exc:
+            state["error"] = {"stage": name, "message": type(exc).__name__ + ": " + str(exc)[-2000:]}
+            _save(path, state)
+            raise
+        state["done"].append(name)
+        _save(path, state)
+    return state
+
+
+def _save(path: Path, state: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(state, indent=2, default=str) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
+# ---- source and task files ----
+
 def load_row(instance_id: str) -> dict:
+    import pandas as pd
+
     df = pd.read_parquet(DATA)
     row = df[df["instance_id"] == instance_id].iloc[0].to_dict()
     for key in ("FAIL_TO_PASS", "PASS_TO_PASS"):
         row[key] = json.dumps(parse_id_list(list(row[key]) if not isinstance(row[key], str) else row[key]))
+    install = row.get("install_config")
+    row["install_config"] = {k: (v.tolist() if hasattr(v, "tolist") else v) for k, v in (install or {}).items()}
+    row["created_at"] = str(row["created_at"])
     return row
+
+
+def source_stage(row: dict, work: Path):
+    from scripts.sprint5_prepare_main import download_archive
+
+    def run(state):
+        archive = work / "source.tar.gz"
+        download_archive({"repo": row["repo"], "base_commit": row["base_commit"]}, archive)
+        sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+        (work / "source-receipt.json").write_text(json.dumps(
+            {"repo": row["repo"], "base_commit": row["base_commit"], "archive": "source.tar.gz", "sha256": sha},
+            indent=2) + "\n", encoding="utf-8")
+        return {"archive_sha256": sha}
+    return run
 
 
 def write_task_files(row: dict) -> dict:
@@ -69,16 +137,29 @@ def write_task_files(row: dict) -> dict:
         "issue_sha256": hashlib.sha256(issue.encode("utf-8")).hexdigest(),
         "repo_ref": {"repo_id": row["repo"], "revision": row["base_commit"], "revision_kind": "commit"},
     }
-    private = {key: row[key] for key in ("FAIL_TO_PASS", "PASS_TO_PASS", "patch", "test_patch")}
-    private = {"instance_id": row["instance_id"], **private}
+    private = {"instance_id": row["instance_id"], **{key: row[key] for key in ("FAIL_TO_PASS", "PASS_TO_PASS", "patch", "test_patch")}}
     for folder, value in ((PUBLIC, public), (PRIVATE, private)):
         folder.mkdir(parents=True, exist_ok=True)
         (folder / (row["instance_id"] + ".json")).write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
     leaks = [key for key in ("patch", "test_patch", "FAIL_TO_PASS", "PASS_TO_PASS", "hints_text")
              if key in public or (row.get(key) and str(row[key])[:200] in json.dumps(public))]
-    return {"public": str((PUBLIC / (row["instance_id"] + ".json")).relative_to(ROOT)),
-            "private": str((PRIVATE / (row["instance_id"] + ".json")).relative_to(ROOT)),
-            "public_keys": sorted(public), "public_contains_private_fields": leaks}
+    if leaks:
+        raise ValueError("public task contains private fields: " + ", ".join(leaks))
+    return {"task_files": {"public": rel(PUBLIC / (row["instance_id"] + ".json")),
+                           "private": rel(PRIVATE / (row["instance_id"] + ".json")),
+                           "public_keys": sorted(public)}}
+
+
+# ---- images ----
+
+def official_digest(image: str) -> dict:
+    """The local official image's RepoDigest for its own repository."""
+    inspect = json.loads(docker("image", "inspect", image))[0]
+    repo = image.rsplit(":", 1)[0] if ":" in image.split("/")[-1] else image
+    digests = [d for d in inspect.get("RepoDigests") or [] if d.split("@", 1)[0] == repo]
+    if not digests:
+        raise ValueError("official image has no RepoDigest for " + repo + "; pull it first")
+    return {"digest": pinned(digests[0]), "size_bytes": inspect.get("Size")}
 
 
 def official_git_state(image: str) -> dict:
@@ -93,7 +174,7 @@ def official_git_state(image: str) -> dict:
 
 def dockerfile(base: str) -> str:
     return (
-        f"FROM {base}\n"
+        f"FROM {pinned(base)}\n"
         "USER root\n"
         "COPY original-files.json /tmp/original-files.json\n"
         "RUN set -eux; test ! -e /opt/repo; mkdir -p /opt/repo; cp -a /testbed/. /opt/repo/; "
@@ -121,191 +202,267 @@ def dockerfile(base: str) -> str:
     )
 
 
-def build_clean(row: dict, archive: Path, manifest: dict) -> dict:
-    official = row["docker_image"]
-    inspect = json.loads(docker("image", "inspect", official))[0]
-    base = (inspect.get("RepoDigests") or [official])[0]
-    work = WORK / row["instance_id"] / "context"
-    if work.exists():
-        shutil.rmtree(work)
-    work.mkdir(parents=True)
-    files = sorted(path for path, meta in manifest["entries"].items() if meta.get("kind") == "file")
-    (work / "original-files.json").write_text(json.dumps(files), encoding="utf-8")
-    (work / "Dockerfile").write_bytes(dockerfile(base).encode("utf-8"))
-    tag = "coding-harness-rebench-clean:" + row["instance_id"].replace("__", "-").lower()
-    log = WORK / row["instance_id"] / "build.log"
-    if log.exists():
-        log.unlink()
-    log.with_suffix(".json").unlink(missing_ok=True)
-    digest, clean_inspect = image_build(work, tag, log)
-    return {"official_image": official, "official_digest": base, "official_size_bytes": inspect.get("Size"),
-            "clean_tag": tag, "clean_digest": digest, "clean_id": clean_inspect.get("Id"),
-            "clean_size_bytes": clean_inspect.get("Size")}
+def clean_tag(instance_id: str) -> str:
+    return "coding-harness-rebench-clean:" + instance_id.replace("__", "-").lower()
 
 
-def isolation(row: dict, image: dict, archive: Path, manifest: dict) -> dict:
-    tag = image["clean_tag"]
-    source_ok, source_hash = source_only_check(tag, manifest)
-    scan = filesystem_scan(tag, archive, manifest, row["test_patch"] or "", row["patch"] or "")
-    layout = json.loads(docker_python(tag, (
-        "import json, os, pathlib\n"
-        "w = pathlib.Path('/workspace'); t = pathlib.Path('/testbed')\n"
-        "extra = json.loads(pathlib.Path('/opt/repo-extra-files.json').read_text())\n"
-        "print(json.dumps({'workspace_entries': len(list(w.iterdir())), 'testbed_link': os.readlink(t) if t.is_symlink() else None,"
-        " 'repo_git': pathlib.Path('/opt/repo/.git').exists(), 'repo_extra_files': len(extra), 'repo_extra_sample': extra[:8],"
-        " 'natives': json.loads(pathlib.Path('/opt/native-artifacts.json').read_text())}))\n")))
-    return {"source_only_match": source_ok, "source_hash": source_hash, "filesystem_scan": scan, "layout": layout,
-            "answer_isolation_pass": bool(source_ok and scan.get("pass") and layout["workspace_entries"] == 0
-                                          and not layout["repo_git"])}
+def image_stage(row: dict, work: Path):
+    from scripts.preflight_a5_repo_baseline import image_build
+    from src.eval.a5_image_tree import archive_manifest
+
+    def run(state):
+        official = official_digest(row["docker_image"])
+        git = official_git_state(official["digest"])
+        manifest = archive_manifest(work / "source.tar.gz", row["repo"], row["base_commit"])
+        context = work / "context"
+        if context.exists():
+            shutil.rmtree(context)
+        context.mkdir(parents=True)
+        files = sorted(path for path, meta in manifest["entries"].items() if meta.get("kind") == "file")
+        (context / "original-files.json").write_text(json.dumps(files), encoding="utf-8")
+        text = dockerfile(official["digest"])
+        (context / "Dockerfile").write_bytes(text.encode("utf-8"))
+        log = work / "build.log"
+        log.unlink(missing_ok=True)
+        log.with_suffix(".json").unlink(missing_ok=True)
+        digest, inspect = image_build(context, clean_tag(row["instance_id"]), log)
+        return {"image": {"official_image": row["docker_image"], "official_digest": official["digest"],
+                          "official_size_bytes": official["size_bytes"], "clean_tag": clean_tag(row["instance_id"]),
+                          "clean_digest": pinned(digest), "clean_id": inspect.get("Id"),
+                          "clean_size_bytes": inspect.get("Size"),
+                          "build_input_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest()},
+                "official_git_state": git, "official_head_matches_base": git.get("head") == row["base_commit"]}
+    return run
 
 
-def overlay_and_gold(row: dict, archive: Path) -> tuple[dict, dict, list[str]]:
-    staging = WORK / row["instance_id"] / "staging"
-    if staging.exists():
-        shutil.rmtree(staging)
-    staging.mkdir(parents=True)
-    apply_patch_tree(archive, row["repo"], row["base_commit"], row["test_patch"] or "", row["patch"] or "", staging)
+def image_present(digest: str) -> bool:
+    try:
+        docker("image", "inspect", digest, timeout=60)
+        return True
+    except RuntimeError:
+        return False
+
+
+# ---- isolation ----
+
+def isolation_stage(row: dict, work: Path):
+    from scripts.build_clean_baseline import docker_python, filesystem_scan, source_only_check
+    from src.eval.a5_image_tree import archive_manifest
+
+    def run(state):
+        image = state["image"]["clean_digest"]
+        archive = work / "source.tar.gz"
+        manifest = archive_manifest(archive, row["repo"], row["base_commit"])
+        source_ok, source_hash = source_only_check(image, manifest)
+        scan = filesystem_scan(image, archive, manifest, row["test_patch"] or "", row["patch"] or "")
+        layout = json.loads(docker_python(image, (
+            "import json, os, pathlib\n"
+            "w = pathlib.Path('/workspace'); t = pathlib.Path('/testbed')\n"
+            "extra = json.loads(pathlib.Path('/opt/repo-extra-files.json').read_text())\n"
+            "print(json.dumps({'workspace_entries': len(list(w.iterdir())), 'testbed_link': os.readlink(t) if t.is_symlink() else None,"
+            " 'repo_git': pathlib.Path('/opt/repo/.git').exists(), 'repo_extra_files': len(extra), 'repo_extra_sample': extra[:8],"
+            " 'natives': json.loads(pathlib.Path('/opt/native-artifacts.json').read_text())}))\n")))
+        passed = bool(source_ok and scan.get("pass") and layout["workspace_entries"] == 0 and not layout["repo_git"])
+        return {"isolation": {"source_only_match": source_ok, "source_hash": source_hash, "filesystem_scan": scan,
+                              "layout": layout, "answer_isolation_pass": passed}}
+    return run
+
+
+# ---- calibration ----
+
+def staging(row: dict, work: Path) -> tuple[dict, dict, list[str], list[str]]:
+    from scripts.preflight_a5_repo_baseline import apply_patch_tree, patch_paths
+
+    root = work / "staging"
+    if root.exists():
+        shutil.rmtree(root)
+    root.mkdir(parents=True)
+    apply_patch_tree(work / "source.tar.gz", row["repo"], row["base_commit"], row["test_patch"] or "", row["patch"] or "", root)
     test_paths = patch_paths(row["test_patch"] or "")
     overlay = {}
     for relative in test_paths:
-        updated = staging / "baseline" / relative
+        updated = root / "baseline" / relative
         if not updated.is_file():
             continue
-        before = staging / "original" / relative
+        before = root / "original" / relative
         if updated.read_bytes() != (before.read_bytes() if before.is_file() else b""):
             overlay[relative] = base64.b64encode(updated.read_bytes()).decode("ascii")
-    changed = {}
-    for relative in patch_paths(row["patch"] or ""):
-        path = staging / "known-good" / relative
-        if relative not in test_paths and path.is_file():
-            changed[relative] = base64.b64encode(path.read_bytes()).decode("ascii")
-    deleted = [rel for rel in patch_paths(row["patch"] or "")
-               if rel not in test_paths and not (staging / "known-good" / rel).exists()]
-    return overlay, {"changed": changed, "deleted": deleted}, test_paths
+    gold_paths = [p for p in patch_paths(row["patch"] or "") if p not in test_paths]
+    changed = {p: base64.b64encode((root / "known-good" / p).read_bytes()).decode("ascii")
+               for p in gold_paths if (root / "known-good" / p).is_file()}
+    deleted = [p for p in gold_paths if not (root / "known-good" / p).exists()]
+    return overlay, {"changed": changed, "deleted": deleted}, test_paths, gold_paths
 
 
-def nodeid_selection(row: dict, baseline: Path) -> tuple[list[str], list[str], dict]:
-    kept, dropped = {}, []
-    for side, key in (("f2p", "FAIL_TO_PASS"), ("p2p", "PASS_TO_PASS")):
-        kept[side] = []
-        for node in parse_id_list(row[key]):
-            reason = None
-            if not usable_nodeid(node):
-                reason = "unusable_nodeid"
-            elif node.count("[") != node.count("]"):
-                reason = "unbalanced_brackets"
-            elif "[" in node and "::" in node[node.find("["):]:
-                reason = "parameter_contains_node_separator"
-            elif node.split("::", 1)[0].endswith(".py") and not (baseline / node.split("::", 1)[0]).is_file():
-                reason = "test_file_missing"
-            if reason:
-                dropped.append({"side": side, "nodeid": node, "reason": reason})
-            else:
-                kept[side].append(node)
-    report = {"f2p": {"original": len(parse_id_list(row["FAIL_TO_PASS"])), "used": len(kept["f2p"])},
-              "p2p": {"original": len(parse_id_list(row["PASS_TO_PASS"])), "used": len(kept["p2p"])},
-              "dropped": dropped}
-    return kept["f2p"], kept["p2p"], report
-
-
-def brief(result: dict, f2p: list[str], p2p: list[str]) -> dict:
-    c = counts(result, f2p, p2p)
+def outcome_counts(result: dict, f2p: list[str], p2p: list[str]) -> dict:
+    by_id = {case.get("nodeid"): case.get("outcome") for case in result.get("cases") or []}
+    passed = lambda nodes: sum(1 for n in nodes if by_id.get(n) == "passed")  # noqa: E731
     return {"status": result.get("status"), "reason": result.get("reason"),
-            "f2p": [c["f2p_passed"], c["f2p_total"]], "p2p": [c["p2p_passed"], c["p2p_total"]],
-            "f2p_outcomes": {n: c["outcomes"][n] for n in f2p},
-            "p2p_not_passed": {n: o for n, o in c["outcomes"].items() if n in p2p and o != "passed"},
-            "collected": result.get("collected_count"), "collection_errors": (result.get("collection_errors") or [])[:3],
-            "runner_error": result.get("runner_error"), "exit_code": result.get("exit_code"),
+            "f2p": [passed(f2p), len(f2p)], "p2p": [passed(p2p), len(p2p)],
+            "f2p_outcomes": {n: by_id.get(n) for n in f2p},
+            "p2p_not_passed": sorted(n for n in p2p if by_id.get(n) != "passed"),
             "execution_status": result.get("execution_status")}
 
 
-async def calibrate(row: dict, image: dict, archive: Path, repeats: int) -> dict:
-    overlay, gold, test_paths = overlay_and_gold(row, archive)
-    f2p, p2p, report = nodeid_selection(row, WORK / row["instance_id"] / "staging" / "baseline")
-    empty_delta = {"changed": {}, "deleted": []}
-    existing = ImageGrader(context=CONTEXT)
-    kwargs = dict(image=image["clean_digest"], test_overlay=overlay, f2p=f2p, p2p=p2p, timeout=600)
-    existing_runs = {label: brief(await existing.evaluate(delta=delta, **kwargs), f2p, p2p)
-                     for label, delta in (("empty", empty_delta), ("gold", gold))}
+def calibration_stage(row: dict, work: Path, repeats: int):
+    from src.eval.image_grader import (ImageGrader, pytest_options_from_test_cmd, repair_truncated_nodeids,
+                                       sandbox_p2p_exclusions)
 
-    options = test_cmd_options((row["install_config"] or {}).get("test_cmd"))
-    grader = RebenchGrader(context=CONTEXT, options=options)
-    raw_f2p, raw_p2p = parse_id_list(row["FAIL_TO_PASS"]), parse_id_list(row["PASS_TO_PASS"])
-    files = sorted({n.split("::", 1)[0] for n in raw_f2p + raw_p2p if ".py" in n.split("::", 1)[0]})
-    collection = await grader.collect(image=image["clean_digest"], overlay=overlay, paths=files)
-    f2p, f2p_notes = repair_nodeids([n for n in raw_f2p if usable_nodeid(n)], collection["collected"])
-    p2p, p2p_notes = repair_nodeids([n for n in raw_p2p if usable_nodeid(n)], collection["collected"])
-    repair = {"options": options, "collected": len(collection["collected"]),
-              "collect_errors": collection.get("collection_errors")[:3], "collect_reason": collection.get("reason"),
-              "f2p_original": len(raw_f2p), "f2p_used": len(f2p), "p2p_original": len(raw_p2p), "p2p_used": len(p2p),
-              "f2p_repaired": f2p_notes, "p2p_repaired": p2p_notes}
-    kwargs = dict(image=image["clean_digest"], test_overlay=overlay, f2p=f2p, p2p=p2p, timeout=600)
-    runs = {"empty": [], "gold": []}
-    for _ in range(repeats):
-        for label, delta in (("empty", empty_delta), ("gold", gold)):
-            runs[label].append(brief(await grader.evaluate(delta=delta, **kwargs), f2p, p2p))
-    empty_fails = all(r["f2p"][1] > 0 and r["f2p"][0] < r["f2p"][1] for r in runs["empty"])
-    gold_ok = all(r["f2p"][1] > 0 and r["f2p"][0] == r["f2p"][1] for r in runs["gold"])
-    gold_full = all(r["status"] == "pass" for r in runs["gold"])
-    stable = all(len({json.dumps(r["f2p_outcomes"], sort_keys=True) for r in runs[k]}) == 1 for k in runs)
-    p2p_flaky = sorted({n for r in runs["gold"] for n in r["p2p_not_passed"]})
-    return {"test_paths": test_paths, "overlay_files": sorted(overlay), "gold_changed": sorted(gold["changed"]),
-            "gold_deleted": gold["deleted"], "existing_grader": {"nodeids": report, "runs": existing_runs},
-            "nodeid_repair": repair, "repeats": repeats, "runs": runs,
+    async def calibrate(state):
+        image = state["image"]["clean_digest"]
+        overlay, gold, test_paths, gold_paths = staging(row, work)
+        options = pytest_options_from_test_cmd(row["install_config"].get("test_cmd"))
+        grader = ImageGrader(context=CONTEXT)
+        common = dict(image=image, test_overlay=overlay, autoload_plugins=True, pytest_options=options)
+        raw_f2p = [n for n in parse_id_list(row["FAIL_TO_PASS"]) if usable_nodeid(n)]
+        raw_p2p = [n for n in parse_id_list(row["PASS_TO_PASS"]) if usable_nodeid(n)]
+        files = sorted({n.split("::", 1)[0] for n in raw_f2p + raw_p2p if n.split("::", 1)[0].endswith(".py")})
+        collection = await grader.collect(paths=files, timeout=GRADER_TIMEOUT, **common)
+        collected = collection.get("collected") or []
+        f2p, f2p_notes = repair_truncated_nodeids(raw_f2p, collected)
+        p2p, p2p_notes = repair_truncated_nodeids(raw_p2p, collected)
+        runs = {"empty": [], "gold": []}
+        raw_gold = []
+        for _ in range(repeats):
+            for label, delta in (("empty", {"changed": {}, "deleted": []}), ("gold", gold)):
+                result = await grader.evaluate(delta=delta, f2p=f2p, p2p=p2p, timeout=GRADER_TIMEOUT, **common)
+                runs[label].append(outcome_counts(result, f2p, p2p))
+                if label == "gold":
+                    raw_gold.append(result)
+        excluded = sandbox_p2p_exclusions(raw_gold, p2p)
+        empty_fails = all(r["f2p"][1] > 0 and r["f2p"][0] < r["f2p"][1] for r in runs["empty"])
+        gold_ok = all(r["f2p"][1] > 0 and r["f2p"][0] == r["f2p"][1] for r in runs["gold"])
+        stable = all(len({json.dumps(r["f2p_outcomes"], sort_keys=True) for r in runs[k]}) == 1 for k in runs)
+        repaired = all(note["match_count"] for note in f2p_notes)
+        accepted = bool(state["isolation"]["answer_isolation_pass"] and empty_fails and gold_ok and stable and repaired)
+        last_empty, last_gold = runs["empty"][-1], runs["gold"][-1]
+        return {"calibration": {
+            "options": options, "collected": len(collected), "collect_reason": collection.get("reason"),
+            "f2p_original": len(raw_f2p), "p2p_original": len(raw_p2p), "f2p": f2p, "p2p": p2p,
+            "f2p_repaired": f2p_notes, "p2p_repaired": p2p_notes, "p2p_excluded": excluded,
+            "repeats": repeats, "runs": runs, "test_paths": test_paths, "gold_paths": gold_paths,
             "empty_f2p_fails_every_run": empty_fails, "gold_f2p_passes_every_run": gold_ok,
-            "gold_full_pass_every_run": gold_full, "f2p_outcomes_stable": stable, "gold_p2p_not_passed": p2p_flaky}
+            "f2p_outcomes_stable": stable, "accepted": accepted,
+            "summary": {"empty_f2p": last_empty["f2p"], "empty_p2p": last_empty["p2p"],
+                        "gold_f2p": last_gold["f2p"], "gold_p2p": last_gold["p2p"]}}}
+
+    def run(state):
+        return asyncio.run(calibrate(state))
+    return run
 
 
-async def one(instance_id: str, repeats: int, skip_build: bool) -> dict:
-    row = load_row(instance_id)
-    print("==", instance_id, flush=True)
-    record = {"instance_id": instance_id, "repo": row["repo"], "created_at": str(row["created_at"]),
-              "base_commit": row["base_commit"], "python": (row["install_config"] or {}).get("python"),
-              "install": (row["install_config"] or {}).get("install"),
-              "test_cmd": (row["install_config"] or {}).get("test_cmd"), "model_calls": 0, "paid": False}
-    archive = WORK / instance_id / "source.tar.gz"
-    download_archive({"repo": row["repo"], "base_commit": row["base_commit"]}, archive)
-    manifest = archive_manifest(archive, row["repo"], row["base_commit"])
-    record["task_files"] = write_task_files(row)
-    record["official_git_state"] = official_git_state(row["docker_image"])
-    record["official_head_matches_base"] = record["official_git_state"].get("head") == row["base_commit"]
-    if skip_build:
-        tag = "coding-harness-rebench-clean:" + instance_id.replace("__", "-").lower()
-        clean_id = json.loads(docker("image", "inspect", tag))[0]["Id"]
-        record["image"] = {"official_image": row["docker_image"], "clean_tag": tag,
-                           "clean_digest": tag.split(":")[0] + "@" + clean_id}
-    else:
-        record["image"] = build_clean(row, archive, manifest)
-    record["isolation"] = isolation(row, record["image"], archive, manifest)
-    print(instance_id, "isolation", record["isolation"]["answer_isolation_pass"], flush=True)
-    record["calibration"] = await calibrate(row, record["image"], archive, repeats)
+# ---- outputs ----
+
+def clean_record(record: dict) -> dict:
+    iso, image = record["isolation"], record["image"]
+    return {"task_id": record["instance_id"], "answer_isolation_pass": iso["answer_isolation_pass"],
+            "clean_image_digest": pinned(image["clean_digest"]), "clean_image_id": image.get("clean_id"),
+            "official_image_digest": pinned(image["official_digest"]), "source_only_match": iso["source_only_match"],
+            "image_source_only_hash": iso.get("source_hash"), "filesystem_scan": iso.get("filesystem_scan"),
+            "native_artifacts": (iso.get("layout") or {}).get("natives"),
+            "build_input_sha256": image.get("build_input_sha256")}
+
+
+def receipt(record: dict, *, private_sha256: str) -> dict:
+    work = WORK / record["instance_id"]
     cal = record["calibration"]
-    record["accepted"] = bool(record["isolation"]["answer_isolation_pass"] and cal["empty_f2p_fails_every_run"]
-                              and cal["gold_f2p_passes_every_run"] and cal["f2p_outcomes_stable"]
-                              and all(n["match_count"] for n in cal["nodeid_repair"]["f2p_repaired"]))
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / (instance_id + ".json")).write_text(json.dumps(record, indent=2, default=str) + "\n", encoding="utf-8")
-    print(instance_id, "accepted", record["accepted"], "empty", [r["f2p"] for r in cal["runs"]["empty"]],
-          "gold", [r["f2p"] for r in cal["runs"]["gold"]], "gold_p2p", [r["p2p"] for r in cal["runs"]["gold"]], flush=True)
-    return record
+    return {"task_id": record["instance_id"], "repo": record["repo"], "base_revision": record["base_commit"],
+            "baseline_image_digest": pinned(record["image"]["clean_digest"]),
+            "official_image_digest": pinned(record["image"]["official_digest"]),
+            "private_source_binding": {"path": str(ROOT / record["task_files"]["private"]), "sha256": private_sha256,
+                                       "test_patch_paths": cal["test_paths"], "gold_patch_paths": cal["gold_paths"]},
+            "source_attempt_ref": str(work / "source-receipt.json"), "model_calls": 0, "paid": False}
 
 
-async def main() -> None:
-    parser = argparse.ArgumentParser()
+def manifest_row(record: dict) -> dict:
+    task_id, cal = record["instance_id"], record["calibration"]
+    work = WORK / task_id
+    command = " ".join(["python", "-m", "pytest", *cal["options"], "<test path>"])
+    return {"id": task_id, "repo": record["repo"], "family": "rebench",
+            "created_at": record["created_at"], "base_commit": record["base_commit"],
+            "receipt": rel(work / "receipt.json"), "original": rel(work / "staging" / "original"),
+            "baseline": rel(work / "staging" / "baseline"), "public_task": str(ROOT / record["task_files"]["public"]),
+            "clean_record": rel(CLEAN_RECORDS / (task_id + ".json")),
+            "official_image_digest": pinned(record["image"]["official_digest"]),
+            "grader_timeout_seconds": GRADER_TIMEOUT, "test_command": command,
+            "grader": {"autoload_plugins": True, "pytest_options": list(cal["options"])},
+            "grader_nodeids": {"f2p": list(cal["f2p"]), "p2p": list(cal["p2p"])},
+            "p2p_excluded": list(cal["p2p_excluded"]), "calibration": dict(cal["summary"])}
+
+
+def merge_manifest(path: Path, rows: list[dict], drop=()) -> None:
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) if path.is_file() else None
+    data = data or {"schema": "rebench.tasks.v1",
+                    "notes": "SWE-rebench tasks prepared by scripts/rebench/prepare.py. Images pinned by digest."}
+    tasks = {task["id"]: task for task in data.get("tasks") or [] if task["id"] not in set(drop)}
+    tasks.update({row["id"]: row for row in rows})
+    data["tasks"] = [tasks[key] for key in sorted(tasks)]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=200), encoding="utf-8")
+
+
+def outputs_stage(row: dict, work: Path):
+    def run(state):
+        record = {**state, "instance_id": row["instance_id"], "repo": row["repo"], "base_commit": row["base_commit"],
+                  "created_at": row["created_at"]}
+        private = ROOT / state["task_files"]["private"]
+        (work / "receipt.json").write_text(json.dumps(
+            receipt(record, private_sha256=hashlib.sha256(private.read_bytes()).hexdigest()), indent=2) + "\n",
+            encoding="utf-8")
+        CLEAN_RECORDS.mkdir(parents=True, exist_ok=True)
+        (CLEAN_RECORDS / (row["instance_id"] + ".json")).write_text(
+            json.dumps(clean_record(record), indent=2) + "\n", encoding="utf-8")
+        if state["calibration"]["accepted"]:
+            merge_manifest(MANIFEST, [manifest_row(record)])
+        else:
+            merge_manifest(MANIFEST, [], drop={row["instance_id"]})
+        return {"accepted": state["calibration"]["accepted"]}
+    return run
+
+
+def prepare_task(instance_id: str, repeats: int, redo=()) -> dict:
+    row = load_row(instance_id)
+    work = WORK / instance_id
+    work.mkdir(parents=True, exist_ok=True)
+    path = work / "state.json"
+    redo = set(redo)
+    if path.is_file():
+        state = json.loads(path.read_text(encoding="utf-8"))
+        digest = (state.get("image") or {}).get("clean_digest")
+        if "image" in state.get("done", []) and (not digest or not image_present(digest)):
+            redo.add("image")
+    stages = [("source", source_stage(row, work)),
+              ("task_files", lambda state: write_task_files(row)),
+              ("image", image_stage(row, work)),
+              ("isolation", isolation_stage(row, work)),
+              ("calibration", calibration_stage(row, work, repeats)),
+              ("outputs", outputs_stage(row, work))]
+    return run_stages(path, stages, redo=redo)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--repeats", type=int, default=3)
-    parser.add_argument("--skip-build", action="store_true")
+    parser.add_argument("--redo", action="append", default=[], choices=STAGES, help="rerun from this stage")
+    parser.add_argument("--ids-file", type=Path, help="one instance id per line")
     parser.add_argument("ids", nargs="*")
     args = parser.parse_args()
-    for instance_id in args.ids or PILOT:
+    ids = list(args.ids)
+    if args.ids_file:
+        ids += [line.strip() for line in args.ids_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+    results = {}
+    for instance_id in ids or PILOT:
+        print("==", instance_id, flush=True)
         try:
-            await one(instance_id, args.repeats, args.skip_build)
+            state = prepare_task(instance_id, args.repeats, args.redo)
+            cal = state["calibration"]
+            results[instance_id] = {"accepted": state["accepted"], **cal["summary"],
+                                    "p2p_excluded": len(cal["p2p_excluded"])}
         except Exception as exc:
-            OUT.mkdir(parents=True, exist_ok=True)
-            (OUT / (instance_id + ".error.json")).write_text(
-                json.dumps({"instance_id": instance_id, "error": type(exc).__name__ + ": " + str(exc)[-3000:]}, indent=2)
-                + "\n", encoding="utf-8")
-            print(instance_id, "ERROR", type(exc).__name__, str(exc)[-800:], flush=True)
+            results[instance_id] = {"error": type(exc).__name__ + ": " + str(exc)[-500:]}
+        print(instance_id, json.dumps(results[instance_id]), flush=True)
+    print(json.dumps(results, indent=2))
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

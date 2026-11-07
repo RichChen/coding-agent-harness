@@ -1,0 +1,21 @@
+{
+  "task_id": "pypa__build-1027",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:9e52350b8ec4f29395585008e0e41cab649d14e38870d3b27e5307c3be869b75",
+  "clean_image_id": "sha256:9e52350b8ec4f29395585008e0e41cab649d14e38870d3b27e5307c3be869b75",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.pypa_1776_build-1027@sha256:740e391fead0b931c80ae2ad4279d20822f385d84c26c4b2c80d70426f9f2250",
+  "source_only_match": true,
+  "image_source_only_hash": "784e8e0d15fad4452c7fd381d901070ea265fb4abf61aba0ed8400dd8571b39f",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "b7a4c9c458fed5f8cd16673d4bfe05acb85c2b1f7996a3020b2e7404496bd691"
+}

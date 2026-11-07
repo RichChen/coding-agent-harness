@@ -1,0 +1,21 @@
+{
+  "task_id": "holoviz__param-1117",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:8de351eb8c1afe071c6af79d3b2b3a10c5aca8cce031a758bebd853d638095b5",
+  "clean_image_id": "sha256:8de351eb8c1afe071c6af79d3b2b3a10c5aca8cce031a758bebd853d638095b5",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.holoviz_1776_param-1117@sha256:c10bc0ad51b00c59ed8fa4366ee722c38e83dfaa620a7cc229f78489ccbaf010",
+  "source_only_match": true,
+  "image_source_only_hash": "8b23b9c615a91b5d9763ce0df972659887540955fc99c920e6f261604a46c0de",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "82db2d9380b338e15ee043a2fc78376896a1399f88471ddeb46fc1339d94bff5"
+}

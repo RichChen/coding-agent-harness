@@ -100,6 +100,7 @@ EDIT_TOOLS = {"edit_file", "search_replace", "write_file"}
 PYTHON_PATHS = {
     "django": (".",),
     "pytest-dev": ("src",),
+    "rebench": (".", "src"),
     "scikit-learn": (".",),
     "sphinx-doc": (".",),
     "sympy": (".",),
@@ -196,6 +197,7 @@ def django_nodeids(raw: list[str]) -> list[str]:
 TEST_COMMANDS = {
     "django": "python tests/runtests.py <module>",
     "pytest-dev": "python -m pytest <test path>",
+    "rebench": "python -m pytest <test path>",
     "scikit-learn": "python -m pytest <test path>",
     "sphinx-doc": "python -m pytest <test path>",
     "sympy": "python -m pytest <test path>",
@@ -223,7 +225,7 @@ def public_issue(task: dict) -> str:
     revision = ref["revision"]
     if task.get("family") not in TEST_COMMANDS:
         raise ValueError("no test command for family " + repr(task.get("family")))
-    test_command = TEST_COMMANDS[task["family"]]
+    test_command = task.get("test_command") or TEST_COMMANDS[task["family"]]
     return (
         "You are repairing an open-source repository from a public issue only.\n"
         f"Repository: {repo}\nBase revision: {revision}\n"
@@ -461,6 +463,18 @@ MAIN_TARGETS = ROOT / "configs" / "sprint" / "main-targets.yaml"
 MAIN_CALIBRATION = ROOT / "docs" / "sprint" / "main-calibration"
 
 
+GRADER_OPTIONS = ("autoload_plugins", "pytest_options")
+
+
+def grader_options(task: dict) -> dict:
+    """ImageGrader switches a task declares under `grader` (SWE-rebench tasks). Other tasks pass none."""
+    options = dict(task.get("grader") or {})
+    unknown = set(options) - set(GRADER_OPTIONS)
+    if unknown:
+        raise ValueError("unknown grader options: " + ", ".join(sorted(unknown)))
+    return options
+
+
 async def empty_regrade(task: dict, image: str, spec, f2p: list[str]) -> dict:
     """Grade the same image and test overlay with an empty delta. No model calls."""
     return await ImageGrader().evaluate(
@@ -472,6 +486,7 @@ async def empty_regrade(task: dict, image: str, spec, f2p: list[str]) -> dict:
         django=task.get("family") == "django",
         sympy=False,
         timeout=float(task["grader_timeout_seconds"]),
+        **grader_options(task),
     )
 
 
@@ -599,7 +614,7 @@ def resolve_image(task: dict, receipt: dict, *, legacy_image: bool, mock: bool):
         if not mock:
             raise SystemExit("legacy images cannot call the model")
         return receipt["baseline_image_digest"], None
-    clean_path = ROOT / "docs" / "sprint" / "clean-images" / (task["id"] + ".json")
+    clean_path = ROOT / (task.get("clean_record") or Path("docs", "sprint", "clean-images", task["id"] + ".json"))
     if not clean_path.is_file():
         raise SystemExit("clean image required: " + task["id"])
     clean = load_json(clean_path)
@@ -829,6 +844,7 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
             django=task.get("family") == "django",
             sympy=False,
             timeout=float(task["grader_timeout_seconds"]),
+            **grader_options(task),
         )
         infra_reason = grader_infra_reason(evaluation)
         infra = infra_reason is not None
