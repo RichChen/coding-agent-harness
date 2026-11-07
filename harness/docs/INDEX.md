@@ -17,6 +17,10 @@
 | [P4 延后遮蔽诊断](roadmap/P4-DELAYED-MASK-RESULTS.zh-CN.md) | 单次新增对照未观察到修改或自然收尾效率改善；保留结果与限制，不扩建上下文功能 |
 | [P4 同一历史下的动作诊断](roadmap/P4-ACTION-DIAGNOSTICS.zh-CN.md) | 12 次固定历史动作采样与 6 次工具顺序校准：恢复正文改变读取位置，倒计时促使修改尚无稳定支持 |
 | [P4 短续跑与行动指令敏感性](roadmap/P4-CONTINUATION-AND-ACTIONABILITY.zh-CN.md) | 24 次短续跑响应仍读取；另四次同历史采样中，行动指令触发两份通过公开检查的补丁，含额外改动风险与宿主回放边界 |
+| [P4 54 次行动提示实验：停批结果](roadmap/P4-PROMPT-TIMING-SCALE54-STOPPED-RESULTS.zh-CN.md) / [最终结果](roadmap/P4-PROMPT-TIMING-SCALE54-FINAL-RESULTS.zh-CN.md) | 6 道 Sphinx 题、N/I/M 三种提示时机各 3 次；最终三批合并后通过 N 1/17、I 3/18、M 5/18，集中在两道题上，只作描述性结果 |
+| [重复阅读与提示时机：离线分析](analysis/REREAD-AND-PROMPT-TIMING.zh-CN.md) | A5、A6-R、CR-2、P4 已有运行里的重复读和遮蔽的关系，以及 M 组通过与中途提示的关系；只读产物，不调用模型 |
+| [检索查询写法：离线比较](analysis/RETRIEVAL-QUERIES.zh-CN.md) | 预先写定判定规则后比较改写查询和检索器；附事后核对第 0 步预取在慢题上的步数 |
+| [2026-11 修正记录（一）](roadmap/FIX-1-RESULTS.zh-CN.md) / [（二）](roadmap/FIX-2-RESULTS.zh-CN.md) | 失败原因标签、Docker 超时收尾、上下文保护规则、`bytes_kept`、准入估算、服务商错误脱敏、容器内超时进程回收等修正，以及改前改后的测试和冻结配置哈希证据 |
 
 代码检索线和 P2 到 P4 的过程文档（实验合同、检查点、审计、阶段计划）不在公开仓库里；结果文档提到它们的地方只说明出处。
 
@@ -68,9 +72,9 @@
 
 ## 4. 测试：哪些能直接跑，哪些需要未公开材料
 
-不需要 API key，LLM 全部是 mock。全新虚拟环境（`pip install -e ".[dev]"`）里实测：**1249 通过、44 跳过、4 失败**。
+不需要 API key，LLM 全部是 mock。全新虚拟环境（`pip install -e ".[dev]"`）里实测：**1374 通过、46 跳过、4 失败**。
 
-跳过的 44 项里，39 项需要真实 Linux 或 Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组）；5 项读取不入库的本机数据，文件不存在时自动跳过：`runs/a5-main` 的运行数据 3 项、A5 私有记忆池 1 项、`runs/sprint5-main-public` 1 项（见下表最后一行）。4 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过。下表列出这 4 项和自动跳过的 `test_public_target`：
+跳过的 46 项里，40 项需要真实 Linux 或 Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组；`test_container_py36.py` 的 2 项在 Docker 守护进程和 `python:3.6.15-slim-buster` 镜像都可用时会运行，这次统计时可用，不可用时跳过数是 48）；5 项读取不入库的本机数据，文件不存在时自动跳过：`runs/a5-main` 的运行数据 3 项、A5 私有记忆池 1 项、`runs/sprint5-main-public` 1 项（见下表最后一行）；1 项是配置锁定测试里的 `configs/tutorial.yaml`，这个配置没有发布。4 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过。下表列出这 4 项和自动跳过的 `test_public_target`：
 
 | 测试 | 缺的文件 | 原因 |
 | --- | --- | --- |
@@ -87,7 +91,7 @@ python -m pytest -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_exp
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 1249 passed, 44 skipped, 4 deselected
+# 1374 passed, 46 skipped, 4 deselected
 ```
 
 ## 5. 运行证据（`upgrade/evidence/`）

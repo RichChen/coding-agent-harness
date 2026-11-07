@@ -105,10 +105,10 @@ pytest tests/ -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_export
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 1249 passed, 44 skipped, 4 deselected
+# 1374 passed, 46 skipped, 4 deselected
 ```
 
-测试用 Mock LLM，不需要 API Key。在 Windows 上的干净克隆里，1249 个通过；44 个跳过的测试里，39 个需要真实 Linux / Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组），5 个需要未发布的本机数据（`runs/a5-main`、A5 私有记忆池、`runs/sprint5-main-public`）。
+测试用 Mock LLM，不需要 API Key。在 Windows 上的干净克隆里，1374 个通过；46 个跳过的测试里，40 个需要真实 Linux / Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组），5 个需要未发布的本机数据（`runs/a5-main`、A5 私有记忆池、`runs/sprint5-main-public`），1 个是配置锁定测试里的 `configs/tutorial.yaml`，这个配置没有发布。`tests/test_container_py36.py` 的 2 个测试只在 Docker 守护进程和 `python:3.6.15-slim-buster` 镜像都可用时运行，这次统计时它们可用；不可用时结果是 1372 通过、48 跳过。
 
 上面排除的 4 项读取从未提交的本地证据文件：A5 记忆记录、Flask 完整源码包和两个 R2 种子文件。它们不是代码回归，也没有被跳过；把文件放回 `docs/upgrade/evidence/` 下对应路径后，去掉 `--deselect` 即可全跑。明细见 [docs/INDEX.md](docs/INDEX.md) 第 4 节。
 
@@ -226,5 +226,5 @@ Agent 的 system prompt 不再硬编码在 `loop.py`，而是存放在 `prompts/
 - `scripts/`：CLI 入口，分组见英文 README 的 Scripts 表（mini 评测、SWE-bench 准备与运行、A5-main、A6-R、A5 预检与 pilot、H3-H5 与 R2、审计）。每个脚本开头的 docstring 写明是否调用模型。早期 sprint 里没有被 `docs/sprint/` 引用的一次性脚本不放进仓库  
 - `docs/`：`PROJECT-HISTORY`（项目历程）、`CONTAMINATION-NOTES`；`INDEX.md` 是文档分类和阅读顺序，`sprint/` 为 A5 / A6-R 证据链（只追加）；`upgrade/` 为 H3-H5、R1-R2 实现说明，`evidence/` 下是运行记录；`changes/` 为 HP-01..04 证据报告引用的两份重构收口记录；`examples/` 为合成 demo 轨迹  
 - `reports/`：污染探针、失败分类和 SWE-bench Lite 验证日志  
-- `tests/`：69 个测试模块（含 Mock LLM，无需 API Key）；`fixtures/repos/` 有 16 个小型仓库任务和 12 个 SWE-bench Lite 源码快照  
+- `tests/`：110 个测试模块（含 Mock LLM，无需 API Key）；`fixtures/repos/` 有 16 个小型仓库任务和 12 个 SWE-bench Lite 源码快照  
 

@@ -28,7 +28,7 @@
 
 ## 测试：哪些能直接跑，哪些需要未公开材料
 
-不需要 API key。干净克隆里实测：**357 通过、7 跳过、3 失败**。
+不需要 API key。干净克隆里实测：**359 通过、7 跳过、3 失败**（装有 pyarrow；没有时是 356 通过、10 跳过）。
 
 跳过的 7 项依赖本机布局或数据：5 项要求 `../coding-harness` 同级检出，1 项要求 source pool，1 项要求符号链接权限。3 个失败读取只在原开发机器上存在的文件，不是代码回归，也没有被跳过：
 
@@ -44,9 +44,9 @@
 python -m pytest -q --deselect tests/test_a5_funding.py::test_funded_build_bundle_is_prepared_only_and_private_material_stays_outside_public \
   --deselect tests/test_a5_funding.py::test_funded_build_artifacts_are_hashed \
   --deselect tests/test_memory_cards_v5.py::test_generic_builder_matches_v5_bytes
-# 354 passed, 10 skipped, 3 deselected
+# 356 passed, 10 skipped, 3 deselected
 # 跳过的 10 项里，3 项（test_a5_preparation.py）需要 pyarrow，agent 的依赖里没有它；
-# 同一环境装过 harness（会带上 pyarrow）时为 357 passed, 7 skipped。
+# 同一环境装过 harness（会带上 pyarrow）时为 359 passed, 7 skipped。
 ```
 
 ## 实验证据（`docs/sprint/`）

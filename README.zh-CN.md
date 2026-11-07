@@ -43,14 +43,14 @@ python -m reposkill_agent upgrade-demo --output reports/upgrade/my-demo
 
 `--output` 必须是不存在的目录。跑完得到公开 workspace、带状态和来源的 `memory.db`、manifest、`result.json` 和 `report.md`；输出里有 `Offline comparisons: 20; model calls=0`。演示里依赖或 API 签名变了旧经验被拒绝，无关文件变了仍然保留，证据不足返回 unknown。所有注入收据来自 fixture host，不声称真实模型收益。
 
-**2. 公开测试**（两仓合计约 4 分钟）
+**2. 公开测试**（两仓合计约 6–8 分钟）
 
 ```bash
 # 在 agent/ 下
 python -m pytest -q --deselect tests/test_a5_funding.py::test_funded_build_bundle_is_prepared_only_and_private_material_stays_outside_public \
   --deselect tests/test_a5_funding.py::test_funded_build_artifacts_are_hashed \
   --deselect tests/test_memory_cards_v5.py::test_generic_builder_matches_v5_bytes
-# 354 passed, 10 skipped, 3 deselected
+# 356 passed, 10 skipped, 3 deselected
 
 # 在 harness/ 下
 cd ../harness
@@ -59,10 +59,10 @@ python -m pytest -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_exp
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 1249 passed, 44 skipped, 4 deselected
+# 1374 passed, 46 skipped, 4 deselected
 ```
 
-跳过的 54 项分三类：39 项需要真实 Linux 或 Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组）；12 项依赖本机布局或数据（`../coding-harness` 同级检出、`runs/a5-main`、A5 私有记忆池、source pool、符号链接权限、`runs/sprint5-main-public`），在干净克隆里自动 skip；3 项是 agent 的 `test_a5_preparation.py`，需要 `pyarrow`，agent 的依赖里没有它，装上后会运行。harness 首次运行测试时会从 GitHub 下载一份 SWE-bench 规格文件，缓存在 `harness/runs/sprint5-specs/`。
+跳过的 56 项分四类：40 项需要真实 Linux 或 Docker（opt-in 的 Docker 执行测试、本机缓存的固定镜像、真实 Linux 进程组）；12 项依赖本机布局或数据（`../coding-harness` 同级检出、`runs/a5-main`、A5 私有记忆池、source pool、符号链接权限、`runs/sprint5-main-public`），在干净克隆里自动 skip；1 项是 harness 配置锁定测试里的 `configs/tutorial.yaml`，这个配置没有发布；3 项是 agent 的 `test_a5_preparation.py`，需要 `pyarrow`，agent 的依赖里没有它，装上后会运行。harness 的 `test_container_py36.py` 有 2 项只在 Docker 守护进程和 `python:3.6.15-slim-buster` 镜像都可用时运行，上面的数字是在它们可用的机器上测的；不可用时 harness 是 1372 passed, 48 skipped。harness 首次运行测试时会从 GitHub 下载一份 SWE-bench 规格文件，缓存在 `harness/runs/sprint5-specs/`。
 
 **3. 依赖未公开材料的测试（7 项）**
 

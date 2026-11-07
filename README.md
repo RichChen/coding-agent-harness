@@ -43,14 +43,14 @@ python -m reposkill_agent upgrade-demo --output reports/upgrade/my-demo
 
 `--output` must not already exist. The demo writes a public workspace, a `memory.db` with per-record status and provenance, a manifest, `result.json` and `report.md`; the output includes `Offline comparisons: 20; model calls=0`. When a dependency or API signature changes the old record is rejected, unrelated file changes keep it valid, and missing evidence yields unknown. Every injection receipt comes from a fixture host, so it claims no real-model gain.
 
-**2. Public tests** (about 4 minutes for both directories)
+**2. Public tests** (about 6–8 minutes for both directories)
 
 ```bash
 # in agent/
 python -m pytest -q --deselect tests/test_a5_funding.py::test_funded_build_bundle_is_prepared_only_and_private_material_stays_outside_public \
   --deselect tests/test_a5_funding.py::test_funded_build_artifacts_are_hashed \
   --deselect tests/test_memory_cards_v5.py::test_generic_builder_matches_v5_bytes
-# 354 passed, 10 skipped, 3 deselected
+# 356 passed, 10 skipped, 3 deselected
 
 # in harness/
 cd ../harness
@@ -59,10 +59,10 @@ python -m pytest -q --deselect tests/test_a5_real240_h0_snapshot.py::test_h0_exp
   --deselect tests/test_repo_grader.py::test_full_archive_and_private_test_resources_are_complete \
   --deselect tests/test_summary_pilot.py::test_prepare_frozen_data_and_window_expectations \
   --deselect tests/test_summary_pilot.py::test_trace_accounting_replay_and_private_grading
-# 1249 passed, 44 skipped, 4 deselected
+# 1374 passed, 46 skipped, 4 deselected
 ```
 
-The 54 skips fall into three groups: 39 need real Linux or Docker (opt-in Docker execution tests, pinned images cached on this machine, real Linux process groups); 12 depend on this machine's layout or data (a sibling `../coding-harness` checkout, `runs/a5-main`, the private A5 memory pool, the source pool, symlink permission, `runs/sprint5-main-public`) and skip automatically in a clean clone; 3 are agent's `test_a5_preparation.py`, which needs `pyarrow`, not an agent dependency, and runs once it is installed. On the first test run, harness downloads one SWE-bench specs file from GitHub and caches it in `harness/runs/sprint5-specs/`.
+The 56 skips fall into four groups: 40 need real Linux or Docker (opt-in Docker execution tests, pinned images cached on this machine, real Linux process groups); 12 depend on this machine's layout or data (a sibling `../coding-harness` checkout, `runs/a5-main`, the private A5 memory pool, the source pool, symlink permission, `runs/sprint5-main-public`) and skip automatically in a clean clone; 1 is `configs/tutorial.yaml` in the harness config lock test, a config that is not published here; 3 are agent's `test_a5_preparation.py`, which needs `pyarrow`, not an agent dependency, and runs once it is installed. Two harness tests in `test_container_py36.py` run only when a Docker daemon and the `python:3.6.15-slim-buster` image are available; the numbers above were measured with both present, and without them harness gives 1372 passed, 48 skipped. On the first test run, harness downloads one SWE-bench specs file from GitHub and caches it in `harness/runs/sprint5-specs/`.
 
 **3. Tests that need unpublished material (7)**
 
