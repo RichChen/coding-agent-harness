@@ -118,6 +118,20 @@ def model_call_failure(error: Exception) -> tuple[FailureReason, str | None]:
     return FailureReason.UNKNOWN, "model_call_error"
 
 
+def with_reasoning(message: dict, response: LLMResponse) -> dict:
+    """Thinking mode with tools: DeepSeek rejects later requests whose assistant turns lack reasoning_content."""
+    if response.reasoning_content is not None:
+        message["reasoning_content"] = response.reasoning_content
+    return message
+
+
+def persisted_response(response: LLMResponse) -> dict:
+    data = plain(response)
+    if data.get("reasoning_content") is None:
+        data.pop("reasoning_content", None)
+    return data
+
+
 @dataclass
 class AgentRunResult:
     task_id: str
@@ -642,7 +656,7 @@ class AgentLoop:
                     total_tokens=total_tokens, tool_failures=tool_failures, policy_blocks=policy_blocks,
                     context_events=context_events,
                     total_tool_invocations=total_tool_invocations, run_output=self.run_output_meter.snapshot(),
-                    response=plain(response) if response else None, response_operations=response_operations))
+                    response=persisted_response(response) if response else None, response_operations=response_operations))
 
         if self.event_bus:
             self.event_bus.open(task_id)
@@ -833,7 +847,7 @@ class AgentLoop:
                     if self.workspace_controller is not None:
                         feedback = await self.workspace_controller.check(messages)
                         if feedback is not None:
-                            messages.append({"role": "assistant", "content": response.text})
+                            messages.append(with_reasoning({"role": "assistant", "content": response.text}, response))
                             messages.append(feedback)
                             state.transition(LoopPhase.OBSERVING)
                             steps.append(StepRecord(step=state.step_number, phase=LoopPhase.OBSERVING,
@@ -907,7 +921,7 @@ class AgentLoop:
                         for tc in response.tool_calls
                     ],
                 }
-                messages.append(assistant_msg)
+                messages.append(with_reasoning(assistant_msg, response))
 
                 # Batch-validate every call before any side effect.
                 batch = validate_tool_call_batch(

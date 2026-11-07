@@ -57,6 +57,8 @@ def reduce_events(events) -> RecoveredState:
                     assistant["tool_calls"] = [dict(id=c["id"], type="function", function=dict(
                         name=c["name"], arguments=c["raw_arguments"] or json.dumps(c["arguments"])))
                         for c in response["tool_calls"]]
+                if response.get("reasoning_content") is not None:
+                    assistant["reasoning_content"] = response["reasoning_content"]
                 state.messages = state.messages + [assistant]
             state.pending_model = False
         elif kind == "model.started":

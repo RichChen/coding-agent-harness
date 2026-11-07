@@ -1,0 +1,572 @@
+{
+  "run_at": "2026-11-07T05:24:23.126953+00:00",
+  "model": "deepseek-flash",
+  "base_url": "https://api.deepseek.com/v1",
+  "summary": {
+    "requests": 9,
+    "max_requests": 10,
+    "ledger_cny_with_held_reservations": "0.003413",
+    "provider_usage_cny": "0.003413",
+    "failed_requests_holding_reservation": 0,
+    "price_periods": [
+      "off_peak"
+    ]
+  },
+  "cases": [
+    {
+      "case": "A_tools_thinking",
+      "request": {
+        "model": "deepseek-flash",
+        "thinking": "enabled",
+        "reasoning_effort": null,
+        "max_tokens": 2048,
+        "stream": false,
+        "tools": [
+          "get_date"
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "finish_reason": "tool_calls",
+        "usage": {
+          "prompt_tokens": 283,
+          "completion_tokens": 29,
+          "total_tokens": 312,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 283,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "reasoning_chars": 0,
+        "reasoning_excerpt": null,
+        "content_excerpt": "I'll look that up for you.",
+        "tool_calls": [
+          "get_date"
+        ],
+        "provider": {
+          "response_model": "deepseek-flash",
+          "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+          "response_id": "089bbc2b-113f-45f1-87ab-598061a869f0",
+          "provider_request_id": null,
+          "started_at": "2026-11-07T05:24:15.734798+00:00",
+          "finished_at": "2026-11-07T05:24:17.460070+00:00"
+        }
+      },
+      "settlement": {
+        "reservation_id": 1,
+        "phase": "pilot",
+        "operation_id": "A_tools_thinking",
+        "component": "smoke",
+        "status": "provider_usage",
+        "cost_cny": "0.000399",
+        "prompt_tokens": 283,
+        "completion_tokens": 29,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 283,
+        "reasoning_tokens": 0,
+        "split": "provider",
+        "price_period": "off_peak",
+        "reserved_cny": "0.018"
+      }
+    },
+    {
+      "case": "B_replay_with_reasoning",
+      "request": {
+        "model": "deepseek-flash",
+        "thinking": "enabled",
+        "reasoning_effort": null,
+        "max_tokens": 2048,
+        "stream": false,
+        "tools": [
+          "get_date"
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          },
+          {
+            "role": "assistant",
+            "has_reasoning_content": true,
+            "tool_calls": 1
+          },
+          {
+            "role": "tool",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 330,
+          "completion_tokens": 36,
+          "total_tokens": 366,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 128,
+          "prompt_cache_miss_tokens": 202,
+          "completion_tokens_details": {
+            "reasoning_tokens": 14
+          }
+        },
+        "reasoning_chars": 40,
+        "reasoning_excerpt": "The tool returned 2026-11-07. Report it.",
+        "content_excerpt": "Today's date is **November 7, 2026** (2026-11-07).",
+        "tool_calls": [],
+        "provider": {
+          "response_model": "deepseek-flash",
+          "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+          "response_id": "6bd247b8-bde8-4f9f-9b86-3db86b98c3ef",
+          "provider_request_id": null,
+          "started_at": "2026-11-07T05:24:17.473736+00:00",
+          "finished_at": "2026-11-07T05:24:18.124874+00:00"
+        }
+      },
+      "settlement": {
+        "reservation_id": 2,
+        "phase": "pilot",
+        "operation_id": "B_replay_with_reasoning",
+        "component": "smoke",
+        "status": "provider_usage",
+        "cost_cny": "0.000349",
+        "prompt_tokens": 330,
+        "completion_tokens": 36,
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 202,
+        "reasoning_tokens": 14,
+        "split": "provider",
+        "price_period": "off_peak",
+        "reserved_cny": "0.019"
+      }
+    },
+    {
+      "case": "C_replay_without_reasoning",
+      "request": {
+        "model": "deepseek-flash",
+        "thinking": "enabled",
+        "reasoning_effort": null,
+        "max_tokens": 2048,
+        "stream": false,
+        "tools": [
+          "get_date"
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          },
+          {
+            "role": "assistant",
+            "has_reasoning_content": false,
+            "tool_calls": 1
+          },
+          {
+            "role": "tool",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 330,
+          "completion_tokens": 14,
+          "total_tokens": 344,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 128,
+          "prompt_cache_miss_tokens": 202,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "reasoning_chars": 0,
+        "reasoning_excerpt": null,
+        "content_excerpt": "Today's date is **November 7, 2026**.",
+        "tool_calls": [],
+        "provider": {
+          "response_model": "deepseek-flash",
+          "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+          "response_id": "069da147-c73f-4a61-aeac-a8070863e412",
+          "provider_request_id": null,
+          "started_at": "2026-11-07T05:24:18.126481+00:00",
+          "finished_at": "2026-11-07T05:24:18.506433+00:00"
+        }
+      },
+      "settlement": {
+        "reservation_id": 3,
+        "phase": "pilot",
+        "operation_id": "C_replay_without_reasoning",
+        "component": "smoke",
+        "status": "provider_usage",
+        "cost_cny": "0.000261",
+        "prompt_tokens": 330,
+        "completion_tokens": 14,
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 202,
+        "reasoning_tokens": 0,
+        "split": "provider",
+        "price_period": "off_peak",
+        "reserved_cny": "0.019"
+      }
+    },
+    {
+      "case": "F_plain_assistant_without_reasoning",
+      "request": {
+        "model": "deepseek-flash",
+        "thinking": "enabled",
+        "reasoning_effort": null,
+        "max_tokens": 2048,
+        "stream": false,
+        "tools": [
+          "get_date"
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          },
+          {
+            "role": "assistant",
+            "has_reasoning_content": true,
+            "tool_calls": 1
+          },
+          {
+            "role": "tool",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          },
+          {
+            "role": "assistant",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          },
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 356,
+          "completion_tokens": 45,
+          "total_tokens": 401,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 128,
+          "prompt_cache_miss_tokens": 228,
+          "completion_tokens_details": {
+            "reasoning_tokens": 23
+          }
+        },
+        "reasoning_chars": 76,
+        "reasoning_excerpt": "The user wants the date again. From the tool result: 2026-11-07. Just reply.",
+        "content_excerpt": "Today's date is **November 7, 2026** (2026-11-07).",
+        "tool_calls": [],
+        "provider": {
+          "response_model": "deepseek-flash",
+          "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+          "response_id": "d52ac710-ae22-458a-8c44-9fc2e5d2e463",
+          "provider_request_id": null,
+          "started_at": "2026-11-07T05:24:18.508451+00:00",
+          "finished_at": "2026-11-07T05:24:19.398023+00:00"
+        }
+      },
+      "settlement": {
+        "reservation_id": 4,
+        "phase": "pilot",
+        "operation_id": "F_plain_assistant_without_reasoning",
+        "component": "smoke",
+        "status": "provider_usage",
+        "cost_cny": "0.000411",
+        "prompt_tokens": 356,
+        "completion_tokens": 45,
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 228,
+        "reasoning_tokens": 23,
+        "split": "provider",
+        "price_period": "off_peak",
+        "reserved_cny": "0.019"
+      }
+    },
+    {
+      "case": "D_stream_tools_thinking",
+      "request": {
+        "model": "deepseek-flash",
+        "thinking": "enabled",
+        "reasoning_effort": null,
+        "max_tokens": 2048,
+        "stream": true,
+        "tools": [
+          "get_date"
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "finish_reason": "tool_calls",
+        "usage": {
+          "prompt_tokens": 283,
+          "completion_tokens": 29,
+          "total_tokens": 312,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 128,
+          "prompt_cache_miss_tokens": 155,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "reasoning_chars": 0,
+        "reasoning_excerpt": null,
+        "content_excerpt": "I'll look that up for you.",
+        "tool_calls": [
+          "get_date"
+        ],
+        "provider": {
+          "response_model": "deepseek-flash",
+          "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+          "response_id": "4f5e815f-c9ee-48de-a25a-bdf28453521b",
+          "provider_request_id": null,
+          "started_at": "2026-11-07T05:24:19.400617+00:00",
+          "finished_at": "2026-11-07T05:24:20.173778+00:00"
+        }
+      },
+      "settlement": {
+        "reservation_id": 5,
+        "phase": "pilot",
+        "operation_id": "D_stream_tools_thinking",
+        "component": "smoke",
+        "status": "provider_usage",
+        "cost_cny": "0.000274",
+        "prompt_tokens": 283,
+        "completion_tokens": 29,
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 155,
+        "reasoning_tokens": 0,
+        "split": "provider",
+        "price_period": "off_peak",
+        "reserved_cny": "0.018"
+      }
+    },
+    {
+      "case": "E_small_max_tokens",
+      "request": {
+        "model": "deepseek-flash",
+        "thinking": "enabled",
+        "reasoning_effort": null,
+        "max_tokens": 32,
+        "stream": false,
+        "tools": [],
+        "messages": [
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "finish_reason": "length",
+        "usage": {
+          "prompt_tokens": 47,
+          "completion_tokens": 32,
+          "total_tokens": 79,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 47,
+          "completion_tokens_details": {
+            "reasoning_tokens": 32
+          }
+        },
+        "reasoning_chars": 137,
+        "reasoning_excerpt": "We need answer. Need count primes between 100 and 200. Interpret exclusive? Usually \"between 100 and 200\" could exclude ",
+        "content_excerpt": null,
+        "tool_calls": [],
+        "provider": {
+          "response_model": "deepseek-flash",
+          "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+          "response_id": "9c67b80e-0028-4e62-9242-afecce2f241a",
+          "provider_request_id": null,
+          "started_at": "2026-11-07T05:24:20.176351+00:00",
+          "finished_at": "2026-11-07T05:24:20.713691+00:00"
+        }
+      },
+      "settlement": {
+        "reservation_id": 6,
+        "phase": "pilot",
+        "operation_id": "E_small_max_tokens",
+        "component": "smoke",
+        "status": "provider_usage",
+        "cost_cny": "0.000175",
+        "prompt_tokens": 47,
+        "completion_tokens": 32,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 47,
+        "reasoning_tokens": 32,
+        "split": "provider",
+        "price_period": "off_peak",
+        "reserved_cny": "0.002"
+      }
+    },
+    {
+      "case": "G_thinking_disabled",
+      "request": {
+        "model": "deepseek-flash",
+        "thinking": "disabled",
+        "reasoning_effort": null,
+        "max_tokens": 2048,
+        "stream": false,
+        "tools": [
+          "get_date"
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "has_reasoning_content": false,
+            "tool_calls": 0
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "finish_reason": "tool_calls",
+        "usage": {
+          "prompt_tokens": 259,
+          "completion_tokens": 21,
+          "total_tokens": 280,
+          "provenance": "provider",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 259
+        },
+        "reasoning_chars": null,
+        "reasoning_excerpt": null,
+        "content_excerpt": null,
+        "tool_calls": [
+          "get_date"
+        ],
+        "provider": {
+          "response_model": "deepseek-flash",
+          "system_fingerprint": "bc19ba97cbe016479903222bb1578db6",
+          "response_id": "995c15e1-a83d-4e13-934c-094b1b7f8cc3",
+          "provider_request_id": null,
+          "started_at": "2026-11-07T05:24:20.715890+00:00",
+          "finished_at": "2026-11-07T05:24:21.683565+00:00"
+        }
+      },
+      "settlement": {
+        "reservation_id": 7,
+        "phase": "pilot",
+        "operation_id": "G_thinking_disabled",
+        "component": "smoke",
+        "status": "provider_usage",
+        "cost_cny": "0.000343",
+        "prompt_tokens": 259,
+        "completion_tokens": 21,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 259,
+        "reasoning_tokens": null,
+        "split": "provider",
+        "price_period": "off_peak",
+        "reserved_cny": "0.018"
+      }
+    },
+    {
+      "case": "H_agent_loop",
+      "success": true,
+      "final_answer": "7341",
+      "failure_reason": "none",
+      "termination_kind": null,
+      "attempts": [
+        {
+          "success": true,
+          "error_kind": null,
+          "usage": {
+            "prompt_tokens": 518,
+            "completion_tokens": 39,
+            "total_tokens": 557,
+            "provenance": "provider",
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 518,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          }
+        },
+        {
+          "success": true,
+          "error_kind": null,
+          "usage": {
+            "prompt_tokens": 578,
+            "completion_tokens": 50,
+            "total_tokens": 628,
+            "provenance": "provider",
+            "prompt_cache_hit_tokens": 256,
+            "prompt_cache_miss_tokens": 322,
+            "completion_tokens_details": {
+              "reasoning_tokens": 47
+            }
+          }
+        }
+      ],
+      "settlements": [
+        {
+          "reservation_id": 8,
+          "phase": "pilot",
+          "operation_id": "cb94468826b64d719db4b0d5e3c8712e",
+          "component": "agent_loop",
+          "status": "provider_usage",
+          "cost_cny": "0.000674",
+          "prompt_tokens": 518,
+          "completion_tokens": 39,
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 518,
+          "reasoning_tokens": 0,
+          "split": "provider",
+          "price_period": "off_peak",
+          "reserved_cny": "0.017"
+        },
+        {
+          "reservation_id": 9,
+          "phase": "pilot",
+          "operation_id": "cef82fe1253446e4a67df751dfd99d26",
+          "component": "agent_loop",
+          "status": "provider_usage",
+          "cost_cny": "0.000527",
+          "prompt_tokens": 578,
+          "completion_tokens": 50,
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 322,
+          "reasoning_tokens": 47,
+          "split": "provider",
+          "price_period": "off_peak",
+          "reserved_cny": "0.017"
+        }
+      ]
+    }
+  ]
+}

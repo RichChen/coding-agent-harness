@@ -41,6 +41,10 @@ class LLMSummaryProvider:
                     endpoint=self.client.base_url, thinking=self.client.thinking)
 
     async def generate(self, messages, *, max_tokens):
+        if getattr(self.client, "thinking", None) == "enabled":
+            # Reasoning would spend the small summary output budget; summaries carry no tools to replay.
+            return await self.client.chat(messages, tools=None, max_tokens=max_tokens, temperature=0.0,
+                                          thinking="disabled")
         return await self.client.chat(messages, tools=None, max_tokens=max_tokens, temperature=0.0)
 
 

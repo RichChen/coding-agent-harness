@@ -54,6 +54,8 @@ class LLMResponse:
     first_chunk_monotonic: float | None = None
     complete_monotonic: float | None = None
     provider_metadata: dict[str, Any] = field(default_factory=dict)
+    # Thinking mode only. Must be sent back on the assistant message in later tool requests.
+    reasoning_content: str | None = None
 
     @property
     def has_tool_calls(self) -> bool:
@@ -194,6 +196,19 @@ def provider_metadata(request_model, data=None, *, headers=None, started_at=None
         raw_usage_omitted='size_limit' if omitted else None, raw_usage_sha256=hashlib.sha256(raw_bytes).hexdigest())
 
 
+THINKING_MODES = (None, "disabled", "enabled")
+REASONING_EFFORTS = (None, "low", "high", "max")
+
+
+def check_thinking(thinking, reasoning_effort=None):
+    if thinking not in THINKING_MODES:
+        raise ValueError(f"unknown thinking mode: {thinking!r}")
+    if reasoning_effort not in REASONING_EFFORTS:
+        raise ValueError(f"unknown reasoning_effort: {reasoning_effort!r}")
+    if reasoning_effort is not None and thinking != "enabled":
+        raise ValueError("reasoning_effort requires thinking='enabled'")
+
+
 @dataclass(frozen=True)
 class OpenAICompatibleAdapter:
     """Provider adapter for OpenAI-compatible chat completions."""
@@ -215,7 +230,9 @@ class OpenAICompatibleAdapter:
         stream: bool = False,
         stream_options: dict[str, Any] | None = None,
         thinking: str | None = None,
+        reasoning_effort: str | None = None,
     ) -> dict[str, Any]:
+        check_thinking(thinking, reasoning_effort)
         payload: dict[str, Any] = {
             "model": model,
             "messages": messages,
@@ -229,9 +246,9 @@ class OpenAICompatibleAdapter:
         if stream and stream_options:
             payload["stream_options"] = stream_options
         if thinking is not None:
-            if thinking != "disabled":
-                raise ValueError("only thinking='disabled' is supported; reasoning replay is not implemented")
             payload["thinking"] = {"type": thinking}
+        if reasoning_effort is not None:
+            payload["reasoning_effort"] = reasoning_effort
         return payload
 
     def headers(self, api_key: str) -> dict[str, str]:
@@ -268,11 +285,12 @@ class LLMClient:
         trust_env: bool = True,
         thinking: str | None = None,
         audit_metadata: bool = False,
+        reasoning_effort: str | None = None,
     ):
         self.audit_metadata = audit_metadata
         self.last_provider_metadata = {}
-        if thinking not in (None, "disabled"):
-            raise ValueError("only thinking='disabled' is supported; reasoning replay is not implemented")
+        check_thinking(thinking, reasoning_effort)
+        self.reasoning_effort = reasoning_effort
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
@@ -362,8 +380,10 @@ class LLMClient:
         *,
         max_tokens: int | None = None,
         temperature: float | None = None,
+        thinking: str | None = None,
     ) -> LLMResponse:
-        """Honest non-streaming chat completions path (stream=false)."""
+        """Honest non-streaming chat completions path (stream=false). thinking overrides the client's mode."""
+        mode = self.thinking if thinking is None else thinking
         payload = self.adapter.build_payload(
             model=self.model,
             messages=messages,
@@ -371,7 +391,8 @@ class LLMClient:
             temperature=self.temperature if temperature is None else temperature,
             max_tokens=self.max_tokens if max_tokens is None else max_tokens,
             stream=False,
-            thinking=self.thinking,
+            thinking=mode,
+            reasoning_effort=self.reasoning_effort if mode == "enabled" else None,
         )
         payload.pop("stream", None)
 
@@ -468,6 +489,7 @@ class LLMClient:
             stream=True,
             stream_options={"include_usage": True},
             thinking=self.thinking,
+            reasoning_effort=self.reasoning_effort,
         )
         client = await self._ensure_client()
         aggregator = OpenAIStreamAggregator(
@@ -602,6 +624,7 @@ class LLMClient:
             first_chunk_monotonic=result.first_chunk_monotonic,
             complete_monotonic=result.complete_monotonic,
             provider_metadata=copy.deepcopy(self.last_provider_metadata) if self.audit_metadata else {},
+            reasoning_content=result.reasoning_content,
         )
         yield LLMStreamEvent(
             "llm_stream_done",
@@ -631,6 +654,8 @@ class LLMClient:
             raise LLMError(f"Unable to parse LLM response: {e}", kind=LLMErrorKind.PARSE)
 
         text = message.get("content") or None
+        reasoning = message.get("reasoning_content")
+        reasoning = reasoning if isinstance(reasoning, str) else None
 
         tool_calls: list[ToolCall] = []
         raw_tool_calls = message.get("tool_calls") or []
@@ -688,4 +713,5 @@ class LLMClient:
             usage=normalize_usage(data.get("usage") if isinstance(data.get("usage"), dict) else None),
             capability=StreamCapability.NON_STREAMING,
             provider_metadata=provider_metadata(self.model, data) if self.audit_metadata else {},
+            reasoning_content=reasoning,
         )

@@ -86,6 +86,8 @@ def runtime_fingerprint(loop):
         price_table=loop.model_ledger.price_table,
         limits={k: getattr(loop, k) for k in ("file_size_limit_bytes", "tool_output_max_chars", "read_file_max_lines", "max_tool_argument_bytes")},
         output_limit=loop.run_output_meter.limit_bytes)
+    if getattr(loop.llm, "reasoning_effort", None) is not None:
+        spec["model"]["reasoning_effort"] = loop.llm.reasoning_effort
     if getattr(loop, "workspace_controller", None) is not None:
         spec["workspace_v1"] = loop.workspace_controller.fingerprint()
     return digest(canonical(spec).encode())

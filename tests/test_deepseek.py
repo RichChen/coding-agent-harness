@@ -55,13 +55,13 @@ async def test_nonthinking_tools_and_usage_survive_both_transports(streaming):
                 assert result.text == "done"
 
 
-def test_thinking_is_opt_in_and_unsupported_replay_is_rejected():
+def test_thinking_is_opt_in_and_unknown_modes_are_rejected():
     config = LLMConfig(base_url="https://example.invalid")
     assert config.thinking is None
     with pytest.raises(ValidationError):
-        LLMConfig(base_url="https://example.invalid", thinking="enabled")
-    with pytest.raises(ValueError, match="reasoning replay"):
-        LLMClient("https://example.invalid", "fake", "model", thinking="enabled")
+        LLMConfig(base_url="https://example.invalid", thinking="auto")
+    with pytest.raises(ValueError, match="thinking"):
+        LLMClient("https://example.invalid", "fake", "model", thinking="auto")
 
 
 def test_usage_does_not_invent_cache_counts_or_keep_unrelated_fields():

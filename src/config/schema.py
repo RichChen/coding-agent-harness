@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import ClassVar, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_serializer
+from pydantic import BaseModel, ConfigDict, Field, model_serializer, model_validator
 
 
 class OmitNewDefaults(BaseModel):
@@ -26,8 +26,9 @@ class OmitNewDefaults(BaseModel):
         return data
 
 
-class LLMConfig(BaseModel):
+class LLMConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
+    omit_when_default = ("reasoning_effort",)
 
     base_url: str
     api_key: str = ""
@@ -40,9 +41,17 @@ class LLMConfig(BaseModel):
     # When True (default), httpx honors HTTP(S)_PROXY / ALL_PROXY for real providers.
     # Loopback tests should set False so local fixtures do not require SOCKS deps.
     trust_env: bool = True
-    # Explicit non-thinking mode for DeepSeek tool calls. None leaves provider
-    # defaults unchanged; thinking replay is not supported by this runtime yet.
-    thinking: Literal["disabled"] | None = None
+    # DeepSeek thinking switch. None sends nothing, which leaves the provider default
+    # (thinking on for deepseek-flash). "enabled" replays reasoning_content in tool loops.
+    thinking: Literal["disabled", "enabled"] | None = None
+    # DeepSeek reasoning_effort; only with thinking="enabled". None leaves the provider default (high).
+    reasoning_effort: Literal["low", "high", "max"] | None = None
+
+    @model_validator(mode="after")
+    def _effort_needs_thinking(self):
+        if self.reasoning_effort is not None and self.thinking != "enabled":
+            raise ValueError("reasoning_effort requires thinking='enabled'")
+        return self
 
 
 class RetryConfig(BaseModel):

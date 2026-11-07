@@ -141,6 +141,7 @@ def build_agent(
         max_keepalive_connections=llm_cfg.get("max_keepalive_connections", 5),
         trust_env=llm_cfg.get("trust_env", True),
         thinking=llm_cfg.get("thinking"),
+        reasoning_effort=llm_cfg.get("reasoning_effort"),
         audit_metadata=retry_cfg.get("stop_on_unknown_usage", False),
     )
 

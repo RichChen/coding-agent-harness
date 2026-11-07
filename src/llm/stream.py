@@ -81,6 +81,7 @@ class AggregatedStreamResult:
     complete_monotonic: float | None = None
     saw_done_marker: bool = False
     fail: StreamFail | None = None
+    reasoning_content: str | None = None
 
     @property
     def is_complete(self) -> bool:
@@ -128,6 +129,7 @@ class OpenAIStreamAggregator:
         self._line_buf = SSELineBuffer()
         self._event_data_lines: list[str] = []
         self._text_parts: list[str] = []
+        self._reasoning_parts: list[str] | None = None
         self._tools: dict[int, ToolCallAccumulator] = {}
         self._finish_reason: str | None = None
         self._usage: dict[str, Any] | None = None
@@ -271,6 +273,7 @@ class OpenAIStreamAggregator:
             complete_monotonic=complete_mono,
             saw_done_marker=self._saw_done_marker,
             fail=None,
+            reasoning_content=None if self._reasoning_parts is None else "".join(self._reasoning_parts),
         )
 
     def _handle_sse_line(self, line: bytes) -> list[dict[str, Any]]:
@@ -344,6 +347,14 @@ class OpenAIStreamAggregator:
             delta = choice.get("delta") or {}
             if not isinstance(delta, dict):
                 continue
+
+            reasoning = delta.get("reasoning_content")
+            if isinstance(reasoning, str):
+                self._mark_first_chunk()
+                self._started = True
+                if self._reasoning_parts is None:
+                    self._reasoning_parts = []
+                self._reasoning_parts.append(reasoning)
 
             content = delta.get("content")
             if isinstance(content, str) and content:
