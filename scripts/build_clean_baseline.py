@@ -142,10 +142,11 @@ def build_one(task: dict) -> dict:
     return row
 
 
-def docker_python(digest: str, code: str, stdin: bytes = b"", python_bin: str = "/usr/local/bin/python") -> str:
+def docker_python(digest: str, code: str, stdin: bytes = b"", python_bin: str = "/usr/local/bin/python",
+                  timeout: float = 600) -> str:
     argv = ["docker", "--context", "desktop-linux", "run", "--rm", "-i", "--network", "none", digest,
             python_bin, "-I", "-S", "-c", code]
-    result = subprocess.run(argv, input=stdin, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=600)
+    result = subprocess.run(argv, input=stdin, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
     if result.returncode:
         raise RuntimeError(result.stderr.decode("utf-8", "replace")[-1000:])
     return result.stdout.decode("utf-8", "replace")
@@ -305,7 +306,7 @@ print(json.dumps(hashes))
     return set(json.loads(raw))
 
 
-def filesystem_scan(digest: str, archive: Path, manifest: dict, test_patch: str, gold_patch: str, python_bin: str = "/usr/local/bin/python", base_image: str | None = None):
+def filesystem_scan(digest: str, archive: Path, manifest: dict, test_patch: str, gold_patch: str, python_bin: str = "/usr/local/bin/python", base_image: str | None = None, timeout: float = 600):
     packages = repo_packages(manifest)
     blob = archive_text(archive)
     needles = added_lines(test_patch, blob) + added_lines(gold_patch, blob)
@@ -352,7 +353,7 @@ for root in roots:
             continue
 print(json.dumps({"found": hits}))
 '''
-    raw = docker_python(digest, code, json.dumps(needles).encode(), python_bin=python_bin)
+    raw = docker_python(digest, code, json.dumps(needles).encode(), python_bin=python_bin, timeout=timeout)
     found = json.loads(raw).get("found") or []
     same: list[str] = []
     install_same: list[str] = []

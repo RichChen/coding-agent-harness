@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 import traceback
 from pathlib import Path
@@ -35,7 +36,7 @@ def choose_replacement(queue: list[dict], tried: set[str], taken_repos: set[str]
 def attempt(instance_id: str, repeats: int, ingest) -> dict:
     try:
         state = ingest(instance_id, repeats)
-    except prepare.GraderInfraError as exc:
+    except (prepare.GraderInfraError, subprocess.TimeoutExpired) as exc:
         return {"instance_id": instance_id, "accepted": False, "failed_clauses": [], "pending": True,
                 "error": type(exc).__name__ + ": " + str(exc)[-500:]}
     except Exception as exc:

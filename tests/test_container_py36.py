@@ -38,6 +38,14 @@ def _resolve(node, tree, seen=frozenset()):
         return ["".join(v.value if isinstance(v, ast.Constant) else "x" for v in node.values)]
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "replace":
         return _resolve(node.func.value, tree, seen)
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id not in seen:
+        found = []
+        for item in ast.walk(tree):
+            if isinstance(item, ast.FunctionDef) and item.name == node.func.id:
+                for ret in ast.walk(item):
+                    if isinstance(ret, ast.Return) and ret.value is not None:
+                        found += _resolve(ret.value, tree, seen | {node.func.id})
+        return found
     if isinstance(node, ast.Name) and node.id not in seen:
         found = []
         for item in ast.walk(tree):

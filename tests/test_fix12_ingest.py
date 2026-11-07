@@ -92,12 +92,16 @@ def test_replacement_skips_taken_repositories():
     assert choose_replacement(queue, {"e5"}, {"r/e2"}) is None
 
 
-def test_grader_infra_failure_is_pending_not_a_substitution():
+@pytest.mark.parametrize("error", ["grader", "timeout"])
+def test_infra_failure_is_pending_not_a_substitution(error):
+    import subprocess
+
     from scripts.rebench.prepare import GraderInfraError
 
     def ingest(instance_id, repeats):
         if instance_id == "e1":
-            raise GraderInfraError("Docker create failed")
+            raise GraderInfraError("Docker create failed") if error == "grader" else \
+                subprocess.TimeoutExpired(["docker", "run"], 3600)
         return {"accepted": True, "calibration": {"failed_clauses": [], "summary": {}, "p2p_excluded": []},
                 "memory": {"memory_bytes": 1024**3}}
     result = ingest_plan(plan(), ingest)

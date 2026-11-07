@@ -46,6 +46,7 @@ CONTEXT = "desktop-linux"
 PILOT = ["pypa__twine-1309", "delgan__loguru-1451", "pycqa__isort-2491", "holoviz__param-1117", "pypa__build-1027"]
 CONDA_PYTHON = "/opt/conda/envs/testbed/bin/python"
 GRADER_TIMEOUT = 600
+SCAN_TIMEOUT = 3600  # the answer-isolation scan reads every file of the image, archives included
 DIGEST = re.compile(r"^[^@\s]+@sha256:[0-9a-f]{64}$")
 STAGES = ("source", "task_files", "image", "isolation", "calibration", "memory", "outputs")
 
@@ -256,7 +257,8 @@ def isolation_stage(row: dict, work: Path):
         archive = work / "source.tar.gz"
         manifest = archive_manifest(archive, row["repo"], row["base_commit"])
         source_ok, source_hash = source_only_check(image, manifest)
-        scan = filesystem_scan(image, archive, manifest, row["test_patch"] or "", row["patch"] or "")
+        scan = filesystem_scan(image, archive, manifest, row["test_patch"] or "", row["patch"] or "",
+                               timeout=SCAN_TIMEOUT)
         layout = json.loads(docker_python(image, (
             "import json, os, pathlib\n"
             "w = pathlib.Path('/workspace'); t = pathlib.Path('/testbed')\n"
