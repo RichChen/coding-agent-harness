@@ -1,0 +1,1116 @@
+{
+  "summary": {
+    "sampled": 100,
+    "with_size": 100,
+    "errors": [],
+    "gb_min": 1.189175753,
+    "gb_median": 1.5341499385000001,
+    "gb_mean": 1.90556098791,
+    "gb_max": 7.220167584,
+    "gb_p90": 2.669676189,
+    "extrapolated_total_gb": 1638.8,
+    "note": "compressed sizes"
+  },
+  "rows": [
+    {
+      "image": "swerebench/sweb.eval.x86_64.basicmachines-co_1776_basic-memory-295:latest",
+      "full_size": 1549103749,
+      "last_updated": "2026-04-21T07:39:35.476265Z",
+      "digest": "sha256:5b1f02a17c81f56f2c29bee5ba4e761ec51706758a5dc7e3b7069d8d8901e4ea",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "basicmachines-co__basic-memory-295",
+      "repo": "basicmachines-co/basic-memory"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.bluesky_1776_ophyd-async-1164:latest",
+      "full_size": 1544084481,
+      "last_updated": "2026-04-21T08:06:59.446185Z",
+      "digest": "sha256:aaebed450ccf1ae1c902f93192520417b8d70893f7e5c10da955633096530ccb",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "bluesky__ophyd-async-1164",
+      "repo": "bluesky/ophyd-async"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.microsoft_1776_fabric-cicd-394:latest",
+      "full_size": 1246089096,
+      "last_updated": "2026-04-20T18:26:26.709498Z",
+      "digest": "sha256:457a3b078aaec7098f4d2596a2c8c30802c5c56e39a5da353b4db926578a2967",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "microsoft__fabric-cicd-394",
+      "repo": "microsoft/fabric-cicd"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.rollbar_1776_pyrollbar-468:latest",
+      "full_size": 1258153180,
+      "last_updated": "2026-04-20T16:19:20.61067Z",
+      "digest": "sha256:89c1c82a744fe3d945b43280a26d9a28dbfa9043ea21ea7e649821271c084ba8",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "rollbar__pyrollbar-468",
+      "repo": "rollbar/pyrollbar"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.point72_1776_ccflow-24:latest",
+      "full_size": 2306212758,
+      "last_updated": "2026-04-20T15:55:42.088138Z",
+      "digest": "sha256:790419811205c7bab89513e091326b84ab8ade9e972705b028383dd97c2ba728",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "Point72__ccflow-24",
+      "repo": "Point72/ccflow"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sympy_1776_sympy-27685:latest",
+      "full_size": 1577354227,
+      "last_updated": "2026-04-20T15:59:16.115562Z",
+      "digest": "sha256:c20da165daa8a88ef3f69e511c1072a3f5413cca1d600dd402be4a1bef2154ed",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sympy__sympy-27685",
+      "repo": "sympy/sympy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sigstore_1776_sigstore-python-1652:latest",
+      "full_size": 1265276985,
+      "last_updated": "2026-04-21T07:58:28.157817Z",
+      "digest": "sha256:725a7b4a9f0e52504287dc75b4d57640715e5b1a3bb46e042dbb071a68d1aae4",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sigstore__sigstore-python-1652",
+      "repo": "sigstore/sigstore-python"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.matthewwithanm_1776_python-markdownify-230:latest",
+      "full_size": 1301841138,
+      "last_updated": "2026-04-20T15:49:21.492491Z",
+      "digest": "sha256:c95cfd4d83de45fde2417a290f402dc4b5cd39093d8ab39ede2a8acf96e9b2c6",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "matthewwithanm__python-markdownify-230",
+      "repo": "matthewwithanm/python-markdownify"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.modin-project_1776_modin-7560:latest",
+      "full_size": 2732781065,
+      "last_updated": "2026-04-21T07:47:41.382366Z",
+      "digest": "sha256:2e7245533ec3b07b21e12c23cf403b768fca7a5cf4faa6256159e236f48788e0",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "modin-project__modin-7560",
+      "repo": "modin-project/modin"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.scitools_1776_iris-6772:latest",
+      "full_size": 1612680123,
+      "last_updated": "2026-04-21T07:59:34.851837Z",
+      "digest": "sha256:b5efdad4506d73c6e5f894bbee6fb8b1a8f21a991ab6db60dde4b15c675315b6",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "SciTools__iris-6772",
+      "repo": "SciTools/iris"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pandas-dev_1776_pandas-64797:latest",
+      "full_size": 1713538694,
+      "last_updated": "2026-05-17T16:38:51.384668Z",
+      "digest": "sha256:336cc8527088755a853128b8fa0d297f4982d04bfb2daef3b5ef4b10b7ee8b5b",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pandas-dev__pandas-64797",
+      "repo": "pandas-dev/pandas"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.cambridge-iccs_1776_tctrack-118:latest",
+      "full_size": 1478645194,
+      "last_updated": "2026-04-21T07:58:33.698824Z",
+      "digest": "sha256:81635fd2725542a608a1088836114afa5e1a5a6b7704caf934603623268c30b6",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "Cambridge-ICCS__TCTrack-118",
+      "repo": "Cambridge-ICCS/TCTrack"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.noppanut15_1776_depthviz-55:latest",
+      "full_size": 1595341640,
+      "last_updated": "2026-04-20T15:51:14.48411Z",
+      "digest": "sha256:5b9ed17c700e6662451b50ecc01d02124cb67d325a48e080ce69e34565ec807d",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "noppanut15__depthviz-55",
+      "repo": "noppanut15/depthviz"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.macbre_1776_sql-metadata-553:latest",
+      "full_size": 1189175753,
+      "last_updated": "2026-04-20T16:25:19.924704Z",
+      "digest": "sha256:8cbbf233c08968af984dbd12d8c5d8f88532be2c435079fa840ada82b9ac1822",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "macbre__sql-metadata-553",
+      "repo": "macbre/sql-metadata"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.schemathesis_1776_schemathesis-3291:latest",
+      "full_size": 1466340073,
+      "last_updated": "2026-04-21T07:58:35.457622Z",
+      "digest": "sha256:6d2339dec2ac230f79106d40abb5160d61a0b0686855c09ff55d35db643587ac",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "schemathesis__schemathesis-3291",
+      "repo": "schemathesis/schemathesis"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.microsoft_1776_fabric-cicd-670:latest",
+      "full_size": 1256084764,
+      "last_updated": "2026-04-21T08:05:21.848707Z",
+      "digest": "sha256:351be193abaf203892842b1ec618cd4ce5af42ce5cc4f971e1b03edc8e788a67",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "microsoft__fabric-cicd-670",
+      "repo": "microsoft/fabric-cicd"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pandas-dev_1776_pandas-64092:latest",
+      "full_size": 1699231279,
+      "last_updated": "2026-04-23T15:59:07.559107Z",
+      "digest": "sha256:4270b5f323b36be21672c26bf19a14b5f371f04e750f52e5ad90ee3efc292b48",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pandas-dev__pandas-64092",
+      "repo": "pandas-dev/pandas"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.rdflib_1776_pyshacl-285:latest",
+      "full_size": 1271856529,
+      "last_updated": "2026-04-20T15:52:20.899683Z",
+      "digest": "sha256:dce0b58cfbe8e9a00c8bccad6f73121ee6b553f0f7477c349a56edf606a41db1",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "RDFLib__pySHACL-285",
+      "repo": "RDFLib/pySHACL"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.huggingface_1776_transformers-43721_interface:latest",
+      "full_size": 7220167584,
+      "last_updated": "2026-04-23T16:03:42.194982Z",
+      "digest": "sha256:4ce3092fba7c6054919f5559b9687431f14bc7accd93c6be52c566550e08ab7a",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "huggingface__transformers-43721_interface",
+      "repo": "huggingface/transformers"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.python-wheel-build_1776_fromager-653:latest",
+      "full_size": 1285249119,
+      "last_updated": "2026-04-20T16:24:20.970253Z",
+      "digest": "sha256:80804862a75f5ad92620b6ecdc2492d15df433db76980099855305deb94930ef",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "python-wheel-build__fromager-653",
+      "repo": "python-wheel-build/fromager"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pennlinc_1776_cubids-438:latest",
+      "full_size": 1744492401,
+      "last_updated": "2026-04-20T15:58:58.218903Z",
+      "digest": "sha256:f653cb450a7a3ab137065e0822089af189ae91a495bda6ae70b7aa3fccf896f2",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "PennLINC__CuBIDS-438",
+      "repo": "PennLINC/CuBIDS"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.astronomer_1776_astronomer-cosmos-2332:latest",
+      "full_size": 2284457757,
+      "last_updated": "2026-04-23T16:00:13.692949Z",
+      "digest": "sha256:a25e48e3353538ca68103ec6a3fdcc9ee3ea35e82ae0b167873f9b8f50df1ee2",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "astronomer__astronomer-cosmos-2332",
+      "repo": "astronomer/astronomer-cosmos"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.prometheus_1776_client_python-1134:latest",
+      "full_size": 1268708479,
+      "last_updated": "2026-04-21T07:48:35.509241Z",
+      "digest": "sha256:b123db5ec7d4b84f7554329cc8762381914f3b9745d8bd5ac259bf52c187b8a9",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "prometheus__client_python-1134",
+      "repo": "prometheus/client_python"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.stravalib_1776_stravalib-709_interface:latest",
+      "full_size": 1254974053,
+      "last_updated": "2026-04-23T15:57:23.953088Z",
+      "digest": "sha256:5e0a4e7230f32ed2fb39f49aafd466349bd978930c0c28980c349348b68a6ac8",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "stravalib__stravalib-709_interface",
+      "repo": "stravalib/stravalib"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.google_1776_adk-python-2478:latest",
+      "full_size": 1783461733,
+      "last_updated": "2026-04-21T07:41:23.870128Z",
+      "digest": "sha256:f8498c96bf4d3bb18480784d1772326195d7796d5113f71efab36e6d49ad6051",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "google__adk-python-2478",
+      "repo": "google/adk-python"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.ets-labs_1776_python-dependency-injector-852:latest",
+      "full_size": 1732384316,
+      "last_updated": "2026-04-20T15:57:07.360145Z",
+      "digest": "sha256:e885eda3750caafdfd40f9565eddff8a12ae3e509bb6e0a05b5cce2769315f44",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "ets-labs__python-dependency-injector-852",
+      "repo": "ets-labs/python-dependency-injector"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.libp2p_1776_py-libp2p-533:latest",
+      "full_size": 1370060055,
+      "last_updated": "2026-04-20T15:56:22.780222Z",
+      "digest": "sha256:64d23e9f9cec4b54d6c2ae11fc8360197aeb7c3332e49c0a4c49358e500cce35",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "libp2p__py-libp2p-533",
+      "repo": "libp2p/py-libp2p"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.agronholm_1776_sqlacodegen-368:latest",
+      "full_size": 1292627032,
+      "last_updated": "2026-04-20T16:19:16.173687Z",
+      "digest": "sha256:80696417056dc3819791229648b60667d74c802130dfacfd961610611ee61bbb",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "agronholm__sqlacodegen-368",
+      "repo": "agronholm/sqlacodegen"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.vyperlang_1776_vyper-4462:latest",
+      "full_size": 1341002118,
+      "last_updated": "2026-04-20T15:51:02.967837Z",
+      "digest": "sha256:d6d94b8571d903d8ed69ea1f41448de46d2510f478476418ec2cbeaf915e4374",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "vyperlang__vyper-4462",
+      "repo": "vyperlang/vyper"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.movingpandas_1776_movingpandas-444:latest",
+      "full_size": 3099253220,
+      "last_updated": "2026-04-20T15:55:35.994226Z",
+      "digest": "sha256:de2e65c17a304d0dfe2dcee73562c44b8048fd69552adf56996768f316b6baa8",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "movingpandas__movingpandas-444",
+      "repo": "movingpandas/movingpandas"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sympy_1776_sympy-27708:latest",
+      "full_size": 1560577609,
+      "last_updated": "2026-04-20T15:58:58.64723Z",
+      "digest": "sha256:bede5382df5607d05f09a3b234016ae3b8bbfa666066d5374789cf7fd32ad2cf",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sympy__sympy-27708",
+      "repo": "sympy/sympy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.basicmachines-co_1776_basic-memory-341:latest",
+      "full_size": 1554298508,
+      "last_updated": "2026-04-21T08:06:21.509677Z",
+      "digest": "sha256:61fee718be291e5c881ec54959bf2b0fbb7271a1e8ff89eb41e4cd8c4bf40a31",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "basicmachines-co__basic-memory-341",
+      "repo": "basicmachines-co/basic-memory"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.yukinarit_1776_pyserde-682:latest",
+      "full_size": 1289385692,
+      "last_updated": "2026-04-21T08:07:51.76359Z",
+      "digest": "sha256:7270f38f72899098f9a8e75a7c0202e9fdc48501090af8908474888a51a5c001",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "yukinarit__pyserde-682",
+      "repo": "yukinarit/pyserde"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.gerlero_1776_foamlib-315:latest",
+      "full_size": 1369326656,
+      "last_updated": "2026-04-20T15:51:56.46514Z",
+      "digest": "sha256:2e6045c630359a9e390d4935cebd9fb245bf2160fd6031ae90930d9d26f3ac6a",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "gerlero__foamlib-315",
+      "repo": "gerlero/foamlib"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.tox-dev_1776_tox-3846:latest",
+      "full_size": 1287900682,
+      "last_updated": "2026-05-17T16:35:17.468833Z",
+      "digest": "sha256:269a32558d3aeac5f9e9b6fc451302667b83a85f260f0b915babe1838b50b3bc",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "tox-dev__tox-3846",
+      "repo": "tox-dev/tox"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.keras-team_1776_keras-22138:latest",
+      "full_size": 2694064773,
+      "last_updated": "2026-04-23T16:00:57.904621Z",
+      "digest": "sha256:33c0a55769ca939a6ad4c197f2220a7980a6d898ebf656e16d3702879b81a443",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "keras-team__keras-22138",
+      "repo": "keras-team/keras"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sympy_1776_sympy-28207:latest",
+      "full_size": 1584159369,
+      "last_updated": "2026-04-20T16:25:44.392117Z",
+      "digest": "sha256:9c6b6a2792fccc57f03760b18b5f9ea66aaf13019843cdd4b2e12f66685ef402",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sympy__sympy-28207",
+      "repo": "sympy/sympy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.raullenchai_1776_rapid-mlx-227:latest",
+      "full_size": 1423813840,
+      "last_updated": "2026-05-17T16:35:21.400122Z",
+      "digest": "sha256:813471001c6124fea572da82a6767c21df0dcd37ba73302c18b60ded3834df6d",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "raullenchai__rapid-mlx-227",
+      "repo": "raullenchai/Rapid-MLX"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.agronholm_1776_anyio-1134:latest",
+      "full_size": 1264574824,
+      "last_updated": "2026-05-17T16:35:08.635512Z",
+      "digest": "sha256:d7997027864d2bfb32d649e7e544381f5d1b161df8f1682c719d222d66489dc0",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "agronholm__anyio-1134",
+      "repo": "agronholm/anyio"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.oemof_1776_oemof-solph-1180:latest",
+      "full_size": 1588234286,
+      "last_updated": "2026-04-20T15:54:53.52957Z",
+      "digest": "sha256:f9c19613d91d5a38d5bb706e2b1640320631cdad24c7010d1ccb3ef0edb4982a",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "oemof__oemof-solph-1180",
+      "repo": "oemof/oemof-solph"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.koxudaxi_1776_datamodel-code-generator-2389:latest",
+      "full_size": 1298175415,
+      "last_updated": "2026-04-20T16:18:39.987317Z",
+      "digest": "sha256:e1b315dc343ad8f01b13c720863d1273c79c489c6b3aa86507e887c579c3a2d9",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "koxudaxi__datamodel-code-generator-2389",
+      "repo": "koxudaxi/datamodel-code-generator"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.delgan_1776_loguru-1297:latest",
+      "full_size": 1262439515,
+      "last_updated": "2026-04-20T16:15:30.908018Z",
+      "digest": "sha256:8d899d1147cf88bc088afe57fc5299fdcf2fafe6a1e30ef26825577e8953362f",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "Delgan__loguru-1297",
+      "repo": "Delgan/loguru"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.scipy_1776_scipy-24282:latest",
+      "full_size": 2106080982,
+      "last_updated": "2026-04-21T07:59:26.828506Z",
+      "digest": "sha256:d02c1ec0e4a97ae403bdd63ad0e3966cecc69d07b40470d84723bf08fc3c44be",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "scipy__scipy-24282",
+      "repo": "scipy/scipy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pgmpy_1776_pgmpy-1906:latest",
+      "full_size": 6980519885,
+      "last_updated": "2026-04-20T16:17:02.963658Z",
+      "digest": "sha256:512b87b8ca765d69d0b4335b23f9819e8e94d0faf8a341022c05be6b2c64694f",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pgmpy__pgmpy-1906",
+      "repo": "pgmpy/pgmpy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pytorch_1776_ignite-3532_interface:latest",
+      "full_size": 7011271392,
+      "last_updated": "2026-04-23T16:03:11.164822Z",
+      "digest": "sha256:dba59ebc3ecdc6e95a9f8083ce398f685aa3ba0ee624893d57e3e098e221af12",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pytorch__ignite-3532_interface",
+      "repo": "pytorch/ignite"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sunpy_1776_sunpy-8548_interface:latest",
+      "full_size": 1741659355,
+      "last_updated": "2026-05-17T18:54:40.803098Z",
+      "digest": "sha256:0337a22656ee2c2ebfcc07ef51d9f8d4fbe09ddcf3b96589f226b5dfe7118393",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sunpy__sunpy-8548_interface",
+      "repo": "sunpy/sunpy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.mitmproxy_1776_mitmproxy-7827:latest",
+      "full_size": 1389747179,
+      "last_updated": "2026-04-21T07:43:42.534001Z",
+      "digest": "sha256:2820df1dc5fa5bb22e874d655b03405053a14b2b10a77cf7b0bdbefc13c64421",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "mitmproxy__mitmproxy-7827",
+      "repo": "mitmproxy/mitmproxy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.streamlink_1776_streamlink-6420:latest",
+      "full_size": 1470288086,
+      "last_updated": "2026-04-20T15:49:40.181927Z",
+      "digest": "sha256:6930e7b42c31caa543bf7eed35629dd44a9ae0bc4a69b4ad4922bb22f162d8ff",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "streamlink__streamlink-6420",
+      "repo": "streamlink/streamlink"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pypa_1776_twine-1309:latest",
+      "full_size": 1259650552,
+      "last_updated": "2026-05-17T16:35:11.438157Z",
+      "digest": "sha256:0ab70a15a784fc15cfeb1840e0634284c71de499e507a75847a268617668f9d3",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pypa__twine-1309",
+      "repo": "pypa/twine"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.schemathesis_1776_schemathesis-4087:latest",
+      "full_size": 1469452637,
+      "last_updated": "2026-05-17T16:37:15.50288Z",
+      "digest": "sha256:85fae37fcacb6479d21c3d4dc1c769a5d27884a2dc60d3c8f8c1f7557c97a58f",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "schemathesis__schemathesis-4087",
+      "repo": "schemathesis/schemathesis"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.streamlink_1776_streamlink-6439:latest",
+      "full_size": 1452239353,
+      "last_updated": "2026-04-20T16:18:47.139625Z",
+      "digest": "sha256:84aaf330eed25c3f73d8c1be24235bbf03dbbcf1b672921e81c6edc571c9c6a7",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "streamlink__streamlink-6439",
+      "repo": "streamlink/streamlink"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pyccel_1776_pyccel-2418:latest",
+      "full_size": 1883448706,
+      "last_updated": "2026-04-21T07:44:31.208774Z",
+      "digest": "sha256:94ae4aa52946800117b2b14a798150cb2a75821ff2b10c7f39891c450b47157d",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pyccel__pyccel-2418",
+      "repo": "pyccel/pyccel"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.deepset-ai_1776_haystack-9242:latest",
+      "full_size": 1461850022,
+      "last_updated": "2026-04-20T16:18:47.961932Z",
+      "digest": "sha256:e010eaa125d23f25fc671b0ac28921f823096b87a8277d86bc667acb8069a157",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "deepset-ai__haystack-9242",
+      "repo": "deepset-ai/haystack"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.networkx_1776_networkx-8055:latest",
+      "full_size": 1749778675,
+      "last_updated": "2026-04-21T07:42:40.651973Z",
+      "digest": "sha256:654e51da1344a30fd322f1a33bed695e82aa96a83d06c1ea3947c4186060d0c5",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "networkx__networkx-8055",
+      "repo": "networkx/networkx"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.tobymao_1776_sqlglot-4661:latest",
+      "full_size": 1390293729,
+      "last_updated": "2026-04-20T15:52:54.077547Z",
+      "digest": "sha256:14dc53fe631f2208e0f7e6f88ab16f61bc338b20bda9999df5898bf209e485bd",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "tobymao__sqlglot-4661",
+      "repo": "tobymao/sqlglot"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.modelcontextprotocol_1776_python-sdk-384:latest",
+      "full_size": 1249754564,
+      "last_updated": "2026-04-20T16:19:26.500703Z",
+      "digest": "sha256:26a2a02be24af91bcb2fe85075d2188400e5b07063ec2c4f1e64466fc02b0997",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "modelcontextprotocol__python-sdk-384",
+      "repo": "modelcontextprotocol/python-sdk"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.koxudaxi_1776_datamodel-code-generator-2998:latest",
+      "full_size": 1296113347,
+      "last_updated": "2026-04-23T15:57:33.90077Z",
+      "digest": "sha256:fa009aa369191837f59a3b72fbbf77cc172379e6df0f8f4df7fdd55070254701",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "koxudaxi__datamodel-code-generator-2998",
+      "repo": "koxudaxi/datamodel-code-generator"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.lmstudio-ai_1776_venvstacks-197:latest",
+      "full_size": 1286656564,
+      "last_updated": "2026-04-20T15:49:34.731808Z",
+      "digest": "sha256:232cd8fa333866dc1ca8a1a2a02defdad6af36fafb17f69c64b7ddfb7853898b",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "lmstudio-ai__venvstacks-197",
+      "repo": "lmstudio-ai/venvstacks"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pipecat-ai_1776_pipecat-2413:latest",
+      "full_size": 1617213846,
+      "last_updated": "2026-04-21T07:39:20.850713Z",
+      "digest": "sha256:eb961e1a591e2019d941270340ba032d68bb28458c2111ced077c508ecadc8eb",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pipecat-ai__pipecat-2413",
+      "repo": "pipecat-ai/pipecat"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sympy_1776_sympy-27512:latest",
+      "full_size": 1315690654,
+      "last_updated": "2026-04-20T15:48:34.536759Z",
+      "digest": "sha256:347e46dfd632856151f2b08d32e676d7ba25dcffd3fb27470ea73866d62620b0",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sympy__sympy-27512",
+      "repo": "sympy/sympy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pymc-devs_1776_pymc-7858:latest",
+      "full_size": 2669676189,
+      "last_updated": "2026-04-20T16:25:23.001662Z",
+      "digest": "sha256:36895c44be6b4fb6d7a8de0b562e914f2975fa870db33192bc98de9cec7e8eac",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pymc-devs__pymc-7858",
+      "repo": "pymc-devs/pymc"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.scitools_1776_iris-6754:latest",
+      "full_size": 2002894264,
+      "last_updated": "2026-04-21T07:59:42.940237Z",
+      "digest": "sha256:7ba17ad1c77eae794980a33e3969e738a1e1452891c4812495fbe0c6e5a3f699",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "SciTools__iris-6754",
+      "repo": "SciTools/iris"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.dag-hammarskjold-library_1776_dlx-534:latest",
+      "full_size": 1379660045,
+      "last_updated": "2026-04-20T15:57:12.939565Z",
+      "digest": "sha256:2c40b97738b0f2ff5736a41038bddf5ca58a4609a5ccd7741579bb020d090788",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "dag-hammarskjold-library__dlx-534",
+      "repo": "dag-hammarskjold-library/dlx"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.geopandas_1776_geopandas-3591:latest",
+      "full_size": 1652798857,
+      "last_updated": "2026-04-20T15:51:59.32706Z",
+      "digest": "sha256:b6feaf02ef6fa6c8fe91d9e1648684cc7e08c5009474925824f7df506fa04666",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "geopandas__geopandas-3591",
+      "repo": "geopandas/geopandas"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.spikeinterface_1776_spikeinterface-3670:latest",
+      "full_size": 1753790359,
+      "last_updated": "2026-04-20T16:17:26.670418Z",
+      "digest": "sha256:147af27c0ab44fe0d4449dd0f2ff951b6dff324ad8e7ac1b3e0924fd30cfb941",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "SpikeInterface__spikeinterface-3670",
+      "repo": "SpikeInterface/spikeinterface"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.open-spaced-repetition_1776_py-fsrs-127:latest",
+      "full_size": 6905151082,
+      "last_updated": "2026-04-21T07:49:46.590162Z",
+      "digest": "sha256:5d2a5db84f6445779f2cf108201d71c2f0fce7e31e1f11e1d8970d1036e039a7",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "open-spaced-repetition__py-fsrs-127",
+      "repo": "open-spaced-repetition/py-fsrs"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.graphistry_1776_pygraphistry-1107_interface:latest",
+      "full_size": 1525112199,
+      "last_updated": "2026-05-17T16:35:27.198628Z",
+      "digest": "sha256:cdcd4a55adec0228cb0b4661e818b60eef63aed78040938b7c2b6ac8b400eb87",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "graphistry__pygraphistry-1107_interface",
+      "repo": "graphistry/pygraphistry"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.terrapower_1776_armi-2068:latest",
+      "full_size": 1703506866,
+      "last_updated": "2026-04-20T15:55:52.618321Z",
+      "digest": "sha256:88abee4c676897ffd3a2351951f161082eb670f5c786a2fa2c75d82b1d6245be",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "terrapower__armi-2068",
+      "repo": "terrapower/armi"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.schemathesis_1776_schemathesis-3405:latest",
+      "full_size": 1466674014,
+      "last_updated": "2026-04-21T08:05:36.60304Z",
+      "digest": "sha256:53d4136480fc8aee7d46acd3f094bbe4b0e3e74450f1b93e09f8d528c455a183",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "schemathesis__schemathesis-3405",
+      "repo": "schemathesis/schemathesis"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.feder-observatory_1776_stellarphot-519:latest",
+      "full_size": 1971503103,
+      "last_updated": "2026-04-21T15:03:26.32106Z",
+      "digest": "sha256:2b73c941b3e9bad792bf61d8468c33ae292b85810170e4aa679efc87a01f0fb1",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "feder-observatory__stellarphot-519",
+      "repo": "feder-observatory/stellarphot"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.davidyz_1776_vectorcode-27:latest",
+      "full_size": 7084427055,
+      "last_updated": "2026-04-20T16:00:22.951824Z",
+      "digest": "sha256:c8d0a2d790cad622657be911be424d267e6cd9f8188015d9bffc3c113479f726",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "Davidyz__VectorCode-27",
+      "repo": "Davidyz/VectorCode"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.keras-team_1776_keras-22330:latest",
+      "full_size": 4273950643,
+      "last_updated": "2026-05-17T16:40:52.837567Z",
+      "digest": "sha256:b06d059502353cd6a7a581133f239b00d4f1441c2a3df4bff078a0d2eee334fe",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "keras-team__keras-22330",
+      "repo": "keras-team/keras"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.dstackai_1776_gpuhunt-197:latest",
+      "full_size": 1635180210,
+      "last_updated": "2026-04-21T08:06:40.807126Z",
+      "digest": "sha256:faaac87657252735ca1611d2d5f58f5a1c816039f6d134c8d9079bb813943240",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "dstackai__gpuhunt-197",
+      "repo": "dstackai/gpuhunt"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.asottile_1776_dead-204:latest",
+      "full_size": 1234326585,
+      "last_updated": "2026-04-20T16:15:53.767425Z",
+      "digest": "sha256:e5992e00a88d1fd86934f7c2878a1793a3e9c420bc535c717ffd77a9db6c8d6e",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "asottile__dead-204",
+      "repo": "asottile/dead"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pandas-dev_1776_pandas-60791:latest",
+      "full_size": 1697787033,
+      "last_updated": "2026-04-20T16:14:44.167261Z",
+      "digest": "sha256:2dcf6b7419b4917c5568ae1804cc938eec9f9aef284257f81d6368d6d308e62f",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pandas-dev__pandas-60791",
+      "repo": "pandas-dev/pandas"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.ets-labs_1776_python-dependency-injector-886:latest",
+      "full_size": 1400779387,
+      "last_updated": "2026-04-20T16:23:31.294955Z",
+      "digest": "sha256:624b81115093fcb2a6e5256e7719e01699a78825e510ad882a31de858c113bc4",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "ets-labs__python-dependency-injector-886",
+      "repo": "ets-labs/python-dependency-injector"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.python-pillow_1776_pillow-9023:latest",
+      "full_size": 1872317836,
+      "last_updated": "2026-04-20T15:50:25.678115Z",
+      "digest": "sha256:1fa55b8886c798123fab0f4ff901987cc4691812b0eb3eac391e1985439689e9",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "python-pillow__Pillow-9023",
+      "repo": "python-pillow/Pillow"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.modelcontextprotocol_1776_python-sdk-222:latest",
+      "full_size": 1216510316,
+      "last_updated": "2026-04-20T15:49:31.210083Z",
+      "digest": "sha256:ad5b15902c86dfc8c6a64780a971df422cc0e2daa5561f1e19e0bbb95908d212",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "modelcontextprotocol__python-sdk-222",
+      "repo": "modelcontextprotocol/python-sdk"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.mmcdermott_1776_meds_transforms-242:latest",
+      "full_size": 1496953500,
+      "last_updated": "2026-04-20T15:57:13.671147Z",
+      "digest": "sha256:b9f13ba108cfd529d071fbf433ba5d190a0ef694e8782b79a4d1ef9cbd38e3b2",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "mmcdermott__MEDS_transforms-242",
+      "repo": "mmcdermott/MEDS_transforms"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sympy_1776_sympy-28570:latest",
+      "full_size": 1620003216,
+      "last_updated": "2026-04-21T08:09:34.502126Z",
+      "digest": "sha256:ccf55616b0981e059c43d55c064d450a1b9c67840f97add67bd90cce3b3a27f5",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sympy__sympy-28570",
+      "repo": "sympy/sympy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.zopefoundation_1776_persistent-220:latest",
+      "full_size": 1326500614,
+      "last_updated": "2026-04-20T15:48:35.548597Z",
+      "digest": "sha256:b10e56bd660d11de802b911ea4d95c6d559647248e333307f7c6c1a663d855eb",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "zopefoundation__persistent-220",
+      "repo": "zopefoundation/persistent"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.vndee_1776_llm-sandbox-101:latest",
+      "full_size": 1247973573,
+      "last_updated": "2026-04-21T08:03:14.826703Z",
+      "digest": "sha256:ff86818e57b565f13630d7ba3e0c5ebfee8664f143acc02ee97fcc5e2ddf1a0e",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "vndee__llm-sandbox-101",
+      "repo": "vndee/llm-sandbox"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.twisted_1776_towncrier-687:latest",
+      "full_size": 1331217539,
+      "last_updated": "2026-04-20T15:52:11.551383Z",
+      "digest": "sha256:c2f37aea06c9a962820d26af42eb5d142daa55317b7a9230dde347927bb62c2a",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "twisted__towncrier-687",
+      "repo": "twisted/towncrier"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.berriai_1776_litellm-16315:latest",
+      "full_size": 2976321050,
+      "last_updated": "2026-04-21T07:58:46.88715Z",
+      "digest": "sha256:82bde985f848e8d0159091f21a62d37fc1dcaeeacad06d949ccfec3deab5a591",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "BerriAI__litellm-16315",
+      "repo": "BerriAI/litellm"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pydata_1776_xarray-10838:latest",
+      "full_size": 2522653140,
+      "last_updated": "2026-04-21T08:04:29.803404Z",
+      "digest": "sha256:c4d48b85840248d34ff6f6f5dd57cba8f183e41418c0ed5991452ea7dd0d80cd",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pydata__xarray-10838",
+      "repo": "pydata/xarray"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sympy_1776_sympy-28660:latest",
+      "full_size": 1619940328,
+      "last_updated": "2026-04-21T07:58:36.775624Z",
+      "digest": "sha256:ec83b1753cfa2794655628d097a7797a0bf0b1cdd5763f73aa8a19d773ba5257",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sympy__sympy-28660",
+      "repo": "sympy/sympy"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.schemathesis_1776_schemathesis-3778:latest",
+      "full_size": 1430301133,
+      "last_updated": "2026-05-17T16:35:23.832854Z",
+      "digest": "sha256:1e68e997325f09328dac5c48eb3ac85c50012f2571bf099fe92e72e346de117a",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "schemathesis__schemathesis-3778",
+      "repo": "schemathesis/schemathesis"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pypa_1776_virtualenv-2940:latest",
+      "full_size": 1602117918,
+      "last_updated": "2026-04-21T07:47:22.191703Z",
+      "digest": "sha256:e8f7c89b360cdbe4ba2ce013c575ea02021b673fd72cb2ca105d146bb353cc20",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pypa__virtualenv-2940",
+      "repo": "pypa/virtualenv"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.deepset-ai_1776_haystack-8879:latest",
+      "full_size": 1504759020,
+      "last_updated": "2026-04-20T15:48:42.844076Z",
+      "digest": "sha256:89dabc0d06ee4baa978718f9683912027200fa6810a4482ff1b0644210764214",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "deepset-ai__haystack-8879",
+      "repo": "deepset-ai/haystack"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sktime_1776_skpro-574:latest",
+      "full_size": 1440722696,
+      "last_updated": "2026-04-21T07:43:22.366184Z",
+      "digest": "sha256:6133c21defe86ccd86824ea78129016651ddb9c114d20985f4e6fa753227a95b",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sktime__skpro-574",
+      "repo": "sktime/skpro"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.prefecthq_1776_prefect-17123:latest",
+      "full_size": 2162785813,
+      "last_updated": "2026-04-20T15:58:24.025402Z",
+      "digest": "sha256:7ea65cea6d3db9b00921db410c7b6b79a56dc6c26d8f5bedcc73a9d6024f6f0b",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "PrefectHQ__prefect-17123",
+      "repo": "PrefectHQ/prefect"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.nolar_1776_kopf-1225:latest",
+      "full_size": 1260847119,
+      "last_updated": "2026-04-21T08:06:15.781084Z",
+      "digest": "sha256:c9344b122a31dcb189ab83598c2e3998441caecc716858bbb4cd221ec3ae4724",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "nolar__kopf-1225",
+      "repo": "nolar/kopf"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.astropy_1776_astroquery-3275:latest",
+      "full_size": 1543187678,
+      "last_updated": "2026-04-20T15:48:25.601007Z",
+      "digest": "sha256:f874423f9f237d3baf1703d24192b0f6cd3e3ba9a51f7498b03a5794e4c8162f",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "astropy__astroquery-3275",
+      "repo": "astropy/astroquery"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.tobymao_1776_sqlglot-6991:latest",
+      "full_size": 1486718153,
+      "last_updated": "2026-04-23T15:57:53.42142Z",
+      "digest": "sha256:bae149a9a88492c1f85d663cf709b2d300fb41a201e49b37db4179aa33f12395",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "tobymao__sqlglot-6991",
+      "repo": "tobymao/sqlglot"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.beeware_1776_briefcase-2546:latest",
+      "full_size": 1356825625,
+      "last_updated": "2026-04-21T07:59:25.638888Z",
+      "digest": "sha256:78dda686d852192ad426ebcdb94993e47720e614701becd2e1c6a07c238f6fb0",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "beeware__briefcase-2546",
+      "repo": "beeware/briefcase"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.tobymao_1776_sqlglot-4563:latest",
+      "full_size": 1836552007,
+      "last_updated": "2026-04-22T13:01:46.374849Z",
+      "digest": "sha256:f9a0fc745f48590fe160e1563fdf7ced83622d3ef80d309e6e7d826f22181884",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "tobymao__sqlglot-4563",
+      "repo": "tobymao/sqlglot"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.deepset-ai_1776_haystack-9033:latest",
+      "full_size": 1926614353,
+      "last_updated": "2026-04-20T15:58:45.662797Z",
+      "digest": "sha256:8259af490733d3792025311a610bcb78659ee548c23f710474f6f6da6d29b52b",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "deepset-ai__haystack-9033",
+      "repo": "deepset-ai/haystack"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.diamondlightsource_1776_mx-bluesky-1519:latest",
+      "full_size": 2507760164,
+      "last_updated": "2026-04-21T15:05:33.754526Z",
+      "digest": "sha256:c8c9b8c10da44f84c3be71f65605fbf49be7a5f45202f6f13891d891ad5af7e4",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "DiamondLightSource__mx-bluesky-1519",
+      "repo": "DiamondLightSource/mx-bluesky"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.narwhals-dev_1776_narwhals-3478:latest",
+      "full_size": 1580596300,
+      "last_updated": "2026-04-23T15:57:58.113522Z",
+      "digest": "sha256:33f5e8a66ea9235065c44c2c2fe5fff3fa1f35c375d028832c6f6262ea321764",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "narwhals-dev__narwhals-3478",
+      "repo": "narwhals-dev/narwhals"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.matterminers_1776_tardis-361:latest",
+      "full_size": 1279412517,
+      "last_updated": "2026-04-20T15:49:10.218226Z",
+      "digest": "sha256:d57feaa52b0dba14cb30dd29b39e9e5185feeb0946f045afae6f8e7ffe8699f7",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "MatterMiners__tardis-361",
+      "repo": "MatterMiners/tardis"
+    }
+  ]
+}

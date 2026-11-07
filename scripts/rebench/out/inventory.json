@@ -1,0 +1,753 @@
+{
+  "dataset": {
+    "dataset": "nebius/SWE-rebench-leaderboard",
+    "revision": "34d5a58864acf91613740a09ec5d205228dcfa39",
+    "last_modified": "2026-07-28T09:59:05.000Z",
+    "license": "cc-by-4.0",
+    "files": {
+      "2025_01-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_01/0.parquet",
+        "bytes": 526928,
+        "sha256": "a29c94a9c001404061d0aebc11330404fecbdda27cb641140fc5acd1992c3744"
+      },
+      "2025_02-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_02/0.parquet",
+        "bytes": 405283,
+        "sha256": "2153fc9e9656bc689061d7cf47b240ed3b78c9b27633c1b2b3ac8ea96edb43d7"
+      },
+      "2025_03-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_03/0.parquet",
+        "bytes": 301878,
+        "sha256": "1ee6e2e361a4005f0e9103f460e962a959b104dccc2450ad1a955a5ea0dcead4"
+      },
+      "2025_04-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_04/0.parquet",
+        "bytes": 191540,
+        "sha256": "20fb4bc144f01c86786976b8f4a57d89a149d8e333f6edc1da3352dbabc19263"
+      },
+      "2025_05-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_05/0.parquet",
+        "bytes": 203481,
+        "sha256": "48aff09c384ecb2442e457154cb5dcff75118debcfc88cdd595a0649c2253c65"
+      },
+      "2025_06-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_06/0.parquet",
+        "bytes": 259404,
+        "sha256": "7137b9f7b5511d20039cac74123e4efa8a1096fc23be5a22f6109ded472b4298"
+      },
+      "2025_07-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_07/0.parquet",
+        "bytes": 206409,
+        "sha256": "a44b525f0ba01a1bcb833b1eecd257bb230521f6293ae4de41f2e1f81576743b"
+      },
+      "2025_08-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_08/0.parquet",
+        "bytes": 275616,
+        "sha256": "e965444c68616f7ddd9acd8e47b5bc0629450c792c03c5757544cbe5b5d31d70"
+      },
+      "2025_09-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_09/0.parquet",
+        "bytes": 336025,
+        "sha256": "d8599ec97449b0d9cdbea5a0bbede20c70a83bd037ed3f271626f36210175a7e"
+      },
+      "2025_10-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_10/0.parquet",
+        "bytes": 305686,
+        "sha256": "de124584ab7fe2fd2a62e65ac55bed7c3e9a7f7157087407f5859e8ef2b68392"
+      },
+      "2025_11-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_11/0.parquet",
+        "bytes": 196856,
+        "sha256": "961390e018b1f7b18346291746f0e2d1407822605bbef11313913f18de8f8d16"
+      },
+      "2025_12-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2025_12/0.parquet",
+        "bytes": 380325,
+        "sha256": "7d980113047b7fc170ece34b84eba9ebe483cea000c7a8cc49f092e3ec8bdb3e"
+      },
+      "2026_01-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2026_01/0.parquet",
+        "bytes": 679726,
+        "sha256": "b34360fba386349e41e612e57147f5a183d7524fc7be9d48001f06b33d1d4f3b"
+      },
+      "2026_02-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2026_02/0.parquet",
+        "bytes": 364512,
+        "sha256": "0418d67761cf65f7a897de4a5d3fc21db803a0ca5dc3fae9ad8f569e2fb00a41"
+      },
+      "2026_03-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/2026_03/0.parquet",
+        "bytes": 797808,
+        "sha256": "18e198ac18b3c25b307c0aa5d9b6e20d338886e186bf7c12addb759ad4165a61"
+      },
+      "test-0.parquet": {
+        "url": "https://huggingface.co/api/datasets/nebius/SWE-rebench-leaderboard/parquet/default/test/0.parquet",
+        "bytes": 4864925,
+        "sha256": "1497b218db0a8259d22471812f0de12b779c699daf741b930d68bc717636f0bf"
+      }
+    }
+  },
+  "rows": 860,
+  "unique_ids": 860,
+  "columns": [
+    "repo",
+    "instance_id",
+    "base_commit",
+    "patch",
+    "test_patch",
+    "problem_statement",
+    "hints_text",
+    "created_at",
+    "version",
+    "meta",
+    "install_config",
+    "FAIL_TO_PASS",
+    "PASS_TO_PASS",
+    "environment_setup_commit",
+    "docker_image",
+    "image_name",
+    "interface",
+    "harbor_cpus",
+    "harbor_memory",
+    "harbor_storage",
+    "harbor_verifier_timeout_sec"
+  ],
+  "swebench_fields_present": {
+    "instance_id": true,
+    "repo": true,
+    "base_commit": true,
+    "patch": true,
+    "test_patch": true,
+    "problem_statement": true,
+    "hints_text": true,
+    "created_at": true,
+    "version": true,
+    "FAIL_TO_PASS": true,
+    "PASS_TO_PASS": true,
+    "environment_setup_commit": true
+  },
+  "extra_fields": [
+    "meta",
+    "install_config",
+    "docker_image",
+    "image_name",
+    "interface",
+    "harbor_cpus",
+    "harbor_memory",
+    "harbor_storage",
+    "harbor_verifier_timeout_sec"
+  ],
+  "monthly_split_rows": {
+    "2025_01": 109,
+    "2025_02": 76,
+    "2025_03": 62,
+    "2025_04": 40,
+    "2025_05": 40,
+    "2025_06": 40,
+    "2025_07": 30,
+    "2025_08": 52,
+    "2025_09": 50,
+    "2025_10": 51,
+    "2025_11": 47,
+    "2025_12": 48,
+    "2026_01": 48,
+    "2026_02": 57,
+    "2026_03": 110
+  },
+  "monthly_split_total": 860,
+  "repos": 413,
+  "repos_top": [
+    [
+      "tobymao/sqlglot",
+      41
+    ],
+    [
+      "sympy/sympy",
+      28
+    ],
+    [
+      "astropy/astropy",
+      17
+    ],
+    [
+      "BerriAI/litellm",
+      16
+    ],
+    [
+      "pandas-dev/pandas",
+      13
+    ],
+    [
+      "zarr-developers/zarr-python",
+      12
+    ],
+    [
+      "probabl-ai/skore",
+      10
+    ],
+    [
+      "schemathesis/schemathesis",
+      10
+    ],
+    [
+      "deepset-ai/haystack",
+      9
+    ],
+    [
+      "getmoto/moto",
+      9
+    ],
+    [
+      "lincc-frameworks/nested-pandas",
+      8
+    ],
+    [
+      "conan-io/conan",
+      7
+    ],
+    [
+      "scipp/plopp",
+      7
+    ],
+    [
+      "omni-us/jsonargparse",
+      7
+    ],
+    [
+      "pgmpy/pgmpy",
+      7
+    ],
+    [
+      "koxudaxi/datamodel-code-generator",
+      7
+    ],
+    [
+      "tox-dev/tox",
+      7
+    ],
+    [
+      "agronholm/sqlacodegen",
+      6
+    ],
+    [
+      "beeware/briefcase",
+      6
+    ],
+    [
+      "dask/dask",
+      6
+    ],
+    [
+      "pydata/xarray",
+      5
+    ],
+    [
+      "ethereum/web3.py",
+      5
+    ],
+    [
+      "SpikeInterface/spikeinterface",
+      5
+    ],
+    [
+      "stfc/PSyclone",
+      5
+    ],
+    [
+      "agronholm/anyio",
+      4
+    ],
+    [
+      "python-wheel-build/fromager",
+      4
+    ],
+    [
+      "astropy/astroquery",
+      4
+    ],
+    [
+      "Delgan/loguru",
+      4
+    ],
+    [
+      "google/flax",
+      4
+    ],
+    [
+      "python-scim/scim2-models",
+      4
+    ],
+    [
+      "pypa/virtualenv",
+      4
+    ],
+    [
+      "idaholab/MontePy",
+      4
+    ],
+    [
+      "macbre/sql-metadata",
+      4
+    ],
+    [
+      "jlowin/fastmcp",
+      4
+    ],
+    [
+      "Ultraplot/UltraPlot",
+      4
+    ],
+    [
+      "basicmachines-co/basic-memory",
+      4
+    ],
+    [
+      "GenericMappingTools/pygmt",
+      4
+    ],
+    [
+      "openai/openai-agents-python",
+      4
+    ],
+    [
+      "PyPSA/PyPSA",
+      4
+    ],
+    [
+      "marimo-team/marimo",
+      4
+    ]
+  ],
+  "repo_task_histogram": {
+    "1": 249,
+    "2": 80,
+    "3": 42,
+    "4": 18,
+    "5": 4,
+    "6": 3,
+    "7": 6,
+    "8": 1,
+    "9": 2,
+    "10": 2,
+    "12": 1,
+    "13": 1,
+    "16": 1,
+    "17": 1,
+    "28": 1,
+    "41": 1
+  },
+  "months": {
+    "2025-01": 109,
+    "2025-02": 76,
+    "2025-03": 62,
+    "2025-04": 40,
+    "2025-05": 40,
+    "2025-06": 40,
+    "2025-07": 30,
+    "2025-08": 52,
+    "2025-09": 50,
+    "2025-10": 51,
+    "2025-11": 47,
+    "2025-12": 48,
+    "2026-01": 48,
+    "2026-02": 57,
+    "2026-03": 46,
+    "2026-04": 43,
+    "2026-05": 21
+  },
+  "created_min": "2025-01-03 00:43:09",
+  "created_max": "2026-05-12 11:45:06",
+  "licenses": [
+    [
+      null,
+      860
+    ]
+  ],
+  "python": [
+    [
+      "3.12",
+      291
+    ],
+    [
+      "3.9",
+      203
+    ],
+    [
+      "3.11",
+      193
+    ],
+    [
+      "3.13",
+      111
+    ],
+    [
+      "3.10",
+      57
+    ],
+    [
+      "3.8",
+      2
+    ],
+    [
+      "3.13.1",
+      1
+    ],
+    [
+      "3.6",
+      1
+    ],
+    [
+      "3.5",
+      1
+    ]
+  ],
+  "log_parser": [
+    [
+      "parse_log_pytest",
+      860
+    ]
+  ],
+  "test_cmd_kind": [
+    [
+      "pytest",
+      858
+    ],
+    [
+      "./test_reframe.py",
+      1
+    ],
+    [
+      "hatch",
+      1
+    ]
+  ],
+  "test_cmd_top": [
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider -W ignore::DeprecationWarning",
+      422
+    ],
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider",
+      12
+    ],
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider -v",
+      9
+    ],
+    [
+      "python -m pytest --no-header -rA --tb=line --color=no -p no:cacheprovider",
+      9
+    ],
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/dialects/test_duckdb.py",
+      6
+    ],
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/dialects/test_snowflake.py",
+      4
+    ],
+    [
+      "uv run pytest -p pytest_mock -v --no-header -rA --tb=line --color=no --no-cov",
+      4
+    ],
+    [
+      "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 pytest --no-header -rA --tb=line --color=no -p no:cacheprovider -W ignore::DeprecationWarning",
+      3
+    ],
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider --verbose",
+      3
+    ],
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider -m \"not integration_test and not memory_test and not requires_eclipse and not requires_window_manager and not slow\" -v --tb=no",
+      3
+    ],
+    [
+      "python -m pytest --no-header -rA --tb=line --color=no -p no:cacheprovider --verbosity=1",
+      3
+    ],
+    [
+      "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/test_conversion.py",
+      2
+    ]
+  ],
+  "has_docker_image": 860,
+  "docker_image_prefix": [
+    [
+      "swerebench",
+      860
+    ]
+  ],
+  "pre_install_nonempty": 180,
+  "packages": [
+    [
+      "",
+      539
+    ],
+    [
+      "requirements.txt",
+      202
+    ],
+    [
+      "pytest",
+      98
+    ],
+    [
+      "environment.yml",
+      15
+    ],
+    [
+      "poetry",
+      1
+    ],
+    [
+      "click pytest",
+      1
+    ],
+    [
+      "pip",
+      1
+    ],
+    [
+      "pandas>=1.0.0 python-dateutil",
+      1
+    ],
+    [
+      "wemake-python-styleguide",
+      1
+    ],
+    [
+      "typing_extensions boto3",
+      1
+    ]
+  ],
+  "env_yml": 16,
+  "docker_specs_set": 0,
+  "env_vars_set": 0,
+  "is_lite": [
+    [
+      "False",
+      774
+    ],
+    [
+      "True",
+      86
+    ]
+  ],
+  "f2p_median": 1.0,
+  "p2p_median": 28.0,
+  "f2p_not_pytest_node": 3,
+  "env_commit_differs": 185,
+  "hints_nonempty": 170,
+  "tasks_with_truncated_f2p": 33,
+  "tasks_with_plugin_in_install": 122,
+  "after_threshold": {
+    "official_latest_collection_2025_05": {
+      "count": 533,
+      "repos": 284,
+      "top": [
+        [
+          "tobymao/sqlglot",
+          28
+        ],
+        [
+          "BerriAI/litellm",
+          16
+        ],
+        [
+          "sympy/sympy",
+          14
+        ],
+        [
+          "astropy/astropy",
+          10
+        ],
+        [
+          "schemathesis/schemathesis",
+          10
+        ],
+        [
+          "getmoto/moto",
+          9
+        ],
+        [
+          "tox-dev/tox",
+          7
+        ],
+        [
+          "pandas-dev/pandas",
+          6
+        ],
+        [
+          "koxudaxi/datamodel-code-generator",
+          6
+        ],
+        [
+          "conan-io/conan",
+          5
+        ],
+        [
+          "deepset-ai/haystack",
+          5
+        ],
+        [
+          "agronholm/anyio",
+          4
+        ],
+        [
+          "python-wheel-build/fromager",
+          4
+        ],
+        [
+          "jlowin/fastmcp",
+          4
+        ],
+        [
+          "Ultraplot/UltraPlot",
+          4
+        ]
+      ]
+    },
+    "v4_1_flash_release_2026_09_10": {
+      "count": 0,
+      "repos": 0,
+      "top": []
+    }
+  },
+  "subset": {
+    "steps": [
+      {
+        "filter": "all",
+        "remaining": 860,
+        "repos": 413
+      },
+      {
+        "filter": "direct pytest command (no uv/hatch/tox wrapper)",
+        "remaining": 827,
+        "repos": 393
+      },
+      {
+        "filter": "every F2P id is a pytest node id",
+        "remaining": 824,
+        "repos": 392
+      },
+      {
+        "filter": "no conda environment.yml install",
+        "remaining": 808,
+        "repos": 383
+      },
+      {
+        "filter": "created after official cutoff (>= 2025-06-01)",
+        "remaining": 497,
+        "repos": 263
+      }
+    ],
+    "final": 497,
+    "final_repos": 263,
+    "final_by_month": {
+      "2025-06": 40,
+      "2025-07": 30,
+      "2025-08": 50,
+      "2025-09": 39,
+      "2025-10": 48,
+      "2025-11": 44,
+      "2025-12": 40,
+      "2026-01": 41,
+      "2026-02": 55,
+      "2026-03": 46,
+      "2026-04": 43,
+      "2026-05": 21
+    },
+    "final_top_repos": [
+      [
+        "tobymao/sqlglot",
+        28
+      ],
+      [
+        "BerriAI/litellm",
+        16
+      ],
+      [
+        "sympy/sympy",
+        14
+      ],
+      [
+        "astropy/astropy",
+        10
+      ],
+      [
+        "schemathesis/schemathesis",
+        10
+      ],
+      [
+        "getmoto/moto",
+        9
+      ],
+      [
+        "tox-dev/tox",
+        7
+      ],
+      [
+        "pandas-dev/pandas",
+        6
+      ],
+      [
+        "koxudaxi/datamodel-code-generator",
+        6
+      ],
+      [
+        "conan-io/conan",
+        5
+      ],
+      [
+        "agronholm/anyio",
+        4
+      ],
+      [
+        "python-wheel-build/fromager",
+        4
+      ],
+      [
+        "jlowin/fastmcp",
+        4
+      ],
+      [
+        "GenericMappingTools/pygmt",
+        4
+      ],
+      [
+        "omni-us/jsonargparse",
+        4
+      ]
+    ],
+    "final_with_truncated_f2p": 19,
+    "final_with_truncated_p2p": 88,
+    "final_pre_install_apt": 49,
+    "final_python": [
+      [
+        "3.12",
+        251
+      ],
+      [
+        "3.11",
+        115
+      ],
+      [
+        "3.13",
+        110
+      ],
+      [
+        "3.9",
+        15
+      ],
+      [
+        "3.10",
+        5
+      ],
+      [
+        "3.5",
+        1
+      ]
+    ]
+  }
+}

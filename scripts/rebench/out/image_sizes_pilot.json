@@ -1,0 +1,148 @@
+{
+  "summary": {
+    "sampled": 12,
+    "with_size": 12,
+    "errors": [],
+    "gb_min": 1.230401173,
+    "gb_median": 1.2604484035,
+    "gb_mean": 1.27939115175,
+    "gb_max": 1.393087762,
+    "gb_p90": 1.306345544,
+    "extrapolated_total_gb": 1100.3,
+    "note": "compressed sizes"
+  },
+  "rows": [
+    {
+      "image": "swerebench/sweb.eval.x86_64.delgan_1776_loguru-1451:latest",
+      "full_size": 1365563220,
+      "last_updated": "2026-05-17T16:37:03.328275Z",
+      "digest": "sha256:181bd51aa34ebe84d749819dfbe9a2d3d215ff8f6406d897d790f876bc5f36db",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "delgan__loguru-1451",
+      "repo": "Delgan/loguru"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pypa_1776_twine-1309:latest",
+      "full_size": 1259650552,
+      "last_updated": "2026-05-17T16:35:11.438157Z",
+      "digest": "sha256:0ab70a15a784fc15cfeb1840e0634284c71de499e507a75847a268617668f9d3",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pypa__twine-1309",
+      "repo": "pypa/twine"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.tox-dev_1776_tox-3931:latest",
+      "full_size": 1288359397,
+      "last_updated": "2026-05-17T16:36:56.007356Z",
+      "digest": "sha256:6c44571aa2f3c2e01be2ba54b3330efcb4b5ba0d00983aa4a309d27853804896",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "tox-dev__tox-3931",
+      "repo": "tox-dev/tox"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.tox-dev_1776_tox-3810:latest",
+      "full_size": 1264989951,
+      "last_updated": "2026-04-23T15:57:25.52473Z",
+      "digest": "sha256:ffd1129e4be4692becf5011c874858918864d586267002a2917195726542de57",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "tox-dev__tox-3810",
+      "repo": "tox-dev/tox"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pycqa_1776_isort-2491:latest",
+      "full_size": 1247710060,
+      "last_updated": "2026-05-17T16:36:59.444277Z",
+      "digest": "sha256:8f6c834300883cb779eb720b8d9af2bd5f5c38c67f615748eb87a2c019851e4b",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pycqa__isort-2491",
+      "repo": "PyCQA/isort"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.joke2k_1776_django-environ-592:latest",
+      "full_size": 1230401173,
+      "last_updated": "2026-04-23T15:57:12.575274Z",
+      "digest": "sha256:9d95b539e1f0a5d7efeddf8d64855420fddceeb8fe20c337f7b5bedee370e55d",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "joke2k__django-environ-592",
+      "repo": "joke2k/django-environ"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.sqlfluff_1776_sqlfluff-7615:latest",
+      "full_size": 1393087762,
+      "last_updated": "2026-05-17T16:37:16.344152Z",
+      "digest": "sha256:b736f3429143f3e832840e8f3b6e3d9d33f0a737c73582dff690eef75f6eabe1",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "sqlfluff__sqlfluff-7615",
+      "repo": "sqlfluff/sqlfluff"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.holoviz_1776_param-1117:latest",
+      "full_size": 1241471798,
+      "last_updated": "2026-05-17T16:35:03.32852Z",
+      "digest": "sha256:c10bc0ad51b00c59ed8fa4366ee722c38e83dfaa620a7cc229f78489ccbaf010",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "holoviz__param-1117",
+      "repo": "holoviz/param"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.ucfopen_1776_canvasapi-716:latest",
+      "full_size": 1252878638,
+      "last_updated": "2026-05-17T16:35:10.507761Z",
+      "digest": "sha256:6eb2cb4155cf4e7a75b451a3c3f7edcc0966d34a945ed99e7d66ef588c9c7e85",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "ucfopen__canvasapi-716",
+      "repo": "ucfopen/canvasapi"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.macbre_1776_sql-metadata-625_interface:latest",
+      "full_size": 1240989471,
+      "last_updated": "2026-05-17T18:53:33.89079Z",
+      "digest": "sha256:5cece931a26478cd7247ba8ccbcd6c2865aa0437aeed4ac84f23744a9f53ef85",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "macbre__sql-metadata-625_interface",
+      "repo": "macbre/sql-metadata"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.pypa_1776_build-1027:latest",
+      "full_size": 1306345544,
+      "last_updated": "2026-05-17T16:35:10.030677Z",
+      "digest": "sha256:740e391fead0b931c80ae2ad4279d20822f385d84c26c4b2c80d70426f9f2250",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "pypa__build-1027",
+      "repo": "pypa/build"
+    },
+    {
+      "image": "swerebench/sweb.eval.x86_64.copier-org_1776_copier-2646:latest",
+      "full_size": 1261246255,
+      "last_updated": "2026-05-17T16:35:06.342846Z",
+      "digest": "sha256:bb745d823b4f629441f1db4cab88719e352cf430dccabf7e59ad9003b75b6d4c",
+      "arch": [
+        "amd64"
+      ],
+      "instance_id": "copier-org__copier-2646",
+      "repo": "copier-org/copier"
+    }
+  ]
+}

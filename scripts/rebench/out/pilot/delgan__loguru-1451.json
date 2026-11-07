@@ -1,0 +1,344 @@
+{
+  "instance_id": "delgan__loguru-1451",
+  "repo": "Delgan/loguru",
+  "created_at": "2026-03-25 02:34:06",
+  "base_commit": "2abeb0fa6d7be4b0455c6e0b580b1e9dab19005e",
+  "python": "3.13",
+  "install": "pip install -e \".[dev]\" --quiet",
+  "test_cmd": "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/test_add_option_format.py",
+  "model_calls": 0,
+  "paid": false,
+  "task_files": {
+    "public": "runs\\rebench\\public\\delgan__loguru-1451.json",
+    "private": "runs\\rebench\\private\\delgan__loguru-1451.json",
+    "public_keys": [
+      "issue_sha256",
+      "issue_text",
+      "repo_ref",
+      "task_id"
+    ],
+    "public_contains_private_fields": []
+  },
+  "official_git_state": {
+    "head": "2abeb0fa6d7be4b0455c6e0b580b1e9dab19005e",
+    "refs": 0,
+    "reflog": 0,
+    "unreachable": 0,
+    "dirty": 0,
+    "stash": 0
+  },
+  "official_head_matches_base": true,
+  "image": {
+    "official_image": "swerebench/sweb.eval.x86_64.delgan_1776_loguru-1451:latest",
+    "official_digest": "swerebench/sweb.eval.x86_64.delgan_1776_loguru-1451@sha256:181bd51aa34ebe84d749819dfbe9a2d3d215ff8f6406d897d790f876bc5f36db",
+    "official_size_bytes": 4850823936,
+    "clean_tag": "coding-harness-rebench-clean:delgan-loguru-1451",
+    "clean_digest": "coding-harness-rebench-clean@sha256:3c315ce6a31890a17bab2568d4e958946552d7cb4acfb0e09150ffb357a5100e",
+    "clean_id": "sha256:3c315ce6a31890a17bab2568d4e958946552d7cb4acfb0e09150ffb357a5100e",
+    "clean_size_bytes": 4853952392
+  },
+  "isolation": {
+    "source_only_match": true,
+    "source_hash": "d327b31d4aa524d66a13a4fe280788bcf36897ad8a1a879d251c72b31c4f2523",
+    "filesystem_scan": {
+      "needle_count": 12,
+      "hits": [],
+      "hit_count": 0,
+      "base_image_same": [],
+      "base_image_same_count": 0,
+      "install_record_same": [],
+      "install_record_same_count": 0,
+      "pass": true
+    },
+    "layout": {
+      "workspace_entries": 0,
+      "testbed_link": "/workspace",
+      "repo_git": false,
+      "repo_extra_files": 0,
+      "repo_extra_sample": [],
+      "natives": []
+    },
+    "answer_isolation_pass": true
+  },
+  "calibration": {
+    "test_paths": [
+      "tests/test_add_option_format.py"
+    ],
+    "overlay_files": [
+      "tests/test_add_option_format.py"
+    ],
+    "gold_changed": [
+      "loguru/_handler.py"
+    ],
+    "gold_deleted": [],
+    "existing_grader": {
+      "nodeids": {
+        "f2p": {
+          "original": 2,
+          "used": 2
+        },
+        "p2p": {
+          "original": 22,
+          "used": 18
+        },
+        "dropped": [
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_add_option_format.py::test_format[a-Message:",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_add_option_format.py::test_format[c-{level}",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_add_option_format.py::test_format[d-{message}",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_add_option_format.py::test_format[f-<lambda>-f",
+            "reason": "unbalanced_brackets"
+          }
+        ]
+      },
+      "runs": {
+        "empty": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            18,
+            18
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "failed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 20,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        "gold": {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            2,
+            2
+          ],
+          "p2p": [
+            18,
+            18
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "passed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 20,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        }
+      }
+    },
+    "nodeid_repair": {
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "collected": 24,
+      "collect_errors": [],
+      "collect_reason": null,
+      "f2p_original": 2,
+      "f2p_used": 2,
+      "p2p_original": 22,
+      "p2p_used": 22,
+      "f2p_repaired": [],
+      "p2p_repaired": [
+        {
+          "nodeid": "tests/test_add_option_format.py::test_format[a-Message:",
+          "matches": [
+            "tests/test_add_option_format.py::test_format[a-Message: {message}-Message: a\\n]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_add_option_format.py::test_format[c-{level}",
+          "matches": [
+            "tests/test_add_option_format.py::test_format[c-{level} {message} {level}-DEBUG c DEBUG\\n]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_add_option_format.py::test_format[d-{message}",
+          "matches": [
+            "tests/test_add_option_format.py::test_format[d-{message} {level} {level.no} {level.name}-d DEBUG 10 DEBUG\\n]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_add_option_format.py::test_format[f-<lambda>-f",
+          "matches": [
+            "tests/test_add_option_format.py::test_format[f-<lambda>-f DEBUG]"
+          ],
+          "match_count": 1
+        }
+      ]
+    },
+    "repeats": 3,
+    "runs": {
+      "empty": [
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            22,
+            22
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "failed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 24,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            22,
+            22
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "failed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 24,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            22,
+            22
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "failed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 24,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        }
+      ],
+      "gold": [
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            2,
+            2
+          ],
+          "p2p": [
+            22,
+            22
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "passed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 24,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            2,
+            2
+          ],
+          "p2p": [
+            22,
+            22
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "passed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 24,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            2,
+            2
+          ],
+          "p2p": [
+            22,
+            22
+          ],
+          "f2p_outcomes": {
+            "tests/test_add_option_format.py::test_invalid_format_key_emits_helpful_error_with_catch": "passed",
+            "tests/test_add_option_format.py::test_invalid_format_key_error_message_content": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 24,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        }
+      ]
+    },
+    "empty_f2p_fails_every_run": true,
+    "gold_f2p_passes_every_run": true,
+    "gold_full_pass_every_run": true,
+    "f2p_outcomes_stable": true,
+    "gold_p2p_not_passed": []
+  },
+  "accepted": true
+}

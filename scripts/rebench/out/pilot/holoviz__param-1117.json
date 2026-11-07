@@ -1,0 +1,486 @@
+{
+  "instance_id": "holoviz__param-1117",
+  "repo": "holoviz/param",
+  "created_at": "2026-03-25 14:50:38",
+  "base_commit": "833c8f05f7a47fa1476620307ef7fd447c45e6fb",
+  "python": "3.13",
+  "install": "pip install -e \".[tests]\" -q",
+  "test_cmd": "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/testreactive.py",
+  "model_calls": 0,
+  "paid": false,
+  "task_files": {
+    "public": "runs\\rebench\\public\\holoviz__param-1117.json",
+    "private": "runs\\rebench\\private\\holoviz__param-1117.json",
+    "public_keys": [
+      "issue_sha256",
+      "issue_text",
+      "repo_ref",
+      "task_id"
+    ],
+    "public_contains_private_fields": []
+  },
+  "official_git_state": {
+    "head": "833c8f05f7a47fa1476620307ef7fd447c45e6fb",
+    "refs": 0,
+    "reflog": 0,
+    "unreachable": 0,
+    "dirty": 0,
+    "stash": 0
+  },
+  "official_head_matches_base": true,
+  "image": {
+    "official_image": "swerebench/sweb.eval.x86_64.holoviz_1776_param-1117:latest",
+    "official_digest": "swerebench/sweb.eval.x86_64.holoviz_1776_param-1117@sha256:c10bc0ad51b00c59ed8fa4366ee722c38e83dfaa620a7cc229f78489ccbaf010",
+    "official_size_bytes": 4463236831,
+    "clean_tag": "coding-harness-rebench-clean:holoviz-param-1117",
+    "clean_digest": "coding-harness-rebench-clean@sha256:eb7c2f2a42920d42c8cc4310120bf7ced85d1cf4658e87addee0cabc57678a66",
+    "clean_id": "sha256:eb7c2f2a42920d42c8cc4310120bf7ced85d1cf4658e87addee0cabc57678a66",
+    "clean_size_bytes": 4466191590
+  },
+  "isolation": {
+    "source_only_match": true,
+    "source_hash": "8b23b9c615a91b5d9763ce0df972659887540955fc99c920e6f261604a46c0de",
+    "filesystem_scan": {
+      "needle_count": 12,
+      "hits": [],
+      "hit_count": 0,
+      "base_image_same": [],
+      "base_image_same_count": 0,
+      "install_record_same": [],
+      "install_record_same_count": 0,
+      "pass": true
+    },
+    "layout": {
+      "workspace_entries": 0,
+      "testbed_link": "/workspace",
+      "repo_git": false,
+      "repo_extra_files": 1,
+      "repo_extra_sample": [
+        "param/_version.py"
+      ],
+      "natives": []
+    },
+    "answer_isolation_pass": true
+  },
+  "calibration": {
+    "test_paths": [
+      "tests/testreactive.py"
+    ],
+    "overlay_files": [
+      "tests/testreactive.py"
+    ],
+    "gold_changed": [
+      "param/reactive.py"
+    ],
+    "gold_deleted": [],
+    "existing_grader": {
+      "nodeids": {
+        "f2p": {
+          "original": 2,
+          "used": 2
+        },
+        "p2p": {
+          "original": 94,
+          "used": 94
+        },
+        "dropped": []
+      },
+      "runs": {
+        "empty": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            0,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "missing",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "missing"
+          },
+          "p2p_not_passed": {
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[add]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[divmod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[floordiv]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[mod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[mul]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[pow]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[sub]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[truediv]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[eq]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[ge]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[gt]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[le]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[lt]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[ne]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[abs]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[ceil]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[floor]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[trunc]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[neg]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[pos]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[round]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[add]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[divmod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[floordiv]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[mod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[mul]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[pow]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[sub]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[truediv]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops[and_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops[or_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops[xor]": "missing",
+            "tests/testreactive.py::test_reactive_logic_unary_ops[inv]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops_reverse[and_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops_reverse[or_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops_reverse[xor]": "missing",
+            "tests/testreactive.py::test_reactive_getitem_dict": "missing",
+            "tests/testreactive.py::test_reactive_getitem_list": "missing",
+            "tests/testreactive.py::test_reactive_getitem_list_with_slice": "missing",
+            "tests/testreactive.py::test_reactive_empty_construct": "missing",
+            "tests/testreactive.py::test_reactive_set_new_value_assignment": "missing",
+            "tests/testreactive.py::test_reactive_set_new_value_method": "missing",
+            "tests/testreactive.py::test_reactive_increment_value": "missing",
+            "tests/testreactive.py::test_reactive_multiply_value_inplace": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_set_new_value": "missing",
+            "tests/testreactive.py::test_reactive_reflect_param_value": "missing",
+            "tests/testreactive.py::test_reactive_skip_value": "missing",
+            "tests/testreactive.py::test_reactive_skip_value_return": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_param_value": "missing",
+            "tests/testreactive.py::test_reactive_reactive_reflect_other_rx": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_other_reactive_expr": "missing",
+            "tests/testreactive.py::test_reactive_reflect_bound_method": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_bound_method": "missing",
+            "tests/testreactive.py::test_reactive_reflect_bound_function": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_bound_function": "missing",
+            "tests/testreactive.py::test_reactive_len": "missing",
+            "tests/testreactive.py::test_reactive_bool": "missing",
+            "tests/testreactive.py::test_reactive_not_": "missing",
+            "tests/testreactive.py::test_reactive_and_": "missing",
+            "tests/testreactive.py::test_reactive_or_": "missing",
+            "tests/testreactive.py::test_reactive_map": "missing",
+            "tests/testreactive.py::test_reactive_async_map": "missing",
+            "tests/testreactive.py::test_reactive_map_args": "missing",
+            "tests/testreactive.py::test_reactive_iter": "missing",
+            "tests/testreactive.py::test_reactive_multi_iter": "missing",
+            "tests/testreactive.py::test_reactive_is": "missing",
+            "tests/testreactive.py::test_reactive_in": "missing",
+            "tests/testreactive.py::test_reactive_is_not": "missing",
+            "tests/testreactive.py::test_reactive_where_expr": "missing",
+            "tests/testreactive.py::test_reactive_where_expr_refs": "missing",
+            "tests/testreactive.py::test_reactive_watch_on_set_input": "missing",
+            "tests/testreactive.py::test_reactive_watch_async_on_event": "missing",
+            "tests/testreactive.py::test_reactive_set_value_non_root_raises": "missing",
+            "tests/testreactive.py::test_reactive_clone_evaluates_once": "missing",
+            "tests/testreactive.py::test_reactive_when": "missing",
+            "tests/testreactive.py::test_reactive_when_initial": "missing",
+            "tests/testreactive.py::test_reactive_resolve": "missing",
+            "tests/testreactive.py::test_reactive_resolve_nested": "missing",
+            "tests/testreactive.py::test_reactive_resolve_recursive": "missing",
+            "tests/testreactive.py::test_reactive_async_func": "missing",
+            "tests/testreactive.py::test_reactive_pipe_async_func": "missing",
+            "tests/testreactive.py::test_reactive_gen": "missing",
+            "tests/testreactive.py::test_reactive_gen_pipe": "missing",
+            "tests/testreactive.py::test_reactive_gen_with_dep": "missing",
+            "tests/testreactive.py::test_reactive_gen_pipe_with_dep": "missing",
+            "tests/testreactive.py::test_reactive_async_gen": "missing",
+            "tests/testreactive.py::test_reactive_async_gen_pipe": "missing",
+            "tests/testreactive.py::test_reactive_async_gen_with_dep": "missing",
+            "tests/testreactive.py::test_reactive_async_gen_pipe_with_dep": "missing",
+            "tests/testreactive.py::test_root_invalidation": "missing",
+            "tests/testreactive.py::test_ensure_ref_can_update_by_watcher_of_same_parameter": "missing",
+            "tests/testreactive.py::test_reactive_dunder_len_error": "missing",
+            "tests/testreactive.py::test_reactive_dunder_bool": "missing",
+            "tests/testreactive.py::test_reactive_set_value_attributeerror": "missing"
+          },
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 3,
+          "execution_status": "failed"
+        },
+        "gold": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            0,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "missing",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "missing"
+          },
+          "p2p_not_passed": {
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[add]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[divmod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[floordiv]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[mod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[mul]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[pow]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[sub]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops[truediv]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[eq]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[ge]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[gt]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[le]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[lt]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_comparison_ops[ne]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[abs]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[ceil]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[floor]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[trunc]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[neg]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[pos]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_unary_ops[round]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[add]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[divmod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[floordiv]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[mod]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[mul]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[pow]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[sub]": "missing",
+            "tests/testreactive.py::test_reactive_numeric_binary_ops_reverse[truediv]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops[and_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops[or_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops[xor]": "missing",
+            "tests/testreactive.py::test_reactive_logic_unary_ops[inv]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops_reverse[and_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops_reverse[or_]": "missing",
+            "tests/testreactive.py::test_reactive_logic_binary_ops_reverse[xor]": "missing",
+            "tests/testreactive.py::test_reactive_getitem_dict": "missing",
+            "tests/testreactive.py::test_reactive_getitem_list": "missing",
+            "tests/testreactive.py::test_reactive_getitem_list_with_slice": "missing",
+            "tests/testreactive.py::test_reactive_empty_construct": "missing",
+            "tests/testreactive.py::test_reactive_set_new_value_assignment": "missing",
+            "tests/testreactive.py::test_reactive_set_new_value_method": "missing",
+            "tests/testreactive.py::test_reactive_increment_value": "missing",
+            "tests/testreactive.py::test_reactive_multiply_value_inplace": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_set_new_value": "missing",
+            "tests/testreactive.py::test_reactive_reflect_param_value": "missing",
+            "tests/testreactive.py::test_reactive_skip_value": "missing",
+            "tests/testreactive.py::test_reactive_skip_value_return": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_param_value": "missing",
+            "tests/testreactive.py::test_reactive_reactive_reflect_other_rx": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_other_reactive_expr": "missing",
+            "tests/testreactive.py::test_reactive_reflect_bound_method": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_bound_method": "missing",
+            "tests/testreactive.py::test_reactive_reflect_bound_function": "missing",
+            "tests/testreactive.py::test_reactive_pipeline_reflect_bound_function": "missing",
+            "tests/testreactive.py::test_reactive_len": "missing",
+            "tests/testreactive.py::test_reactive_bool": "missing",
+            "tests/testreactive.py::test_reactive_not_": "missing",
+            "tests/testreactive.py::test_reactive_and_": "missing",
+            "tests/testreactive.py::test_reactive_or_": "missing",
+            "tests/testreactive.py::test_reactive_map": "missing",
+            "tests/testreactive.py::test_reactive_async_map": "missing",
+            "tests/testreactive.py::test_reactive_map_args": "missing",
+            "tests/testreactive.py::test_reactive_iter": "missing",
+            "tests/testreactive.py::test_reactive_multi_iter": "missing",
+            "tests/testreactive.py::test_reactive_is": "missing",
+            "tests/testreactive.py::test_reactive_in": "missing",
+            "tests/testreactive.py::test_reactive_is_not": "missing",
+            "tests/testreactive.py::test_reactive_where_expr": "missing",
+            "tests/testreactive.py::test_reactive_where_expr_refs": "missing",
+            "tests/testreactive.py::test_reactive_watch_on_set_input": "missing",
+            "tests/testreactive.py::test_reactive_watch_async_on_event": "missing",
+            "tests/testreactive.py::test_reactive_set_value_non_root_raises": "missing",
+            "tests/testreactive.py::test_reactive_clone_evaluates_once": "missing",
+            "tests/testreactive.py::test_reactive_when": "missing",
+            "tests/testreactive.py::test_reactive_when_initial": "missing",
+            "tests/testreactive.py::test_reactive_resolve": "missing",
+            "tests/testreactive.py::test_reactive_resolve_nested": "missing",
+            "tests/testreactive.py::test_reactive_resolve_recursive": "missing",
+            "tests/testreactive.py::test_reactive_async_func": "missing",
+            "tests/testreactive.py::test_reactive_pipe_async_func": "missing",
+            "tests/testreactive.py::test_reactive_gen": "missing",
+            "tests/testreactive.py::test_reactive_gen_pipe": "missing",
+            "tests/testreactive.py::test_reactive_gen_with_dep": "missing",
+            "tests/testreactive.py::test_reactive_gen_pipe_with_dep": "missing",
+            "tests/testreactive.py::test_reactive_async_gen": "missing",
+            "tests/testreactive.py::test_reactive_async_gen_pipe": "missing",
+            "tests/testreactive.py::test_reactive_async_gen_with_dep": "missing",
+            "tests/testreactive.py::test_reactive_async_gen_pipe_with_dep": "missing",
+            "tests/testreactive.py::test_root_invalidation": "missing",
+            "tests/testreactive.py::test_ensure_ref_can_update_by_watcher_of_same_parameter": "missing",
+            "tests/testreactive.py::test_reactive_dunder_len_error": "missing",
+            "tests/testreactive.py::test_reactive_dunder_bool": "missing",
+            "tests/testreactive.py::test_reactive_set_value_attributeerror": "missing"
+          },
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 3,
+          "execution_status": "failed"
+        }
+      }
+    },
+    "nodeid_repair": {
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "collected": 103,
+      "collect_errors": [],
+      "collect_reason": null,
+      "f2p_original": 2,
+      "f2p_used": 2,
+      "p2p_original": 94,
+      "p2p_used": 94,
+      "f2p_repaired": [],
+      "p2p_repaired": []
+    },
+    "repeats": 3,
+    "runs": {
+      "empty": [
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            94,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "failed",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            94,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "failed",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            2
+          ],
+          "p2p": [
+            94,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "failed",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        }
+      ],
+      "gold": [
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            2,
+            2
+          ],
+          "p2p": [
+            94,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "passed",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            2,
+            2
+          ],
+          "p2p": [
+            94,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "passed",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            2,
+            2
+          ],
+          "p2p": [
+            94,
+            94
+          ],
+          "f2p_outcomes": {
+            "tests/testreactive.py::test_shared_rx_only_triggers_once": "passed",
+            "tests/testreactive.py::test_async_shared_rx_only_triggers_once": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 96,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        }
+      ]
+    },
+    "empty_f2p_fails_every_run": true,
+    "gold_f2p_passes_every_run": true,
+    "gold_full_pass_every_run": true,
+    "f2p_outcomes_stable": true,
+    "gold_p2p_not_passed": []
+  },
+  "accepted": true
+}

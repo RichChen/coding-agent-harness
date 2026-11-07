@@ -1,0 +1,524 @@
+{
+  "instance_id": "pypa__build-1027",
+  "repo": "pypa/build",
+  "created_at": "2026-04-10 18:48:38",
+  "base_commit": "27b67b2db1807f2547af670e4d14401a6605bf3b",
+  "python": "3.13",
+  "install": "pip install filelock pytest pytest-cov pytest-mock covdefaults pytest-rerunfailures pytest-xdist wheel setuptools setuptools_scm virtualenv uv -q && pip install -e . -q",
+  "test_cmd": "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/test_projectbuilder.py",
+  "model_calls": 0,
+  "paid": false,
+  "task_files": {
+    "public": "runs\\rebench\\public\\pypa__build-1027.json",
+    "private": "runs\\rebench\\private\\pypa__build-1027.json",
+    "public_keys": [
+      "issue_sha256",
+      "issue_text",
+      "repo_ref",
+      "task_id"
+    ],
+    "public_contains_private_fields": []
+  },
+  "official_git_state": {
+    "head": "27b67b2db1807f2547af670e4d14401a6605bf3b",
+    "refs": 0,
+    "reflog": 0,
+    "unreachable": 0,
+    "dirty": 0,
+    "stash": 0
+  },
+  "official_head_matches_base": true,
+  "image": {
+    "official_image": "swerebench/sweb.eval.x86_64.pypa_1776_build-1027:latest",
+    "official_digest": "swerebench/sweb.eval.x86_64.pypa_1776_build-1027@sha256:740e391fead0b931c80ae2ad4279d20822f385d84c26c4b2c80d70426f9f2250",
+    "official_size_bytes": 4632669315,
+    "clean_tag": "coding-harness-rebench-clean:pypa-build-1027",
+    "clean_digest": "coding-harness-rebench-clean@sha256:c6a4a5f93a39a9206aec521544d379632a89649175087c6c7a6e7f2ddaf342fb",
+    "clean_id": "sha256:c6a4a5f93a39a9206aec521544d379632a89649175087c6c7a6e7f2ddaf342fb",
+    "clean_size_bytes": 4633633375
+  },
+  "isolation": {
+    "source_only_match": true,
+    "source_hash": "784e8e0d15fad4452c7fd381d901070ea265fb4abf61aba0ed8400dd8571b39f",
+    "filesystem_scan": {
+      "needle_count": 12,
+      "hits": [],
+      "hit_count": 0,
+      "base_image_same": [],
+      "base_image_same_count": 0,
+      "install_record_same": [],
+      "install_record_same_count": 0,
+      "pass": true
+    },
+    "layout": {
+      "workspace_entries": 0,
+      "testbed_link": "/workspace",
+      "repo_git": false,
+      "repo_extra_files": 0,
+      "repo_extra_sample": [],
+      "natives": []
+    },
+    "answer_isolation_pass": true
+  },
+  "calibration": {
+    "test_paths": [
+      "tests/test_projectbuilder.py"
+    ],
+    "overlay_files": [
+      "tests/test_projectbuilder.py"
+    ],
+    "gold_changed": [
+      "docs/changelog/860.bugfix.rst",
+      "src/build/_util.py"
+    ],
+    "gold_deleted": [],
+    "existing_grader": {
+      "nodeids": {
+        "f2p": {
+          "original": 4,
+          "used": 3
+        },
+        "p2p": {
+          "original": 60,
+          "used": 48
+        },
+        "dropped": [
+          {
+            "side": "f2p",
+            "nodeid": "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-missing_dep;",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep[extra-without-associated-deps]",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-prerelease_dep",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-missing_dep",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml0-`requires`",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml1-`requires`",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml2-`requires`",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml3-`build-backend`",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml4-`backend-path`",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml5-`backend-path`",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml6-Unknown",
+            "reason": "unbalanced_brackets"
+          }
+        ]
+      },
+      "runs": {
+        "empty": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            3
+          ],
+          "p2p": [
+            30,
+            48
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "failed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_init[False]": "error",
+            "tests/test_projectbuilder.py::test_check_dependencies[False]": "error",
+            "tests/test_projectbuilder.py::test_build[False]": "error",
+            "tests/test_projectbuilder.py::test_default_backend[False]": "error",
+            "tests/test_projectbuilder.py::test_missing_backend[False]": "error",
+            "tests/test_projectbuilder.py::test_missing_requires[False]": "error",
+            "tests/test_projectbuilder.py::test_build_system_typo[False]": "error",
+            "tests/test_projectbuilder.py::test_missing_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_relative_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_build_not_dir_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare_no_hook[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare_error[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare_not_dir_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_no_outdir_single[False]": "error",
+            "tests/test_projectbuilder.py::test_no_outdir_multiple[False]": "error",
+            "tests/test_projectbuilder.py::test_log[False]": "error"
+          },
+          "collected": 51,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        "gold": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            3
+          ],
+          "p2p": [
+            30,
+            48
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "failed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_init[False]": "error",
+            "tests/test_projectbuilder.py::test_check_dependencies[False]": "error",
+            "tests/test_projectbuilder.py::test_build[False]": "error",
+            "tests/test_projectbuilder.py::test_default_backend[False]": "error",
+            "tests/test_projectbuilder.py::test_missing_backend[False]": "error",
+            "tests/test_projectbuilder.py::test_missing_requires[False]": "error",
+            "tests/test_projectbuilder.py::test_build_system_typo[False]": "error",
+            "tests/test_projectbuilder.py::test_missing_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_relative_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_build_not_dir_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare_no_hook[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare_error[False]": "error",
+            "tests/test_projectbuilder.py::test_prepare_not_dir_outdir[False]": "error",
+            "tests/test_projectbuilder.py::test_no_outdir_single[False]": "error",
+            "tests/test_projectbuilder.py::test_no_outdir_multiple[False]": "error",
+            "tests/test_projectbuilder.py::test_log[False]": "error"
+          },
+          "collected": 51,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        }
+      }
+    },
+    "nodeid_repair": {
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "collected": 69,
+      "collect_errors": [],
+      "collect_reason": null,
+      "f2p_original": 4,
+      "f2p_used": 4,
+      "p2p_original": 60,
+      "p2p_used": 64,
+      "f2p_repaired": [
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep",
+          "matches": [
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep @ https://example.com/extras_dep-1.0.0.tar.gz]"
+          ],
+          "match_count": 1
+        }
+      ],
+      "p2p_repaired": [
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-missing_dep;",
+          "matches": [
+            "tests/test_projectbuilder.py::test_check_dependency[False-missing_dep; python_version>\"10\"-None]",
+            "tests/test_projectbuilder.py::test_check_dependency[False-missing_dep; python_version<=\"1\"-None]",
+            "tests/test_projectbuilder.py::test_check_dependency[False-missing_dep; python_version>=\"1\"-expected10]"
+          ],
+          "match_count": 3
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep",
+          "matches": [
+            "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep == 1.0.0-None]",
+            "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep == 2.0.0-expected12]"
+          ],
+          "match_count": 2
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep[extra-without-associated-deps]",
+          "matches": [
+            "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep[extra-without-associated-deps] == 1.0.0-None]",
+            "tests/test_projectbuilder.py::test_check_dependency[False-extras_dep[extra-without-associated-deps] == 2.0.0-expected14]"
+          ],
+          "match_count": 2
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_check_dependency[False-prerelease_dep",
+          "matches": [
+            "tests/test_projectbuilder.py::test_check_dependency[False-prerelease_dep >= 1.0.0-None]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-missing_dep",
+          "matches": [
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-missing_dep @ https://example.com/missing_dep-1.0.0.tar.gz]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml0-`requires`",
+          "matches": [
+            "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml0-`requires` is a required property]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml1-`requires`",
+          "matches": [
+            "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml1-`requires` must be an array of strings]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml2-`requires`",
+          "matches": [
+            "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml2-`requires` must be an array of strings]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml3-`build-backend`",
+          "matches": [
+            "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml3-`build-backend` must be a string]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml4-`backend-path`",
+          "matches": [
+            "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml4-`backend-path` must be an array of strings]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml5-`backend-path`",
+          "matches": [
+            "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml5-`backend-path` must be an array of strings]"
+          ],
+          "match_count": 1
+        },
+        {
+          "nodeid": "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml6-Unknown",
+          "matches": [
+            "tests/test_projectbuilder.py::test_parse_invalid_build_system_table_type[False-pyproject_toml6-Unknown properties: unknown-prop]"
+          ],
+          "match_count": 1
+        }
+      ]
+    },
+    "repeats": 3,
+    "runs": {
+      "empty": [
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            4
+          ],
+          "p2p": [
+            63,
+            64
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep @ https://example.com/extras_dep-1.0.0.tar.gz]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "failed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "failed"
+          },
+          "collected": 68,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            4
+          ],
+          "p2p": [
+            63,
+            64
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep @ https://example.com/extras_dep-1.0.0.tar.gz]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "failed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "failed"
+          },
+          "collected": 68,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            4
+          ],
+          "p2p": [
+            63,
+            64
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep @ https://example.com/extras_dep-1.0.0.tar.gz]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "failed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "failed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "failed"
+          },
+          "collected": 68,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        }
+      ],
+      "gold": [
+        {
+          "status": "partial",
+          "reason": null,
+          "f2p": [
+            4,
+            4
+          ],
+          "p2p": [
+            63,
+            64
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep @ https://example.com/extras_dep-1.0.0.tar.gz]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "passed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "failed"
+          },
+          "collected": 68,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "partial",
+          "reason": null,
+          "f2p": [
+            4,
+            4
+          ],
+          "p2p": [
+            63,
+            64
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep @ https://example.com/extras_dep-1.0.0.tar.gz]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "passed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "failed"
+          },
+          "collected": 68,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "partial",
+          "reason": null,
+          "f2p": [
+            4,
+            4
+          ],
+          "p2p": [
+            63,
+            64
+          ],
+          "f2p_outcomes": {
+            "tests/test_projectbuilder.py::test_check_dependency_url_no_direct_url_is_unmet[False-extras_dep @ https://example.com/extras_dep-1.0.0.tar.gz]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_url_mismatched_direct_url_is_unmet[False]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_mismatched_direct_url_is_unmet[False]": "passed",
+            "tests/test_projectbuilder.py::test_check_dependency_vcs_url_no_revision_mismatch_is_unmet[False]": "passed"
+          },
+          "p2p_not_passed": {
+            "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]": "failed"
+          },
+          "collected": 68,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        }
+      ]
+    },
+    "empty_f2p_fails_every_run": true,
+    "gold_f2p_passes_every_run": true,
+    "gold_full_pass_every_run": false,
+    "f2p_outcomes_stable": true,
+    "gold_p2p_not_passed": [
+      "tests/test_projectbuilder.py::test_build_with_dep_on_console_script[False]"
+    ]
+  },
+  "accepted": true
+}

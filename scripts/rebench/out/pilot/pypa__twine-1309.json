@@ -1,0 +1,322 @@
+{
+  "instance_id": "pypa__twine-1309",
+  "repo": "pypa/twine",
+  "created_at": "2026-04-17 17:23:13",
+  "base_commit": "cab618fb122bb2d1e6c042f5bf0c5a8b8e2573bc",
+  "python": "3.13",
+  "install": "pip install -e . -q && pip install pretend pytest pytest-socket coverage -q",
+  "test_cmd": "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/test_main.py",
+  "model_calls": 0,
+  "paid": false,
+  "task_files": {
+    "public": "runs\\rebench\\public\\pypa__twine-1309.json",
+    "private": "runs\\rebench\\private\\pypa__twine-1309.json",
+    "public_keys": [
+      "issue_sha256",
+      "issue_text",
+      "repo_ref",
+      "task_id"
+    ],
+    "public_contains_private_fields": []
+  },
+  "official_git_state": {
+    "head": "cab618fb122bb2d1e6c042f5bf0c5a8b8e2573bc",
+    "refs": 0,
+    "reflog": 0,
+    "unreachable": 0,
+    "dirty": 0,
+    "stash": 0
+  },
+  "official_head_matches_base": true,
+  "image": {
+    "official_image": "swerebench/sweb.eval.x86_64.pypa_1776_twine-1309:latest",
+    "official_digest": "swerebench/sweb.eval.x86_64.pypa_1776_twine-1309@sha256:0ab70a15a784fc15cfeb1840e0634284c71de499e507a75847a268617668f9d3",
+    "official_size_bytes": 4525627860,
+    "clean_tag": "coding-harness-rebench-clean:pypa-twine-1309",
+    "clean_digest": "coding-harness-rebench-clean@sha256:4d5da41680e0dbafbd055e846a3170e531115eb9642bf3a27604138fe8dc53e5",
+    "clean_id": "sha256:4d5da41680e0dbafbd055e846a3170e531115eb9642bf3a27604138fe8dc53e5",
+    "clean_size_bytes": 4526590984
+  },
+  "isolation": {
+    "source_only_match": true,
+    "source_hash": "eb7884d72fcefc1d09e6e48fa6a0e89fcea4a68198a954d0721add830ac00a6f",
+    "filesystem_scan": {
+      "needle_count": 12,
+      "hits": [],
+      "hit_count": 0,
+      "base_image_same": [],
+      "base_image_same_count": 0,
+      "install_record_same": [],
+      "install_record_same_count": 0,
+      "pass": true
+    },
+    "layout": {
+      "workspace_entries": 0,
+      "testbed_link": "/workspace",
+      "repo_git": false,
+      "repo_extra_files": 6,
+      "repo_extra_sample": [
+        "twine.egg-info/PKG-INFO",
+        "twine.egg-info/SOURCES.txt",
+        "twine.egg-info/dependency_links.txt",
+        "twine.egg-info/entry_points.txt",
+        "twine.egg-info/requires.txt",
+        "twine.egg-info/top_level.txt"
+      ],
+      "natives": []
+    },
+    "answer_isolation_pass": true
+  },
+  "calibration": {
+    "test_paths": [
+      "tests/test_main.py"
+    ],
+    "overlay_files": [
+      "tests/test_main.py"
+    ],
+    "gold_changed": [
+      "twine/__main__.py"
+    ],
+    "gold_deleted": [],
+    "existing_grader": {
+      "nodeids": {
+        "f2p": {
+          "original": 1,
+          "used": 0
+        },
+        "p2p": {
+          "original": 3,
+          "used": 2
+        },
+        "dropped": [
+          {
+            "side": "f2p",
+            "nodeid": "tests/test_main.py::test_http_exception_handling[599-Unknown",
+            "reason": "unbalanced_brackets"
+          },
+          {
+            "side": "p2p",
+            "nodeid": "tests/test_main.py::test_http_exception_handling[400-Bad",
+            "reason": "unbalanced_brackets"
+          }
+        ]
+      },
+      "runs": {
+        "empty": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            0
+          ],
+          "p2p": [
+            0,
+            2
+          ],
+          "f2p_outcomes": {},
+          "p2p_not_passed": {
+            "tests/test_main.py::test_exception_handling": "missing",
+            "tests/test_main.py::test_no_color_exception": "missing"
+          },
+          "collected": 0,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 4,
+          "execution_status": "failed"
+        },
+        "gold": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            0
+          ],
+          "p2p": [
+            0,
+            2
+          ],
+          "f2p_outcomes": {},
+          "p2p_not_passed": {
+            "tests/test_main.py::test_exception_handling": "missing",
+            "tests/test_main.py::test_no_color_exception": "missing"
+          },
+          "collected": 0,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 4,
+          "execution_status": "failed"
+        }
+      }
+    },
+    "nodeid_repair": {
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "collected": 4,
+      "collect_errors": [],
+      "collect_reason": null,
+      "f2p_original": 1,
+      "f2p_used": 1,
+      "p2p_original": 3,
+      "p2p_used": 3,
+      "f2p_repaired": [
+        {
+          "nodeid": "tests/test_main.py::test_http_exception_handling[599-Unknown",
+          "matches": [
+            "tests/test_main.py::test_http_exception_handling[599-Unknown Status-Another reason]"
+          ],
+          "match_count": 1
+        }
+      ],
+      "p2p_repaired": [
+        {
+          "nodeid": "tests/test_main.py::test_http_exception_handling[400-Bad",
+          "matches": [
+            "tests/test_main.py::test_http_exception_handling[400-Bad Request-Error reason]"
+          ],
+          "match_count": 1
+        }
+      ]
+    },
+    "repeats": 3,
+    "runs": {
+      "empty": [
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            1
+          ],
+          "p2p": [
+            3,
+            3
+          ],
+          "f2p_outcomes": {
+            "tests/test_main.py::test_http_exception_handling[599-Unknown Status-Another reason]": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 4,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            1
+          ],
+          "p2p": [
+            3,
+            3
+          ],
+          "f2p_outcomes": {
+            "tests/test_main.py::test_http_exception_handling[599-Unknown Status-Another reason]": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 4,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            1
+          ],
+          "p2p": [
+            3,
+            3
+          ],
+          "f2p_outcomes": {
+            "tests/test_main.py::test_http_exception_handling[599-Unknown Status-Another reason]": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 4,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        }
+      ],
+      "gold": [
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            1,
+            1
+          ],
+          "p2p": [
+            3,
+            3
+          ],
+          "f2p_outcomes": {
+            "tests/test_main.py::test_http_exception_handling[599-Unknown Status-Another reason]": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 4,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            1,
+            1
+          ],
+          "p2p": [
+            3,
+            3
+          ],
+          "f2p_outcomes": {
+            "tests/test_main.py::test_http_exception_handling[599-Unknown Status-Another reason]": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 4,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            1,
+            1
+          ],
+          "p2p": [
+            3,
+            3
+          ],
+          "f2p_outcomes": {
+            "tests/test_main.py::test_http_exception_handling[599-Unknown Status-Another reason]": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 4,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        }
+      ]
+    },
+    "empty_f2p_fails_every_run": true,
+    "gold_f2p_passes_every_run": true,
+    "gold_full_pass_every_run": true,
+    "f2p_outcomes_stable": true,
+    "gold_p2p_not_passed": []
+  },
+  "accepted": true
+}

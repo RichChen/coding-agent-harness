@@ -1,0 +1,286 @@
+{
+  "instance_id": "pycqa__isort-2491",
+  "repo": "PyCQA/isort",
+  "created_at": "2026-03-12 21:21:11",
+  "base_commit": "ae91dadf34951e316d5a81ffe7ac086952f1da65",
+  "python": "3.13",
+  "install": "pip install -e . -q && pip install pytest hypothesis pytest-benchmark -q",
+  "test_cmd": "pytest --no-header -rA --tb=line --color=no -p no:cacheprovider tests/unit/test_regressions.py",
+  "model_calls": 0,
+  "paid": false,
+  "task_files": {
+    "public": "runs\\rebench\\public\\pycqa__isort-2491.json",
+    "private": "runs\\rebench\\private\\pycqa__isort-2491.json",
+    "public_keys": [
+      "issue_sha256",
+      "issue_text",
+      "repo_ref",
+      "task_id"
+    ],
+    "public_contains_private_fields": []
+  },
+  "official_git_state": {
+    "head": "ae91dadf34951e316d5a81ffe7ac086952f1da65",
+    "refs": 0,
+    "reflog": 0,
+    "unreachable": 0,
+    "dirty": 0,
+    "stash": 0
+  },
+  "official_head_matches_base": true,
+  "image": {
+    "official_image": "swerebench/sweb.eval.x86_64.pycqa_1776_isort-2491:latest",
+    "official_digest": "swerebench/sweb.eval.x86_64.pycqa_1776_isort-2491@sha256:8f6c834300883cb779eb720b8d9af2bd5f5c38c67f615748eb87a2c019851e4b",
+    "official_size_bytes": 4478048071,
+    "clean_tag": "coding-harness-rebench-clean:pycqa-isort-2491",
+    "clean_digest": "coding-harness-rebench-clean@sha256:cbdf38ae5edcd38bad96deeca0b9457737834ec8d036bcda62382e8c28a4e41f",
+    "clean_id": "sha256:cbdf38ae5edcd38bad96deeca0b9457737834ec8d036bcda62382e8c28a4e41f",
+    "clean_size_bytes": 4481513032
+  },
+  "isolation": {
+    "source_only_match": true,
+    "source_hash": "f4e00b32cbc6a3bf4c14a09bbb632b19206b222c1928ca70a11488a7b7be9edd",
+    "filesystem_scan": {
+      "needle_count": 12,
+      "hits": [],
+      "hit_count": 0,
+      "base_image_same": [],
+      "base_image_same_count": 0,
+      "install_record_same": [],
+      "install_record_same_count": 0,
+      "pass": true
+    },
+    "layout": {
+      "workspace_entries": 0,
+      "testbed_link": "/workspace",
+      "repo_git": false,
+      "repo_extra_files": 0,
+      "repo_extra_sample": [],
+      "natives": []
+    },
+    "answer_isolation_pass": true
+  },
+  "calibration": {
+    "test_paths": [
+      "tests/unit/test_regressions.py"
+    ],
+    "overlay_files": [
+      "tests/unit/test_regressions.py"
+    ],
+    "gold_changed": [
+      "isort/output.py"
+    ],
+    "gold_deleted": [],
+    "existing_grader": {
+      "nodeids": {
+        "f2p": {
+          "original": 1,
+          "used": 1
+        },
+        "p2p": {
+          "original": 73,
+          "used": 73
+        },
+        "dropped": []
+      },
+      "runs": {
+        "empty": {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        "gold": {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            1,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        }
+      }
+    },
+    "nodeid_repair": {
+      "options": [
+        "-p",
+        "no:cacheprovider"
+      ],
+      "collected": 74,
+      "collect_errors": [],
+      "collect_reason": null,
+      "f2p_original": 1,
+      "f2p_used": 1,
+      "p2p_original": 73,
+      "p2p_used": 73,
+      "f2p_repaired": [],
+      "p2p_repaired": []
+    },
+    "repeats": 3,
+    "runs": {
+      "empty": [
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        },
+        {
+          "status": "fail",
+          "reason": null,
+          "f2p": [
+            0,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "failed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 1,
+          "execution_status": "failed"
+        }
+      ],
+      "gold": [
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            1,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            1,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        },
+        {
+          "status": "pass",
+          "reason": null,
+          "f2p": [
+            1,
+            1
+          ],
+          "p2p": [
+            73,
+            73
+          ],
+          "f2p_outcomes": {
+            "tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move": "passed"
+          },
+          "p2p_not_passed": {},
+          "collected": 74,
+          "collection_errors": [],
+          "runner_error": null,
+          "exit_code": 0,
+          "execution_status": "succeeded"
+        }
+      ]
+    },
+    "empty_f2p_fails_every_run": true,
+    "gold_f2p_passes_every_run": true,
+    "gold_full_pass_every_run": true,
+    "f2p_outcomes_stable": true,
+    "gold_p2p_not_passed": []
+  },
+  "accepted": true
+}
