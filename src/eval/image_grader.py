@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import base64
 import json
+import shlex
 import time
 from pathlib import Path
 
@@ -29,6 +30,61 @@ for name, encoded in (req.get("overlay") or {}).items():
 '''
 
 CONFIG_NAMES = {"conftest.py", "setup.cfg", "setup.py", "pyproject.toml", "pytest.ini", "tox.ini", "setup.cfg"}
+
+AUTOLOAD_OFF = "os.environ['PYTEST_DISABLE_PLUGIN_AUTOLOAD']='1'"
+AUTOLOAD_KEPT = "os.environ.pop('PYTEST_DISABLE_PLUGIN_AUTOLOAD',None)"
+# Options of a task's test command that take a separate value. --tb and --color are dropped: they only
+# change console output, which the receipt does not read.
+VALUE_OPTIONS = {"-p", "-W", "-m", "-k", "-o", "-c", "--deselect", "--ignore", "--ignore-glob", "--rootdir",
+                 "--import-mode", "--timeout", "--tb", "--color"}
+CONSOLE_ONLY = {"-rA", "--no-header", "-v", "--verbose", "-vv", "-q", "--tb", "--color"}
+
+
+def pytest_options_from_test_cmd(test_cmd: str | None) -> list[str]:
+    """Option flags of a task's pytest command. Positional test paths are dropped; node ids replace them."""
+    tokens = shlex.split(test_cmd or "")
+    if "pytest" not in tokens:
+        return []
+    tokens = tokens[tokens.index("pytest") + 1:]
+    kept, index = [], 0
+    while index < len(tokens):
+        token = tokens[index]
+        if token in VALUE_OPTIONS and index + 1 < len(tokens):
+            if token not in CONSOLE_ONLY:
+                kept += [token, tokens[index + 1]]
+            index += 2
+            continue
+        if (token.startswith("-") and token not in CONSOLE_ONLY
+                and not token.startswith(("--tb=", "--color=", "--verbosity"))):
+            kept.append(token)
+        index += 1
+    return kept
+
+
+def repair_truncated_nodeids(nodes: list[str], collected: list[str]) -> tuple[list[str], list[dict]]:
+    """Map node ids that a log parser cut at the first space back to the collected ids they start."""
+    have = set(collected)
+    repaired, notes = [], []
+    for node in nodes:
+        if node in have:
+            repaired.append(node)
+            continue
+        matches = [item for item in collected if item.startswith(node + " ")]
+        notes.append({"nodeid": node, "matches": matches[:10], "match_count": len(matches)})
+        repaired.extend(matches)
+    return list(dict.fromkeys(repaired)), notes
+
+
+def sandbox_p2p_exclusions(gold_evaluations: list[dict], p2p: list[str]) -> list[str]:
+    """P2P node ids that did not pass in every gold-patch evaluation inside the grading sandbox."""
+    excluded = []
+    for node in p2p:
+        for evaluation in gold_evaluations:
+            outcomes = {case.get("nodeid"): case.get("outcome") for case in evaluation.get("cases") or []}
+            if outcomes.get(node) != "passed":
+                excluded.append(node)
+                break
+    return excluded
 
 
 def touched_kinds(paths: list[str]) -> dict:
@@ -94,8 +150,38 @@ class ImageGrader:
     def __init__(self, *, context: str = "desktop-linux"):
         self.context = context
 
-    async def evaluate(self, *, image: str, delta: dict | None, test_overlay: dict, f2p: list[str], p2p: list[str], django: bool = False, sympy: bool = False, timeout: float = 300, repo_root: str = "/opt/repo", python_bin: str = "/usr/local/bin/python") -> dict:
-        from scripts.preflight_a5_repo_baseline import prepare_repo_runtime, upload_runner
+    async def collect(self, *, image: str, test_overlay: dict, paths: list[str], autoload_plugins: bool = False,
+                      pytest_options: list[str] | None = None, timeout: float = 600, repo_root: str = "/opt/repo",
+                      python_bin: str = "/usr/local/bin/python") -> dict:
+        """Collect node ids with the test overlay applied. Used to repair truncated ids before grading."""
+        args = list(pytest_options or []) + ["--collect-only", "-q", *paths]
+        result = await self._run(image=image, delta=None, test_overlay=test_overlay, args=args, sympy=False,
+                                 django=False, autoload_plugins=autoload_plugins, timeout=timeout,
+                                 repo_root=repo_root, python_bin=python_bin)
+        receipt = result.pop("receipt", None) or {}
+        return {"collected": list(receipt.get("collected") or []), "reason": result.get("reason"),
+                **receipt_diagnostics(receipt)}
+
+    async def evaluate(self, *, image: str, delta: dict | None, test_overlay: dict, f2p: list[str], p2p: list[str], django: bool = False, sympy: bool = False, timeout: float = 300, repo_root: str = "/opt/repo", python_bin: str = "/usr/local/bin/python", autoload_plugins: bool = False, pytest_options: list[str] | None = None) -> dict:
+        nodeids = list(f2p) + list(p2p)
+        result = await self._run(image=image, delta=delta, test_overlay=test_overlay,
+                                 args=list(pytest_options or []) + nodeids, sympy=sympy, django=django,
+                                 autoload_plugins=autoload_plugins, timeout=timeout, repo_root=repo_root,
+                                 python_bin=python_bin)
+        receipt = result.pop("receipt", None)
+        retries = result.pop("docker_retries")
+        if receipt is not None:
+            result.update(score_receipt(receipt, f2p, p2p))
+            result.update(receipt_diagnostics(receipt))
+            result["receipt_complete"] = receipt.get("complete")
+        result["docker_retries"] = retries
+        changed = list(((delta or {}).get("changed") or {}).keys()) + list((delta or {}).get("deleted") or [])
+        result.update(touched_kinds(changed))
+        return result
+
+    async def _run(self, *, image: str, delta: dict | None, test_overlay: dict, args: list[str], django: bool,
+                   sympy: bool, autoload_plugins: bool, timeout: float, repo_root: str, python_bin: str) -> dict:
+        from scripts.preflight_a5_repo_baseline import PYTEST_OBSERVER, prepare_repo_runtime, upload_runner
 
         backend = DockerExecutionBackend(
             image=image, context=self.context, memory_bytes=2 * 1024**3,
@@ -119,16 +205,23 @@ class ImageGrader:
                 "exec", "-i", backend.name, python_bin, "-I", "-S", "-c", APPLY,
                 data=json.dumps(payload).encode(), limit=64 * 1024, timeout=120,
             )
-            await upload_runner(backend, django=django, python_bin=python_bin)
-            nodeids = list(f2p) + list(p2p)
+            if autoload_plugins and not django:
+                runner = PYTEST_OBSERVER.replace(AUTOLOAD_OFF, AUTOLOAD_KEPT)
+                if runner == PYTEST_OBSERVER:
+                    raise RuntimeError("pytest observer no longer disables plugin autoload in the expected line")
+                await backend._ok("exec", "-i", backend.name, python_bin, "-I", "-S", "-c",
+                                  "import sys;open('/tmp/a5-runner.py','wb').write(sys.stdin.buffer.read())",
+                                  data=runner.encode(), limit=256 * 1024)
+            else:
+                await upload_runner(backend, django=django, python_bin=python_bin)
             request = ExecutionRequest(
                 argv=[python_bin, "-I", "-B", "/tmp/a5-runner.py"],
                 stdin_bytes=json.dumps({
-                    "args": nodeids, "labels": nodeids, "collect_only": False,
+                    "args": args, "labels": args, "collect_only": False,
                     "sympy_native_helpers": sympy,
                 }).encode(),
                 env={
-                    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+                    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "" if autoload_plugins and not django else "1",
                     "PYTHONPATH": "/workspace:/workspace/src",
                     "A5_REPO_ROOT": "/workspace",
                     "PYTHONDONTWRITEBYTECODE": "1",
@@ -144,15 +237,10 @@ class ImageGrader:
                 "from pathlib import Path; import sys; p=Path('/tmp/a5-pytest-receipt.json'); sys.stdout.buffer.write(p.read_bytes())",
                 limit=16 * 1024**2,
             )
-            receipt = json.loads(raw)
-            result.update(score_receipt(receipt, f2p, p2p))
-            result.update(receipt_diagnostics(receipt))
-            result["receipt_complete"] = receipt.get("complete")
+            result["receipt"] = json.loads(raw)
         except Exception as exc:
             result["reason"] = type(exc).__name__ + ": " + str(exc)[:500]
         finally:
             await backend.close()
             result["docker_retries"] = list(backend.docker_retries)
-        changed = list(((delta or {}).get("changed") or {}).keys()) + list((delta or {}).get("deleted") or [])
-        result.update(touched_kinds(changed))
         return result
