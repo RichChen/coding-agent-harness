@@ -118,9 +118,17 @@ def _hooks(rule: dict) -> WindowPolicyHooks:
     return WindowPolicyHooks(WindowPolicy(strategy=strategy, max_tokens=10**9, keep_recent=rule["keep_recent"]))
 
 
+_LOOP: asyncio.AbstractEventLoop | None = None
+
+
 def make_view(hooks: WindowPolicyHooks, raw: list[dict], protected_ids: set[str] | None) -> list[dict]:
+    # one loop per process: on Windows every new loop opens a loopback socket pair, and hundreds of thousands of
+    # them exhaust local ports until accept() blocks forever
+    global _LOOP
+    if _LOOP is None:
+        _LOOP = asyncio.new_event_loop()
     ctx = HookContext(extra={"tools": [], "max_output_tokens": 0})
-    view = asyncio.run(hooks.before_llm(copy.deepcopy(raw), ctx))
+    view = _LOOP.run_until_complete(hooks.before_llm(copy.deepcopy(raw), ctx))
     if protected_ids:
         for i, msg in enumerate(raw):
             if msg.get("role") == "tool" and msg.get("tool_call_id") in protected_ids:

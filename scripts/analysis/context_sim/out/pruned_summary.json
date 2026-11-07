@@ -1,0 +1,1510 @@
+{
+ "runs": 1719,
+ "excluded": {
+  "excluded:not_prefix_history": 153,
+  "excluded:infra_retired": 197,
+  "excluded:infra_error": 12,
+  "excluded:unknown": 1,
+  "excluded:invalid_candidate": 1
+ },
+ "rebuilt_steps_equal": 50429,
+ "steps": 50429,
+ "groups": {
+  "A5 all": {
+   "runs": 239,
+   "requests": 5836,
+   "tool_calls": 6852,
+   "cost_cny_recorded_A": 27.95,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.4,
+     "requests_saved_pct": 1.3,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -3.7,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 22.6,
+     "cost_cny": 27.61,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 9.8,
+     "requests_saved_pct": 7.6,
+     "input_increase_pct": {
+      "median": 3.1,
+      "p90": 14.1
+     },
+     "cost_increase_pct": {
+      "median": 22.6,
+      "p10": -21.3,
+      "p90": 45.2
+     },
+     "runs_cheaper_pct": 28.5,
+     "cost_cny": 35.73,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 14.0,
+     "requests_saved_pct": 11.5,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 9.5
+     },
+     "cost_increase_pct": {
+      "median": -7.8,
+      "p10": -28.8,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 67.8,
+     "cost_cny": 23.44,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 14.2,
+     "requests_saved_pct": 11.6,
+     "input_increase_pct": {
+      "median": 6.1,
+      "p90": 21.7
+     },
+     "cost_increase_pct": {
+      "median": 9.3,
+      "p10": -24.2,
+      "p90": 36.2
+     },
+     "runs_cheaper_pct": 38.1,
+     "cost_cny": 30.98,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 14.4,
+     "requests_saved_pct": 11.8,
+     "input_increase_pct": {
+      "median": 20.7,
+      "p90": 51.1
+     },
+     "cost_increase_pct": {
+      "median": -44.6,
+      "p10": -58.6,
+      "p90": -21.8
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 14.1,
+     "rejected": 0
+    }
+   }
+  },
+  "A5 b0": {
+   "runs": 224,
+   "requests": 5353,
+   "tool_calls": 6244,
+   "cost_cny_recorded_A": 25.44,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.5,
+     "requests_saved_pct": 1.4,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -3.8,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 22.8,
+     "cost_cny": 25.12,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 9.0,
+     "requests_saved_pct": 7.2,
+     "input_increase_pct": {
+      "median": 3.4,
+      "p90": 14.0
+     },
+     "cost_increase_pct": {
+      "median": 21.6,
+      "p10": -21.1,
+      "p90": 44.9
+     },
+     "runs_cheaper_pct": 29.0,
+     "cost_cny": 32.5,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 12.9,
+     "requests_saved_pct": 10.9,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 11.4
+     },
+     "cost_increase_pct": {
+      "median": -7.6,
+      "p10": -27.4,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 68.3,
+     "cost_cny": 21.47,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 13.0,
+     "requests_saved_pct": 10.9,
+     "input_increase_pct": {
+      "median": 6.3,
+      "p90": 22.3
+     },
+     "cost_increase_pct": {
+      "median": 9.5,
+      "p10": -23.5,
+      "p90": 36.1
+     },
+     "runs_cheaper_pct": 37.9,
+     "cost_cny": 28.24,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 13.2,
+     "requests_saved_pct": 11.1,
+     "input_increase_pct": {
+      "median": 20.8,
+      "p90": 50.5
+     },
+     "cost_increase_pct": {
+      "median": -44.4,
+      "p10": -57.3,
+      "p90": -21.3
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 12.95,
+     "rejected": 0
+    }
+   }
+  },
+  "A5 b2": {
+   "runs": 15,
+   "requests": 483,
+   "tool_calls": 608,
+   "cost_cny_recorded_A": 2.51,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 0.8,
+     "requests_saved_pct": 0.6,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -1.9,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 20.0,
+     "cost_cny": 2.49,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 18.3,
+     "requests_saved_pct": 12.0,
+     "input_increase_pct": {
+      "median": 0.9,
+      "p90": 13.6
+     },
+     "cost_increase_pct": {
+      "median": 33.1,
+      "p10": -23.7,
+      "p90": 48.3
+     },
+     "runs_cheaper_pct": 20.0,
+     "cost_cny": 3.23,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 25.7,
+     "requests_saved_pct": 18.8,
+     "input_increase_pct": {
+      "median": -10.8,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": -17.1,
+      "p10": -31.7,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 60.0,
+     "cost_cny": 1.97,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 25.8,
+     "requests_saved_pct": 18.8,
+     "input_increase_pct": {
+      "median": -1.7,
+      "p90": 13.6
+     },
+     "cost_increase_pct": {
+      "median": 4.3,
+      "p10": -23.7,
+      "p90": 35.6
+     },
+     "runs_cheaper_pct": 40.0,
+     "cost_cny": 2.73,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 26.2,
+     "requests_saved_pct": 19.0,
+     "input_increase_pct": {
+      "median": 17.1,
+      "p90": 53.1
+     },
+     "cost_increase_pct": {
+      "median": -52.0,
+      "p10": -62.5,
+      "p90": -34.3
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 1.14,
+     "rejected": 0
+    }
+   }
+  },
+  "A6-R all": {
+   "runs": 318,
+   "requests": 10265,
+   "tool_calls": 13404,
+   "cost_cny_recorded_A": 57.34,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.6,
+     "requests_saved_pct": 1.3,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -3.6,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 28.9,
+     "cost_cny": 56.58,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 20.5,
+     "requests_saved_pct": 13.2,
+     "input_increase_pct": {
+      "median": -1.8,
+      "p90": 7.6
+     },
+     "cost_increase_pct": {
+      "median": 25.3,
+      "p10": -24.6,
+      "p90": 43.4
+     },
+     "runs_cheaper_pct": 20.1,
+     "cost_cny": 70.17,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 28.0,
+     "requests_saved_pct": 20.1,
+     "input_increase_pct": {
+      "median": -2.4,
+      "p90": 16.0
+     },
+     "cost_increase_pct": {
+      "median": -15.6,
+      "p10": -51.8,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 85.8,
+     "cost_cny": 42.16,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 28.3,
+     "requests_saved_pct": 20.4,
+     "input_increase_pct": {
+      "median": 1.7,
+      "p90": 20.4
+     },
+     "cost_increase_pct": {
+      "median": 4.0,
+      "p10": -37.1,
+      "p90": 30.8
+     },
+     "runs_cheaper_pct": 44.3,
+     "cost_cny": 55.96,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 28.6,
+     "requests_saved_pct": 20.7,
+     "input_increase_pct": {
+      "median": 15.8,
+      "p90": 46.9
+     },
+     "cost_increase_pct": {
+      "median": -49.3,
+      "p10": -71.5,
+      "p90": -30.5
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 25.59,
+     "rejected": 0
+    }
+   }
+  },
+  "A6-R r0": {
+   "runs": 159,
+   "requests": 5074,
+   "tool_calls": 6432,
+   "cost_cny_recorded_A": 27.24,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.3,
+     "requests_saved_pct": 1.1,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -3.6,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 32.7,
+     "cost_cny": 26.94,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 15.7,
+     "requests_saved_pct": 11.1,
+     "input_increase_pct": {
+      "median": 0.9,
+      "p90": 10.3
+     },
+     "cost_increase_pct": {
+      "median": 27.0,
+      "p10": -25.4,
+      "p90": 44.1
+     },
+     "runs_cheaper_pct": 17.6,
+     "cost_cny": 34.44,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 22.7,
+     "requests_saved_pct": 17.3,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 23.3
+     },
+     "cost_increase_pct": {
+      "median": -14.1,
+      "p10": -49.6,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 82.4,
+     "cost_cny": 20.62,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 22.9,
+     "requests_saved_pct": 17.6,
+     "input_increase_pct": {
+      "median": 5.8,
+      "p90": 28.9
+     },
+     "cost_increase_pct": {
+      "median": 5.6,
+      "p10": -32.6,
+      "p90": 31.4
+     },
+     "runs_cheaper_pct": 44.0,
+     "cost_cny": 27.49,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 23.1,
+     "requests_saved_pct": 17.7,
+     "input_increase_pct": {
+      "median": 26.0,
+      "p90": 52.8
+     },
+     "cost_increase_pct": {
+      "median": -48.9,
+      "p10": -68.4,
+      "p90": -28.8
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 12.5,
+     "rejected": 0
+    }
+   }
+  },
+  "A6-R r1": {
+   "runs": 159,
+   "requests": 5191,
+   "tool_calls": 6972,
+   "cost_cny_recorded_A": 30.11,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.8,
+     "requests_saved_pct": 1.5,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -3.8,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 25.2,
+     "cost_cny": 29.64,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 25.0,
+     "requests_saved_pct": 15.2,
+     "input_increase_pct": {
+      "median": -4.4,
+      "p90": 6.2
+     },
+     "cost_increase_pct": {
+      "median": 21.2,
+      "p10": -17.5,
+      "p90": 41.6
+     },
+     "runs_cheaper_pct": 22.6,
+     "cost_cny": 35.74,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 32.9,
+     "requests_saved_pct": 22.9,
+     "input_increase_pct": {
+      "median": -5.5,
+      "p90": 7.3
+     },
+     "cost_increase_pct": {
+      "median": -17.9,
+      "p10": -57.2,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 89.3,
+     "cost_cny": 21.54,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 33.4,
+     "requests_saved_pct": 23.2,
+     "input_increase_pct": {
+      "median": -2.1,
+      "p90": 12.4
+     },
+     "cost_increase_pct": {
+      "median": 2.3,
+      "p10": -46.4,
+      "p90": 27.2
+     },
+     "runs_cheaper_pct": 44.7,
+     "cost_cny": 28.47,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 33.7,
+     "requests_saved_pct": 23.6,
+     "input_increase_pct": {
+      "median": 11.0,
+      "p90": 39.2
+     },
+     "cost_increase_pct": {
+      "median": -49.7,
+      "p10": -73.5,
+      "p90": -32.0
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 13.09,
+     "rejected": 0
+    }
+   }
+  },
+  "CR-2 all": {
+   "runs": 1108,
+   "requests": 33350,
+   "tool_calls": 36989,
+   "cost_cny_recorded_A": 168.89,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 4.5,
+     "requests_saved_pct": 4.7,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -10.2,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 25.0,
+     "cost_cny": 161.63,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 27.7,
+     "requests_saved_pct": 26.9,
+     "input_increase_pct": {
+      "median": -4.3,
+      "p90": 13.6
+     },
+     "cost_increase_pct": {
+      "median": 3.0,
+      "p10": -42.7,
+      "p90": 43.2
+     },
+     "runs_cheaper_pct": 47.6,
+     "cost_cny": 169.02,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 29.0,
+     "requests_saved_pct": 28.1,
+     "input_increase_pct": {
+      "median": -5.1,
+      "p90": 17.7
+     },
+     "cost_increase_pct": {
+      "median": -22.0,
+      "p10": -67.2,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 82.7,
+     "cost_cny": 104.51,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 34.5,
+     "requests_saved_pct": 33.8,
+     "input_increase_pct": {
+      "median": -3.2,
+      "p90": 18.8
+     },
+     "cost_increase_pct": {
+      "median": -17.5,
+      "p10": -65.6,
+      "p90": 29.2
+     },
+     "runs_cheaper_pct": 67.5,
+     "cost_cny": 124.29,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 36.0,
+     "requests_saved_pct": 35.3,
+     "input_increase_pct": {
+      "median": 3.4,
+      "p90": 44.9
+     },
+     "cost_increase_pct": {
+      "median": -57.4,
+      "p10": -83.7,
+      "p90": -29.7
+     },
+     "runs_cheaper_pct": 99.5,
+     "cost_cny": 53.86,
+     "rejected": 31
+    }
+   }
+  },
+  "CR-2 n": {
+   "runs": 275,
+   "requests": 8589,
+   "tool_calls": 9739,
+   "cost_cny_recorded_A": 43.28,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 3.3,
+     "requests_saved_pct": 3.4,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -6.6,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 25.8,
+     "cost_cny": 41.87,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 26.5,
+     "requests_saved_pct": 25.4,
+     "input_increase_pct": {
+      "median": -5.8,
+      "p90": 13.7
+     },
+     "cost_increase_pct": {
+      "median": 9.6,
+      "p10": -36.5,
+      "p90": 43.7
+     },
+     "runs_cheaper_pct": 39.3,
+     "cost_cny": 45.04,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 28.8,
+     "requests_saved_pct": 27.5,
+     "input_increase_pct": {
+      "median": -5.5,
+      "p90": 17.8
+     },
+     "cost_increase_pct": {
+      "median": -22.4,
+      "p10": -66.1,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 81.8,
+     "cost_cny": 27.2,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 34.3,
+     "requests_saved_pct": 33.2,
+     "input_increase_pct": {
+      "median": -4.9,
+      "p90": 18.8
+     },
+     "cost_increase_pct": {
+      "median": -14.9,
+      "p10": -63.9,
+      "p90": 35.0
+     },
+     "runs_cheaper_pct": 66.2,
+     "cost_cny": 33.03,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 35.8,
+     "requests_saved_pct": 34.8,
+     "input_increase_pct": {
+      "median": 4.5,
+      "p90": 45.4
+     },
+     "cost_increase_pct": {
+      "median": -58.7,
+      "p10": -83.0,
+      "p90": -33.7
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 13.87,
+     "rejected": 19
+    }
+   }
+  },
+  "CR-2 o": {
+   "runs": 277,
+   "requests": 8236,
+   "tool_calls": 8884,
+   "cost_cny_recorded_A": 41.04,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 6.1,
+     "requests_saved_pct": 6.4,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -13.7,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 27.1,
+     "cost_cny": 38.77,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 28.6,
+     "requests_saved_pct": 28.4,
+     "input_increase_pct": {
+      "median": -4.6,
+      "p90": 12.5
+     },
+     "cost_increase_pct": {
+      "median": -4.7,
+      "p10": -47.0,
+      "p90": 41.1
+     },
+     "runs_cheaper_pct": 53.4,
+     "cost_cny": 39.74,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 28.7,
+     "requests_saved_pct": 28.3,
+     "input_increase_pct": {
+      "median": -6.5,
+      "p90": 13.8
+     },
+     "cost_increase_pct": {
+      "median": -23.3,
+      "p10": -66.4,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 85.6,
+     "cost_cny": 25.54,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 34.6,
+     "requests_saved_pct": 34.5,
+     "input_increase_pct": {
+      "median": -3.0,
+      "p90": 18.2
+     },
+     "cost_increase_pct": {
+      "median": -18.8,
+      "p10": -69.2,
+      "p90": 29.4
+     },
+     "runs_cheaper_pct": 70.4,
+     "cost_cny": 29.5,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 35.9,
+     "requests_saved_pct": 35.9,
+     "input_increase_pct": {
+      "median": 3.5,
+      "p90": 45.7
+     },
+     "cost_increase_pct": {
+      "median": -55.5,
+      "p10": -84.0,
+      "p90": -29.6
+     },
+     "runs_cheaper_pct": 99.6,
+     "cost_cny": 13.06,
+     "rejected": 2
+    }
+   }
+  },
+  "CR-2 p": {
+   "runs": 279,
+   "requests": 8071,
+   "tool_calls": 8655,
+   "cost_cny_recorded_A": 41.66,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 4.7,
+     "requests_saved_pct": 4.9,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -10.1,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 26.5,
+     "cost_cny": 39.75,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 27.1,
+     "requests_saved_pct": 26.8,
+     "input_increase_pct": {
+      "median": -1.5,
+      "p90": 13.1
+     },
+     "cost_increase_pct": {
+      "median": -4.9,
+      "p10": -38.3,
+      "p90": 40.5
+     },
+     "runs_cheaper_pct": 54.1,
+     "cost_cny": 41.16,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 27.6,
+     "requests_saved_pct": 27.2,
+     "input_increase_pct": {
+      "median": -1.8,
+      "p90": 20.5
+     },
+     "cost_increase_pct": {
+      "median": -20.2,
+      "p10": -65.3,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 80.6,
+     "cost_cny": 25.69,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 33.2,
+     "requests_saved_pct": 33.1,
+     "input_increase_pct": {
+      "median": -0.1,
+      "p90": 17.5
+     },
+     "cost_increase_pct": {
+      "median": -20.4,
+      "p10": -65.1,
+      "p90": 25.3
+     },
+     "runs_cheaper_pct": 71.3,
+     "cost_cny": 29.58,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 34.7,
+     "requests_saved_pct": 34.8,
+     "input_increase_pct": {
+      "median": 2.7,
+      "p90": 40.3
+     },
+     "cost_increase_pct": {
+      "median": -54.5,
+      "p10": -82.7,
+      "p90": -21.6
+     },
+     "runs_cheaper_pct": 98.9,
+     "cost_cny": 13.21,
+     "rejected": 10
+    }
+   }
+  },
+  "CR-2 t": {
+   "runs": 277,
+   "requests": 8454,
+   "tool_calls": 9711,
+   "cost_cny_recorded_A": 42.9,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 4.0,
+     "requests_saved_pct": 4.3,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -11.1,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 20.6,
+     "cost_cny": 41.25,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 28.8,
+     "requests_saved_pct": 27.1,
+     "input_increase_pct": {
+      "median": -4.0,
+      "p90": 14.4
+     },
+     "cost_increase_pct": {
+      "median": 8.2,
+      "p10": -45.7,
+      "p90": 47.2
+     },
+     "runs_cheaper_pct": 43.3,
+     "cost_cny": 43.08,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 30.7,
+     "requests_saved_pct": 29.3,
+     "input_increase_pct": {
+      "median": -5.2,
+      "p90": 20.6
+     },
+     "cost_increase_pct": {
+      "median": -21.6,
+      "p10": -71.5,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 82.7,
+     "cost_cny": 26.09,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 36.0,
+     "requests_saved_pct": 34.3,
+     "input_increase_pct": {
+      "median": -4.7,
+      "p90": 21.4
+     },
+     "cost_increase_pct": {
+      "median": -14.9,
+      "p10": -65.6,
+      "p90": 29.0
+     },
+     "runs_cheaper_pct": 62.1,
+     "cost_cny": 32.19,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 37.3,
+     "requests_saved_pct": 35.8,
+     "input_increase_pct": {
+      "median": 2.2,
+      "p90": 49.1
+     },
+     "cost_increase_pct": {
+      "median": -58.6,
+      "p10": -84.6,
+      "p90": -31.4
+     },
+     "runs_cheaper_pct": 99.3,
+     "cost_cny": 13.73,
+     "rejected": 0
+    }
+   }
+  },
+  "P4 I": {
+   "runs": 18,
+   "requests": 301,
+   "tool_calls": 337,
+   "cost_cny_recorded_A": 1.95,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 0.6,
+     "requests_saved_pct": 0.7,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -1.4,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 11.1,
+     "cost_cny": 1.93,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 20.2,
+     "requests_saved_pct": 20.3,
+     "input_increase_pct": {
+      "median": 1.7,
+      "p90": 13.8
+     },
+     "cost_increase_pct": {
+      "median": 2.3,
+      "p10": -60.4,
+      "p90": 46.8
+     },
+     "runs_cheaper_pct": 44.4,
+     "cost_cny": 1.92,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 23.4,
+     "requests_saved_pct": 23.3,
+     "input_increase_pct": {
+      "median": -0.7,
+      "p90": 3.5
+     },
+     "cost_increase_pct": {
+      "median": -24.3,
+      "p10": -62.0,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 83.3,
+     "cost_cny": 1.25,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 26.1,
+     "requests_saved_pct": 25.9,
+     "input_increase_pct": {
+      "median": -1.3,
+      "p90": 8.9
+     },
+     "cost_increase_pct": {
+      "median": -30.5,
+      "p10": -60.4,
+      "p90": 11.5
+     },
+     "runs_cheaper_pct": 77.8,
+     "cost_cny": 1.45,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 27.3,
+     "requests_saved_pct": 27.2,
+     "input_increase_pct": {
+      "median": 1.0,
+      "p90": 19.4
+     },
+     "cost_increase_pct": {
+      "median": -57.8,
+      "p10": -75.9,
+      "p90": -32.4
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.77,
+     "rejected": 0
+    }
+   }
+  },
+  "P4 M": {
+   "runs": 18,
+   "requests": 328,
+   "tool_calls": 366,
+   "cost_cny_recorded_A": 2.2,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.1,
+     "requests_saved_pct": 1.2,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 5.6,
+     "cost_cny": 2.17,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 18.9,
+     "requests_saved_pct": 19.8,
+     "input_increase_pct": {
+      "median": 2.1,
+      "p90": 12.5
+     },
+     "cost_increase_pct": {
+      "median": 5.8,
+      "p10": -53.5,
+      "p90": 53.7
+     },
+     "runs_cheaper_pct": 38.9,
+     "cost_cny": 2.28,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 20.5,
+     "requests_saved_pct": 22.0,
+     "input_increase_pct": {
+      "median": 0.2,
+      "p90": 26.4
+     },
+     "cost_increase_pct": {
+      "median": -20.2,
+      "p10": -70.4,
+      "p90": -7.6
+     },
+     "runs_cheaper_pct": 94.4,
+     "cost_cny": 1.41,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 23.0,
+     "requests_saved_pct": 24.4,
+     "input_increase_pct": {
+      "median": 1.8,
+      "p90": 25.7
+     },
+     "cost_increase_pct": {
+      "median": -17.5,
+      "p10": -59.3,
+      "p90": 30.9
+     },
+     "runs_cheaper_pct": 66.7,
+     "cost_cny": 1.77,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 23.2,
+     "requests_saved_pct": 24.7,
+     "input_increase_pct": {
+      "median": 2.5,
+      "p90": 32.0
+     },
+     "cost_increase_pct": {
+      "median": -52.6,
+      "p10": -77.2,
+      "p90": -40.6
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.87,
+     "rejected": 0
+    }
+   }
+  },
+  "P4 N": {
+   "runs": 17,
+   "requests": 325,
+   "tool_calls": 358,
+   "cost_cny_recorded_A": 2.21,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.4,
+     "requests_saved_pct": 1.5,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -7.9,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 17.6,
+     "cost_cny": 2.18,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 25.1,
+     "requests_saved_pct": 26.5,
+     "input_increase_pct": {
+      "median": -17.0,
+      "p90": 1.5
+     },
+     "cost_increase_pct": {
+      "median": -8.2,
+      "p10": -36.7,
+      "p90": 28.4
+     },
+     "runs_cheaper_pct": 52.9,
+     "cost_cny": 2.16,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 27.9,
+     "requests_saved_pct": 29.8,
+     "input_increase_pct": {
+      "median": -25.7,
+      "p90": 13.7
+     },
+     "cost_increase_pct": {
+      "median": -46.1,
+      "p10": -66.5,
+      "p90": -10.2
+     },
+     "runs_cheaper_pct": 94.1,
+     "cost_cny": 1.24,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 31.8,
+     "requests_saved_pct": 33.8,
+     "input_increase_pct": {
+      "median": -26.4,
+      "p90": 11.2
+     },
+     "cost_increase_pct": {
+      "median": -38.2,
+      "p10": -55.9,
+      "p90": 6.1
+     },
+     "runs_cheaper_pct": 82.4,
+     "cost_cny": 1.52,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 32.4,
+     "requests_saved_pct": 34.5,
+     "input_increase_pct": {
+      "median": -26.0,
+      "p90": 20.7
+     },
+     "cost_increase_pct": {
+      "median": -67.5,
+      "p10": -76.3,
+      "p90": -49.9
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.74,
+     "rejected": 0
+    }
+   }
+  },
+  "P4 all": {
+   "runs": 53,
+   "requests": 954,
+   "tool_calls": 1061,
+   "cost_cny_recorded_A": 6.36,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 1.0,
+     "requests_saved_pct": 1.2,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": -3.7,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 11.3,
+     "cost_cny": 6.28,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 21.4,
+     "requests_saved_pct": 22.2,
+     "input_increase_pct": {
+      "median": -5.6,
+      "p90": 12.2
+     },
+     "cost_increase_pct": {
+      "median": 3.4,
+      "p10": -52.1,
+      "p90": 43.9
+     },
+     "runs_cheaper_pct": 45.3,
+     "cost_cny": 6.35,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 23.9,
+     "requests_saved_pct": 25.1,
+     "input_increase_pct": {
+      "median": -8.8,
+      "p90": 16.1
+     },
+     "cost_increase_pct": {
+      "median": -30.9,
+      "p10": -68.1,
+      "p90": -4.2
+     },
+     "runs_cheaper_pct": 90.6,
+     "cost_cny": 3.9,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 27.0,
+     "requests_saved_pct": 28.1,
+     "input_increase_pct": {
+      "median": -5.9,
+      "p90": 20.2
+     },
+     "cost_increase_pct": {
+      "median": -32.5,
+      "p10": -58.9,
+      "p90": 17.1
+     },
+     "runs_cheaper_pct": 75.5,
+     "cost_cny": 4.74,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 27.6,
+     "requests_saved_pct": 28.8,
+     "input_increase_pct": {
+      "median": -11.1,
+      "p90": 26.3
+     },
+     "cost_increase_pct": {
+      "median": -59.8,
+      "p10": -76.8,
+      "p90": -32.7
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 2.38,
+     "rejected": 0
+    }
+   }
+  },
+  "P4-first all": {
+   "runs": 1,
+   "requests": 24,
+   "tool_calls": 25,
+   "cost_cny_recorded_A": 0.17,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 0.0,
+     "requests_saved_pct": 0.0,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 0.0,
+     "cost_cny": 0.17,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 24.0,
+     "requests_saved_pct": 25.0,
+     "input_increase_pct": {
+      "median": -15.0,
+      "p90": -15.0
+     },
+     "cost_increase_pct": {
+      "median": -7.7,
+      "p10": -7.7,
+      "p90": -7.7
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.16,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 32.0,
+     "requests_saved_pct": 33.3,
+     "input_increase_pct": {
+      "median": -21.4,
+      "p90": -21.4
+     },
+     "cost_increase_pct": {
+      "median": -43.6,
+      "p10": -43.6,
+      "p90": -43.6
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.1,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 36.0,
+     "requests_saved_pct": 37.5,
+     "input_increase_pct": {
+      "median": -25.6,
+      "p90": -25.6
+     },
+     "cost_increase_pct": {
+      "median": -45.3,
+      "p10": -45.3,
+      "p90": -45.3
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.1,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 36.0,
+     "requests_saved_pct": 37.5,
+     "input_increase_pct": {
+      "median": -22.3,
+      "p90": -22.3
+     },
+     "cost_increase_pct": {
+      "median": -70.5,
+      "p10": -70.5,
+      "p90": -70.5
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.05,
+     "rejected": 0
+    }
+   }
+  },
+  "P4-first first": {
+   "runs": 1,
+   "requests": 24,
+   "tool_calls": 25,
+   "cost_cny_recorded_A": 0.17,
+   "rules": {
+    "A": {
+     "skipped_calls_pct": 0.0,
+     "requests_saved_pct": 0.0,
+     "input_increase_pct": {
+      "median": 0.0,
+      "p90": 0.0
+     },
+     "cost_increase_pct": {
+      "median": 0.0,
+      "p10": 0.0,
+      "p90": 0.0
+     },
+     "runs_cheaper_pct": 0.0,
+     "cost_cny": 0.17,
+     "rejected": 0
+    },
+    "B": {
+     "skipped_calls_pct": 24.0,
+     "requests_saved_pct": 25.0,
+     "input_increase_pct": {
+      "median": -15.0,
+      "p90": -15.0
+     },
+     "cost_increase_pct": {
+      "median": -7.7,
+      "p10": -7.7,
+      "p90": -7.7
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.16,
+     "rejected": 0
+    },
+    "C": {
+     "skipped_calls_pct": 32.0,
+     "requests_saved_pct": 33.3,
+     "input_increase_pct": {
+      "median": -21.4,
+      "p90": -21.4
+     },
+     "cost_increase_pct": {
+      "median": -43.6,
+      "p10": -43.6,
+      "p90": -43.6
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.1,
+     "rejected": 0
+    },
+    "BC": {
+     "skipped_calls_pct": 36.0,
+     "requests_saved_pct": 37.5,
+     "input_increase_pct": {
+      "median": -25.6,
+      "p90": -25.6
+     },
+     "cost_increase_pct": {
+      "median": -45.3,
+      "p10": -45.3,
+      "p90": -45.3
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.1,
+     "rejected": 0
+    },
+    "N": {
+     "skipped_calls_pct": 36.0,
+     "requests_saved_pct": 37.5,
+     "input_increase_pct": {
+      "median": -22.3,
+      "p90": -22.3
+     },
+     "cost_increase_pct": {
+      "median": -70.5,
+      "p10": -70.5,
+      "p90": -70.5
+     },
+     "runs_cheaper_pct": 100.0,
+     "cost_cny": 0.05,
+     "rejected": 0
+    }
+   }
+  }
+ }
+}

@@ -1,2 +1,4 @@
 sim_runs.json
 sim_runs.json.partial.jsonl
+pruned_runs.json
+pruned_runs.json.partial.jsonl
