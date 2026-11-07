@@ -30,6 +30,8 @@ def fingerprint(config, tmp_path):
 
 @pytest.mark.parametrize("rel", sorted(RECORDED))
 def test_config_hash_and_fingerprint_unchanged(rel, tmp_path):
+    if not (ROOT / rel).exists():
+        pytest.skip(f"{rel} is not published in this repository")
     expected = RECORDED[rel]
     config = load_config(ROOT / rel)
     assert canonical_hash(config) == expected["canonical_hash"]
