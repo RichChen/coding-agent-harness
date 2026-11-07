@@ -203,7 +203,7 @@ class ToolsConfig(BaseModel):
 
 class TracingConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
-    omit_when_default = ("request_telemetry",)
+    omit_when_default = ("request_telemetry", "session_artifact_bytes", "session_artifact_item_bytes")
 
     format: str = "jsonl"
     output_dir: str = "traces"
@@ -212,6 +212,16 @@ class TracingConfig(OmitNewDefaults):
     # Adds replaced messages, admission estimate vs provider prompt_tokens, cache hits and
     # reasoning tokens to context.prepared / model.settled.
     request_telemetry: bool = False
+    # Session artifact quotas. Every step stores the full message history twice, so the total
+    # grows with the square of the step count; the item quota bounds one history snapshot.
+    session_artifact_bytes: int = Field(default=64 * 1024 * 1024, ge=16 * 1024 * 1024)
+    session_artifact_item_bytes: int = Field(default=2 * 1024 * 1024, ge=1024 * 1024)
+
+    @model_validator(mode="after")
+    def _item_within_total(self):
+        if self.session_artifact_item_bytes > self.session_artifact_bytes:
+            raise ValueError("session_artifact_item_bytes must not exceed session_artifact_bytes")
+        return self
 
 
 class WorkspaceConfig(BaseModel):

@@ -463,6 +463,13 @@ MAIN_TARGETS = ROOT / "configs" / "sprint" / "main-targets.yaml"
 MAIN_CALIBRATION = ROOT / "docs" / "sprint" / "main-calibration"
 
 
+def session_limits(config: dict) -> dict:
+    """RunSession quotas the profile raised; absent keys keep RunSession.create defaults."""
+    tracing = config.get("tracing") or {}
+    names = (("session_artifact_bytes", "artifact_limit_bytes"), ("session_artifact_item_bytes", "artifact_item_limit_bytes"))
+    return {arg: tracing[key] for key, arg in names if key in tracing}
+
+
 GRADER_OPTIONS = ("autoload_plugins", "pytest_options")
 
 
@@ -816,7 +823,9 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
     run_error = None
     result = None
     try:
-        with RunSession.create(output / "session", task_id=task["id"], expected=expected, timeout_seconds=config["runtime"]["total_timeout_seconds"]) as session:
+        with RunSession.create(output / "session", task_id=task["id"], expected=expected,
+                               timeout_seconds=config["runtime"]["total_timeout_seconds"],
+                               **session_limits(config)) as session:
             result = await session.run(agent, prompt)
             session.store.export_jsonl(output / "events.jsonl")
     except Exception as exc:

@@ -127,7 +127,7 @@ class RunSession:
 
     @classmethod
     def create(cls, directory: Path, *, task_id, expected, timeout_seconds=600,
-               artifact_item_limit_bytes=2 * 1024 * 1024):
+               artifact_item_limit_bytes=2 * 1024 * 1024, artifact_limit_bytes=64 * 1024 * 1024):
         directory = Path(directory).resolve()
         workspace = Path(expected["workspace"]["path"])
         if directory.is_relative_to(workspace) or workspace.is_relative_to(directory):
@@ -136,7 +136,7 @@ class RunSession:
             raise StoreError("session timeout must be positive")
         store = EventStore(directory, create=True, run_id=uuid.uuid4().hex, task_id=task_id)
         try:
-            artifacts = ArtifactStore(directory / "artifacts", store.run_id, limit_bytes=64 * 1024 * 1024,
+            artifacts = ArtifactStore(directory / "artifacts", store.run_id, limit_bytes=artifact_limit_bytes,
                                       item_limit_bytes=artifact_item_limit_bytes)
             manifest = dict(expected, started_at=utc_now(),
                             expires_at=(datetime.now(timezone.utc) + timedelta(seconds=timeout_seconds)).isoformat(),
@@ -153,7 +153,12 @@ class RunSession:
     def resume(cls, directory: Path, *, expected):
         store = EventStore(directory)
         try:
-            session = cls(store, ArtifactStore(store.directory / "artifacts", store.run_id))
+            first = store.read_events()[:1]
+            quotas = (first[0]["payload"].get("quotas") or {}) if first else {}
+            limits = {key: quotas[name] for key, name in (("limit_bytes", "artifact_bytes"),
+                                                          ("item_limit_bytes", "artifact_item_bytes"))
+                      if isinstance(quotas.get(name), int) and quotas[name] > 0}
+            session = cls(store, ArtifactStore(store.directory / "artifacts", store.run_id, **limits))
             if session.state.workspace and session.state.terminal is None:
                 raise StoreError("workspace-v1 Docker continuation is unsupported; use read-only inspect/export")
             validate_resume(session.state.manifest, expected, session.artifacts)
