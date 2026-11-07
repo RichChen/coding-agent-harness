@@ -28,6 +28,9 @@ def view_hash(value):
 
 
 ADMISSION_ESTIMATES = ('utf8_bytes', 'calibrated_v1')
+# admission: compare compact_token_threshold with the admission estimate (tools included)
+# rather than with serialized bytes / 4, so both thresholds share one unit.
+COMPACT_TRIGGERS = ('bytes_div_4', 'admission')
 # calibrated_v1: ASCII bytes per token, fitted on provider prompt_tokens of the
 # A5/A6-R/CR-2 requests (scripts/audit/fix2_2026_11) with a safety margin so that
 # no recorded request was underestimated. Non-ASCII bytes count one token each.
@@ -134,13 +137,15 @@ def summarize_fixture(messages):
 
 class WindowPolicyHooks(LoopHooks):
     def __init__(self, policy: WindowPolicy, plugin=None, *, dispatcher=None, summary_provider=None,
-                 protection_rules='v1', admission='utf8_bytes'):
+                 protection_rules='v1', admission='utf8_bytes', compact_trigger='bytes_div_4'):
         # Not WindowPolicy fields: asdict(policy) feeds recorded config hashes.
         if protection_rules not in PROTECTION_RULES: raise ValueError(f'unknown protection rules: {protection_rules}')
         if admission not in ADMISSION_ESTIMATES: raise ValueError(f'unknown admission estimate: {admission}')
+        if compact_trigger not in COMPACT_TRIGGERS: raise ValueError(f'unknown compact trigger: {compact_trigger}')
         self.policy = policy
         self.protection_rules = protection_rules
         self.admission = admission
+        self.compact_trigger = compact_trigger
         self.plugin = plugin or NoOpPolicyPlugin()
         self.dispatcher = dispatcher
         self.summary_provider = summary_provider
@@ -164,7 +169,13 @@ class WindowPolicyHooks(LoopHooks):
         if self.admission != 'utf8_bytes':
             fingerprint['admission'] = dict(estimate=self.admission,
                                             ascii_bytes_per_token=CALIBRATED_ASCII_BYTES_PER_TOKEN)
+        if self.compact_trigger != 'bytes_div_4': fingerprint['compact_trigger'] = self.compact_trigger
         return fingerprint
+
+    def compact_size(self, view, tools):
+        if self.compact_trigger == 'admission':
+            return request_size(view, tools, 0, self.admission)['admission_input_tokens']
+        return request_size(view)['estimated_input_tokens']
 
     def restore(self, state):
         state = copy.deepcopy(state)
@@ -236,7 +247,7 @@ class WindowPolicyHooks(LoopHooks):
                 stats['actually_injected'] = 'summary'
                 stats['summary_records'] = copy.deepcopy(cached)
         if self.policy.strategy in ('masking','mask-then-summary'):
-            if self.policy.compact_token_threshold is None or request_size(view)['estimated_input_tokens'] > self.policy.compact_token_threshold:
+            if self.policy.compact_token_threshold is None or self.compact_size(view, tools) > self.policy.compact_token_threshold:
                 view, mask = micro_compact_openai_messages_with_stats(view, keep_recent=self.policy.keep_recent, preserve_tools=set(),
                                                                       protection_rules=self.protection_rules)
                 stats['masking'] = mask.to_dict()

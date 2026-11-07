@@ -42,6 +42,7 @@ def test_config_hash_and_fingerprint_unchanged(rel, tmp_path):
     ("context", "protection_rules", "v2"),
     ("command", "observation_bytes_kept", "persisted"),
     ("context", "admission_estimate", "calibrated_v1"),
+    ("context", "compact_trigger_estimate", "admission"),
 ])
 def test_enabling_a_new_option_changes_hash_and_fingerprint(section, key, value, tmp_path):
     base = load_config(ROOT / MASKING)

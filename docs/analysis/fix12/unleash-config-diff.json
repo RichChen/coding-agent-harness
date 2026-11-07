@@ -1,0 +1,109 @@
+{
+  "schema": "unleash-pilot.config-diff.v1",
+  "profiles": {
+    "b0-v2": "configs/sprint/b0-v2.yaml",
+    "a": "configs/rebench/unleash-a.yaml",
+    "u": "configs/rebench/unleash-u.yaml",
+    "ut": "configs/rebench/unleash-ut.yaml"
+  },
+  "fields_compared": 93,
+  "pairs": [
+    {
+      "before": "b0-v2",
+      "after": "a",
+      "differences": {
+        "policy.command.export_keep_original_files": [
+          false,
+          true
+        ],
+        "retry.stop_on_unknown_usage": [
+          false,
+          true
+        ],
+        "runtime.budget.hide_remaining_calls": [
+          false,
+          true
+        ],
+        "tracing.request_telemetry": [
+          false,
+          true
+        ],
+        "tracing.session_artifact_bytes": [
+          67108864,
+          536870912
+        ],
+        "tracing.session_artifact_item_bytes": [
+          2097152,
+          8388608
+        ]
+      },
+      "undeclared": {},
+      "declared_but_not_found": {},
+      "ok": true
+    },
+    {
+      "before": "a",
+      "after": "u",
+      "differences": {
+        "runtime.budget.max_model_calls": [
+          40,
+          100
+        ],
+        "runtime.context.admission_estimate": [
+          "utf8_bytes",
+          "calibrated_v1"
+        ],
+        "runtime.context.compact_token_threshold": [
+          null,
+          880000
+        ],
+        "runtime.context.compact_trigger_estimate": [
+          "bytes_div_4",
+          "admission"
+        ],
+        "runtime.context.max_tokens": [
+          96000,
+          1100000
+        ],
+        "runtime.max_steps": [
+          60,
+          120
+        ],
+        "runtime.step_timeout_seconds": [
+          300,
+          900
+        ],
+        "runtime.total_timeout_seconds": [
+          2400,
+          10800
+        ]
+      },
+      "undeclared": {},
+      "declared_but_not_found": {},
+      "ok": true
+    },
+    {
+      "before": "u",
+      "after": "ut",
+      "differences": {
+        "llm.max_tokens": [
+          8192,
+          32768
+        ],
+        "llm.reasoning_effort": [
+          null,
+          "high"
+        ],
+        "llm.thinking": [
+          "disabled",
+          "enabled"
+        ]
+      },
+      "undeclared": {},
+      "declared_but_not_found": {},
+      "ok": true
+    }
+  ],
+  "ok": true,
+  "launcher_shared": "per-run CNY cap, settlement and pricing are set by scripts/rebench/run_unleash.py, the same for every group"
+}

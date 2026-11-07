@@ -196,6 +196,14 @@ def provider_metadata(request_model, data=None, *, headers=None, started_at=None
         raw_usage_omitted='size_limit' if omitted else None, raw_usage_sha256=hashlib.sha256(raw_bytes).hexdigest())
 
 
+def request_options(payload: dict[str, Any]) -> dict[str, Any]:
+    """The model-behaviour options of a chat completions body, as sent."""
+    thinking = payload.get("thinking")
+    return {"model": payload.get("model"), "max_tokens": payload.get("max_tokens"),
+            "thinking": thinking.get("type") if isinstance(thinking, dict) else None,
+            "reasoning_effort": payload.get("reasoning_effort"), "stream": bool(payload.get("stream"))}
+
+
 THINKING_MODES = (None, "disabled", "enabled")
 REASONING_EFFORTS = (None, "low", "high", "max")
 
@@ -289,6 +297,7 @@ class LLMClient:
     ):
         self.audit_metadata = audit_metadata
         self.last_provider_metadata = {}
+        self.last_request: dict[str, Any] | None = None
         check_thinking(thinking, reasoning_effort)
         self.reasoning_effort = reasoning_effort
         self.base_url = base_url.rstrip("/")
@@ -395,6 +404,7 @@ class LLMClient:
             reasoning_effort=self.reasoning_effort if mode == "enabled" else None,
         )
         payload.pop("stream", None)
+        self.last_request = request_options(payload)
 
         started_at = datetime.now(timezone.utc).isoformat()
         if self.audit_metadata:
@@ -491,6 +501,7 @@ class LLMClient:
             thinking=self.thinking,
             reasoning_effort=self.reasoning_effort,
         )
+        self.last_request = request_options(payload)
         client = await self._ensure_client()
         aggregator = OpenAIStreamAggregator(
             max_tool_argument_bytes=self.max_tool_argument_bytes

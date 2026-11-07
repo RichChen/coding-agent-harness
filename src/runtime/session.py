@@ -88,6 +88,8 @@ def runtime_fingerprint(loop):
         output_limit=loop.run_output_meter.limit_bytes)
     if getattr(loop.llm, "reasoning_effort", None) is not None:
         spec["model"]["reasoning_effort"] = loop.llm.reasoning_effort
+    if not getattr(loop, "announce_remaining_calls", True):
+        spec["remaining_calls_hidden"] = True
     if getattr(loop, "workspace_controller", None) is not None:
         spec["workspace_v1"] = loop.workspace_controller.fingerprint()
     return digest(canonical(spec).encode())

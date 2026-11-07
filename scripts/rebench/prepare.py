@@ -47,7 +47,7 @@ PILOT = ["pypa__twine-1309", "delgan__loguru-1451", "pycqa__isort-2491", "holovi
 CONDA_PYTHON = "/opt/conda/envs/testbed/bin/python"
 GRADER_TIMEOUT = 600
 DIGEST = re.compile(r"^[^@\s]+@sha256:[0-9a-f]{64}$")
-STAGES = ("source", "task_files", "image", "isolation", "calibration", "outputs")
+STAGES = ("source", "task_files", "image", "isolation", "calibration", "memory", "outputs")
 
 
 def rel(path: Path) -> str:
@@ -153,7 +153,9 @@ def write_task_files(row: dict) -> dict:
 # ---- images ----
 
 def official_digest(image: str) -> dict:
-    """The local official image's RepoDigest for its own repository."""
+    """The local official image's RepoDigest for its own repository. Pulls the image when it is not local."""
+    if not image_present(image):
+        docker("pull", "-q", image, timeout=7200)
     inspect = json.loads(docker("image", "inspect", image))[0]
     repo = image.rsplit(":", 1)[0] if ":" in image.split("/")[-1] else image
     digests = [d for d in inspect.get("RepoDigests") or [] if d.split("@", 1)[0] == repo]
@@ -304,7 +306,37 @@ def outcome_counts(result: dict, f2p: list[str], p2p: list[str]) -> dict:
             "execution_status": result.get("execution_status")}
 
 
-def calibration_stage(row: dict, work: Path, repeats: int):
+class GraderInfraError(RuntimeError):
+    """The grader failed before any test ran. Not a property of the task; the stage is retried later."""
+
+
+async def evaluate_retrying(grader, attempts: int = 3, **kwargs) -> dict:
+    """ImageGrader.evaluate, repeated while it fails before test execution (Docker create/exec errors)."""
+    for _ in range(attempts):
+        result = await grader.evaluate(**kwargs)
+        if not (result.get("execution_status") is None and result.get("reason")):
+            return result
+        await asyncio.sleep(10)
+    raise GraderInfraError("grader failed before test execution: " + str(result.get("reason"))[:300])
+
+
+def failed_clauses(*, isolation_ok: bool, runs: dict, stable: bool, repaired: bool, excluded: int, p2p: int) -> list[int]:
+    """Exclusion clauses of the pilot design (section 3.3) that a calibrated task fails."""
+    clauses = []
+    if not isolation_ok:
+        clauses.append(2)
+    if not repaired or not all(r["f2p"][1] > 0 and r["f2p"][0] == r["f2p"][1] for r in runs["gold"]):
+        clauses.append(3)
+    if not all(r["f2p"][1] > 0 and r["f2p"][0] == 0 for r in runs["empty"]):
+        clauses.append(4)
+    if not stable:
+        clauses.append(5)
+    if excluded * 2 > p2p:
+        clauses.append(8)
+    return clauses
+
+
+def calibration_stage(row: dict, work: Path, repeats: int, keep_original_files: bool = False):
     from src.eval.image_grader import (ImageGrader, pytest_options_from_test_cmd, repair_truncated_nodeids,
                                        sandbox_p2p_exclusions)
 
@@ -313,30 +345,38 @@ def calibration_stage(row: dict, work: Path, repeats: int):
         overlay, gold, test_paths, gold_paths = staging(row, work)
         options = pytest_options_from_test_cmd(row["install_config"].get("test_cmd"))
         grader = ImageGrader(context=CONTEXT)
-        common = dict(image=image, test_overlay=overlay, autoload_plugins=True, pytest_options=options)
+        common = dict(image=image, test_overlay=overlay, autoload_plugins=True, pytest_options=options,
+                      keep_original_files=keep_original_files)
         raw_f2p = [n for n in parse_id_list(row["FAIL_TO_PASS"]) if usable_nodeid(n)]
         raw_p2p = [n for n in parse_id_list(row["PASS_TO_PASS"]) if usable_nodeid(n)]
         files = sorted({n.split("::", 1)[0] for n in raw_f2p + raw_p2p if n.split("::", 1)[0].endswith(".py")})
-        collection = await grader.collect(paths=files, timeout=GRADER_TIMEOUT, **common)
+        collect_args = {k: v for k, v in common.items() if k != "keep_original_files"}
+        collection = await grader.collect(paths=files, timeout=GRADER_TIMEOUT, **collect_args)
         collected = collection.get("collected") or []
+        if not collected and collection.get("reason"):
+            raise GraderInfraError("collection failed before running: " + str(collection["reason"])[:300])
         f2p, f2p_notes = repair_truncated_nodeids(raw_f2p, collected)
         p2p, p2p_notes = repair_truncated_nodeids(raw_p2p, collected)
         runs = {"empty": [], "gold": []}
         raw_gold = []
         for _ in range(repeats):
             for label, delta in (("empty", {"changed": {}, "deleted": []}), ("gold", gold)):
-                result = await grader.evaluate(delta=delta, f2p=f2p, p2p=p2p, timeout=GRADER_TIMEOUT, **common)
+                result = await evaluate_retrying(grader, delta=delta, f2p=f2p, p2p=p2p, timeout=GRADER_TIMEOUT,
+                                                 **common)
                 runs[label].append(outcome_counts(result, f2p, p2p))
                 if label == "gold":
                     raw_gold.append(result)
         excluded = sandbox_p2p_exclusions(raw_gold, p2p)
-        empty_fails = all(r["f2p"][1] > 0 and r["f2p"][0] < r["f2p"][1] for r in runs["empty"])
+        empty_fails = all(r["f2p"][1] > 0 and r["f2p"][0] == 0 for r in runs["empty"])
         gold_ok = all(r["f2p"][1] > 0 and r["f2p"][0] == r["f2p"][1] for r in runs["gold"])
         stable = all(len({json.dumps(r["f2p_outcomes"], sort_keys=True) for r in runs[k]}) == 1 for k in runs)
         repaired = all(note["match_count"] for note in f2p_notes)
-        accepted = bool(state["isolation"]["answer_isolation_pass"] and empty_fails and gold_ok and stable and repaired)
+        clauses = failed_clauses(isolation_ok=state["isolation"]["answer_isolation_pass"], runs=runs, stable=stable,
+                                 repaired=repaired, excluded=len(excluded), p2p=len(p2p))
+        accepted = not clauses
         last_empty, last_gold = runs["empty"][-1], runs["gold"][-1]
         return {"calibration": {
+            "keep_original_files": keep_original_files, "failed_clauses": clauses,
             "options": options, "collected": len(collected), "collect_reason": collection.get("reason"),
             "f2p_original": len(raw_f2p), "p2p_original": len(raw_p2p), "f2p": f2p, "p2p": p2p,
             "f2p_repaired": f2p_notes, "p2p_repaired": p2p_notes, "p2p_excluded": excluded,
@@ -348,6 +388,34 @@ def calibration_stage(row: dict, work: Path, repeats: int):
 
     def run(state):
         return asyncio.run(calibrate(state))
+    return run
+
+
+ONE_GIB, TWO_GIB = 1024**3, 2 * 1024**3
+
+
+def memory_stage(row: dict, work: Path, keep_original_files: bool = False):
+    """Agent containers get 1 GiB. Grade the gold delta once at 1 GiB; when the outcome differs from the
+    2 GiB calibration, the task gets 2 GiB in every group (pilot design section 3.3, clause 6)."""
+    from src.eval.image_grader import ImageGrader
+
+    async def probe(state):
+        cal = state["calibration"]
+        if not cal["accepted"]:
+            return {"memory": {"probed": False, "memory_bytes": None}}
+        overlay, gold, _, _ = staging(row, work)
+        result = await evaluate_retrying(
+            ImageGrader(context=CONTEXT), image=state["image"]["clean_digest"], delta=gold, test_overlay=overlay, f2p=cal["f2p"], p2p=cal["p2p"],
+            timeout=GRADER_TIMEOUT, autoload_plugins=True, pytest_options=cal["options"],
+            keep_original_files=keep_original_files, memory_bytes=ONE_GIB)
+        counts = outcome_counts(result, cal["f2p"], cal["p2p"])
+        reference = cal["runs"]["gold"][-1]
+        same = counts["f2p"] == reference["f2p"] and counts["p2p_not_passed"] == reference["p2p_not_passed"]
+        return {"memory": {"probed": True, "one_gib": counts, "matches_two_gib": same,
+                           "memory_bytes": ONE_GIB if same else TWO_GIB}}
+
+    def run(state):
+        return asyncio.run(probe(state))
     return run
 
 
@@ -387,7 +455,9 @@ def manifest_row(record: dict) -> dict:
             "grader_timeout_seconds": GRADER_TIMEOUT, "test_command": command,
             "grader": {"autoload_plugins": True, "pytest_options": list(cal["options"])},
             "grader_nodeids": {"f2p": list(cal["f2p"]), "p2p": list(cal["p2p"])},
-            "p2p_excluded": list(cal["p2p_excluded"]), "calibration": dict(cal["summary"])}
+            "p2p_excluded": list(cal["p2p_excluded"]), "calibration": dict(cal["summary"]),
+            **({"export_keep_original_files": True} if cal.get("keep_original_files") else {}),
+            **({"memory_bytes": record["memory"]["memory_bytes"]} if (record.get("memory") or {}).get("memory_bytes") else {})}
 
 
 def merge_manifest(path: Path, rows: list[dict], drop=()) -> None:
@@ -401,7 +471,7 @@ def merge_manifest(path: Path, rows: list[dict], drop=()) -> None:
     path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=200), encoding="utf-8")
 
 
-def outputs_stage(row: dict, work: Path):
+def outputs_stage(row: dict, work: Path, manifest: Path = MANIFEST):
     def run(state):
         record = {**state, "instance_id": row["instance_id"], "repo": row["repo"], "base_commit": row["base_commit"],
                   "created_at": row["created_at"]}
@@ -413,14 +483,15 @@ def outputs_stage(row: dict, work: Path):
         (CLEAN_RECORDS / (row["instance_id"] + ".json")).write_text(
             json.dumps(clean_record(record), indent=2) + "\n", encoding="utf-8")
         if state["calibration"]["accepted"]:
-            merge_manifest(MANIFEST, [manifest_row(record)])
+            merge_manifest(manifest, [manifest_row(record)])
         else:
-            merge_manifest(MANIFEST, [], drop={row["instance_id"]})
+            merge_manifest(manifest, [], drop={row["instance_id"]})
         return {"accepted": state["calibration"]["accepted"]}
     return run
 
 
-def prepare_task(instance_id: str, repeats: int, redo=()) -> dict:
+def prepare_task(instance_id: str, repeats: int, redo=(), *, keep_original_files: bool = False,
+                 manifest: Path = MANIFEST) -> dict:
     row = load_row(instance_id)
     work = WORK / instance_id
     work.mkdir(parents=True, exist_ok=True)
@@ -431,12 +502,19 @@ def prepare_task(instance_id: str, repeats: int, redo=()) -> dict:
         digest = (state.get("image") or {}).get("clean_digest")
         if "image" in state.get("done", []) and (not digest or not image_present(digest)):
             redo.add("image")
+        if "calibration" in state.get("done", []) and (
+                bool((state.get("calibration") or {}).get("keep_original_files")) != keep_original_files
+                or "failed_clauses" not in state["calibration"]):
+            redo.add("calibration")
+        if "outputs" in state.get("done", []) and state.get("manifest") != rel(manifest):
+            redo.add("outputs")
     stages = [("source", source_stage(row, work)),
               ("task_files", lambda state: write_task_files(row)),
               ("image", image_stage(row, work)),
               ("isolation", isolation_stage(row, work)),
-              ("calibration", calibration_stage(row, work, repeats)),
-              ("outputs", outputs_stage(row, work))]
+              ("calibration", calibration_stage(row, work, repeats, keep_original_files)),
+              ("memory", memory_stage(row, work, keep_original_files)),
+              ("outputs", lambda state: {**outputs_stage(row, work, manifest)(state), "manifest": rel(manifest)})]
     return run_stages(path, stages, redo=redo)
 
 
@@ -445,18 +523,24 @@ def main() -> None:
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--redo", action="append", default=[], choices=STAGES, help="rerun from this stage")
     parser.add_argument("--ids-file", type=Path, help="one instance id per line")
+    parser.add_argument("--keep-original-files", action="store_true",
+                        help="export rule export_keep_original_files for calibration; recorded in the manifest row")
+    parser.add_argument("--manifest", type=Path, default=MANIFEST)
     parser.add_argument("ids", nargs="*")
     args = parser.parse_args()
     ids = list(args.ids)
     if args.ids_file:
         ids += [line.strip() for line in args.ids_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+    manifest = args.manifest if args.manifest.is_absolute() else ROOT / args.manifest
     results = {}
     for instance_id in ids or PILOT:
         print("==", instance_id, flush=True)
         try:
-            state = prepare_task(instance_id, args.repeats, args.redo)
+            state = prepare_task(instance_id, args.repeats, args.redo, keep_original_files=args.keep_original_files,
+                                 manifest=manifest)
             cal = state["calibration"]
             results[instance_id] = {"accepted": state["accepted"], **cal["summary"],
+                                    "failed_clauses": cal["failed_clauses"], "memory_bytes": state["memory"]["memory_bytes"],
                                     "p2p_excluded": len(cal["p2p_excluded"])}
         except Exception as exc:
             results[instance_id] = {"error": type(exc).__name__ + ": " + str(exc)[-500:]}

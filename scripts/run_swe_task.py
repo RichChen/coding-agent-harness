@@ -417,9 +417,11 @@ def delta_lost(events_summary: dict, delta: dict | None) -> bool:
     return bool(events_summary.get("saw_edit")) and not delta_changes(delta)
 
 
-def make_ledger(state_path: Path | None, *, settlement: str = "cache_miss", time_of_day: bool = False) -> CnyBudgetLedger:
+def make_ledger(state_path: Path | None, *, settlement: str = "cache_miss", time_of_day: bool = False,
+                run_cap_cny: str = "1.000", max_calls: int = 40) -> CnyBudgetLedger:
     """settlement="provider_usage" settles each call at the provider's hit/miss/output usage; time_of_day also
-    applies DeepSeek's off-peak half price. The default prices every prompt token at the miss price."""
+    applies DeepSeek's off-peak half price. The default prices every prompt token at the miss price.
+    run_cap_cny / max_calls: the per-run CNY cap and the ledger's own call cap."""
     price = PriceSnapshot(
         provider="DeepSeek",
         model="deepseek-flash",
@@ -432,14 +434,15 @@ def make_ledger(state_path: Path | None, *, settlement: str = "cache_miss", time
         retrieved_on="2026-09-21",
         verified=True,
     )
-    # One run stays inside the sprint cap of 1 CNY. USD budget is not used.
+    # One run stays inside the per-run cap (sprint default 1 CNY). USD budget is not used.
+    cap = Decimal(run_cap_cny)
     plan = A5BudgetPlan(
-        total_cny=Decimal("1.000"),
+        total_cny=cap,
         build_cny=Decimal("0.000"),
-        pilot_cny=Decimal("1.000"),
+        pilot_cny=cap,
         reserve_cny=Decimal("0.000"),
         build_calls=0,
-        pilot_calls=40,
+        pilot_calls=max_calls,
     )
     return CnyBudgetLedger(price, plan, state_path=state_path, settlement=settlement, time_of_day=time_of_day)
 
@@ -672,11 +675,23 @@ def grader_infra_reason(evaluation: dict):
     return None
 
 
-def clean_backend(image: str, reap_on_timeout: bool = False) -> BaselineImageBackend:
+def export_rule(config: dict, task: dict) -> bool:
+    """export_keep_original_files for this run. The profile must match the rule the task was calibrated with."""
+    profile = bool(config["policy"]["command"].get("export_keep_original_files", False))
+    calibrated = bool(task.get("export_keep_original_files", False))
+    if profile != calibrated:
+        raise ValueError(f"export rule mismatch for {task.get('id')}: profile export_keep_original_files={profile}, "
+                         f"task calibrated with {calibrated}")
+    return profile
+
+
+def clean_backend(image: str, reap_on_timeout: bool = False, keep_original_files: bool = False,
+                  memory_bytes: int = 1024**3) -> BaselineImageBackend:
     return BaselineImageBackend(
         image=image,
         context="desktop-linux",
-        memory_bytes=1024**3,
+        keep_original_files=keep_original_files,
+        memory_bytes=memory_bytes,
         workspace_bytes=256 * 1024**2,
         tmpfs_bytes=64 * 1024**2,
         network="none",
@@ -758,7 +773,9 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
     if failure:
         return _isolation_stop(task, variant, failure, mock=mock, profile=profile, output=output)
     config = load_config(profile)
-    backend = clean_backend(image, config["policy"]["command"].get("docker_reap_on_timeout", False))
+    keep_original = export_rule(config, task)
+    backend = clean_backend(image, config["policy"]["command"].get("docker_reap_on_timeout", False),
+                            keep_original, int(task.get("memory_bytes", 1024**3)))
     # CNY ledger is the only budget that stops a run. Do not set max_cost_usd here.
     if mock:
         config["llm"]["api_key"] = config["llm"]["api_key"] or "mock"
@@ -853,6 +870,7 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
             django=task.get("family") == "django",
             sympy=False,
             timeout=float(task["grader_timeout_seconds"]),
+            keep_original_files=keep_original,
             **grader_options(task),
         )
         infra_reason = grader_infra_reason(evaluation)

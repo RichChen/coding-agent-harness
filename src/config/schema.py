@@ -69,7 +69,7 @@ class RetryConfig(BaseModel):
 
 class RuntimeContextConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
-    omit_when_default = ("protection_rules", "admission_estimate")
+    omit_when_default = ("protection_rules", "admission_estimate", "compact_trigger_estimate")
 
     strategy: str | None = Field(default=None, pattern="^(none|masking|summary|mask-then-summary)$")
     max_tokens: int | None = Field(default=None, gt=0)
@@ -97,6 +97,9 @@ class RuntimeContextConfig(OmitNewDefaults):
     # calibrated_v1: max_tokens is compared with an estimate fitted to provider prompt_tokens
     # instead of with raw UTF-8 bytes (which run 2.3-5.2x above the provider count).
     admission_estimate: Literal["utf8_bytes", "calibrated_v1"] = "utf8_bytes"
+    # admission: compact_token_threshold is compared with the admission estimate above
+    # (tools included) instead of serialized bytes / 4.
+    compact_trigger_estimate: Literal["bytes_div_4", "admission"] = "bytes_div_4"
 
 
 class RuntimePlannerConfig(BaseModel):
@@ -118,10 +121,13 @@ class RuntimeSubagentsConfig(BaseModel):
     share_parent_budget: bool = False
 
 
-class RuntimeBudgetConfig(BaseModel):
+class RuntimeBudgetConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
+    omit_when_default = ("hide_remaining_calls",)
 
     max_model_calls: int | None = None
+    # True: do not append the "remaining model calls: N/M" user message before each request.
+    hide_remaining_calls: bool = False
     max_tokens: int | None = None
     max_cost_usd: float | None = None
     # Required when max_cost_usd is set: {"prompt_per_1k": float, "completion_per_1k": float}
@@ -153,7 +159,7 @@ class SandboxConfig(BaseModel):
 
 class CommandConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
-    omit_when_default = ("observation_bytes_kept", "docker_reap_on_timeout")
+    omit_when_default = ("observation_bytes_kept", "docker_reap_on_timeout", "export_keep_original_files")
 
     allow_all: bool = True
     allowed_prefixes: list[str] = Field(default_factory=list)
@@ -182,6 +188,9 @@ class CommandConfig(OmitNewDefaults):
     # Docker profile: after a command timeout or cancel the container stays up. True also kills
     # that command's processes inside it (commands then see HARNESS_EXEC_ID in their environment).
     docker_reap_on_timeout: bool = False
+    # Clean-image runs: files of the original source tree are exported and graded even under a
+    # directory the export otherwise skips (build/, __pycache__/ ...). New artifacts there stay out.
+    export_keep_original_files: bool = False
 
 
 class PolicyConfig(BaseModel):

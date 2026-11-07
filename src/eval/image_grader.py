@@ -29,6 +29,34 @@ for name, encoded in (req.get("overlay") or {}).items():
     path.write_bytes(base64.b64decode(encoded))
 '''
 
+# export_keep_original_files: which of the candidate paths (stdin, JSON list) are original source files of
+# the image. Same rule as the export script in baseline_image_backend.
+ORIGINALS_AMONG = r'''
+import json, pathlib, sys
+root = pathlib.Path("/opt/repo")
+extra = set(json.loads(pathlib.Path("/opt/repo-extra-files.json").read_text()))
+found = []
+for name in json.load(sys.stdin):
+    path = root / name
+    if name not in extra and path.is_file() and not path.is_symlink():
+        found.append(name)
+json.dump(sorted(found), sys.stdout)
+'''
+
+
+def grader_payload(delta: dict | None, overlay: dict | None, original_files=None) -> dict:
+    """Files the grader writes into the workspace, filtered by the same rule as the export."""
+    return {
+        "deleted": [name for name in ((delta or {}).get("deleted") or []) if not is_export_skipped(name, original_files)],
+        "changed": {
+            name: encoded
+            for name, encoded in ((delta or {}).get("changed") or {}).items()
+            if not is_export_skipped(name, original_files)
+        },
+        "overlay": overlay or {},
+    }
+
+
 CONFIG_NAMES = {"conftest.py", "setup.cfg", "setup.py", "pyproject.toml", "pytest.ini", "tox.ini", "setup.cfg"}
 
 AUTOLOAD_OFF = "os.environ['PYTEST_DISABLE_PLUGIN_AUTOLOAD']='1'"
@@ -162,12 +190,13 @@ class ImageGrader:
         return {"collected": list(receipt.get("collected") or []), "reason": result.get("reason"),
                 **receipt_diagnostics(receipt)}
 
-    async def evaluate(self, *, image: str, delta: dict | None, test_overlay: dict, f2p: list[str], p2p: list[str], django: bool = False, sympy: bool = False, timeout: float = 300, repo_root: str = "/opt/repo", python_bin: str = "/usr/local/bin/python", autoload_plugins: bool = False, pytest_options: list[str] | None = None) -> dict:
+    async def evaluate(self, *, image: str, delta: dict | None, test_overlay: dict, f2p: list[str], p2p: list[str], django: bool = False, sympy: bool = False, timeout: float = 300, repo_root: str = "/opt/repo", python_bin: str = "/usr/local/bin/python", autoload_plugins: bool = False, pytest_options: list[str] | None = None, keep_original_files: bool = False, memory_bytes: int = 2 * 1024**3) -> dict:
         nodeids = list(f2p) + list(p2p)
         result = await self._run(image=image, delta=delta, test_overlay=test_overlay,
                                  args=list(pytest_options or []) + nodeids, sympy=sympy, django=django,
                                  autoload_plugins=autoload_plugins, timeout=timeout, repo_root=repo_root,
-                                 python_bin=python_bin)
+                                 python_bin=python_bin, keep_original_files=keep_original_files,
+                                 memory_bytes=memory_bytes)
         receipt = result.pop("receipt", None)
         retries = result.pop("docker_retries")
         if receipt is not None:
@@ -180,11 +209,12 @@ class ImageGrader:
         return result
 
     async def _run(self, *, image: str, delta: dict | None, test_overlay: dict, args: list[str], django: bool,
-                   sympy: bool, autoload_plugins: bool, timeout: float, repo_root: str, python_bin: str) -> dict:
+                   sympy: bool, autoload_plugins: bool, timeout: float, repo_root: str, python_bin: str,
+                   keep_original_files: bool = False, memory_bytes: int = 2 * 1024**3) -> dict:
         from scripts.preflight_a5_repo_baseline import PYTEST_OBSERVER, prepare_repo_runtime, upload_runner
 
         backend = DockerExecutionBackend(
-            image=image, context=self.context, memory_bytes=2 * 1024**3,
+            image=image, context=self.context, memory_bytes=memory_bytes,
             workspace_bytes=512 * 1024**2, tmpfs_bytes=256 * 1024**2, network="none",
             python_bin=python_bin,
         )
@@ -192,15 +222,19 @@ class ImageGrader:
         try:
             await backend.start({})
             await prepare_repo_runtime(backend, repo_root=repo_root, python_bin=python_bin)
-            payload = {
-                "deleted": [name for name in ((delta or {}).get("deleted") or []) if not is_export_skipped(name)],
-                "changed": {
-                    name: encoded
-                    for name, encoded in ((delta or {}).get("changed") or {}).items()
-                    if not is_export_skipped(name)
-                },
-                "overlay": test_overlay or {},
-            }
+            originals = None
+            if keep_original_files:
+                names = list(((delta or {}).get("changed") or {}).keys()) + list((delta or {}).get("deleted") or [])
+                candidates = [name for name in names if is_export_skipped(name)]
+                originals = set()
+                if candidates:
+                    raw = await backend._ok(
+                        "exec", "-i", backend.name, python_bin, "-I", "-S", "-c",
+                        ORIGINALS_AMONG.replace('pathlib.Path("/opt/repo")', "pathlib.Path(" + json.dumps(repo_root) + ")"),
+                        data=json.dumps(candidates).encode(), limit=1024 * 1024, timeout=120,
+                    )
+                    originals = set(json.loads(raw))
+            payload = grader_payload(delta, test_overlay, originals)
             await backend._ok(
                 "exec", "-i", backend.name, python_bin, "-I", "-S", "-c", APPLY,
                 data=json.dumps(payload).encode(), limit=64 * 1024, timeout=120,

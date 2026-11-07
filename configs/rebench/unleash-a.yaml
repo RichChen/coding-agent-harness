@@ -1,0 +1,46 @@
+# Unleash pilot, group A (docs/analysis/UNLEASH-PILOT-DESIGN.zh-CN.md section 2.1).
+# b0-v2 unchanged except for the settings every group shares: unknown usage stops the run,
+# per-request telemetry, session artifact quotas (R3), the export rule (R4) and no
+# "remaining model calls" message (R6). The 4 CNY per-run cap at peak price is set by the
+# batch launcher (scripts/rebench/run_unleash.py), identically for all groups.
+llm:
+  base_url: "https://api.deepseek.com/v1"
+  api_key: "${LLM_API_KEY}"
+  model: "${DEEPSEEK_MODEL:deepseek-flash}"
+  thinking: disabled
+  max_tokens: 8192
+  trust_env: false
+retry:
+  stop_on_unknown_usage: true
+runtime:
+  system_prompt_path: prompts/swe_b0.md
+  max_steps: 60
+  step_timeout_seconds: 300
+  total_timeout_seconds: 2400
+  context:
+    strategy: masking
+    max_tokens: 96000
+    keep_recent_tool_results: 4
+    plugin: noop
+  budget:
+    max_model_calls: 40
+    max_tokens: 10000000
+    hide_remaining_calls: true
+policy:
+  command:
+    execution_profile: docker_linux
+    docker_context: desktop-linux
+    docker_network: none
+    timeout_seconds: 120
+    env_whitelist: []
+    export_keep_original_files: true
+  file_size_limit_bytes: 1048576
+  tool_output_max_chars: 16000
+tools:
+  enabled: [read_file, write_file, list_dir, edit_file, search_replace, run_command, search_code]
+tracing:
+  lifecycle_events: true
+  llm_stream_events: true
+  request_telemetry: true
+  session_artifact_bytes: 536870912
+  session_artifact_item_bytes: 8388608

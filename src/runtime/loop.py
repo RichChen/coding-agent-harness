@@ -186,6 +186,7 @@ class AgentLoop:
         run_output_limit_bytes: int = RUN_OUTPUT_TOTAL_BYTES,
         estimated_input_tokens: int = 512,
         request_telemetry: bool = False,
+        announce_remaining_calls: bool = True,
     ):
         self.llm = llm
         self.tools = tools
@@ -217,6 +218,7 @@ class AgentLoop:
         self.run_output_meter = RunOutputMeter(limit_bytes=run_output_limit_bytes)
         self.estimated_input_tokens = estimated_input_tokens
         self.request_telemetry = request_telemetry
+        self.announce_remaining_calls = announce_remaining_calls
         self._cleanup_elapsed_s: float | None = None
         self.session = None
         self.execution_backend = None
@@ -392,7 +394,7 @@ class AgentLoop:
 
     def _with_remaining_calls(self, view):
         ledger = self.model_ledger
-        if ledger is None or ledger.max_model_calls is None:
+        if ledger is None or ledger.max_model_calls is None or not self.announce_remaining_calls:
             return view
         left = max(int(ledger.max_model_calls) - int(ledger.calls_started), 0)
         return list(view) + [{"role": "user", "content": f"remaining model calls: {left}/{ledger.max_model_calls}"}]

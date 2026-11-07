@@ -141,9 +141,11 @@ class RetryPolicy:
             attempt_id = uuid.uuid4().hex
             if self.session:
                 context = self.telemetry
+                source = getattr(getattr(fn, '__self__', None), 'llm', getattr(fn, '__self__', None))
                 self.sink.on_record = lambda record: self.session.model_settled(
                     self.model_ledger, operation_id, attempt_id, record,
-                    telemetry=None if context is None else settled_telemetry(context, record.usage))
+                    telemetry=None if context is None else settled_telemetry(
+                        context, record.usage, getattr(source, 'last_request', None)))
             if self.deadline is not None:
                 self.deadline.raise_if_expired_or_cancelled()
 

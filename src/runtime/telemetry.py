@@ -58,11 +58,12 @@ def _count(value):
     return value if type(value) is int and value >= 0 else None
 
 
-def settled_telemetry(context: dict, usage: dict | None) -> dict:
+def settled_telemetry(context: dict, usage: dict | None, request: dict | None = None) -> dict:
+    """request: the options the client put in the request body (LLMClient.last_request), when it records them."""
     usage = usage if isinstance(usage, dict) else {}
     admission, prompt = _count(context.get("admission_input_tokens")), _count(usage.get("prompt_tokens"))
     details = usage.get("completion_tokens_details")
-    return {
+    return ({"request": dict(request)} if isinstance(request, dict) else {}) | {
         "step": context.get("step"),
         "admission_input_tokens": admission,
         "admission_method": context.get("admission_method"),

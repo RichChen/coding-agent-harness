@@ -57,8 +57,13 @@ _SKIP_SUFFIXES = (".pyc", ".pyo", ".so", ".pyd", ".o", ".dylib")
 _SKIP_NAMES = frozenset({".coverage"})
 
 
-def is_export_skipped(relative: str) -> bool:
-    """Compiled artifacts and caches stay out of the delta. Source files do not."""
+def is_export_skipped(relative: str, original_files=None) -> bool:
+    """Compiled artifacts and caches stay out of the delta. Source files do not.
+
+    original_files: with export_keep_original_files, the paths of the original source tree among the
+    candidates; those are never skipped, even under a directory named build."""
+    if original_files is not None and relative in original_files:
+        return False
     parts = PurePosixPath(relative).parts
     name = parts[-1] if parts else relative
     if any(part in _SKIP_DIRS or part.endswith(".egg-info") for part in parts):
@@ -73,8 +78,13 @@ work = pathlib.Path("/workspace")
 skip_dirs = {"__pycache__", ".pytest_cache", "build"}
 skip_names = {".coverage"}
 skip_suffixes = (".pyc", ".pyo", ".so", ".pyd", ".o", ".dylib")
+keep_original = False
+# Files the image added to /opt/repo beyond the source archive; everything else there is original source.
+extra = set(json.loads(pathlib.Path("/opt/repo-extra-files.json").read_text())) if keep_original else set()
 
 def skipped(rel):
+    if keep_original and rel.as_posix() not in extra and (root / rel).is_file() and not (root / rel).is_symlink():
+        return False
     if any(part in skip_dirs or part.endswith(".egg-info") for part in rel.parts):
         return True
     return rel.name.endswith(skip_suffixes) or rel.name in skip_names or rel.name.endswith(".egg-info")
@@ -117,11 +127,20 @@ json.dump({"changed": changed, "deleted": sorted(deleted), "skipped_files": len(
 '''
 
 
+def export_script(repo_root: str, keep_original_files: bool = False) -> str:
+    code = EXPORT_DELTA.replace('pathlib.Path("/opt/repo")', 'pathlib.Path(' + json.dumps(repo_root) + ')')
+    if keep_original_files:
+        code = code.replace("keep_original = False", "keep_original = True", 1)
+    return code
+
+
 class BaselineImageBackend(DockerExecutionBackend):
-    def __init__(self, *, repo_root="/opt/repo", python_bin="/usr/local/bin/python", **kwargs):
+    def __init__(self, *, repo_root="/opt/repo", python_bin="/usr/local/bin/python", keep_original_files=False,
+                 **kwargs):
         super().__init__(python_bin=python_bin, **kwargs)
         self.repo_root = repo_root
         self.python_bin = python_bin
+        self.keep_original_files = keep_original_files
         self.candidate_delta = None
         self.snapshot_error = None
         self.export_skipped_files = None
@@ -147,7 +166,7 @@ class BaselineImageBackend(DockerExecutionBackend):
         try:
             raw = await self._ok(
                 "exec", "-i", self.name, self.python_bin, "-I", "-S", "-c",
-                EXPORT_DELTA.replace('pathlib.Path("/opt/repo")', 'pathlib.Path(' + json.dumps(self.repo_root) + ')'),
+                export_script(self.repo_root, self.keep_original_files),
                 data=b"{}", limit=DELTA_BYTE_LIMIT + 1024 * 1024, timeout=120, op="snapshot",
             )
         except Exception as exc:

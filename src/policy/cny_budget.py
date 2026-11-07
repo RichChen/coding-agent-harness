@@ -144,6 +144,8 @@ class CnyBudgetLedger:
     phase_calls: dict[str, int] = field(default_factory=lambda: {"build": 0, "pilot": 0})
     outstanding: dict[int, CnyReservation] = field(default_factory=dict)
     settlements: list[dict[str, Any]] = field(default_factory=list)
+    # Reservations refused by the hard cap, with the amount that did not fit.
+    rejections: list[dict[str, Any]] = field(default_factory=list)
     _next_id: int = 0
     state_path: Path | None = field(default=None, repr=False, compare=False)
     # cache_miss: every prompt token at the miss price (the original ledger). provider_usage: hit, miss and
@@ -185,6 +187,10 @@ class CnyBudgetLedger:
             raise CnyBudgetError(f"{phase} call cap reached", reason="cny_call_cap")
         amount = self.estimate(prompt_tokens, max_output_tokens)
         if self.phase_cost[phase] + amount > self._cap(phase) or self.cost_committed + amount > self.plan.total_cny - self.plan.reserve_cny:
+            self.rejections.append({"phase": phase, "operation_id": operation_id, "component": component,
+                                    "reserve_cny": str(amount), "committed_cny": str(self.cost_committed),
+                                    "prompt_tokens": prompt_tokens, "max_output_tokens": max_output_tokens})
+            self.persist()
             raise CnyBudgetError("CNY hard cap would be exceeded", reason="cny_hard_cap")
         self._next_id += 1
         reservation = CnyReservation(self._next_id, phase, operation_id, component, amount, prompt_tokens, max_output_tokens,
@@ -246,4 +252,6 @@ class CnyBudgetLedger:
             "hard_caps": {"total": str(self.plan.total_cny), "build": str(self.plan.build_cny), "pilot": str(self.plan.pilot_cny), "reserve": str(self.plan.reserve_cny)}}
         if self.settlement != "cache_miss":
             data["settlement"] = {"mode": self.settlement, "time_of_day": self.time_of_day}
+        if self.rejections:
+            data["rejections"] = list(self.rejections)
         return data
