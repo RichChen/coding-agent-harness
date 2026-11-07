@@ -415,7 +415,9 @@ def delta_lost(events_summary: dict, delta: dict | None) -> bool:
     return bool(events_summary.get("saw_edit")) and not delta_changes(delta)
 
 
-def make_ledger(state_path: Path) -> CnyBudgetLedger:
+def make_ledger(state_path: Path | None, *, settlement: str = "cache_miss", time_of_day: bool = False) -> CnyBudgetLedger:
+    """settlement="provider_usage" settles each call at the provider's hit/miss/output usage; time_of_day also
+    applies DeepSeek's off-peak half price. The default prices every prompt token at the miss price."""
     price = PriceSnapshot(
         provider="DeepSeek",
         model="deepseek-flash",
@@ -437,7 +439,7 @@ def make_ledger(state_path: Path) -> CnyBudgetLedger:
         build_calls=0,
         pilot_calls=40,
     )
-    return CnyBudgetLedger(price, plan, state_path=state_path)
+    return CnyBudgetLedger(price, plan, state_path=state_path, settlement=settlement, time_of_day=time_of_day)
 
 
 def select_tasks(manifest: dict, requested: list[str]) -> list[dict]:
@@ -719,9 +721,10 @@ async def tool_smoke(image: str, profile: Path) -> dict:
 
 async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, variant: str = "B0", cards_path: Path | None = None, legacy_image: bool = False,
                    prompt_suffix: str | None = None, retry: dict | None = None,
-                   retrieval=None, mock_llm=None, on_agent=None) -> dict:
+                   retrieval=None, mock_llm=None, on_agent=None, ledger_options: dict | None = None) -> dict:
     """retrieval: passed to build_agent (needed when the profile enables retrieve_code).
-    mock_llm: with mock=True, replaces the default mock model. on_agent(agent) runs once the agent is built."""
+    mock_llm: with mock=True, replaces the default mock model. on_agent(agent) runs once the agent is built.
+    ledger_options: keyword arguments for make_ledger (settlement, time_of_day)."""
     if mock_llm is not None and not mock:
         raise ValueError("mock_llm requires mock=True")
     if task["id"] in HOLDOUT:
@@ -785,7 +788,7 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
     if on_agent is not None:
         on_agent(agent)
     requested_model = model_identity(agent.llm)
-    ledger = make_ledger(output / "cny-ledger.json")
+    ledger = make_ledger(output / "cny-ledger.json", **(ledger_options or {}))
     before = ledger.cost_committed
     calls_before = ledger.calls_started
     agent.retry.cny_ledger = ledger
@@ -1063,7 +1066,13 @@ def main():
     parser.add_argument("--mock", action="store_true", help="zero-model finish, still grades in Docker")
     parser.add_argument("--legacy-image", action="store_true", help="mock-only: use the old baseline image")
     parser.add_argument("--verify-memory", action="store_true")
+    parser.add_argument("--cny-settlement", default="cache_miss", choices=["cache_miss", "provider_usage"],
+                        help="provider_usage: settle at the provider's hit/miss/output usage (reservations stay at the miss price)")
+    parser.add_argument("--cny-time-of-day", action="store_true", help="with provider_usage: off-peak calls at half price")
     args = parser.parse_args()
+    ledger_options = None
+    if args.cny_settlement != "cache_miss" or args.cny_time_of_day:
+        ledger_options = {"settlement": args.cny_settlement, "time_of_day": args.cny_time_of_day}
     if args.variant != "B0" and not args.cards:
         raise SystemExit("B1/B2/B3 require --cards")
     manifest = load_yaml(ROOT / args.tasks)
@@ -1084,7 +1093,7 @@ def main():
             summaries.append(await run_task(
                 task, ROOT / args.profile, out_root / task["id"],
                 mock=args.mock, variant=args.variant, cards_path=cards,
-                legacy_image=args.legacy_image,
+                legacy_image=args.legacy_image, ledger_options=ledger_options,
             ))
         print(json.dumps(summaries, indent=2))
 
