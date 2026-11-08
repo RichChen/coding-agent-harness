@@ -270,13 +270,16 @@ def inspect_run(run_dir: Path, group: str) -> dict:
 # --- stop rules ----------------------------------------------------------------------------------
 
 def forecast(rows: dict, slots: list[dict], out_root: Path) -> Decimal | None:
-    """Section 8.4: once every slot of the first FORECAST_BLOCKS blocks has a final run, spend so far x 6 x 1.14."""
+    """Section 8.4: once every slot of the first FORECAST_BLOCKS blocks has a final run, the spend of those slots
+    (retired infra attempts included) x 6 x 1.14. Later blocks never enter it: the factor 6 scales 30 runs to 180."""
     first = [s for s in slots if s["block"] <= FORECAST_BLOCKS]
     finals = [rows.get(slot_dir(out_root, s)) for s in first]
     if not first or any(r is None or (r["rerun"] and not r["http402"] and infra_attempts(r["path"]) < MAX_INFRA_RERUNS)
                         for r in finals):
         return None
-    return sum((r["cost"] for r in rows.values()), Decimal(0)) * FORECAST_FACTOR
+    dirs = {slot_dir(out_root, s) for s in first}
+    spent = sum((r["cost"] for path, r in rows.items() if path.with_name(path.name.split(".")[0]) in dirs), Decimal(0))
+    return spent * FORECAST_FACTOR
 
 
 def batch_halt(rows: dict, slots: list[dict], out_root: Path, *, mock: bool, cap: Decimal = BATCH_CAP,

@@ -134,6 +134,20 @@ def test_forecast_after_five_blocks(tmp_path):
     assert ru.forecast(partial, plan, tmp_path / "1.250") is None
 
 
+def test_forecast_counts_only_the_first_five_blocks(tmp_path):
+    plan = slots(blocks=6)
+    rows = {}
+    for s in plan:
+        path = write_run(ru.slot_dir(tmp_path, s), s["group"], cost="1.200" if s["block"] <= 5 else "3.000")
+        rows[path] = ru.inspect_run(path, s["group"])
+    final = ru.slot_dir(tmp_path, plan[0])
+    retired = write_run(final.with_name(final.name + ".infra1"), plan[0]["group"], cost="0.500")
+    rows[retired] = ru.inspect_run(retired, plan[0]["group"])
+    # 36 CNY in blocks 1-5 plus 0.5 retired in block 1 -> 36.5 x 6.84; the 18 CNY of block 6 stays out.
+    assert ru.forecast(rows, plan, tmp_path) == Decimal("249.660")
+    assert ru.batch_halt(rows, plan, tmp_path, mock=True) is None
+
+
 def test_per_run_cap_stops_over_ten_percent_in_u_and_ut_only(tmp_path):
     ten = [("U", {"cap_stop": i == 0}) for i in range(10)]
     assert ru.batch_halt(rows_for(tmp_path / "a", ten), slots(), tmp_path, mock=True) is None
