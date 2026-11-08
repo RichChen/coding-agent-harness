@@ -125,6 +125,7 @@ class RunSession:
     def __init__(self, store, artifacts):
         self.store, self.artifacts = store, artifacts
         self._running = False
+        self.append_seconds = 0.0
         self.refresh()
 
     @classmethod
@@ -194,15 +195,19 @@ class RunSession:
     def append(self, kind, payload, **metadata):
         if self.state.terminal is not None:
             raise StoreError("terminated run is immutable")
-        if "step_id" not in metadata and self.state.loop:
-            metadata["step_id"] = f"step-{self.state.loop['step_number']}"
-        payload = plain(payload)
-        encoded = canonical(payload).encode()
-        if len(encoded) > 16 * 1024:
-            payload = {"artifact_ref": self.artifacts.publish(encoded, "application/json")}
-        event = self.store.append(kind, payload, **metadata)
-        self.refresh()
-        return event
+        started = time.perf_counter()
+        try:
+            if "step_id" not in metadata and self.state.loop:
+                metadata["step_id"] = f"step-{self.state.loop['step_number']}"
+            payload = plain(payload)
+            encoded = canonical(payload).encode()
+            if len(encoded) > 16 * 1024:
+                payload = {"artifact_ref": self.artifacts.publish(encoded, "application/json")}
+            event = self.store.append(kind, payload, **metadata)
+            self.refresh()
+            return event
+        finally:
+            self.append_seconds += time.perf_counter() - started
 
     def save_loop(self, snapshot):
         self.append("state.saved", snapshot)

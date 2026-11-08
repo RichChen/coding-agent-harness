@@ -13,6 +13,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import time
 from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
@@ -839,6 +840,8 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
     )
     run_error = None
     result = None
+    session = None
+    agent_started = time.monotonic()
     try:
         with RunSession.create(output / "session", task_id=task["id"], expected=expected,
                                timeout_seconds=config["runtime"]["total_timeout_seconds"],
@@ -851,6 +854,8 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
         close = getattr(agent.llm, "aclose", None)
         if close is not None:
             await close()
+    timing = {"agent_wall_seconds": round(time.monotonic() - agent_started, 3),
+              "session_record_seconds": round(session.append_seconds, 3) if session is not None else None}
     delta = backend.candidate_delta
     snapshot_error = getattr(backend, "snapshot_error", None)
     if delta is not None:
@@ -938,6 +943,7 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
         "harness_tool_errors": len(tool_errors),
         "harness_tool_error_details": tool_errors[:20],
         "peak_context": _peak_context(result_plain, events),
+        "timing": timing,
         "cost_cny": str(ledger.cost_committed - before),
         "stop_reason": stats["stop_reason"],
         "run_error": run_error,
