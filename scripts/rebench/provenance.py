@@ -7,7 +7,9 @@ match the record of the installed distribution that owns it. Records consulted, 
 - ``conda-meta/*.json`` ``paths_data`` of the conda prefix that contains the file (conda packages, the
   interpreter and its standard library included);
 - ``info/paths.json`` of an extracted package under a conda ``pkgs`` cache, for files of that cache;
-- ``/var/lib/dpkg/info/*.md5sums`` (Debian packages; md5 is the only digest dpkg records).
+- ``/var/lib/dpkg/info/*.md5sums`` (Debian packages; md5 is the only digest dpkg records);
+- the same path in a known public base image whose layers are a prefix of the image's layers (the miniconda
+  base environment records no digest for most of its files, and its packages are not in the pkgs cache).
 
 Everything else stays a hit: /tmp, /root, caches, archive members, the repository and the target project's
 own packages (``exclusion_guarded``), and any third-party file whose bytes differ from its record.
@@ -20,8 +22,11 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 
-RULE = "provenance-v1"
+RULE = "provenance-v2"
+
+BASE_IMAGES = {"continuumio/miniconda3:24.7.1-0": "/opt/conda/bin/python"}
 
 PROVENANCE_CODE = r'''
 import base64, csv, hashlib, json, os, posixpath, sys
@@ -150,14 +155,69 @@ print(json.dumps(results))
 '''
 
 
-def provenance(image: str, found: list[dict], timeout: float = 1800) -> dict:
+DIGEST_CODE = r'''
+import hashlib, json, os, sys
+job = json.load(sys.stdin)
+root = job.get("root") or "/"
+out = {}
+for path in job["paths"]:
+    real = os.path.join(root, *[p for p in path.split("/") if p])
+    out[path] = None
+    if "!" in path or os.path.islink(real) or not os.path.isfile(real):
+        continue
+    h = hashlib.sha256()
+    with open(real, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    out[path] = h.hexdigest()
+print(json.dumps(out))
+'''
+
+
+def inspect_image(ref: str) -> dict | None:
+    proc = subprocess.run(["docker", "--context", "desktop-linux", "image", "inspect", ref],
+                          capture_output=True, text=True, timeout=120)
+    if proc.returncode:
+        return None
+    info = json.loads(proc.stdout)[0]
+    return {"id": info["Id"], "layers": info["RootFS"].get("Layers") or [], "repo_digests": info.get("RepoDigests") or []}
+
+
+def base_image(image: str, candidates: dict = BASE_IMAGES, inspect=inspect_image) -> dict | None:
+    """The first local candidate base image whose layers are a prefix of the image's layers."""
+    target = inspect(image)
+    for ref, python_bin in candidates.items():
+        base = inspect(ref)
+        if target and base and base["layers"] and target["layers"][:len(base["layers"])] == base["layers"]:
+            return {"ref": ref, "id": base["id"], "python_bin": python_bin,
+                    "digest": (base["repo_digests"] or [base["id"]])[0]}
+    return None
+
+
+def base_matches(found: list[dict], origin: dict, base_digests: dict, base: dict) -> dict:
+    """origin plus a base-image record for every unexcused hit whose bytes equal the same path in the base image."""
+    merged = dict(origin)
+    for item in found:
+        if merged.get(item["path"]) is None and base_digests.get(item["path"]) == item["sha256"]:
+            merged[item["path"]] = {"source": "base image", "package": base["digest"]}
+    return merged
+
+
+def provenance(image: str, found: list[dict], timeout: float = 1800, candidates: dict = BASE_IMAGES) -> dict:
     """path -> {source, package} for every hit shown to be an unmodified third-party file, else None."""
     from scripts.build_clean_baseline import docker_python
 
     if not found:
         return {}
     payload = {"root": "/", "hits": [{"path": item["path"], "sha256": item["sha256"]} for item in found]}
-    return json.loads(docker_python(image, PROVENANCE_CODE, json.dumps(payload).encode(), timeout=timeout))
+    origin = json.loads(docker_python(image, PROVENANCE_CODE, json.dumps(payload).encode(), timeout=timeout))
+    left = sorted({item["path"] for item in found if origin.get(item["path"]) is None and "!" not in item["path"]})
+    base = base_image(image, candidates) if left else None
+    if base:
+        digests = json.loads(docker_python(base["id"], DIGEST_CODE, json.dumps({"root": "/", "paths": left}).encode(),
+                                           python_bin=base["python_bin"], timeout=timeout))
+        origin = base_matches(found, origin, digests, base)
+    return origin
 
 
 def classify_hits(found: list[dict], origin: dict, packages: set[str]) -> tuple[list[str], list[dict]]:
