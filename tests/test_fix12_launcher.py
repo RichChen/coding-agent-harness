@@ -166,6 +166,25 @@ def test_model_identity_rules_on_real_runs(tmp_path):
     assert reason.startswith("no returned model name recorded in the first 3")
 
 
+def test_a_consistent_but_unexpected_model_stops(tmp_path):
+    wrong = rows_for(tmp_path / "a", [(g, {"models": ("deepseek-pro",)}) for g in ru.GROUPS], mock=False)
+    assert ru.batch_halt(wrong, slots(), tmp_path, mock=False) == "returned model name deepseek-pro is not deepseek-flash"
+    configured = rows_for(tmp_path / "b", [(g, {}) for g in ru.GROUPS], mock=True)
+    for row in configured.values():
+        row["summary"]["model"]["name"] = "deepseek-pro"
+    assert ru.batch_halt(configured, slots(), tmp_path, mock=True) == "configured model deepseek-pro is not deepseek-flash"
+
+
+def test_preflight_rejects_a_model_override(monkeypatch):
+    monkeypatch.setattr(ru, "load_inputs", lambda: (None, {"substitutions": []}, [], {}))
+    monkeypatch.setattr(ru, "fetch_price_page", lambda: (_ for _ in ()).throw(OSError("offline")))
+    monkeypatch.delenv("DEEPSEEK_MODEL", raising=False)
+    assert ru.preflight()["model_ok"] is True
+    monkeypatch.setenv("DEEPSEEK_MODEL", "deepseek-pro")
+    report = ru.preflight()
+    assert report["models"] == ["deepseek-pro"] and report["model_ok"] is False and report["pass"] is False
+
+
 def test_request_problem_stops_the_batch(tmp_path):
     rows = rows_for(tmp_path, [("A", {}), ("U", {"records": [record("U", reasoning=2)]})])
     assert "reasoning tokens with thinking disabled" in ru.batch_halt(rows, slots(), tmp_path, mock=True)

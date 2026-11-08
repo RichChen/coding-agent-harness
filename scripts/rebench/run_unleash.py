@@ -68,6 +68,9 @@ THINKING = {"A": ("disabled", None), "U": ("disabled", None), "UT": ("enabled", 
 TELEMETRY_FIELDS = ("request", "admission_input_tokens", "prompt_tokens", "prompt_cache_hit_tokens",
                     "prompt_cache_miss_tokens", "completion_tokens", "reasoning_tokens", "masked", "replaced_count")
 NULLABLE = ("reasoning_tokens",)
+# Design table 2.1. The profiles read ${DEEPSEEK_MODEL:deepseek-flash}, so an environment override would switch
+# every group at once and stay consistent between runs; the name itself has to be checked.
+EXPECTED_MODEL = "deepseek-flash"
 PRICE_URL = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
 EXPECTED_PRICE = {"model_version": "DeepSeek-V4.1-Flash-1017", "peak_cny_per_million": ["0.04", "2", "8"]}
 PRICE_RECHECK_SECONDS = 3600
@@ -298,10 +301,14 @@ def batch_halt(rows: dict, slots: list[dict], out_root: Path, *, mock: bool, cap
             identities.add((model.get("name"), model.get("base_url_host")))
     if len(identities) > 1:
         return "model name or base_url host differs between runs: " + json.dumps(sorted(identities, key=str))
+    if identities and next(iter(identities))[0] != EXPECTED_MODEL:
+        return f"configured model {next(iter(identities))[0]} is not {EXPECTED_MODEL}"
     if not mock:
         names = {n for r in attempts for n in r["models"]}
         if len(names) > 1:
             return "returned model names differ: " + ", ".join(sorted(names))
+        if names and names != {EXPECTED_MODEL}:
+            return f"returned model name {next(iter(names))} is not {EXPECTED_MODEL}"
         prints = {f for r in attempts for f in r["fingerprints"]}
         if len(prints) > 1:
             return "returned system_fingerprint changed: " + ", ".join(sorted(prints))
@@ -549,6 +556,8 @@ def preflight() -> dict:
     configs = {"b0-v2": unleash_config_diff.load(unleash_config_diff.B0_V2),
                **{g: unleash_config_diff.load(p) for g, p in unleash_config_diff.PROFILES.items()}}
     report["config_diff_ok"] = unleash_config_diff.check(configs)["ok"]
+    report["models"] = sorted({configs[g]["llm.model"] for g in unleash_config_diff.PROFILES})
+    report["model_ok"] = report["models"] == [EXPECTED_MODEL]
     try:
         page = fetch_price_page()
         snapshot = price_snapshot(page)
@@ -557,7 +566,8 @@ def preflight() -> dict:
     except Exception as exc:  # noqa: BLE001
         report["price_problem"] = "price page unreadable: " + type(exc).__name__
     report["off_peak_now"] = seconds_until_off_peak(now_utc()) == 0
-    report["pass"] = bool(report["slots_ok"] and report["config_diff_ok"] and report["price_problem"] is None)
+    report["pass"] = bool(report["slots_ok"] and report["config_diff_ok"] and report["model_ok"]
+                          and report["price_problem"] is None)
     return report
 
 
