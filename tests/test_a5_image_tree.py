@@ -1,11 +1,12 @@
 import base64
 import copy
 import io
+import pathlib
 import tarfile
 
 import pytest
 
-from src.eval.a5_image_tree import (archive_manifest, canonical, sha, tree_hash,
+from src.eval.a5_image_tree import (archive_manifest, canonical, extract, sha, tree_hash,
                                    validate_delta, validate_entries, LIMIT)
 
 
@@ -75,6 +76,37 @@ def test_rebench_directory_link_archive_manifest(tmp_path):
                 archive.addfile(info, io.BytesIO(data))
     manifest = archive_manifest(path, 'o/repo', 'abc')
     assert manifest['entries']['pkg/proxy/enterprise'] == dict(kind='symlink', mode=0o777, target='../../enterprise')
+
+
+def test_directory_link_is_materialized_when_symlinks_are_not_permitted(tmp_path, monkeypatch):
+    path = tmp_path / 'repo.tar.gz'
+    with tarfile.open(str(path), 'w:gz', pax_headers={'comment': 'abc'}) as archive:
+        for name, kind, data in [('enterprise', 'dir', b''), ('enterprise/a.py', 'file', b'x'),
+                                 ('enterprise/sub', 'dir', b''), ('enterprise/sub/b.py', 'file', b'y'),
+                                 ('pkg', 'dir', b''), ('pkg/proxy', 'dir', b''),
+                                 ('pkg/proxy/enterprise', 'sym', b'../../enterprise')]:
+            info = tarfile.TarInfo('repo-abc/' + name)
+            if kind == 'dir':
+                info.type, info.mode = tarfile.DIRTYPE, 0o755
+                archive.addfile(info)
+            elif kind == 'sym':
+                info.type, info.linkname, info.mode = tarfile.SYMTYPE, data.decode(), 0o777
+                archive.addfile(info)
+            else:
+                info.size, info.mode = len(data), 0o644
+                archive.addfile(info, io.BytesIO(data))
+    manifest = archive_manifest(path, 'o/repo', 'abc')
+
+    def refuse(self, target, target_is_directory=False):
+        error = OSError('symlink privilege not held')
+        error.winerror = 1314
+        raise error
+
+    monkeypatch.setattr(pathlib.Path, 'symlink_to', refuse)
+    out = tmp_path / 'out'
+    assert extract(path, manifest, out, verify_modes=False) == manifest['source_tree_hash']
+    assert (out / 'pkg/proxy/enterprise/a.py').read_bytes() == b'x'
+    assert (out / 'pkg/proxy/enterprise/sub/b.py').read_bytes() == b'y'
 
 
 def test_child_below_link_and_special_mode_rejected():

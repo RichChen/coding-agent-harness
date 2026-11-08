@@ -161,7 +161,7 @@ def extract(archive_path, manifest, destination, *, verify_modes=True):
             (root / name).mkdir()
     with tarfile.open(str(archive_path), 'r:gz') as archive:
         prefix = manifest['repo'].split('/')[1] + '-' + manifest['base_revision'] + '/'
-        copied_links = []
+        copied_links, copied_dirs = [], []
         for name, meta in entries.items():
             p = root / name
             if meta['kind'] == 'file':
@@ -176,6 +176,23 @@ def extract(archive_path, manifest, destination, *, verify_modes=True):
                         raise
                     resolved = posixpath.normpath(posixpath.join(str(PurePosixPath(name).parent), meta['target']))
                     target = entries.get(resolved) or {}
+                    if target.get('kind') == 'dir':
+                        inner = resolved + '/'
+                        p.mkdir()
+                        for sub in sorted((n for n in entries if n.startswith(inner)),
+                                          key=lambda n: (len(PurePosixPath(n).parts), n)):
+                            dest = p / sub[len(inner):]
+                            if entries[sub]['kind'] == 'dir':
+                                dest.mkdir()
+                            elif entries[sub]['kind'] == 'file':
+                                data = archive.extractfile(prefix + sub).read()
+                                if sha(data) != entries[sub]['sha256']:
+                                    raise ValueError('symlink target hash mismatch')
+                                dest.write_bytes(data)
+                            else:
+                                raise ValueError('link below a materialized directory link')
+                        copied_dirs.append(name)
+                        continue
                     if target.get('kind') != 'file':
                         raise
                     data = archive.extractfile(prefix + resolved).read()
@@ -191,6 +208,17 @@ def extract(archive_path, manifest, destination, *, verify_modes=True):
         resolved = posixpath.normpath(posixpath.join(str(PurePosixPath(name).parent), entries[name]['target']))
         if actual.get(name, {}).get('sha256') != entries[resolved]['sha256']:
             raise ValueError('materialized symlink mismatch')
+        actual[name] = dict(entries[name])
+    for name in copied_dirs:
+        resolved = posixpath.normpath(posixpath.join(str(PurePosixPath(name).parent), entries[name]['target']))
+        inner, below = resolved + '/', name + '/'
+        unmoded = lambda meta: {key: value for key, value in meta.items() if key != 'mode'}  # noqa: E731
+        copied = {n[len(below):]: unmoded(m) for n, m in actual.items() if n.startswith(below)}
+        source = {n[len(inner):]: unmoded(m) for n, m in entries.items() if n.startswith(inner)}
+        if actual.get(name, {}).get('kind') != 'dir' or copied != source:
+            raise ValueError('materialized directory link mismatch')
+        for n in [n for n in actual if n.startswith(below)]:
+            del actual[n]
         actual[name] = dict(entries[name])
     if not verify_modes:
         actual = {name: {key: value for key, value in meta.items() if key != 'mode'} for name, meta in actual.items()}
