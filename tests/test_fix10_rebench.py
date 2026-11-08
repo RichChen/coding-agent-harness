@@ -81,6 +81,26 @@ def test_grader_spec_for_a_rebench_task(tmp_path):
     assert list(spec.test_overlay) == ["tests/test_x.py"]
 
 
+def test_a_rebench_gold_patch_touching_config_files_still_builds_a_spec(tmp_path):
+    task = make_task(tmp_path)
+    receipt = json.loads(open(task["receipt"]).read())
+    receipt["private_source_binding"]["gold_patch_paths"] = [
+        ".gitignore", "pyproject.toml", "r/x.py", "setup.cfg", "tests/testdata/x.yaml", "r/test_helpers.py"]
+    open(task["receipt"], "w").write(json.dumps(receipt))
+    assert rst.grader_spec(task).editable_paths == (".gitignore", "r/x.py")
+
+
+def test_other_families_keep_refusing_config_files_as_editable(tmp_path):
+    from src.eval.contracts import ContractError
+
+    task = make_task(tmp_path)
+    receipt = json.loads(open(task["receipt"]).read())
+    receipt["private_source_binding"]["gold_patch_paths"] = ["pyproject.toml", "r/x.py"]
+    open(task["receipt"], "w").write(json.dumps(receipt))
+    with pytest.raises(ContractError):
+        rst.grader_spec({**task, "family": "sympy", "grader_nodeids": None})
+
+
 # ---- prepare: resumable stages ----
 
 def test_stages_resume_from_the_first_unfinished_one(tmp_path):

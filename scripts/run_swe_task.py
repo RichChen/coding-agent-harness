@@ -16,7 +16,7 @@ import sys
 import time
 from datetime import datetime
 from decimal import Decimal
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from urllib.parse import urlparse
 
 import yaml
@@ -246,6 +246,16 @@ def build_prompt(task: dict, prompt_suffix: str | None = None) -> str:
     return prompt
 
 
+def spec_protected(path: str, test_paths: tuple[str, ...]) -> bool:
+    """A path RepositorySpec refuses as editable."""
+    from src.eval.repo_grader import PROTECTED_NAMES
+
+    pure = PurePosixPath(path)
+    return (pure.name in PROTECTED_NAMES or path.endswith(".pth") or pure.name.startswith("test_")
+            or any(part in ("tests", "test", ".oracle", ".grader_private") for part in pure.parts)
+            or any(path == t or path.startswith(t + "/") for t in test_paths))
+
+
 def grader_spec(task: dict, base: dict[str, bytes] | None = None) -> RepositorySpec:
     receipt = load_json(ROOT / task["receipt"])
     binding = receipt["private_source_binding"]
@@ -275,6 +285,10 @@ def grader_spec(task: dict, base: dict[str, bytes] | None = None) -> RepositoryS
     if excluded:
         p2p = [node for node in p2p if node not in excluded]
     editable = tuple(binding["gold_patch_paths"])
+    if family == "rebench":
+        # ImageGrader applies the whole candidate delta and never reads editable_paths; the spec contract
+        # refuses config and test files there, which rebench gold patches may touch (e.g. pyproject.toml).
+        editable = tuple(p for p in editable if not spec_protected(p, test_paths))
     baseline_root = ROOT / task["baseline"]
     original_root = ROOT / task["original"]
     overlay = {}
@@ -648,6 +662,10 @@ def prerun_check(task: dict, *, mock: bool, legacy_image: bool = False):
         archive = Path(receipt["source_attempt_ref"]).parent / "source.tar.gz"
         manifest = archive_manifest(archive, task["repo"], receipt["base_revision"])
         matched, _hash = source_only_check(image, manifest, overrides_for(task, manifest))
+        if not matched and task.get("family") == "rebench":
+            # Rebench tasks follow the ingest rule, which excuses confirmed export-subst placeholders (revision R7).
+            from scripts.rebench.provenance import source_check
+            matched = source_check(image, archive, manifest)["match"]
         if not matched:
             return spec, image, clean, "opt/repo source-only hash mismatch"
     return spec, image, clean, None
