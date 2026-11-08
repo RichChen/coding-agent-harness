@@ -1,0 +1,260 @@
+{
+  "root": "runs/unleash-pilot-prerun-1",
+  "runs": [
+    {
+      "run": "openai__openai-agents-python-2144/A/r1",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:33:51.943570+00:00",
+      "tool_calls": 51,
+      "tool_seconds_median": 2.75,
+      "tool_seconds_max": 6.0,
+      "agent_wall_seconds": 405.656,
+      "session_record_seconds": 89.39,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "openai__openai-agents-python-2144/A/r2",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:33:03.559126+00:00",
+      "tool_calls": 45,
+      "tool_seconds_median": 2.05,
+      "tool_seconds_max": 4.5,
+      "agent_wall_seconds": 297.268,
+      "session_record_seconds": 81.674,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "openai__openai-agents-python-2144/U/r1",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:38:35.844492+00:00",
+      "tool_calls": 106,
+      "tool_seconds_median": 4.58,
+      "tool_seconds_max": 11.39,
+      "agent_wall_seconds": 1620.382,
+      "session_record_seconds": 541.626,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "openai__openai-agents-python-2144/U/r2",
+      "status": "fail",
+      "started_utc": "2026-11-08T10:04:13.752328+00:00",
+      "tool_calls": 104,
+      "tool_seconds_median": 4.89,
+      "tool_seconds_max": 101.33,
+      "agent_wall_seconds": 1463.143,
+      "session_record_seconds": 515.747,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "openai__openai-agents-python-2144/U/r2.infra1",
+      "status": "infra_error",
+      "started_utc": "2026-11-08T09:40:58.448876+00:00",
+      "tool_calls": 93,
+      "tool_seconds_median": 5.29,
+      "tool_seconds_max": 13.92,
+      "agent_wall_seconds": 1392.753,
+      "session_record_seconds": 390.146,
+      "infra_reason": "candidate snapshot failed: container_gone_before_snapshot",
+      "last_tool": {
+        "exit_code": 0,
+        "error_kind": "cleanup_failed",
+        "status": "outcome_unknown",
+        "cleanup_elapsed_s": 6.9939784000162035
+      }
+    },
+    {
+      "run": "openai__openai-agents-python-2144/UT/r1",
+      "status": "infra_error",
+      "started_utc": "2026-11-08T10:07:58.896724+00:00",
+      "tool_calls": 65,
+      "tool_seconds_median": 3.53,
+      "tool_seconds_max": 12.97,
+      "agent_wall_seconds": 670.713,
+      "session_record_seconds": 142.063,
+      "infra_reason": "candidate snapshot failed: container_gone_before_snapshot",
+      "last_tool": {
+        "exit_code": 0,
+        "error_kind": "cleanup_failed",
+        "status": "outcome_unknown",
+        "cleanup_elapsed_s": 6.548979799961671
+      }
+    },
+    {
+      "run": "openai__openai-agents-python-2144/UT/r2",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:48:30.403360+00:00",
+      "tool_calls": 88,
+      "tool_seconds_median": 5.58,
+      "tool_seconds_max": 120.92,
+      "agent_wall_seconds": 1866.211,
+      "session_record_seconds": 381.614,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "pyccel__pyccel-2454/A/r1",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:05:24.436651+00:00",
+      "tool_calls": 73,
+      "tool_seconds_median": 1.96,
+      "tool_seconds_max": 8.66,
+      "agent_wall_seconds": 461.043,
+      "session_record_seconds": 117.073,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "pyccel__pyccel-2454/A/r2",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:27:49.462994+00:00",
+      "tool_calls": 48,
+      "tool_seconds_median": 0.89,
+      "tool_seconds_max": 10.11,
+      "agent_wall_seconds": 347.082,
+      "session_record_seconds": 76.951,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "pyccel__pyccel-2454/A/r2.infra1",
+      "status": "infra_error",
+      "started_utc": "2026-11-08T09:21:52.314403+00:00",
+      "tool_calls": 27,
+      "tool_seconds_median": 4.9,
+      "tool_seconds_max": 36.38,
+      "agent_wall_seconds": 355.131,
+      "session_record_seconds": 31.094,
+      "infra_reason": "candidate snapshot failed: container_gone_before_snapshot",
+      "last_tool": {
+        "exit_code": 0,
+        "error_kind": "cleanup_failed",
+        "status": "outcome_unknown",
+        "cleanup_elapsed_s": 9.436480600037612
+      }
+    },
+    {
+      "run": "pyccel__pyccel-2454/U/r1",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:31:15.465441+00:00",
+      "tool_calls": 105,
+      "tool_seconds_median": 2.25,
+      "tool_seconds_max": 9.03,
+      "agent_wall_seconds": 1006.969,
+      "session_record_seconds": 491.675,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "pyccel__pyccel-2454/U/r2",
+      "status": "fail",
+      "started_utc": "2026-11-08T09:03:21.620743+00:00",
+      "tool_calls": 112,
+      "tool_seconds_median": 1.67,
+      "tool_seconds_max": 8.79,
+      "agent_wall_seconds": 1086.671,
+      "session_record_seconds": 547.99,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "pyccel__pyccel-2454/UT/r1",
+      "status": "pass",
+      "started_utc": "2026-11-08T09:04:12.683142+00:00",
+      "tool_calls": 107,
+      "tool_seconds_median": 3.65,
+      "tool_seconds_max": 50.28,
+      "agent_wall_seconds": 1608.837,
+      "session_record_seconds": 561.588,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "pyccel__pyccel-2454/UT/r2",
+      "status": "pass",
+      "started_utc": "2026-11-08T09:13:42.565475+00:00",
+      "tool_calls": 73,
+      "tool_seconds_median": 6.24,
+      "tool_seconds_max": 48.87,
+      "agent_wall_seconds": 1141.147,
+      "session_record_seconds": 183.534,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "scrapy__scrapy-7351_interface/A/r1",
+      "status": "partial",
+      "started_utc": "2026-11-08T08:55:46.443321+00:00",
+      "tool_calls": 29,
+      "tool_seconds_median": 0.46,
+      "tool_seconds_max": 6.95,
+      "agent_wall_seconds": 130.925,
+      "session_record_seconds": 48.987,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "scrapy__scrapy-7351_interface/A/r2",
+      "status": "pass",
+      "started_utc": "2026-11-08T09:00:16.538064+00:00",
+      "tool_calls": 30,
+      "tool_seconds_median": 0.47,
+      "tool_seconds_max": 7.17,
+      "agent_wall_seconds": 170.082,
+      "session_record_seconds": 66.513,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "scrapy__scrapy-7351_interface/U/r1",
+      "status": "pass",
+      "started_utc": "2026-11-08T09:01:07.278608+00:00",
+      "tool_calls": 20,
+      "tool_seconds_median": 0.6,
+      "tool_seconds_max": 42.11,
+      "agent_wall_seconds": 169.876,
+      "session_record_seconds": 38.621,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "scrapy__scrapy-7351_interface/U/r2",
+      "status": "partial",
+      "started_utc": "2026-11-08T08:58:06.163185+00:00",
+      "tool_calls": 23,
+      "tool_seconds_median": 0.61,
+      "tool_seconds_max": 34.64,
+      "agent_wall_seconds": 165.741,
+      "session_record_seconds": 33.785,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "scrapy__scrapy-7351_interface/UT/r1",
+      "status": "pass",
+      "started_utc": "2026-11-08T08:55:48.479360+00:00",
+      "tool_calls": 27,
+      "tool_seconds_median": 1.14,
+      "tool_seconds_max": 13.4,
+      "agent_wall_seconds": 254.528,
+      "session_record_seconds": 44.004,
+      "infra_reason": null,
+      "last_tool": null
+    },
+    {
+      "run": "scrapy__scrapy-7351_interface/UT/r2",
+      "status": "pass",
+      "started_utc": "2026-11-08T08:55:50.568715+00:00",
+      "tool_calls": 38,
+      "tool_seconds_median": 0.77,
+      "tool_seconds_max": 123.31,
+      "agent_wall_seconds": 531.856,
+      "session_record_seconds": 65.769,
+      "infra_reason": null,
+      "last_tool": null
+    }
+  ]
+}
