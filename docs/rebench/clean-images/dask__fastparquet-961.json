@@ -1,0 +1,24 @@
+{
+  "task_id": "dask__fastparquet-961",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:ae9ff05ad49522ac2aaaf44f5bfb6cfb843c394d6d9f04b56b1e50979a1a36d3",
+  "clean_image_id": "sha256:ae9ff05ad49522ac2aaaf44f5bfb6cfb843c394d6d9f04b56b1e50979a1a36d3",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.dask_1776_fastparquet-961@sha256:68067b7966a12bd5bf75b448b1dcee1104acc8d1f03f8879434a5c1f27c332b2",
+  "source_only_match": true,
+  "image_source_only_hash": "4d0023080ed18a01fa2d1db405616c9bf36e8a9344a059d7d4220750080fb994",
+  "filesystem_scan": {
+    "needle_count": 7,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [
+    "fastparquet/cencoding.cpython-312-x86_64-linux-gnu.so",
+    "fastparquet/speedups.cpython-312-x86_64-linux-gnu.so"
+  ],
+  "build_input_sha256": "52462378c9e9cd38d85cc753c03a9933ecf28b586f128e87f5e1be1b80ef8f12"
+}

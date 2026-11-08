@@ -1,0 +1,37 @@
+{
+  "task_id": "jsonpickle__jsonpickle-587",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:ef38ef62da0d2177f68c72cb49ddcbd6f048d380de871e74c41054d887ee45b9",
+  "clean_image_id": "sha256:ef38ef62da0d2177f68c72cb49ddcbd6f048d380de871e74c41054d887ee45b9",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.jsonpickle_1776_jsonpickle-587@sha256:5aa546e2840df5c55cc0513a4622087697057f10827b751025633e08f21129dd",
+  "source_only_match": true,
+  "image_source_only_hash": "90fd5d149685a92f6c2e420c13d0eff1b0898d468861f8084dbb9fa03e6bd1f7",
+  "filesystem_scan": {
+    "rule": "provenance-v2",
+    "needle_count": 12,
+    "raw_hit_count": 3,
+    "hits": [],
+    "hit_count": 0,
+    "excused": [
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/discovery.py",
+        "source": "conda-meta",
+        "package": "setuptools-80.10.2-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/discovery.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.10.2-py312h06a4308_0/lib/python3.12/site-packages/setuptools/discovery.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-80.10.2-py312h06a4308_0"
+      }
+    ],
+    "excused_count": 3,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "566ea96edd947c7a4dffb4141134945cfb0c2ceefacc103be10d549af30e74fa"
+}

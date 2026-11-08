@@ -1,0 +1,21 @@
+{
+  "task_id": "ncar__geocat-comp-807",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:f5b99884ec1485b247a08193c4eedefd5d52064285d80c530f0e91cf6b3a116b",
+  "clean_image_id": "sha256:f5b99884ec1485b247a08193c4eedefd5d52064285d80c530f0e91cf6b3a116b",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.ncar_1776_geocat-comp-807@sha256:647d05c1c0742452fd8b2d1eaf1a2c9d567c119ad9e9f9f3f9b2ded1e6c07f28",
+  "source_only_match": true,
+  "image_source_only_hash": "11f7f8621acfc6c68a3e0024dfa825d80c45f1820ad0c7cbe76891f13aa69c6d",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "68ee1af4a173dcb6308910bca7ee80c4d9d9ac772621eb2dcc452becbcb66b1b"
+}

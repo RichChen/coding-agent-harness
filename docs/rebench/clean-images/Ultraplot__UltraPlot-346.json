@@ -1,0 +1,21 @@
+{
+  "task_id": "Ultraplot__UltraPlot-346",
+  "answer_isolation_pass": false,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:f0871f5bdca0e72004ed65043b3eb14d2ec86af167e52f451bd744b00a69772a",
+  "clean_image_id": "sha256:f0871f5bdca0e72004ed65043b3eb14d2ec86af167e52f451bd744b00a69772a",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.ultraplot_1776_ultraplot-346@sha256:a2acf87bfad72c19ef3e7ed223f13d7bcbe3ecefa5c28b4ff7ac87fc2fabac4d",
+  "source_only_match": false,
+  "image_source_only_hash": "mismatch:1",
+  "filesystem_scan": {
+    "rule": "provenance-v2",
+    "needle_count": 12,
+    "raw_hit_count": 0,
+    "hits": [],
+    "hit_count": 0,
+    "excused": [],
+    "excused_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "5e733ba943baed5bf4f6c199fede4ae41f0e916363213078e4bef2d81a07690a"
+}

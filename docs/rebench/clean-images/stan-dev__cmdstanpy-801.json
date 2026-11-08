@@ -1,0 +1,21 @@
+{
+  "task_id": "stan-dev__cmdstanpy-801",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:cb6179236a8b6f2aa1ddb9bd2f284f6220b0781299e28783b3e1ee0206634dfd",
+  "clean_image_id": "sha256:cb6179236a8b6f2aa1ddb9bd2f284f6220b0781299e28783b3e1ee0206634dfd",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.stan-dev_1776_cmdstanpy-801@sha256:43fe396527267e4974d16aec032eeabe76797feeef91de4bfbd35ff7d78086cc",
+  "source_only_match": true,
+  "image_source_only_hash": "a7480837d68348fb487f237fbcb2cc0c48471658e82bc325814fc76c3771bf00",
+  "filesystem_scan": {
+    "needle_count": 10,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "8598468e632933fb7bdd9fe75c5fec0e585bfde81d75a28955674f61409a5373"
+}

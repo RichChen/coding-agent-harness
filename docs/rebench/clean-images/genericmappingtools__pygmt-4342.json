@@ -1,0 +1,21 @@
+{
+  "task_id": "genericmappingtools__pygmt-4342",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:43e8294c41d7560d0fd082a5d6c176ae48a6fe884d4818beb101b7412c03c368",
+  "clean_image_id": "sha256:43e8294c41d7560d0fd082a5d6c176ae48a6fe884d4818beb101b7412c03c368",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.genericmappingtools_1776_pygmt-4342@sha256:b33d962e33e49a437f15e667758b7ef11081990b9c1cc94753bf9c2f1ed61b8c",
+  "source_only_match": true,
+  "image_source_only_hash": "7282aabf12cfe6c7ceaf703141d1b67947172952d41a2f5960d3f913c174f6b1",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "f4872621353a83aa22d5b70e5546e56fd01276bfa6b0ba628bf6c3995571a826"
+}

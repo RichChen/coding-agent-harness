@@ -1,0 +1,21 @@
+{
+  "task_id": "pyfar__pyrato-113",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:38946ef092910e8a8e1c19e82498e3bb2ee1823550fd2eb934d2be08b501d989",
+  "clean_image_id": "sha256:38946ef092910e8a8e1c19e82498e3bb2ee1823550fd2eb934d2be08b501d989",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.pyfar_1776_pyrato-113@sha256:64580e28459e420a89747377416caad3c8cdc38303e5f759f87e3e8c37fdd947",
+  "source_only_match": true,
+  "image_source_only_hash": "1600aae6df6b40325ec4ec5659f189a5165efbfefbc91263cd369d63f1b97ffc",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "9a2a8afebe228049ebb8a7171578492a313175371cc91b753ea680f875c327ed"
+}

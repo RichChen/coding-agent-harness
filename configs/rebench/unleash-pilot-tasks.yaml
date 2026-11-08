@@ -1,0 +1,2682 @@
+schema: rebench.tasks.v1
+notes: SWE-rebench tasks prepared by scripts/rebench/prepare.py. Images pinned by digest.
+tasks:
+- id: BerriAI__litellm-16429
+  repo: BerriAI/litellm
+  family: rebench
+  created_at: '2025-11-10 02:39:39'
+  base_commit: c088483da9c89261d6c773f9ed35ef5df541478f
+  receipt: runs/rebench/work/BerriAI__litellm-16429/receipt.json
+  original: runs/rebench/work/BerriAI__litellm-16429/staging/original
+  baseline: runs/rebench/work/BerriAI__litellm-16429/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\BerriAI__litellm-16429.json
+  clean_record: docs/rebench/clean-images/BerriAI__litellm-16429.json
+  official_image_digest: swerebench/sweb.eval.x86_64.berriai_1776_litellm-16429@sha256:860aee04b45092dc34e22a12ad9662e43acc3fe959521f01b5e21253b8dfde42
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - tests/test_model_cost_map_url.py::test_model_cost_map_url_from_env
+    p2p: []
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 0
+    - 0
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 0
+    - 0
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: BrianPugh__cyclopts-609
+  repo: BrianPugh/cyclopts
+  family: rebench
+  created_at: '2025-10-16 13:05:59'
+  base_commit: 06d8f0ec532d147e974cd729c9bd8ed1db196478
+  receipt: runs/rebench/work/BrianPugh__cyclopts-609/receipt.json
+  original: runs/rebench/work/BrianPugh__cyclopts-609/staging/original
+  baseline: runs/rebench/work/BrianPugh__cyclopts-609/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\BrianPugh__cyclopts-609.json
+  clean_record: docs/rebench/clean-images/BrianPugh__cyclopts-609.json
+  official_image_digest: swerebench/sweb.eval.x86_64.brianpugh_1776_cyclopts-609@sha256:468208cf60b545dcca338453077d8ae6657a1673f7a7cc14616a6de93b11b3fb
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/test_help.py::test_help_flag_after_end_of_options_delimiter
+    p2p:
+    - tests/test_help.py::test_empty_help_panel_rich_silent
+    - tests/test_help.py::test_help_mutable_default
+    - tests/test_help.py::test_help_default_action
+    - tests/test_help.py::test_help_custom_usage
+    - tests/test_help.py::test_help_custom_usage_subapp
+    - tests/test_help.py::test_help_default_help_flags
+    - tests/test_help.py::test_help_format_usage_empty
+    - tests/test_help.py::test_help_format_usage_command
+    - tests/test_help.py::test_format_commands_docstring
+    - tests/test_help.py::test_format_commands_docstring_multi_line_pep0257
+    - tests/test_help.py::test_format_commands_no_show
+    - tests/test_help.py::test_format_commands_explicit_help
+    - tests/test_help.py::test_format_commands_explicit_name
+    - tests/test_help.py::test_help_functools_partial_1
+    - tests/test_help.py::test_help_functools_partial_2
+    - tests/test_help.py::test_help_empty
+    - tests/test_help.py::test_format_choices_rich_format
+    - tests/test_help.py::test_help_format_group_parameters_empty
+    - tests/test_help.py::test_help_format_group_parameters
+    - tests/test_help.py::test_help_format_group_parameters_short_name
+    - tests/test_help.py::test_help_format_group_parameters_from_docstring
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_directives
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_versionchanged
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_note_warning_seealso
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_multiple_directives
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_deprecated_no_content
+    - tests/test_help.py::test_help_format_group_parameters_bool_flag
+    - tests/test_help.py::test_help_format_group_parameters_bool_flag_custom_negative[--yesnt-foo]
+    - tests/test_help.py::test_help_format_group_parameters_bool_flag_custom_negative[yesnt-foo]
+    - tests/test_help.py::test_help_format_group_parameters_list_flag
+    - tests/test_help.py::test_help_format_group_parameters_defaults
+    - tests/test_help.py::test_help_format_group_parameters_defaults_no_show
+    - tests/test_help.py::test_help_format_dataclass_default_parameter_negative_propagation
+    - tests/test_help.py::test_help_format_dataclass_decorated_parameter_negative_propagation
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_no_show
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_union
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_union_python310_syntax_0
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_union_python310_syntax_1
+    - tests/test_help.py::test_help_format_group_parameters_choices_enum
+    - tests/test_help.py::test_help_format_group_parameters_choices_enum_list
+    - tests/test_help.py::test_help_format_group_parameters_choices_enum_list_typing
+    - tests/test_help.py::test_help_format_group_parameters_choices_enum_sequence
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_sequence
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_set
+    - tests/test_help.py::test_help_parameter_string_annotation
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_set_typing
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_tuple
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_tuple_typing
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_tuple_variadic_typing
+    - tests/test_help.py::test_help_format_group_parameters_choices_literal_tuple_variadic
+    - tests/test_help.py::test_help_format_group_parameters_env_var
+    - tests/test_help.py::test_help_print_function
+    - tests/test_help.py::test_help_print_parameter_required
+    - tests/test_help.py::test_help_print_function_defaults
+    - tests/test_help.py::test_help_print_function_no_parse
+    - tests/test_help.py::test_help_print_parameter_group_description
+    - tests/test_help.py::test_help_print_parameter_group_no_show
+    - tests/test_help.py::test_help_print_command_group_description
+    - tests/test_help.py::test_help_print_command_group_no_show
+    - tests/test_help.py::test_help_print_combined_parameter_command_group
+    - tests/test_help.py::test_help_print_commands
+    - tests/test_help.py::test_help_print_commands_group_sort_key
+    - tests/test_help.py::test_help_print_commands_and_function
+    - tests/test_help.py::test_help_print_commands_special_flag_reassign
+    - tests/test_help.py::test_help_print_parameters_no_negative_from_default_parameter
+    - tests/test_help.py::test_help_print_commands_plus_meta
+    - tests/test_help.py::test_help_print_commands_sort_key
+    - tests/test_help.py::test_help_print_commands_sort_key_generator
+    - tests/test_help.py::test_help_print_commands_plus_meta_short
+    - tests/test_help.py::test_help_restructuredtext
+    - tests/test_help.py::test_help_markdown
+    - tests/test_help.py::test_help_rich
+    - tests/test_help.py::test_help_plaintext
+    - tests/test_help.py::test_help_consistent_formatting
+    - tests/test_help.py::test_help_help_on_error
+    - tests/test_help.py::test_issue_373_help_space_with_meta_app
+    - tests/test_help.py::test_format_plain_formatter
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_only_directives
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_nested_indentation
+    - tests/test_help.py::test_help_format_group_parameters_sphinx_inline_directive_content
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 80
+    - 80
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 80
+    - 80
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: Kozea__WeasyPrint-2494
+  repo: Kozea/WeasyPrint
+  family: rebench
+  created_at: '2025-07-06 11:54:40+00:00'
+  base_commit: 121e6b37f9ea8eb24ea1061b517cb1c783a8b588
+  receipt: runs/rebench/work/Kozea__WeasyPrint-2494/receipt.json
+  original: runs/rebench/work/Kozea__WeasyPrint-2494/staging/original
+  baseline: runs/rebench/work/Kozea__WeasyPrint-2494/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\Kozea__WeasyPrint-2494.json
+  clean_record: docs/rebench/clean-images/Kozea__WeasyPrint-2494.json
+  official_image_digest: swerebench/sweb.eval.x86_64.kozea_1776_weasyprint-2494@sha256:51aa2659bb95dbd352be1cbdcfe4610f6d9e50ddb93053728acfbe622637744f
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - tests/layout/test_column.py::test_columns_bottom_margin
+    p2p:
+    - 'tests/layout/test_column.py::test_columns[columns: 4]'
+    - 'tests/layout/test_column.py::test_columns[columns: 100px]'
+    - 'tests/layout/test_column.py::test_columns[columns: 4 100px]'
+    - 'tests/layout/test_column.py::test_columns[columns: 100px 4]'
+    - 'tests/layout/test_column.py::test_columns[column-width: 100px]'
+    - 'tests/layout/test_column.py::test_columns[column-count: 4]'
+    - tests/layout/test_column.py::test_column_gap[normal-16]
+    - tests/layout/test_column.py::test_column_gap[unknown-16]
+    - tests/layout/test_column.py::test_column_gap[15px-15]
+    - tests/layout/test_column.py::test_column_gap[5%-15]
+    - tests/layout/test_column.py::test_column_gap[-1em-16]
+    - tests/layout/test_column.py::test_column_span_1
+    - tests/layout/test_column.py::test_column_span_2
+    - tests/layout/test_column.py::test_column_span_3
+    - tests/layout/test_column.py::test_column_span_4
+    - tests/layout/test_column.py::test_column_span_5
+    - tests/layout/test_column.py::test_column_span_6
+    - tests/layout/test_column.py::test_column_span_7
+    - tests/layout/test_column.py::test_column_span_8
+    - tests/layout/test_column.py::test_column_span_9
+    - tests/layout/test_column.py::test_column_span_balance
+    - tests/layout/test_column.py::test_columns_multipage
+    - tests/layout/test_column.py::test_columns_breaks
+    - tests/layout/test_column.py::test_columns_break_after_column_1
+    - tests/layout/test_column.py::test_columns_break_after_column_2
+    - tests/layout/test_column.py::test_columns_break_after_avoid_column
+    - tests/layout/test_column.py::test_columns_break_before_column_1
+    - tests/layout/test_column.py::test_columns_break_before_column_2
+    - tests/layout/test_column.py::test_columns_break_before_avoid_column
+    - tests/layout/test_column.py::test_columns_break_inside_column_1
+    - tests/layout/test_column.py::test_columns_break_inside_column_2
+    - tests/layout/test_column.py::test_columns_break_inside_column_not_empty_page
+    - tests/layout/test_column.py::test_columns_not_enough_content
+    - tests/layout/test_column.py::test_columns_higher_than_page
+    - tests/layout/test_column.py::test_columns_empty
+    - tests/layout/test_column.py::test_columns_fixed_height[height]
+    - tests/layout/test_column.py::test_columns_fixed_height[min-height]
+    - tests/layout/test_column.py::test_columns_padding
+    - tests/layout/test_column.py::test_columns_relative
+    - tests/layout/test_column.py::test_columns_regression_1
+    - tests/layout/test_column.py::test_columns_regression_2
+    - tests/layout/test_column.py::test_columns_regression_3
+    - tests/layout/test_column.py::test_columns_regression_4
+    - tests/layout/test_column.py::test_columns_regression_5
+    - tests/layout/test_column.py::test_columns_regression_6
+    - tests/layout/test_column.py::test_columns_regression_7
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 46
+    - 46
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 46
+    - 46
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: agronholm__anyio-935
+  repo: agronholm/anyio
+  family: rebench
+  created_at: '2025-06-29 07:11:24'
+  base_commit: 89874ca47cbb3fb3d56f91b043a09b5ec81959a8
+  receipt: runs/rebench/work/agronholm__anyio-935/receipt.json
+  original: runs/rebench/work/agronholm__anyio-935/staging/original
+  baseline: runs/rebench/work/agronholm__anyio-935/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\agronholm__anyio-935.json
+  clean_record: docs/rebench/clean-images/agronholm__anyio-935.json
+  official_image_digest: swerebench/sweb.eval.x86_64.agronholm_1776_anyio-935@sha256:dabe5fcaaa3954fcd92ae5701c63ee69c647fcd3f12704900602758c25c90517
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - tests/test_lowlevel.py::TestRunVar::test_runvar_does_not_share_storage_by_name[asyncio]
+    - tests/test_lowlevel.py::TestRunVar::test_runvar_does_not_share_storage_by_name[asyncio+uvloop]
+    - tests/test_lowlevel.py::TestRunVar::test_runvar_does_not_share_storage_by_name[trio]
+    p2p:
+    - tests/test_lowlevel.py::test_checkpoint_if_cancelled[asyncio-False]
+    - tests/test_lowlevel.py::test_checkpoint_if_cancelled[asyncio-True]
+    - tests/test_lowlevel.py::test_checkpoint_if_cancelled[asyncio+uvloop-False]
+    - tests/test_lowlevel.py::test_checkpoint_if_cancelled[asyncio+uvloop-True]
+    - tests/test_lowlevel.py::test_checkpoint_if_cancelled[trio-False]
+    - tests/test_lowlevel.py::test_checkpoint_if_cancelled[trio-True]
+    - tests/test_lowlevel.py::test_cancel_shielded_checkpoint[asyncio-False]
+    - tests/test_lowlevel.py::test_cancel_shielded_checkpoint[asyncio-True]
+    - tests/test_lowlevel.py::test_cancel_shielded_checkpoint[asyncio+uvloop-False]
+    - tests/test_lowlevel.py::test_cancel_shielded_checkpoint[asyncio+uvloop-True]
+    - tests/test_lowlevel.py::test_cancel_shielded_checkpoint[trio-False]
+    - tests/test_lowlevel.py::test_cancel_shielded_checkpoint[trio-True]
+    - tests/test_lowlevel.py::test_checkpoint[asyncio-False]
+    - tests/test_lowlevel.py::test_checkpoint[asyncio-True]
+    - tests/test_lowlevel.py::test_checkpoint[asyncio+uvloop-False]
+    - tests/test_lowlevel.py::test_checkpoint[asyncio+uvloop-True]
+    - tests/test_lowlevel.py::test_checkpoint[trio-False]
+    - tests/test_lowlevel.py::test_checkpoint[trio-True]
+    - tests/test_lowlevel.py::TestRunVar::test_get_set[asyncio]
+    - tests/test_lowlevel.py::TestRunVar::test_get_set[asyncio+uvloop]
+    - tests/test_lowlevel.py::TestRunVar::test_get_set[trio]
+    - tests/test_lowlevel.py::TestRunVar::test_reset_token_used_on_wrong_runvar[asyncio]
+    - tests/test_lowlevel.py::TestRunVar::test_reset_token_used_on_wrong_runvar[asyncio+uvloop]
+    - tests/test_lowlevel.py::TestRunVar::test_reset_token_used_on_wrong_runvar[trio]
+    - tests/test_lowlevel.py::TestRunVar::test_reset_token_used_twice[asyncio]
+    - tests/test_lowlevel.py::TestRunVar::test_reset_token_used_twice[asyncio+uvloop]
+    - tests/test_lowlevel.py::TestRunVar::test_reset_token_used_twice[trio]
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 3
+    empty_p2p:
+    - 27
+    - 27
+    gold_f2p:
+    - 3
+    - 3
+    gold_p2p:
+    - 27
+    - 27
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: apache__iceberg-python-3295
+  repo: apache/iceberg-python
+  family: rebench
+  created_at: '2026-04-28 22:03:47'
+  base_commit: b67b7241690e05413f3cfea69287f897b0b2410e
+  receipt: runs/rebench/work/apache__iceberg-python-3295/receipt.json
+  original: runs/rebench/work/apache__iceberg-python-3295/staging/original
+  baseline: runs/rebench/work/apache__iceberg-python-3295/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\apache__iceberg-python-3295.json
+  clean_record: docs/rebench/clean-images/apache__iceberg-python-3295.json
+  official_image_digest: swerebench/sweb.eval.x86_64.apache_1776_iceberg-python-3295@sha256:10595208bda942416f6673a2629c9fb66bd5226818bbe62ce1ef99a3bef8e6d1
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/expressions/test_expressions.py::test_deepcopy_and
+    - tests/expressions/test_expressions.py::test_deepcopy_or
+    - tests/expressions/test_expressions.py::test_deepcopy_not
+    - tests/expressions/test_expressions.py::test_deepcopy_balanced_and
+    - tests/expressions/test_expressions.py::test_deepcopy_balanced_or
+    - tests/expressions/test_expressions.py::test_deepcopy_nested_expression
+    - tests/expressions/test_expressions.py::test_deepcopy_then_pickle
+    p2p:
+    - tests/expressions/test_expressions.py::test_isnull_inverse
+    - tests/expressions/test_expressions.py::test_isnull_bind
+    - tests/expressions/test_expressions.py::test_invert_is_null_bind
+    - tests/expressions/test_expressions.py::test_invert_not_null_bind
+    - tests/expressions/test_expressions.py::test_invert_is_nan_bind
+    - tests/expressions/test_expressions.py::test_invert_not_nan_bind
+    - tests/expressions/test_expressions.py::test_bind_expr_does_not_exists
+    - tests/expressions/test_expressions.py::test_bind_does_not_exists
+    - tests/expressions/test_expressions.py::test_isnull_bind_required
+    - tests/expressions/test_expressions.py::test_notnull_inverse
+    - tests/expressions/test_expressions.py::test_notnull_bind
+    - tests/expressions/test_expressions.py::test_notnull_bind_required
+    - tests/expressions/test_expressions.py::test_notnull_bind_top_struct
+    - tests/expressions/test_expressions.py::test_isnan_inverse
+    - tests/expressions/test_expressions.py::test_isnan_bind_float
+    - tests/expressions/test_expressions.py::test_isnan_bind_double
+    - tests/expressions/test_expressions.py::test_isnan_bind_nonfloat
+    - tests/expressions/test_expressions.py::test_notnan_inverse
+    - tests/expressions/test_expressions.py::test_notnan_bind_float
+    - tests/expressions/test_expressions.py::test_notnan_bind_double
+    - tests/expressions/test_expressions.py::test_notnan_bind_nonfloat
+    - tests/expressions/test_expressions.py::test_ref_binding_case_sensitive
+    - tests/expressions/test_expressions.py::test_ref_binding_case_sensitive_failure
+    - tests/expressions/test_expressions.py::test_ref_binding_case_insensitive
+    - tests/expressions/test_expressions.py::test_ref_binding_case_insensitive_failure
+    - tests/expressions/test_expressions.py::test_ref_binding_nested_struct_field
+    - tests/expressions/test_expressions.py::test_in_to_eq
+    - tests/expressions/test_expressions.py::test_empty_bind_in
+    - tests/expressions/test_expressions.py::test_empty_bind_not_in
+    - tests/expressions/test_expressions.py::test_bind_not_in_equal_term
+    - tests/expressions/test_expressions.py::test_in_empty
+    - tests/expressions/test_expressions.py::test_in_set
+    - tests/expressions/test_expressions.py::test_in_tuple
+    - tests/expressions/test_expressions.py::test_in_list
+    - tests/expressions/test_expressions.py::test_not_in_empty
+    - tests/expressions/test_expressions.py::test_not_in_equal
+    - tests/expressions/test_expressions.py::test_bind_in
+    - tests/expressions/test_expressions.py::test_bind_in_invert
+    - tests/expressions/test_expressions.py::test_bind_not_in_invert
+    - tests/expressions/test_expressions.py::test_bind_dedup
+    - tests/expressions/test_expressions.py::test_bind_dedup_to_eq
+    - tests/expressions/test_expressions.py::test_bound_equal_to_invert
+    - tests/expressions/test_expressions.py::test_bound_not_equal_to_invert
+    - tests/expressions/test_expressions.py::test_bound_greater_than_or_equal_invert
+    - tests/expressions/test_expressions.py::test_bound_greater_than_invert
+    - tests/expressions/test_expressions.py::test_bound_less_than_invert
+    - tests/expressions/test_expressions.py::test_bound_less_than_or_equal_invert
+    - tests/expressions/test_expressions.py::test_not_equal_to_invert
+    - tests/expressions/test_expressions.py::test_greater_than_or_equal_invert
+    - tests/expressions/test_expressions.py::test_less_than_or_equal_invert
+    - tests/expressions/test_expressions.py::test_bind[pred0]
+    - tests/expressions/test_expressions.py::test_bind[pred1]
+    - tests/expressions/test_expressions.py::test_bind[pred2]
+    - tests/expressions/test_expressions.py::test_bind[pred3]
+    - tests/expressions/test_expressions.py::test_bind[pred4]
+    - tests/expressions/test_expressions.py::test_bind[pred5]
+    - tests/expressions/test_expressions.py::test_bind[pred6]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred0]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred1]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred2]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred3]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred4]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred5]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred6]
+    - tests/expressions/test_expressions.py::test_bind_case_insensitive[pred7]
+    - tests/expressions/test_expressions.py::test_eq[exp0-testexpra0-testexprb0]
+    - tests/expressions/test_expressions.py::test_eq[exp1-testexpra1-testexprb1]
+    - tests/expressions/test_expressions.py::test_eq[exp2-testexpra2-testexprb2]
+    - tests/expressions/test_expressions.py::test_eq[exp3-testexpra3-testexprb3]
+    - tests/expressions/test_expressions.py::test_eq[exp4-testexpra4-testexprb4]
+    - tests/expressions/test_expressions.py::test_eq[exp5-testexpra5-testexprb5]
+    - tests/expressions/test_expressions.py::test_eq[exp6-testexpra6-testexprb6]
+    - tests/expressions/test_expressions.py::test_negate[lhs0-rhs0]
+    - tests/expressions/test_expressions.py::test_negate[lhs1-rhs1]
+    - tests/expressions/test_expressions.py::test_negate[lhs2-rhs2]
+    - tests/expressions/test_expressions.py::test_negate[lhs3-rhs3]
+    - tests/expressions/test_expressions.py::test_negate[lhs4-rhs4]
+    - tests/expressions/test_expressions.py::test_negate[lhs5-rhs5]
+    - tests/expressions/test_expressions.py::test_negate[lhs6-rhs6]
+    - tests/expressions/test_expressions.py::test_negate[lhs7-rhs7]
+    - tests/expressions/test_expressions.py::test_negate[lhs8-rhs8]
+    - tests/expressions/test_expressions.py::test_reduce[lhs0-rhs0]
+    - tests/expressions/test_expressions.py::test_reduce[lhs1-rhs1]
+    - tests/expressions/test_expressions.py::test_reduce[lhs2-rhs2]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs0-rhs0]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs1-rhs1]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs2-rhs2]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs3-rhs3]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs4-rhs4]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs5-rhs5]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs6-rhs6]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs7-rhs7]
+    - tests/expressions/test_expressions.py::test_base_AlwaysTrue_base_AlwaysFalse[lhs8-rhs8]
+    - tests/expressions/test_expressions.py::test_invert_always
+    - tests/expressions/test_expressions.py::test_accessor_base_class
+    - tests/expressions/test_expressions.py::test_bound_reference
+    - tests/expressions/test_expressions.py::test_reference
+    - tests/expressions/test_expressions.py::test_and
+    - tests/expressions/test_expressions.py::test_and_serialization
+    - tests/expressions/test_expressions.py::test_or
+    - tests/expressions/test_expressions.py::test_or_serialization
+    - tests/expressions/test_expressions.py::test_not
+    - tests/expressions/test_expressions.py::test_not_json_serialization_and_deserialization
+    - tests/expressions/test_expressions.py::test_always_true
+    - tests/expressions/test_expressions.py::test_always_false
+    - tests/expressions/test_expressions.py::test_bound_reference_field_property
+    - tests/expressions/test_expressions.py::test_bound_is_null
+    - tests/expressions/test_expressions.py::test_bound_is_not_null
+    - tests/expressions/test_expressions.py::test_is_null
+    - tests/expressions/test_expressions.py::test_not_null
+    - tests/expressions/test_expressions.py::test_bound_is_nan
+    - tests/expressions/test_expressions.py::test_bound_is_not_nan
+    - tests/expressions/test_expressions.py::test_is_nan
+    - tests/expressions/test_expressions.py::test_not_nan
+    - tests/expressions/test_expressions.py::test_bound_in
+    - tests/expressions/test_expressions.py::test_bound_not_in
+    - tests/expressions/test_expressions.py::test_in
+    - tests/expressions/test_expressions.py::test_not_in
+    - tests/expressions/test_expressions.py::test_bound_equal_to
+    - tests/expressions/test_expressions.py::test_bound_not_equal_to
+    - tests/expressions/test_expressions.py::test_bound_greater_than_or_equal_to
+    - tests/expressions/test_expressions.py::test_bound_greater_than
+    - tests/expressions/test_expressions.py::test_bound_less_than
+    - tests/expressions/test_expressions.py::test_bound_less_than_or_equal
+    - tests/expressions/test_expressions.py::test_equal_to
+    - tests/expressions/test_expressions.py::test_not_equal_to
+    - tests/expressions/test_expressions.py::test_greater_than_or_equal_to
+    - tests/expressions/test_expressions.py::test_greater_than
+    - tests/expressions/test_expressions.py::test_less_than
+    - tests/expressions/test_expressions.py::test_less_than_or_equal
+    - tests/expressions/test_expressions.py::test_starts_with
+    - tests/expressions/test_expressions.py::test_not_starts_with
+    - tests/expressions/test_expressions.py::test_bound_reference_eval
+    - tests/expressions/test_expressions.py::test_non_primitive_from_byte_buffer
+    - tests/expressions/test_expressions.py::test_string_argument_unbound_unary
+    - tests/expressions/test_expressions.py::test_string_argument_unbound_literal
+    - tests/expressions/test_expressions.py::test_string_argument_unbound_set
+    - tests/expressions/test_expressions.py::test_above_int_bounds_equal_to
+    - tests/expressions/test_expressions.py::test_above_int_bounds_not_equal_to
+    - tests/expressions/test_expressions.py::test_above_int_bounds_less_than
+    - tests/expressions/test_expressions.py::test_above_int_bounds_less_than_or_equal
+    - tests/expressions/test_expressions.py::test_above_int_bounds_greater_than
+    - tests/expressions/test_expressions.py::test_above_int_bounds_greater_than_or_equal
+    - tests/expressions/test_expressions.py::test_above_float_bounds_equal_to
+    - tests/expressions/test_expressions.py::test_above_float_bounds_not_equal_to
+    - tests/expressions/test_expressions.py::test_above_float_bounds_less_than
+    - tests/expressions/test_expressions.py::test_above_float_bounds_less_than_or_equal
+    - tests/expressions/test_expressions.py::test_above_float_bounds_greater_than
+    - tests/expressions/test_expressions.py::test_above_float_bounds_greater_than_or_equal
+    - tests/expressions/test_expressions.py::test_above_long_bounds_equal_to
+    - tests/expressions/test_expressions.py::test_above_long_bounds_not_equal_to
+    - tests/expressions/test_expressions.py::test_above_long_bounds_less_than
+    - tests/expressions/test_expressions.py::test_above_long_bounds_less_than_or_equal
+    - tests/expressions/test_expressions.py::test_above_long_bounds_greater_than
+    - tests/expressions/test_expressions.py::test_above_long_bounds_greater_than_or_equal
+    - tests/expressions/test_expressions.py::test_eq_bound_expression
+    - tests/expressions/test_expressions.py::test_nested_bind
+    - tests/expressions/test_expressions.py::test_bind_dot_name
+    - tests/expressions/test_expressions.py::test_nested_bind_with_dot_name
+    - tests/expressions/test_expressions.py::test_bind_ambiguous_name
+    - tests/expressions/test_expressions.py::test_deepcopy_equal_to
+    - tests/expressions/test_expressions.py::test_deepcopy_always_true
+    - tests/expressions/test_expressions.py::test_deepcopy_always_false
+    - tests/expressions/test_expressions.py::test_deepcopy_always_true_then_pickle
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 7
+    empty_p2p:
+    - 164
+    - 164
+    gold_f2p:
+    - 7
+    - 7
+    gold_p2p:
+    - 164
+    - 164
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: astropy__astropy-18818
+  repo: astropy/astropy
+  family: rebench
+  created_at: '2025-11-02 01:15:45'
+  base_commit: 22d3cb5d98d48453c1dce7e1d65780a6559b3b1a
+  receipt: runs/rebench/work/astropy__astropy-18818/receipt.json
+  original: runs/rebench/work/astropy__astropy-18818/staging/original
+  baseline: runs/rebench/work/astropy__astropy-18818/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\astropy__astropy-18818.json
+  clean_record: docs/rebench/clean-images/astropy__astropy-18818.json
+  official_image_digest: swerebench/sweb.eval.x86_64.astropy_1776_astropy-18818@sha256:7629ae96fdb4cd87957a46abb55b7f6fee802eeb4f820a33e701463533282743
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_masked_integer_arrays
+    p2p:
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_resource_warning
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_fileobj_not_closed
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_masked_table_to_hdu
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_non_stringifyable_unit_to_hdu
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_convert_comment_convention
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_filter_reserved
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[XTENSION]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[BITPIX]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[NAXIS]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[NAXIS1]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[NAXIS2]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[PCOUNT]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[GCOUNT]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[TFIELDS]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_warn_reserved[THEAP]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_to_hdu_filter_incompatible
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_table_writeto_header
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_image_extension_update_header[]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_image_extension_update_header[home_is_data]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_image_extension_update_header[home_is_data, pathlib]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_printdiff
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_tabledump
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_dump_load_round_trip[table.fits]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_dump_load_round_trip[tb.fits]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_filename[]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_filename[home_is_data]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_filename[home_is_data, pathlib]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_filehandle[wb]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_filehandle[wb+]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_filehandle[ab]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_filehandle[ab+]
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_append_with_header
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_pathlib
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_getdata_ext_given
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_getdata_ext_given_nodata
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_getdata_ext_not_given_with_data_in_primary
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_getdata_ext_not_given_with_data_in_ext
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_getdata_ext_not_given_nodata_any
+    - astropy/io/fits/tests/test_convenience.py::TestConvenience::test_getdata_ext_not_given_nodata_noext
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 40
+    - 40
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 40
+    - 40
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: aws__bedrock-agentcore-sdk-python-279_interface
+  repo: aws/bedrock-agentcore-sdk-python
+  family: rebench
+  created_at: '2026-02-23 17:33:52'
+  base_commit: 1bd22b7e51c152aba0f9e322699d06102b707026
+  receipt: runs/rebench/work/aws__bedrock-agentcore-sdk-python-279_interface/receipt.json
+  original: runs/rebench/work/aws__bedrock-agentcore-sdk-python-279_interface/staging/original
+  baseline: runs/rebench/work/aws__bedrock-agentcore-sdk-python-279_interface/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\aws__bedrock-agentcore-sdk-python-279_interface.json
+  clean_record: docs/rebench/clean-images/aws__bedrock-agentcore-sdk-python-279_interface.json
+  official_image_digest: swerebench/sweb.eval.x86_64.aws_1776_bedrock-agentcore-sdk-python-279_interface@sha256:4dfe004346a64cc8fdc1dfecd0d839923ab1e50f5ffab969fc0def85da001789
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestThinkingModeCompatibility::test_retrieve_customer_context_does_not_append_assistant_message
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestThinkingModeCompatibility::test_retrieve_customer_context_no_assistant_message_multi_turn
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestThinkingModeCompatibility::test_retrieve_customer_context_default_context_tag
+    p2p:
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_init_basic
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_events_to_messages
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_create_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_create_session_id_mismatch
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_session_valid
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_session_invalid
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_session_legacy_migration
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_create_agent
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_create_agent_wrong_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_agent_valid
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_agent_no_events
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_agent_legacy_migration
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_create_message
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_list_messages
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_list_messages_returns_values_in_correct_reverse_order
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_events_to_messages_empty_payload
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_delete_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_agent_wrong_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_agent_exception
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_update_agent
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_update_agent_wrong_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_create_message_wrong_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_create_message_exception
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_message
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_read_message_not_found
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_update_message
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_update_message_wrong_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_list_messages_with_limit
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_list_messages_wrong_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_list_messages_exception
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_load_long_term_memories_no_config
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_validate_namespace_resolution
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_load_long_term_memories_with_validation_failure
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retry_with_backoff_success
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retry_with_backoff_max_retries
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_generate_initialization_query
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_generate_initialization_query_custom
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_contextual_memories_all_namespaces
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_contextual_memories_specific_namespaces
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_contextual_memories_no_config
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_contextual_memories_invalid_namespace
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_load_long_term_memories_with_config
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_load_long_term_memories_exception_handling
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_namespace_variable_resolution
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_generate_initialization_query_patterns
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_load_long_term_memories_enhanced_functionality
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_initialize_with_ltm_integration
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_init_with_boto_config
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_customer_context_no_messages
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_customer_context_no_config
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_customer_context_with_memories
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_customer_context_exception
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_retrieve_customer_context_filters_by_relevance_score
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_list_messages_default_max_results
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestAgentCoreMemorySessionManager::test_list_messages_with_limit_calculates_max_results
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingConfig::test_batch_size_default_value
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingConfig::test_batch_size_custom_value
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingConfig::test_batch_size_maximum_value
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingConfig::test_batch_size_exceeds_maximum_raises_error
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingConfig::test_batch_size_zero_raises_error
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingConfig::test_batch_size_negative_raises_error
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBufferManagement::test_pending_message_count_empty_buffer
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBufferManagement::test_pending_message_count_with_buffered_messages
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBufferManagement::test_buffer_auto_flushes_at_batch_size
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBufferManagement::test_create_message_returns_empty_dict_when_buffered
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test__flush_messages_empty_buffer
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test__flush_messages_sends_all_buffered
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test__flush_messages_maintains_order
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test__flush_messages_clears_buffer
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test__flush_messages_exception_handling
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test_partial_flush_failure_preserves_all_messages
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test_batching_combines_messages_for_same_session
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test_multiple_sessions_grouped_into_separate_api_calls
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test_latest_timestamp_used_for_combined_events
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test_partial_failure_multiple_sessions_preserves_buffer
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test_blob_messages_sent_individually_not_batched
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingFlush::test_mixed_sessions_with_blobs_and_conversational
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBackwardsCompatibility::test_batch_size_one_sends_immediately
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBackwardsCompatibility::test_batch_size_one_returns_event_id
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingContextManager::test_context_manager_returns_self
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingContextManager::test_context_manager_flushes_on_exit
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingContextManager::test_context_manager_flushes_on_exception
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingContextManager::test_exit_preserves_original_exception_when_flush_fails
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingContextManager::test_exit_raises_flush_exception_when_no_original_exception
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingClose::test_close_flushes_pending_messages
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingClose::test_close_with_empty_buffer
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBlobMessages::test_blob_message_sent_via_gmdp_client
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestBatchingBlobMessages::test_mixed_conversational_and_blob_messages
+    - tests/bedrock_agentcore/memory/integrations/strands/test_agentcore_memory_session_manager.py::TestThinkingModeCompatibility::test_retrieve_customer_context_custom_context_tag
+    - tests_integ/memory/integrations/test_session_manager.py::TestAgentCoreMemorySessionManager::test_session_manager_error_handling
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 3
+    empty_p2p:
+    - 90
+    - 90
+    gold_f2p:
+    - 3
+    - 3
+    gold_p2p:
+    - 90
+    - 90
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: conan-io__conan-19604
+  repo: conan-io/conan
+  family: rebench
+  created_at: '2026-02-11 16:04:19'
+  base_commit: ad7f30275329c63c924d3201463a1143ba1a739c
+  receipt: runs/rebench/work/conan-io__conan-19604/receipt.json
+  original: runs/rebench/work/conan-io__conan-19604/staging/original
+  baseline: runs/rebench/work/conan-io__conan-19604/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\conan-io__conan-19604.json
+  clean_record: docs/rebench/clean-images/conan-io__conan-19604.json
+  official_image_digest: swerebench/sweb.eval.x86_64.conan-io_1776_conan-19604@sha256:a79eb716bef039cf4b3fa094ea7aca74067fcc3730412c90377a8501569a7b7b
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - test/integration/conanfile/test_cpp_info_serialize.py::test_cpp_info_serialize_round_trip
+    p2p: []
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 0
+    - 0
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 0
+    - 0
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: dask__fastparquet-961
+  repo: dask/fastparquet
+  family: rebench
+  created_at: '2025-08-22 08:43:03+00:00'
+  base_commit: 68da54f81836e3a05ed9d0468450207b24db40ca
+  receipt: runs/rebench/work/dask__fastparquet-961/receipt.json
+  original: runs/rebench/work/dask__fastparquet-961/staging/original
+  baseline: runs/rebench/work/dask__fastparquet-961/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\dask__fastparquet-961.json
+  clean_record: docs/rebench/clean-images/dask__fastparquet-961.json
+  official_image_digest: swerebench/sweb.eval.x86_64.dask_1776_fastparquet-961@sha256:68067b7966a12bd5bf75b448b1dcee1104acc8d1f03f8879434a5c1f27c332b2
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - fastparquet/test/test_timestamp_conversion_960.py::test_github_960
+    p2p: []
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 0
+    - 0
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 0
+    - 0
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: feder-observatory__stellarphot-526
+  repo: feder-observatory/stellarphot
+  family: rebench
+  created_at: '2025-06-12 14:08:45'
+  base_commit: da552391c4c5b4ae9128491dbbc3d103d3d2f313
+  receipt: runs/rebench/work/feder-observatory__stellarphot-526/receipt.json
+  original: runs/rebench/work/feder-observatory__stellarphot-526/staging/original
+  baseline: runs/rebench/work/feder-observatory__stellarphot-526/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\feder-observatory__stellarphot-526.json
+  clean_record: docs/rebench/clean-images/feder-observatory__stellarphot-526.json
+  official_image_digest: swerebench/sweb.eval.x86_64.feder-observatory_1776_stellarphot-526@sha256:ca93c9e772112eb02abd0f9bb6c75bee1904db2e25233f859278d1840e180d1b
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_aperture_photometry_no_outlier_rejection[True]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_aperture_photometry_no_outlier_rejection[False]
+    p2p:
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_create_aperture_photometry
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_aperture_photometry_with_outlier_rejection[True]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_aperture_photometry_with_outlier_rejection[False]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_photometry_method_argument
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_photometry_on_directory[sky]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_photometry_on_directory[pixel]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_photometry_on_directory_with_no_ra_dec
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_photometry_on_directory_with_bad_fits
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_photometry_variable_aperture
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_invalid_path
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_single_image[True-test.log]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_single_image[True-None]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_single_image[False-test.log]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_single_image[False-None]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_multiple_image[True-test.log]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_multiple_image[True-None]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_multiple_image[False-test.log]
+    - stellarphot/photometry/tests/test_photometry.py::TestAperturePhotometry::test_logging_multiple_image[False-None]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_defaults
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_source_only[1.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_source_only[1.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_source_only[1.5-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_source_only[1.5-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_source_only[2.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_source_only[2.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_dark_only[1.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_dark_only[1.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_dark_only[1.5-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_dark_only[1.5-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_dark_only[2.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_dark_only[2.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_read_noise_only[1.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_read_noise_only[1.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_read_noise_only[1.5-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_read_noise_only[1.5-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_read_noise_only[2.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_read_noise_only[2.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_sky_only[1.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_sky_only[1.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_sky_only[1.5-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_sky_only[1.5-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_sky_only[2.0-5]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_sky_only[2.0-20]
+    - stellarphot/photometry/tests/test_photometry.py::test_annulus_area_term
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_messy_case[False-89.078616]
+    - stellarphot/photometry/tests/test_photometry.py::test_calc_noise_messy_case[True-89.10182]
+    - stellarphot/photometry/tests/test_photometry.py::test_find_too_close
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 2
+    empty_p2p:
+    - 47
+    - 47
+    gold_f2p:
+    - 2
+    - 2
+    gold_p2p:
+    - 47
+    - 47
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: jsonpickle__jsonpickle-587
+  repo: jsonpickle/jsonpickle
+  family: rebench
+  created_at: '2026-01-11 19:48:21'
+  base_commit: f0a02c4dd46c5919669767ad84462937f3fbebf7
+  receipt: runs/rebench/work/jsonpickle__jsonpickle-587/receipt.json
+  original: runs/rebench/work/jsonpickle__jsonpickle-587/staging/original
+  baseline: runs/rebench/work/jsonpickle__jsonpickle-587/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\jsonpickle__jsonpickle-587.json
+  clean_record: docs/rebench/clean-images/jsonpickle__jsonpickle-587.json
+  official_image_digest: swerebench/sweb.eval.x86_64.jsonpickle_1776_jsonpickle-587@sha256:5aa546e2840df5c55cc0513a4622087697057f10827b751025633e08f21129dd
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - tests/object_test.py::test_exclude_slots
+    - tests/object_test.py::test_exclude_getstate_from_slots
+    p2p:
+    - tests/handler_test.py::ruff
+    - tests/handler_test.py::HandlerTestCase::test_base_handler
+    - tests/handler_test.py::HandlerTestCase::test_custom_handler
+    - tests/handler_test.py::HandlerTestCase::test_custom_handler_can_rewrite_everything
+    - tests/handler_test.py::HandlerTestCase::test_decorated_register
+    - tests/handler_test.py::HandlerTestCase::test_invalid_class
+    - tests/handler_test.py::HandlerTestCase::test_references
+    - tests/object_test.py::ruff
+    - tests/object_test.py::FailSafeTestCase::test_custom_err_msg
+    - tests/object_test.py::FailSafeTestCase::test_error_recorded
+    - tests/object_test.py::FailSafeTestCase::test_no_error
+    - tests/object_test.py::test_list_subclass
+    - tests/object_test.py::test_list_subclass_with_init
+    - tests/object_test.py::test_list_subclass_with_data
+    - tests/object_test.py::test_set_subclass
+    - tests/object_test.py::test_set_subclass_with_data
+    - tests/object_test.py::test_decimal
+    - tests/object_test.py::test_oldstyleclass
+    - tests/object_test.py::test_dictsubclass
+    - tests/object_test.py::test_dictsubclass_notunpickable
+    - tests/object_test.py::test_getstate_dict_subclass_structure
+    - tests/object_test.py::test_getstate_dict_subclass_roundtrip_simple
+    - tests/object_test.py::test_getstate_dict_subclass_roundtrip_cyclical
+    - tests/object_test.py::test_getstate_list_simple
+    - tests/object_test.py::test_getstate_list_inside_list
+    - tests/object_test.py::test_getstate_with_getstate_only
+    - tests/object_test.py::test_thing_with_queue
+    - tests/object_test.py::test_thing_with_func
+    - tests/object_test.py::test_thing_with_compiled_regex
+    - tests/object_test.py::test_base_object_roundrip
+    - tests/object_test.py::test_enum34
+    - tests/object_test.py::test_bytes_unicode
+    - tests/object_test.py::test_nested_objects
+    - tests/object_test.py::test_threading_lock
+    - tests/object_test.py::test_array_handler_numeric
+    - tests/object_test.py::test_exceptions_with_arguments
+    - tests/object_test.py::test_getstate_does_not_recurse_infinitely
+    - tests/object_test.py::test_defaultdict_roundtrip
+    - tests/object_test.py::test_default_factory_initialization
+    - tests/object_test.py::test_defaultdict_roundtrip_simple_lambda
+    - tests/object_test.py::test_defaultdict_roundtrip_simple_lambda2
+    - tests/object_test.py::test_defaultdict_and_things_roundtrip_simple_lambda
+    - tests/object_test.py::test_defaultdict_subclass_with_self_as_default_factory
+    - tests/object_test.py::test_defaultdict_subclass_with_class_as_default_factory
+    - tests/object_test.py::test_posix_stat_result
+    - tests/object_test.py::test_repr_using_jsonpickle
+    - tests/object_test.py::test_broken_repr_dict_key
+    - tests/object_test.py::test_ordered_dict_python3
+    - tests/object_test.py::test_ordered_dict
+    - tests/object_test.py::test_ordered_dict_unpicklable
+    - tests/object_test.py::test_ordered_dict_reduces
+    - tests/object_test.py::test_int_keys_in_object_with_getstate_only
+    - tests/object_test.py::test_ordered_dict_int_keys
+    - tests/object_test.py::test_ordered_dict_nested
+    - tests/object_test.py::test_deque_roundtrip
+    - tests/object_test.py::test_namedtuple_roundtrip
+    - tests/object_test.py::test_counter_roundtrip
+    - tests/object_test.py::test_counter_roundtrip_with_keys
+    - tests/object_test.py::test_list_with_fd
+    - tests/object_test.py::test_thing_with_fd
+    - tests/object_test.py::test_dict_with_fd
+    - tests/object_test.py::test_thing_with_lamda
+    - tests/object_test.py::test_newstyleslots
+    - tests/object_test.py::test_newstyleslots_inherited
+    - tests/object_test.py::test_newstyleslots_inherited_deleted_attr
+    - tests/object_test.py::test_newstyleslots_with_children
+    - tests/object_test.py::test_newstyleslots_with_children_inherited
+    - tests/object_test.py::test_newstyleslots_iterable
+    - tests/object_test.py::test_newstyleslots_string_slot
+    - tests/object_test.py::test_enum34_nested
+    - tests/object_test.py::test_enum_references
+    - tests/object_test.py::test_enum_unpicklable
+    - tests/object_test.py::test_enum_int_key_and_value
+    - tests/object_test.py::test_enum_string_key_and_value
+    - tests/object_test.py::test_int_enum_with_auto_value
+    - tests/object_test.py::test_multiple_string_enums_when_make_refs_is_false
+    - tests/object_test.py::test_unicode_mixin
+    - tests/object_test.py::test_datetime_with_tz_copies_refs
+    - tests/object_test.py::test_with_exclude
+    - tests/object_test.py::test_contained_exclusion
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 2
+    empty_p2p:
+    - 80
+    - 80
+    gold_f2p:
+    - 2
+    - 2
+    gold_p2p:
+    - 80
+    - 80
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: marshmallow-code__marshmallow-2925_interface
+  repo: marshmallow-code/marshmallow
+  family: rebench
+  created_at: '2026-03-25 16:50:58'
+  base_commit: 546be2f728faca68a88130a6406c20994355c853
+  receipt: runs/rebench/work/marshmallow-code__marshmallow-2925_interface/receipt.json
+  original: runs/rebench/work/marshmallow-code__marshmallow-2925_interface/staging/original
+  baseline: runs/rebench/work/marshmallow-code__marshmallow-2925_interface/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\marshmallow-code__marshmallow-2925_interface.json
+  clean_record: docs/rebench/clean-images/marshmallow-code__marshmallow-2925_interface.json
+  official_image_digest: swerebench/sweb.eval.x86_64.marshmallow-code_1776_marshmallow-2925_interface@sha256:967a07ee58cd51e937b4f6575c89d1c37bdc24ba18003914a50bc5d1e7f50589
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/test_fields.py::TestAbstractBaseFields::test_number_cannot_be_instantiated
+    - tests/test_fields.py::TestAbstractBaseFields::test_mapping_cannot_be_instantiated
+    p2p:
+    - tests/test_fields.py::test_field_aliases[Integer-Integer]
+    - tests/test_fields.py::test_field_aliases[String-String]
+    - tests/test_fields.py::test_field_aliases[Boolean-Boolean]
+    - tests/test_fields.py::test_field_aliases[Url-Url]
+    - tests/test_fields.py::TestAbstractBaseFields::test_custom_number_subclass
+    - tests/test_fields.py::TestAbstractBaseFields::test_custom_mapping_subclass
+    - tests/test_fields.py::TestField::test_repr
+    - tests/test_fields.py::TestField::test_error_raised_if_uncallable_validator_passed
+    - tests/test_fields.py::TestField::test_error_raised_if_missing_is_set_on_required_field
+    - tests/test_fields.py::TestField::test_custom_field_receives_attr_and_obj
+    - tests/test_fields.py::TestField::test_custom_field_receives_data_key_if_set
+    - tests/test_fields.py::TestField::test_custom_field_follows_data_key_if_set
+    - tests/test_fields.py::TestParentAndName::test_simple_field_parent_and_name
+    - tests/test_fields.py::TestParentAndName::test_unbound_field_root_returns_none
+    - tests/test_fields.py::TestParentAndName::test_list_field_inner_parent_and_name
+    - tests/test_fields.py::TestParentAndName::test_tuple_field_inner_parent_and_name
+    - tests/test_fields.py::TestParentAndName::test_mapping_field_inner_parent_and_name
+    - tests/test_fields.py::TestParentAndName::test_simple_field_root
+    - tests/test_fields.py::TestParentAndName::test_list_field_inner_root
+    - tests/test_fields.py::TestParentAndName::test_tuple_field_inner_root
+    - tests/test_fields.py::TestParentAndName::test_list_root_inheritance
+    - tests/test_fields.py::TestParentAndName::test_dict_root_inheritance
+    - tests/test_fields.py::TestParentAndName::test_datetime_list_inner_format
+    - tests/test_fields.py::TestParentAndName::test_field_named_parent_has_root
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[String]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Integer]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Boolean]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Float]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[DateTime]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Time]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Date]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[TimeDelta]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Dict]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Url]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Email]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[UUID]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[Decimal]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[IP]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[IPv4]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[IPv6]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[IPInterface]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[IPv4Interface]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[IPv6Interface]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[FieldClass19]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[FieldClass20]
+    - tests/test_fields.py::TestMetadata::test_extra_metadata_may_be_added_to_field[FieldClass21]
+    - tests/test_fields.py::TestErrorMessages::test_default_error_messages_get_merged_with_parent_error_messages_cstm_msg
+    - tests/test_fields.py::TestErrorMessages::test_default_error_messages_get_merged_with_parent_error_messages
+    - tests/test_fields.py::TestErrorMessages::test_make_error[required-Missing data for required field.]
+    - tests/test_fields.py::TestErrorMessages::test_make_error[null-Field may not be null.]
+    - tests/test_fields.py::TestErrorMessages::test_make_error[custom-Custom error message.]
+    - tests/test_fields.py::TestErrorMessages::test_make_error[validator_failed-Invalid value.]
+    - tests/test_fields.py::TestErrorMessages::test_make_error_key_doesnt_exist
+    - tests/test_fields.py::TestNestedField::test_nested_only_and_exclude_as_string[only]
+    - tests/test_fields.py::TestNestedField::test_nested_only_and_exclude_as_string[exclude]
+    - tests/test_fields.py::TestNestedField::test_nested_instantiation_from_dict[nested_value0]
+    - tests/test_fields.py::TestNestedField::test_nested_instantiation_from_dict[<lambda>]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[None-exclude]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[None-include]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[None-raise]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[exclude-exclude]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[exclude-include]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[exclude-raise]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[include-exclude]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[include-include]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[include-raise]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[raise-exclude]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[raise-include]
+    - tests/test_fields.py::TestNestedField::test_nested_unknown_override[raise-raise]
+    - tests/test_fields.py::TestNestedField::test_nested_schema_only_and_exclude[only-fields_list0]
+    - tests/test_fields.py::TestNestedField::test_nested_schema_only_and_exclude[exclude-fields_list1]
+    - tests/test_fields.py::TestListNested::test_list_nested_only_exclude_dump_only_load_only_propagated_to_nested[only]
+    - tests/test_fields.py::TestListNested::test_list_nested_only_exclude_dump_only_load_only_propagated_to_nested[exclude]
+    - tests/test_fields.py::TestListNested::test_list_nested_only_exclude_dump_only_load_only_propagated_to_nested[dump_only]
+    - tests/test_fields.py::TestListNested::test_list_nested_only_exclude_dump_only_load_only_propagated_to_nested[load_only]
+    - tests/test_fields.py::TestListNested::test_list_nested_class_only_and_exclude_merged_with_nested[only-expected_attribute0-expected_dump0]
+    - tests/test_fields.py::TestListNested::test_list_nested_class_only_and_exclude_merged_with_nested[exclude-expected_attribute1-expected_dump1]
+    - tests/test_fields.py::TestListNested::test_list_nested_class_multiple_dumps
+    - tests/test_fields.py::TestListNested::test_list_nested_instance_only_and_exclude_merged_with_nested[only-expected_attribute0-expected_dump0]
+    - tests/test_fields.py::TestListNested::test_list_nested_instance_only_and_exclude_merged_with_nested[exclude-expected_attribute1-expected_dump1]
+    - tests/test_fields.py::TestListNested::test_list_nested_instance_multiple_dumps
+    - tests/test_fields.py::TestListNested::test_list_nested_lambda_only_and_exclude_merged_with_nested[only-expected_attribute0-expected_dump0]
+    - tests/test_fields.py::TestListNested::test_list_nested_lambda_only_and_exclude_merged_with_nested[exclude-expected_attribute1-expected_dump1]
+    - tests/test_fields.py::TestListNested::test_list_nested_partial_propagated_to_nested
+    - tests/test_fields.py::TestTupleNested::test_tuple_nested_only_exclude_dump_only_load_only_propagated_to_nested[dump_only]
+    - tests/test_fields.py::TestTupleNested::test_tuple_nested_only_exclude_dump_only_load_only_propagated_to_nested[load_only]
+    - tests/test_fields.py::TestTupleNested::test_tuple_nested_partial_propagated_to_nested
+    - tests/test_fields.py::TestDictNested::test_dict_nested_only_exclude_dump_only_load_only_propagated_to_nested[only]
+    - tests/test_fields.py::TestDictNested::test_dict_nested_only_exclude_dump_only_load_only_propagated_to_nested[exclude]
+    - tests/test_fields.py::TestDictNested::test_dict_nested_only_exclude_dump_only_load_only_propagated_to_nested[dump_only]
+    - tests/test_fields.py::TestDictNested::test_dict_nested_only_exclude_dump_only_load_only_propagated_to_nested[load_only]
+    - tests/test_fields.py::TestDictNested::test_dict_nested_only_and_exclude_merged_with_nested[only-expected0]
+    - tests/test_fields.py::TestDictNested::test_dict_nested_only_and_exclude_merged_with_nested[exclude-expected1]
+    - tests/test_fields.py::TestDictNested::test_dict_nested_partial_propagated_to_nested
+    - tests/test_serialization.py::TestFieldSerialization::test_function_field_passed_func
+    - tests/test_serialization.py::TestFieldSerialization::test_function_field_passed_serialize_only_is_dump_only
+    - tests/test_serialization.py::TestFieldSerialization::test_function_field_passed_deserialize_and_serialize_is_not_dump_only
+    - tests/test_serialization.py::TestFieldSerialization::test_function_field_passed_serialize
+    - tests/test_serialization.py::TestFieldSerialization::test_function_field_does_not_swallow_attribute_error
+    - tests/test_serialization.py::TestFieldSerialization::test_serialize_with_load_only_param
+    - tests/test_serialization.py::TestFieldSerialization::test_function_field_load_only
+    - tests/test_serialization.py::TestFieldSerialization::test_function_field_passed_uncallable_object
+    - tests/test_serialization.py::TestFieldSerialization::test_integer_field
+    - tests/test_serialization.py::TestFieldSerialization::test_integer_as_string_field
+    - tests/test_serialization.py::TestFieldSerialization::test_integer_field_default
+    - tests/test_serialization.py::TestFieldSerialization::test_integer_field_default_set_to_none
+    - tests/test_serialization.py::TestFieldSerialization::test_uuid_field
+    - tests/test_serialization.py::TestFieldSerialization::test_ip_address_field
+    - tests/test_serialization.py::TestFieldSerialization::test_ipv4_address_field
+    - tests/test_serialization.py::TestFieldSerialization::test_ipv6_address_field
+    - tests/test_serialization.py::TestFieldSerialization::test_ip_interface_field
+    - tests/test_serialization.py::TestFieldSerialization::test_ipv4_interface_field
+    - tests/test_serialization.py::TestFieldSerialization::test_ipv6_interface_field
+    - tests/test_serialization.py::TestFieldSerialization::test_enum_field_by_symbol_serialization
+    - tests/test_serialization.py::TestFieldSerialization::test_enum_field_by_value_true_serialization
+    - tests/test_serialization.py::TestFieldSerialization::test_enum_field_by_value_field_serialization
+    - tests/test_serialization.py::TestFieldSerialization::test_decimal_field
+    - tests/test_serialization.py::TestFieldSerialization::test_decimal_field_string
+    - tests/test_serialization.py::TestFieldSerialization::test_decimal_field_special_values
+    - tests/test_serialization.py::TestFieldSerialization::test_decimal_field_special_values_not_permitted
+    - tests/test_serialization.py::TestFieldSerialization::test_decimal_field_fixed_point_representation
+    - tests/test_serialization.py::TestFieldSerialization::test_email_field_serialize_none
+    - tests/test_serialization.py::TestFieldSerialization::test_dict_field_serialize_none
+    - tests/test_serialization.py::TestFieldSerialization::test_dict_field_serialize
+    - tests/test_serialization.py::TestFieldSerialization::test_dict_field_serialize_ordereddict
+    - tests/test_serialization.py::TestFieldSerialization::test_structured_dict_value_serialize
+    - tests/test_serialization.py::TestFieldSerialization::test_structured_dict_key_serialize
+    - tests/test_serialization.py::TestFieldSerialization::test_structured_dict_key_value_serialize
+    - tests/test_serialization.py::TestFieldSerialization::test_url_field_serialize_none
+    - tests/test_serialization.py::TestFieldSerialization::test_method_field_with_method_missing
+    - tests/test_serialization.py::TestFieldSerialization::test_method_field_passed_serialize_only_is_dump_only
+    - tests/test_serialization.py::TestFieldSerialization::test_method_field_passed_deserialize_only_is_load_only
+    - tests/test_serialization.py::TestFieldSerialization::test_method_field_with_uncallable_attribute
+    - tests/test_serialization.py::TestFieldSerialization::test_method_field_does_not_swallow_attribute_error
+    - tests/test_serialization.py::TestFieldSerialization::test_method_with_no_serialize_is_missing
+    - tests/test_serialization.py::TestFieldSerialization::test_serialize_with_data_key_param
+    - tests/test_serialization.py::TestFieldSerialization::test_serialize_with_data_key_as_empty_string
+    - tests/test_serialization.py::TestFieldSerialization::test_serialize_with_attribute_and_data_key_uses_data_key
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_rfc822[value0-Sun, 10 Nov 2013 01:23:45 -0000-rfc]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_rfc822[value0-Sun, 10 Nov 2013 01:23:45 -0000-rfc822]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_rfc822[value1-Sun, 10 Nov 2013 01:23:45 +0000-rfc]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_rfc822[value1-Sun, 10 Nov 2013 01:23:45 +0000-rfc822]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_rfc822[value2-Sun, 10 Nov 2013 01:23:45 -0600-rfc]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_rfc822[value2-Sun, 10 Nov 2013 01:23:45 -0600-rfc822]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_timestamp[timestamp-value0-0]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_timestamp[timestamp-value1-1384043025]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_timestamp[timestamp-value2-1384043025]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_timestamp[timestamp-value3-1384064625]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_timestamp[timestamp_ms-value4-1384043025000]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_timestamp[timestamp_ms-value5-1384043025000]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_timestamp[timestamp_ms-value6-1384064625000]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value0-2013-11-10T01:23:45-iso]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value0-2013-11-10T01:23:45-iso8601]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value0-2013-11-10T01:23:45-None]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value1-2013-11-10T01:23:45.123456+00:00-iso]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value1-2013-11-10T01:23:45.123456+00:00-iso8601]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value1-2013-11-10T01:23:45.123456+00:00-None]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value2-2013-11-10T01:23:45+00:00-iso]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value2-2013-11-10T01:23:45+00:00-iso8601]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value2-2013-11-10T01:23:45+00:00-None]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value3-2013-11-10T01:23:45-06:00-iso]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value3-2013-11-10T01:23:45-06:00-iso8601]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_iso8601[value3-2013-11-10T01:23:45-06:00-None]
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_field_format
+    - tests/test_serialization.py::TestFieldSerialization::test_string_field
+    - tests/test_serialization.py::TestFieldSerialization::test_string_field_default_to_empty_string
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value0-01:23:45-iso]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value0-01:23:45-iso8601]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value0-01:23:45-None]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value1-01:23:45.123000-iso]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value1-01:23:45.123000-iso8601]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value1-01:23:45.123000-None]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value2-01:23:45.123456-iso]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value2-01:23:45.123456-iso8601]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_iso8601[value2-01:23:45.123456-None]
+    - tests/test_serialization.py::TestFieldSerialization::test_time_field_format
+    - tests/test_serialization.py::TestFieldSerialization::test_date_field
+    - tests/test_serialization.py::TestFieldSerialization::test_timedelta_field
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_list_field
+    - tests/test_serialization.py::TestFieldSerialization::test_list_field_serialize_none_returns_none
+    - tests/test_serialization.py::TestFieldSerialization::test_list_field_work_with_generator_single_value
+    - tests/test_serialization.py::TestFieldSerialization::test_list_field_work_with_generators_multiple_values
+    - tests/test_serialization.py::TestFieldSerialization::test_list_field_work_with_generators_empty_generator_returns_none_for_every_non_returning_yield_statement
+    - tests/test_serialization.py::TestFieldSerialization::test_list_field_work_with_set
+    - tests/test_serialization.py::TestFieldSerialization::test_list_field_work_with_custom_class_with_iterator_protocol
+    - tests/test_serialization.py::TestFieldSerialization::test_bad_list_field
+    - tests/test_serialization.py::TestFieldSerialization::test_datetime_integer_tuple_field
+    - tests/test_serialization.py::TestFieldSerialization::test_tuple_field_serialize_none_returns_none
+    - tests/test_serialization.py::TestFieldSerialization::test_bad_tuple_field
+    - tests/test_serialization.py::TestFieldSerialization::test_serialize_does_not_apply_validators
+    - tests/test_serialization.py::TestFieldSerialization::test_constant_field_serialization
+    - tests/test_serialization.py::TestFieldSerialization::test_constant_is_always_included_in_serialized_data
+    - tests/test_serialization.py::TestFieldSerialization::test_constant_field_serialize_when_omitted
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[String]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Integer]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Boolean]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Float]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[DateTime]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Time]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Date]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[TimeDelta]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Dict]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Url]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Email]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[UUID]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[Decimal]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[IP]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[IPv4]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[IPv6]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[IPInterface]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[IPv4Interface]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[IPv6Interface]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[FieldClass19]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[FieldClass20]
+    - tests/test_serialization.py::TestFieldSerialization::test_all_fields_serialize_none_to_none[FieldClass21]
+    - tests/test_serialization.py::TestSchemaSerialization::test_serialize_with_missing_param_value
+    - tests/test_serialization.py::TestSchemaSerialization::test_serialize_with_missing_param_callable
+    - tests/test_serialization.py::test_serializing_named_tuple
+    - tests/test_serialization.py::test_serializing_named_tuple_with_meta
+    - tests/test_serialization.py::test_serializing_slice
+    - tests/test_serialization.py::test_nested_field_many_serializing_generator
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 2
+    empty_p2p:
+    - 222
+    - 222
+    gold_f2p:
+    - 2
+    - 2
+    gold_p2p:
+    - 222
+    - 222
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: microsoft__Agents-for-python-264
+  repo: microsoft/Agents-for-python
+  family: rebench
+  created_at: '2025-12-01 18:05:40'
+  base_commit: 319d84eb43273614d4fffeef85ab45b8313a9dc5
+  receipt: runs/rebench/work/microsoft__Agents-for-python-264/receipt.json
+  original: runs/rebench/work/microsoft__Agents-for-python-264/staging/original
+  baseline: runs/rebench/work/microsoft__Agents-for-python-264/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\microsoft__Agents-for-python-264.json
+  clean_record: docs/rebench/clean-images/microsoft__Agents-for-python-264.json
+  official_image_digest: swerebench/sweb.eval.x86_64.microsoft_1776_agents-for-python-264@sha256:a1f0c34c215180b07d97fc502d9cea94daecd08d3ba8643c2aa0c18acc432457
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/hosting_core/app/_oauth/test_sign_in_state.py::test_sign_in_state_serialization_deserialization
+    p2p: []
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 0
+    - 0
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 0
+    - 0
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: microsoft__fabric-cicd-394
+  repo: microsoft/fabric-cicd
+  family: rebench
+  created_at: '2025-07-03 16:33:39+00:00'
+  base_commit: b19fd6f51356985c99682a8783b42234188156fc
+  receipt: runs/rebench/work/microsoft__fabric-cicd-394/receipt.json
+  original: runs/rebench/work/microsoft__fabric-cicd-394/staging/original
+  baseline: runs/rebench/work/microsoft__fabric-cicd-394/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\microsoft__fabric-cicd-394.json
+  clean_record: docs/rebench/clean-images/microsoft__fabric-cicd-394.json
+  official_image_digest: swerebench/sweb.eval.x86_64.microsoft_1776_fabric-cicd-394@sha256:457a3b078aaec7098f4d2596a2c8c30802c5c56e39a5da353b4db926578a2967
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - tests/test_fabric_workspace.py::test_empty_logical_id_validation
+    - tests/test_fabric_workspace.py::test_whitespace_only_logical_id_validation
+    - tests/test_fabric_workspace.py::test_empty_logical_id_validation_during_publish
+    - tests/test_fabric_workspace.py::test_multiple_empty_logical_ids_validation
+    - tests/test_fabric_workspace.py::test_single_empty_logical_id_validation_message
+    p2p:
+    - tests/test_fabric_workspace.py::test_parameter_file_with_utf8_chars
+    - tests/test_fabric_workspace.py::test_platform_metadata_with_utf8_chars
+    - tests/test_fabric_workspace.py::test_environment_param_with_utf8_chars
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_in_json
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_in_python
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_eventstream_json
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_yaml_format
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_mixed_formats
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_whitespace_variations
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_non_default_values_preserved
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_edge_cases
+    - tests/test_fabric_workspace.py::test_workspace_id_replacement_comprehensive_item_types
+    - tests/test_fabric_workspace.py::test_environment_parameter_replacement_issue
+    - tests/test_fabric_workspace.py::test_valid_logical_id_works_correctly
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 5
+    empty_p2p:
+    - 14
+    - 14
+    gold_f2p:
+    - 5
+    - 5
+    gold_p2p:
+    - 14
+    - 14
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: microsoft__qcodes-8039
+  repo: microsoft/Qcodes
+  family: rebench
+  created_at: '2026-04-13 10:36:33'
+  base_commit: fb48ab0c58eb2c144ab634d0b4209e70334c89ab
+  receipt: runs/rebench/work/microsoft__qcodes-8039/receipt.json
+  original: runs/rebench/work/microsoft__qcodes-8039/staging/original
+  baseline: runs/rebench/work/microsoft__qcodes-8039/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\microsoft__qcodes-8039.json
+  clean_record: docs/rebench/clean-images/microsoft__qcodes-8039.json
+  official_image_digest: swerebench/sweb.eval.x86_64.microsoft_1776_qcodes-8039@sha256:ce91b642dde511eb1e07e8b2fe846d3d599ec54c9feb9f2eaf6a91c820060f24
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/helpers/test_delegate_attribues.py::test_faulty_property_surfaces_original_attribute_error
+    - tests/helpers/test_delegate_attribues.py::test_faulty_property_preserves_inner_traceback
+    p2p:
+    - tests/helpers/test_delegate_attribues.py::test_delegate_dict
+    - tests/helpers/test_delegate_attribues.py::test_delegate_dicts
+    - tests/helpers/test_delegate_attribues.py::test_delegate_object
+    - tests/helpers/test_delegate_attribues.py::test_delegate_objects
+    - tests/helpers/test_delegate_attribues.py::test_delegate_both
+    - tests/helpers/test_delegate_attribues.py::test_working_property_still_returns_value
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 2
+    empty_p2p:
+    - 6
+    - 6
+    gold_f2p:
+    - 2
+    - 2
+    gold_p2p:
+    - 6
+    - 6
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: newton-physics__newton-1653
+  repo: newton-physics/newton
+  family: rebench
+  created_at: '2026-02-16 14:47:26'
+  base_commit: 36e8adacaf011705ea57e995a713d6e77c85e280
+  receipt: runs/rebench/work/newton-physics__newton-1653/receipt.json
+  original: runs/rebench/work/newton-physics__newton-1653/staging/original
+  baseline: runs/rebench/work/newton-physics__newton-1653/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\newton-physics__newton-1653.json
+  clean_record: docs/rebench/clean-images/newton-physics__newton-1653.json
+  official_image_digest: swerebench/sweb.eval.x86_64.newton-physics_1776_newton-1653@sha256:33c25430d2993f61523dd7ad4ccd257cc6b31601309e23ceaf543558b8de3f38
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_mjcf_geom_margin_parsing
+    p2p:
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_actuator_mode_inference_from_actuator_type
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_actuatorfrcrange_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_autolimits_false_joint_effort_limit
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_base_joint_dict_creates_custom_joint
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_base_joint_dict_creates_d6_joint
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_base_joint_in_frame_respects_frame_xform
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_base_joint_on_fixed_root
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_base_joint_respects_import_xform
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_bodies_with_scale
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_chain_with_rotations
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_cylinder_properties_preserved
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_cylinder_shapes_preserved
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_default_inheritance
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_eq_solref_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_error_messages_are_informative
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_exclude_tag
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_exclude_tag_missing_attributes
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_exclude_tag_missing_bodies
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_exclude_tag_warnings_verbose
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_exclude_tag_with_hyphens
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_exclude_tag_with_verbose
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_floating_and_base_joint_mutually_exclusive
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_floating_base_transform
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_floating_false_creates_fixed_joint
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_floating_false_with_parent_body_succeeds
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_floating_none_preserves_mjcf_default
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_floating_true_creates_free_joint
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_floating_true_with_parent_body_raises_error
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_bodies_with_parent_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_childclass_propagation
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_geom_inside_body_is_body_relative
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_inside_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_transform_composition_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_transform_composition_geoms
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_transform_composition_rotation
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_frame_with_sites
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_geom_gap_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_geom_priority_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_geom_solimp_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_geom_solmix_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_granular_loading_flags
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_humanoid_mjcf
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_inertia_rotation
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_jnt_actgravcomp_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_joint_anchor_with_rotated_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_joint_anchor_with_rotated_child_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_joint_stiffness_damping
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_joint_type_free_with_floating_false
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_limit_margin_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_many_independent_articulations
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_mjcf_friction_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_mjcf_geom_solref_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_mjcf_gravcomp
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_mjcf_maxhullvert_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_multi_root_mjcf_with_parent_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_multiple_bodies_hierarchy
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_nested_frames
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_non_sequential_articulation_attachment
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_option_enum_once_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_option_numeric_once_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_option_scalar_per_world
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_option_scalar_world_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_option_tag_pair_syntax
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_option_vector_world_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_parent_body_attaches_to_existing_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_parent_body_creates_joint_to_parent
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_parent_body_not_in_articulation_raises_error
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_parent_body_with_base_joint_creates_d6
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_parse_mujoco_options_disabled
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_parse_sites_backward_compatibility
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_parse_visuals_vs_hide_visuals
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_ref_attribute_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_replace_3d_hinge_with_ball_joint
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_root_body_with_custom_xform
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_sequential_attachment_succeeds
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_single_body_transform
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_site_size_defaults
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_solimpfriction_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_solimplimit_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_solreffriction_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_solreflimit_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_springref_attribute_parsing
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_static_fromto_capsule_xform
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_static_geom_xform_not_applied_twice
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_three_level_hierarchical_composition
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_tree_hierarchy_with_branching
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_xform_relative_to_parent_body
+    - newton/tests/test_import_mjcf.py::TestImportMjcf::test_xform_with_floating_false
+    - newton/tests/test_import_mjcf.py::TestMjcfInclude::test_basic_include_same_directory
+    - newton/tests/test_import_mjcf.py::TestMjcfInclude::test_include_absolute_path
+    - newton/tests/test_import_mjcf.py::TestMjcfInclude::test_include_multiple_sections
+    - newton/tests/test_import_mjcf.py::TestMjcfInclude::test_include_resolves_asset_paths
+    - newton/tests/test_import_mjcf.py::TestMjcfInclude::test_include_subdirectory
+    - newton/tests/test_import_mjcf.py::TestMjcfInclude::test_include_with_freejoint_and_parent_body
+    - newton/tests/test_import_mjcf.py::TestMjcfInclude::test_include_with_parent_body
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeNested::test_circular_include_detection
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeNested::test_include_without_file_attribute
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeNested::test_invalid_source_not_file_not_xml
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeNested::test_missing_include_file
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeNested::test_nested_includes
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeNested::test_relative_include_without_base_dir
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeNested::test_self_include_detection
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeCallback::test_custom_path_resolver_returns_xml
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeCallback::test_custom_path_resolver_with_base_dir
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeCallback::test_dof_angle_conversion_degrees
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeCallback::test_dof_angle_conversion_radians
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeCallback::test_dof_angle_conversion_slide_joint
+    - newton/tests/test_import_mjcf.py::TestMjcfIncludeCallback::test_xml_string_input_with_custom_resolver
+    - newton/tests/test_import_mjcf.py::TestMjcfMultipleWorldbody::test_include_creates_multiple_worldbodies
+    - newton/tests/test_import_mjcf.py::TestMjcfMultipleWorldbody::test_multiple_worldbody_elements
+    - newton/tests/test_import_mjcf.py::TestMjcfMultipleWorldbody::test_multiple_worldbody_with_sites
+    - newton/tests/test_import_mjcf.py::TestMjcfActuatorAutoLimited::test_actlimited_auto_when_actrange_specified
+    - newton/tests/test_import_mjcf.py::TestMjcfActuatorAutoLimited::test_ctrllimited_auto_when_ctrlrange_specified
+    - newton/tests/test_import_mjcf.py::TestMjcfActuatorAutoLimited::test_ctrllimited_auto_without_ctrlrange
+    - newton/tests/test_import_mjcf.py::TestMjcfActuatorAutoLimited::test_ctrllimited_explicit_false_not_overridden
+    - newton/tests/test_import_mjcf.py::TestMjcfActuatorAutoLimited::test_forcelimited_auto_when_forcerange_specified
+    - newton/tests/test_import_mjcf.py::TestMjcfDefaultCustomAttributes::test_base_joint_dict_conflicting_keys_fails
+    - newton/tests/test_import_mjcf.py::TestMjcfDefaultCustomAttributes::test_body_defaults
+    - newton/tests/test_import_mjcf.py::TestMjcfDefaultCustomAttributes::test_general_actuator_defaults
+    - newton/tests/test_import_mjcf.py::TestMjcfDefaultCustomAttributes::test_joint_dof_defaults
+    - newton/tests/test_import_mjcf.py::TestMjcfDefaultCustomAttributes::test_position_actuator_defaults
+    - newton/tests/test_import_mjcf.py::TestMjcfDefaultCustomAttributes::test_shape_defaults
+    - newton/tests/test_import_mjcf.py::TestJointFrictionloss::test_frictionloss_default_zero
+    - newton/tests/test_import_mjcf.py::TestJointFrictionloss::test_frictionloss_from_default_class
+    - newton/tests/test_import_mjcf.py::TestJointFrictionloss::test_hinge_frictionloss
+    - newton/tests/test_import_mjcf.py::TestJointFrictionloss::test_slide_frictionloss
+    - newton/tests/test_import_mjcf.py::TestZeroMassBodies::test_ensure_nonstatic_links_default_false
+    - newton/tests/test_import_mjcf.py::TestZeroMassBodies::test_ensure_nonstatic_links_opt_in
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolver::test_setup_completes
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolverPropertiesBase::test_setup_completes
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolverMassProperties::test_setup_completes
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolverJointProperties::test_setup_completes
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolverGeomProperties::test_mesh_maxhullvert_attribute
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolverGeomProperties::test_setup_completes
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolverEqualityConstraintProperties::test_setup_completes
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoSolverFixedTendonProperties::test_setup_completes
+    - newton/tests/test_mujoco_solver.py::TestMuJoCoValidation::test_body_missing_joint
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 137
+    - 137
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 137
+    - 137
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: omni-us__jsonargparse-770
+  repo: omni-us/jsonargparse
+  family: rebench
+  created_at: '2025-09-08 05:00:49'
+  base_commit: cb4e6338efbadd60f39b670cb311dbdd17ee2877
+  receipt: runs/rebench/work/omni-us__jsonargparse-770/receipt.json
+  original: runs/rebench/work/omni-us__jsonargparse-770/staging/original
+  baseline: runs/rebench/work/omni-us__jsonargparse-770/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\omni-us__jsonargparse-770.json
+  clean_record: docs/rebench/clean-images/omni-us__jsonargparse-770.json
+  official_image_digest: swerebench/sweb.eval.x86_64.omni-us_1776_jsonargparse-770@sha256:14f8b2f467cdfad34dac79ab2731a1421b8ec731151a45ac2eb4e17fc89b3330
+  grader_timeout_seconds: 600
+  test_command: python -m pytest <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options: []
+  grader_nodeids:
+    f2p:
+    - jsonargparse_tests/test_parsing_settings.py::test_set_stubs_resolver_allow_py_files_failure
+    p2p:
+    - jsonargparse_tests/test_parsing_settings.py::test_get_parsing_setting_failure
+    - jsonargparse_tests/test_parsing_settings.py::test_set_validate_defaults_failure
+    - jsonargparse_tests/test_parsing_settings.py::test_validate_defaults_success
+    - jsonargparse_tests/test_parsing_settings.py::test_validate_defaults_failure
+    - jsonargparse_tests/test_parsing_settings.py::test_set_parse_optionals_as_positionals_failure
+    - jsonargparse_tests/test_parsing_settings.py::test_parse_optionals_as_positionals_simple
+    - jsonargparse_tests/test_parsing_settings.py::test_parse_optionals_as_positionals_subcommands
+    - jsonargparse_tests/test_parsing_settings.py::test_optionals_as_positionals_usage_wrap
+    - jsonargparse_tests/test_parsing_settings.py::test_optionals_as_positionals_unsupported_arguments
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 9
+    - 9
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 9
+    - 9
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: openai__openai-agents-python-2144
+  repo: openai/openai-agents-python
+  family: rebench
+  created_at: '2025-12-03 19:21:23'
+  base_commit: 509ddda77841ac1a6ce399e0d5fccde71a0a2f38
+  receipt: runs/rebench/work/openai__openai-agents-python-2144/receipt.json
+  original: runs/rebench/work/openai__openai-agents-python-2144/staging/original
+  baseline: runs/rebench/work/openai__openai-agents-python-2144/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\openai__openai-agents-python-2144.json
+  clean_record: docs/rebench/clean-images/openai__openai-agents-python-2144.json
+  official_image_digest: swerebench/sweb.eval.x86_64.openai_1776_openai-agents-python-2144@sha256:8909a7cdc4466d4222c18e00955aa5444c0466e9ccc11b16f20a82f126669553
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/models/test_litellm_extra_body.py::test_reasoning_summary_is_preserved
+    p2p:
+    - tests/models/test_litellm_extra_body.py::test_extra_body_is_forwarded
+    - tests/models/test_litellm_extra_body.py::test_extra_body_reasoning_effort_is_promoted
+    - tests/models/test_litellm_extra_body.py::test_reasoning_effort_prefers_model_settings
+    - tests/models/test_litellm_extra_body.py::test_extra_body_reasoning_effort_overrides_extra_args
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 4
+    - 4
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 4
+    - 4
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: openatx__adbutils-188
+  repo: openatx/adbutils
+  family: rebench
+  created_at: '2025-08-14 12:59:55+00:00'
+  base_commit: 1b68add2e1d3f7648e1450fa576b18febd852905
+  receipt: runs/rebench/work/openatx__adbutils-188/receipt.json
+  original: runs/rebench/work/openatx__adbutils-188/staging/original
+  baseline: runs/rebench/work/openatx__adbutils-188/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\openatx__adbutils-188.json
+  clean_record: docs/rebench/clean-images/openatx__adbutils-188.json
+  official_image_digest: swerebench/sweb.eval.x86_64.openatx_1776_adbutils-188@sha256:de989cba429ed062bad2a1a6ceb9c8436e7d8ab7be58f388e0af86982e08f846
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - tests/test_devices.py::test_reverse_list_empty_output
+    - tests/test_devices.py::test_reverse_list_invalid_lines
+    p2p:
+    - tests/test_devices.py::test_host_devices
+    - tests/test_devices.py::test_host_devices_invalid
+    - tests/test_devices.py::test_host_devices_extended
+    - tests/test_devices.py::test_host_devices_extended_invalid
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 2
+    empty_p2p:
+    - 4
+    - 4
+    gold_f2p:
+    - 2
+    - 2
+    gold_p2p:
+    - 4
+    - 4
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: optuna__optuna-6428
+  repo: optuna/optuna
+  family: rebench
+  created_at: '2026-02-09 05:12:21'
+  base_commit: 52f6ef6ffe5a2a4c6386f8d83cd39335d7f3a2ae
+  receipt: runs/rebench/work/optuna__optuna-6428/receipt.json
+  original: runs/rebench/work/optuna__optuna-6428/staging/original
+  baseline: runs/rebench/work/optuna__optuna-6428/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\optuna__optuna-6428.json
+  clean_record: docs/rebench/clean-images/optuna__optuna-6428.json
+  official_image_digest: swerebench/sweb.eval.x86_64.optuna_1776_optuna-6428@sha256:188c885af47c20661c8b9a2018f6701113d81ae5fb546c551aacf8cf26192945
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[<lambda>2]
+    p2p:
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[RandomSampler]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[<lambda>0]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[<lambda>1]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[<lambda>3]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[<lambda>4]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[NSGAIISampler]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[NSGAIIISampler]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[QMCSampler]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[<lambda>5]
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_sampling[<lambda>6]
+    - tests/samplers_tests/test_partial_fixed.py::test_float_to_int
+    - tests/samplers_tests/test_partial_fixed.py::test_out_of_the_range_numerical[-2]
+    - tests/samplers_tests/test_partial_fixed.py::test_out_of_the_range_numerical[2]
+    - tests/samplers_tests/test_partial_fixed.py::test_out_of_the_range_categorical
+    - tests/samplers_tests/test_partial_fixed.py::test_partial_fixed_experimental_warning
+    - tests/samplers_tests/test_partial_fixed.py::test_call_after_trial_of_base_sampler
+    - tests/samplers_tests/test_partial_fixed.py::test_fixed_none_value_sampling
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 17
+    - 17
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 17
+    - 17
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: py-pdf__pdfly-219
+  repo: py-pdf/pdfly
+  family: rebench
+  created_at: '2025-12-19 09:12:18'
+  base_commit: b3aad8e327d7a8f0cb79b7e02c2f1e2d26563007
+  receipt: runs/rebench/work/py-pdf__pdfly-219/receipt.json
+  original: runs/rebench/work/py-pdf__pdfly-219/staging/original
+  baseline: runs/rebench/work/py-pdf__pdfly-219/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\py-pdf__pdfly-219.json
+  clean_record: docs/rebench/clean-images/py-pdf__pdfly-219.json
+  official_image_digest: swerebench/sweb.eval.x86_64.py-pdf_1776_pdfly-219@sha256:e1f7c8d2e72c83e9cbef223a0f4f4388c30be2c88aed8463dac48b0b73bea910
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/test_up2.py::test_up2_odd_page_number
+    p2p:
+    - tests/test_up2.py::test_up2_fewer_args
+    - tests/test_up2.py::test_up2_extra_args
+    - tests/test_up2.py::test_up2_8page_file
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 3
+    - 3
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 3
+    - 3
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: pyccel__pyccel-2454
+  repo: pyccel/pyccel
+  family: rebench
+  created_at: '2025-09-22 21:20:01'
+  base_commit: 73787ab09d17fc6495bbf2a48b3e31a76b45113b
+  receipt: runs/rebench/work/pyccel__pyccel-2454/receipt.json
+  original: runs/rebench/work/pyccel__pyccel-2454/staging/original
+  baseline: runs/rebench/work/pyccel__pyccel-2454/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\pyccel__pyccel-2454.json
+  clean_record: docs/rebench/clean-images/pyccel__pyccel-2454.json
+  official_image_digest: swerebench/sweb.eval.x86_64.pyccel_1776_pyccel-2454@sha256:9c8e37a54125c9b0b8faa410c0fe4ba8ccf167370d23a801cb969111c6acb216
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Reassign_List_to_Target
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Reassign_Set_to_Target
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Reassign_Dict_to_Target
+    p2p:
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_no_reallocation[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_heap[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_stack[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_heap[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_stack[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap_shape[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_stack_array_if[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_between_nested_If[fortran]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_no_reallocation[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_heap[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_stack[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_heap[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_stack[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap_shape[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_stack_array_if[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_between_nested_If[c]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_no_reallocation[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_heap[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_stack[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_heap[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_stack[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap_shape[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_stack_array_if[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_between_nested_If[python]
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Reassign_to_Target
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_Between_Allocatables
+    - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_after_If
+  p2p_excluded:
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_no_reallocation[fortran]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_heap[fortran]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_heap[fortran]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap[fortran]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap_shape[fortran]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_stack_array_if[fortran]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_between_nested_If[fortran]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_no_reallocation[c]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_reallocation_heap[c]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_loop_heap[c]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap[c]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_creation_in_if_heap_shape[c]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_stack_array_if[c]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_between_nested_If[c]
+  - tests/epyccel/test_arrays_multiple_assignments.py::test_Assign_after_If
+  calibration:
+    empty_f2p:
+    - 0
+    - 3
+    empty_p2p:
+    - 15
+    - 30
+    gold_f2p:
+    - 3
+    - 3
+    gold_p2p:
+    - 15
+    - 30
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: pycqa__isort-2491
+  repo: PyCQA/isort
+  family: rebench
+  created_at: '2026-03-12 21:21:11'
+  base_commit: ae91dadf34951e316d5a81ffe7ac086952f1da65
+  receipt: runs/rebench/work/pycqa__isort-2491/receipt.json
+  original: runs/rebench/work/pycqa__isort-2491/staging/original
+  baseline: runs/rebench/work/pycqa__isort-2491/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\pycqa__isort-2491.json
+  clean_record: docs/rebench/clean-images/pycqa__isort-2491.json
+  official_image_digest: swerebench/sweb.eval.x86_64.pycqa_1776_isort-2491@sha256:8f6c834300883cb779eb720b8d9af2bd5f5c38c67f615748eb87a2c019851e4b
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/unit/test_regressions.py::test_comment_on_opening_line_of_aliased_import_does_not_move
+    p2p:
+    - tests/unit/test_regressions.py::test_isort_duplicating_comments_issue_1264
+    - tests/unit/test_regressions.py::test_moving_comments_issue_726
+    - tests/unit/test_regressions.py::test_blank_lined_removed_issue_1275
+    - tests/unit/test_regressions.py::test_blank_lined_removed_issue_1283
+    - tests/unit/test_regressions.py::test_extra_blank_line_added_nested_imports_issue_1290
+    - tests/unit/test_regressions.py::test_add_imports_shouldnt_make_isort_unusable_issue_1297
+    - tests/unit/test_regressions.py::test_no_extra_lines_for_imports_in_functions_issue_1277
+    - tests/unit/test_regressions.py::test_no_extra_blank_lines_in_methods_issue_1293
+    - tests/unit/test_regressions.py::test_force_single_line_shouldnt_remove_preceding_comment_lines_issue_1296
+    - tests/unit/test_regressions.py::test_ensure_new_line_before_comments_mixed_with_ensure_newline_before_comments_1295
+    - tests/unit/test_regressions.py::test_trailing_comma_doesnt_introduce_broken_code_with_comment_and_wrap_issue_1302
+    - tests/unit/test_regressions.py::test_ensure_sre_parse_is_identified_as_stdlib_issue_1304
+    - tests/unit/test_regressions.py::test_add_imports_shouldnt_move_lower_comments_issue_1300
+    - tests/unit/test_regressions.py::test_windows_newline_issue_1277
+    - tests/unit/test_regressions.py::test_windows_newline_issue_1278
+    - tests/unit/test_regressions.py::test_check_never_passes_with_indented_headings_issue_1301
+    - tests/unit/test_regressions.py::test_isort_shouldnt_fail_on_long_from_with_dot_issue_1190
+    - tests/unit/test_regressions.py::test_isort_shouldnt_add_extra_new_line_when_fass_and_n_issue_1315
+    - tests/unit/test_regressions.py::test_isort_doesnt_rewrite_import_with_dot_to_from_import_issue_1280
+    - tests/unit/test_regressions.py::test_isort_shouldnt_introduce_extra_lines_with_fass_issue_1322
+    - tests/unit/test_regressions.py::test_comments_should_cause_wrapping_on_long_lines_black_mode_issue_1219
+    - tests/unit/test_regressions.py::test_comment_blocks_should_stay_associated_without_extra_lines_issue_1156
+    - tests/unit/test_regressions.py::test_comment_shouldnt_be_duplicated_with_fass_enabled_issue_1329
+    - tests/unit/test_regressions.py::test_wrap_mode_equal_to_line_length_with_indendet_imports_issue_1333
+    - tests/unit/test_regressions.py::test_isort_skipped_nested_imports_issue_1339
+    - tests/unit/test_regressions.py::test_windows_diff_too_large_misrepresentative_issue_1348
+    - tests/unit/test_regressions.py::test_combine_as_does_not_lose_comments_issue_1321
+    - tests/unit/test_regressions.py::test_combine_as_does_not_lose_comments_issue_1381
+    - tests/unit/test_regressions.py::test_incorrect_grouping_when_comments_issue_1396
+    - tests/unit/test_regressions.py::test_reverse_relative_combined_with_force_sort_within_sections_issue_1395
+    - tests/unit/test_regressions.py::test_isort_should_be_able_to_add_independent_of_doc_string_placement_issue_1420
+    - tests/unit/test_regressions.py::test_comments_should_never_be_moved_between_imports_issue_1427
+    - tests/unit/test_regressions.py::test_isort_doesnt_misplace_comments_issue_1431
+    - tests/unit/test_regressions.py::test_isort_doesnt_misplace_add_import_issue_1445
+    - tests/unit/test_regressions.py::test_isort_doesnt_mangle_code_when_adding_imports_issue_1444
+    - tests/unit/test_regressions.py::test_isort_float_to_top_with_sort_on_off_tests
+    - tests/unit/test_regressions.py::test_isort_doesnt_float_to_top_correctly_when_imports_not_at_top_issue_1382
+    - tests/unit/test_regressions.py::test_empty_float_to_top_shouldnt_error_issue_1453
+    - tests/unit/test_regressions.py::test_import_sorting_shouldnt_be_endless_with_headers_issue_1454
+    - tests/unit/test_regressions.py::test_isort_should_leave_non_import_from_lines_alone_issue_1488
+    - tests/unit/test_regressions.py::test_isort_float_to_top_correctly_identifies_single_line_comments_1499
+    - tests/unit/test_regressions.py::test_isort_shouldnt_mangle_from_multi_line_string_issue_1507
+    - tests/unit/test_regressions.py::test_isort_should_keep_all_as_and_non_as_imports_issue_1523
+    - tests/unit/test_regressions.py::test_isort_shouldnt_introduce_syntax_error_issue_1539
+    - tests/unit/test_regressions.py::test_isort_shouldnt_split_skip_issue_1548
+    - tests/unit/test_regressions.py::test_isort_shouldnt_split_skip_issue_1556
+    - tests/unit/test_regressions.py::test_isort_losing_imports_vertical_prefix_from_module_import_wrap_mode_issue_1542
+    - tests/unit/test_regressions.py::test_isort_adding_second_comma_issue_1621
+    - tests/unit/test_regressions.py::test_isort_shouldnt_duplicate_comments_issue_1631
+    - tests/unit/test_regressions.py::test_isort_shouldnt_add_extra_new_lines_with_import_heading_issue_1670
+    - tests/unit/test_regressions.py::test_isort_shouldnt_add_extra_line_float_to_top_issue_1667
+    - tests/unit/test_regressions.py::test_isort_shouldnt_move_noqa_comment_issue_1594
+    - tests/unit/test_regressions.py::test_isort_correctly_handles_unix_vs_linux_newlines_issue_1566
+    - tests/unit/test_regressions.py::test_isort_treats_src_paths_same_as_from_config_as_cli_issue_1711
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_hanging_line_mode_issue_1741
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[0]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[1]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[2]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[3]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[4]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[5]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[6]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[7]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[8]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[9]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[10]
+    - tests/unit/test_regressions.py::test_isort_should_never_quietly_remove_imports_in_any_hangin_mode_issue_1741[11]
+    - tests/unit/test_regressions.py::test_isort_should_keep_multi_noqa_with_star_issue_1744
+    - tests/unit/test_regressions.py::test_isort_should_keep_multiple_noqa_comments_force_single_line_mode_issue_1721
+    - tests/unit/test_regressions.py::test_isort_should_only_add_imports_to_valid_location_issue_1769
+    - tests/unit/test_regressions.py::test_literal_sort_at_top_of_file_issue_1792
+    - tests/unit/test_regressions.py::test_isort_should_produce_the_same_code_on_subsequent_runs_issue_1799
+    - tests/unit/test_regressions.py::test_unrecoverable_exception_on_valid_input_ending_with_backslash_issue_1893
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 73
+    - 73
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 73
+    - 73
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: pydata__xarray-10838
+  repo: pydata/xarray
+  family: rebench
+  created_at: '2025-10-09 22:04:17'
+  base_commit: 20d377347154412aed41697da23274ca48c0fd54
+  receipt: runs/rebench/work/pydata__xarray-10838/receipt.json
+  original: runs/rebench/work/pydata__xarray-10838/staging/original
+  baseline: runs/rebench/work/pydata__xarray-10838/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\pydata__xarray-10838.json
+  clean_record: docs/rebench/clean-images/pydata__xarray-10838.json
+  official_image_digest: swerebench/sweb.eval.x86_64.pydata_1776_xarray-10838@sha256:c4d48b85840248d34ff6f6f5dd57cba8f183e41418c0ed5991452ea7dd0d80cd
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_nan_after_netcdf_roundtrip
+    - xarray/tests/test_utils.py::TestDictionaries::test_equivalent
+    p2p:
+    - xarray/tests/test_concat.py::test_concat_compat
+    - xarray/tests/test_concat.py::test_concat_missing_var
+    - xarray/tests/test_concat.py::test_concat_extension_array[var4]
+    - xarray/tests/test_concat.py::test_concat_extension_array[var5]
+    - xarray/tests/test_concat.py::test_concat_missing_multiple_consecutive_var
+    - xarray/tests/test_concat.py::test_concat_all_empty
+    - xarray/tests/test_concat.py::test_concat_second_empty
+    - xarray/tests/test_concat.py::test_concat_second_empty_with_scalar_data_var_only_on_first
+    - xarray/tests/test_concat.py::test_concat_multiple_missing_variables
+    - xarray/tests/test_concat.py::test_concat_multiple_datasets_missing_vars[True]
+    - xarray/tests/test_concat.py::test_concat_multiple_datasets_missing_vars[False]
+    - xarray/tests/test_concat.py::test_concat_multiple_datasets_with_multiple_missing_variables
+    - xarray/tests/test_concat.py::test_concat_type_of_missing_fill
+    - xarray/tests/test_concat.py::test_concat_order_when_filling_missing
+    - xarray/tests/test_concat.py::test_concat_fill_missing_variables[True-True]
+    - xarray/tests/test_concat.py::test_concat_fill_missing_variables[True-False]
+    - xarray/tests/test_concat.py::test_concat_fill_missing_variables[False-True]
+    - xarray/tests/test_concat.py::test_concat_fill_missing_variables[False-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_simple[dim1-True-different]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_simple[dim1-True-minimal]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_simple[dim2-False-different]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_simple[dim2-False-minimal]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_merge_variables_present_in_some_datasets
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_2[False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_kwarg[dim1-different]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_kwarg[dim1-minimal]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_kwarg[dim1-all]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_kwarg[dim2-different]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_kwarg[dim2-minimal]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_kwarg[dim2-all]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_dim_precedence
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_data_vars_typing
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_data_vars[minimal]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_data_vars[different]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_data_vars[all]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_data_vars[data_vars3]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_data_vars[data_vars4]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords[different]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords[all]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords[coords2]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_raises_merge_error[minimal]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_coords_raises_merge_error[coords1]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_constant_index[different]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_constant_index[all]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_constant_index[data_vars2]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_constant_index_None
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_constant_index_minimal
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_size0
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_autoalign
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_errors
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_join_kwarg
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[no_conflicts-var1_attrs0-var2_attrs0-expected_attrs0-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[no_conflicts-var1_attrs1-var2_attrs1-expected_attrs1-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[no_conflicts-var1_attrs2-var2_attrs2-expected_attrs2-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[no_conflicts-var1_attrs3-var2_attrs3-expected_attrs3-True]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[drop-var1_attrs4-var2_attrs4-expected_attrs4-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[identical-var1_attrs5-var2_attrs5-expected_attrs5-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[identical-var1_attrs6-var2_attrs6-expected_attrs6-True]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[override-var1_attrs7-var2_attrs7-expected_attrs7-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[drop_conflicts-var1_attrs8-var2_attrs8-expected_attrs8-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg[<lambda>-var1_attrs9-var2_attrs9-expected_attrs9-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[no_conflicts-attrs10-attrs20-expected_attrs0-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[no_conflicts-attrs11-attrs21-expected_attrs1-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[no_conflicts-attrs12-attrs22-expected_attrs2-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[no_conflicts-attrs13-attrs23-expected_attrs3-True]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[drop-attrs14-attrs24-expected_attrs4-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[identical-attrs15-attrs25-expected_attrs5-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[identical-attrs16-attrs26-expected_attrs6-True]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[override-attrs17-attrs27-expected_attrs7-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[drop_conflicts-attrs18-attrs28-expected_attrs8-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_combine_attrs_kwarg_variables[<lambda>-attrs19-attrs29-expected_attrs9-False]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_with_mixed_dims_within_variables
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_with_mixed_dims_between_variables
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_with_mixed_dims_in_coord_variable
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_for_scalars_with_mixed_lengths_along_concat_dim
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_broadcast_1d_x_1d_goes_to_2d
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_with_scalar_coordinates
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_with_coordinates_of_particular_dtypes
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_do_not_promote
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_dim_is_variable
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_dim_is_dataarray
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_multiindex
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_along_new_dim_multiindex
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_fill_value[fill_value0]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_fill_value[2]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_fill_value[2.0]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_fill_value[fill_value3]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_str_dtype[x1-str]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_str_dtype[x1-bytes]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_str_dtype[x2-str]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_str_dtype[x2-bytes]
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_avoids_index_auto_creation
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_avoids_index_auto_creation_new_1d_coord
+    - xarray/tests/test_concat.py::TestConcatDataset::test_concat_promote_shape_without_creating_new_index
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_encoding
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_lazy
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_avoids_index_auto_creation
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_fill_value[fill_value0]
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_fill_value[2]
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_fill_value[2.0]
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_join_kwarg
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_combine_attrs_kwarg
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_str_dtype[x1-str]
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_str_dtype[x1-bytes]
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_str_dtype[x2-str]
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_str_dtype[x2-bytes]
+    - xarray/tests/test_concat.py::TestConcatDataArray::test_concat_coord_name
+    - xarray/tests/test_concat.py::test_concat_attrs_first_variable[attr20-attr10]
+    - xarray/tests/test_concat.py::test_concat_attrs_first_variable[attr20-attr11]
+    - xarray/tests/test_concat.py::test_concat_attrs_first_variable[attr20-attr12]
+    - xarray/tests/test_concat.py::test_concat_attrs_first_variable[attr21-attr10]
+    - xarray/tests/test_concat.py::test_concat_attrs_first_variable[attr21-attr11]
+    - xarray/tests/test_concat.py::test_concat_attrs_first_variable[attr21-attr12]
+    - xarray/tests/test_concat.py::test_concat_merge_single_non_dim_coord
+    - xarray/tests/test_concat.py::test_concat_preserve_coordinate_order
+    - xarray/tests/test_concat.py::test_concat_typing_check
+    - xarray/tests/test_concat.py::test_concat_not_all_indexes
+    - xarray/tests/test_concat.py::test_concat_index_not_same_dim
+    - xarray/tests/test_concat.py::TestNewDefaults::test_concat_second_empty_with_scalar_data_var_only_on_first
+    - xarray/tests/test_concat.py::TestNewDefaults::test_concat_multiple_datasets_missing_vars
+    - xarray/tests/test_concat.py::TestNewDefaults::test_concat_coords_kwarg[different]
+    - xarray/tests/test_concat.py::TestNewDefaults::test_concat_coords_kwarg[minimal]
+    - xarray/tests/test_concat.py::TestNewDefaults::test_concat_coords_kwarg[all]
+    - xarray/tests/test_concat.py::TestNewDefaults::test_concat_promote_shape_for_scalars_with_mixed_lengths_along_concat_dim
+    - xarray/tests/test_concat.py::test_concat_multi_dim_index
+    - xarray/tests/test_utils.py::TestAlias::test
+    - xarray/tests/test_utils.py::test_maybe_coerce_to_str[a0-b0-expected0]
+    - xarray/tests/test_utils.py::test_maybe_coerce_to_str[a1-b1-expected1]
+    - xarray/tests/test_utils.py::test_maybe_coerce_to_str_minimal_str_dtype
+    - xarray/tests/test_utils.py::TestArrayEquiv::test_0d
+    - xarray/tests/test_utils.py::TestDictionaries::test_safe
+    - xarray/tests/test_utils.py::TestDictionaries::test_unsafe
+    - xarray/tests/test_utils.py::TestDictionaries::test_compat_dict_intersection
+    - xarray/tests/test_utils.py::TestDictionaries::test_compat_dict_union
+    - xarray/tests/test_utils.py::TestDictionaries::test_dict_equiv
+    - xarray/tests/test_utils.py::TestDictionaries::test_frozen
+    - xarray/tests/test_utils.py::TestDictionaries::test_filtered
+    - xarray/tests/test_utils.py::test_flat_items
+    - xarray/tests/test_utils.py::test_repr_object
+    - xarray/tests/test_utils.py::test_repr_object_magic_methods
+    - xarray/tests/test_utils.py::test_is_remote_uri
+    - xarray/tests/test_utils.py::Test_is_uniform_and_sorted::test_sorted_uniform
+    - xarray/tests/test_utils.py::Test_is_uniform_and_sorted::test_sorted_not_uniform
+    - xarray/tests/test_utils.py::Test_is_uniform_and_sorted::test_not_sorted_uniform
+    - xarray/tests/test_utils.py::Test_is_uniform_and_sorted::test_not_sorted_not_uniform
+    - xarray/tests/test_utils.py::Test_is_uniform_and_sorted::test_two_numbers
+    - xarray/tests/test_utils.py::Test_is_uniform_and_sorted::test_relative_tolerance
+    - xarray/tests/test_utils.py::Test_hashable::test_hashable
+    - xarray/tests/test_utils.py::test_dask_array_is_scalar
+    - xarray/tests/test_utils.py::test_hidden_key_dict
+    - xarray/tests/test_utils.py::test_either_dict_or_kwargs
+    - xarray/tests/test_utils.py::test_infix_dims[supplied0-all_0-expected0]
+    - xarray/tests/test_utils.py::test_infix_dims[supplied1-all_1-expected1]
+    - xarray/tests/test_utils.py::test_infix_dims[supplied2-all_2-expected2]
+    - xarray/tests/test_utils.py::test_infix_dims[supplied3-all_3-expected3]
+    - xarray/tests/test_utils.py::test_infix_dims[supplied4-all_4-expected4]
+    - xarray/tests/test_utils.py::test_infix_dims[supplied5-all_5-expected5]
+    - xarray/tests/test_utils.py::test_infix_dims_errors[supplied0-all_0]
+    - xarray/tests/test_utils.py::test_infix_dims_errors[supplied1-all_1]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[str]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[list_of_str]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[list_mixed]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[list_with_ellipsis]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[tuple_of_str]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[list_with_tuple]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[tuple_of_tuple]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[non_sequence_collection]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[empty_tuple]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[empty_collection]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[None]
+    - xarray/tests/test_utils.py::test_parse_dims_as_tuple[ellipsis]
+    - xarray/tests/test_utils.py::test_parse_dims_set
+    - xarray/tests/test_utils.py::test_parse_dims_replace_none[None]
+    - xarray/tests/test_utils.py::test_parse_dims_replace_none[ellipsis]
+    - xarray/tests/test_utils.py::test_parse_dims_raises[str_missing]
+    - xarray/tests/test_utils.py::test_parse_dims_raises[list_missing_one]
+    - xarray/tests/test_utils.py::test_parse_dims_raises[list_missing_all]
+    - xarray/tests/test_utils.py::test_parse_ordered_dims[str]
+    - xarray/tests/test_utils.py::test_parse_ordered_dims[list]
+    - xarray/tests/test_utils.py::test_parse_ordered_dims[list_only_ellipsis]
+    - xarray/tests/test_utils.py::test_parse_ordered_dims[list_with_ellipsis]
+    - xarray/tests/test_utils.py::test_parse_ordered_dims[list_with_middle_ellipsis]
+    - xarray/tests/test_utils.py::test_parse_ordered_dims_raises
+    - xarray/tests/test_utils.py::test_iterate_nested[nested_list0-expected0]
+    - xarray/tests/test_utils.py::test_iterate_nested[nested_list1-expected1]
+    - xarray/tests/test_utils.py::test_iterate_nested[nested_list2-expected2]
+    - xarray/tests/test_utils.py::test_iterate_nested[nested_list3-expected3]
+    - xarray/tests/test_utils.py::test_iterate_nested[nested_list4-expected4]
+    - xarray/tests/test_utils.py::test_iterate_nested[nested_list5-expected5]
+    - xarray/tests/test_utils.py::test_find_stack_level
+    - xarray/tests/test_utils.py::test_attempt_import
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 2
+    empty_p2p:
+    - 193
+    - 193
+    gold_f2p:
+    - 2
+    - 2
+    gold_p2p:
+    - 193
+    - 193
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: python-wheel-build__fromager-653
+  repo: python-wheel-build/fromager
+  family: rebench
+  created_at: '2025-07-01 19:46:40+00:00'
+  base_commit: 4fa10a0a7b67131e1f158060f4c1580df25e432f
+  receipt: runs/rebench/work/python-wheel-build__fromager-653/receipt.json
+  original: runs/rebench/work/python-wheel-build__fromager-653/staging/original
+  baseline: runs/rebench/work/python-wheel-build__fromager-653/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\python-wheel-build__fromager-653.json
+  clean_record: docs/rebench/clean-images/python-wheel-build__fromager-653.json
+  official_image_digest: swerebench/sweb.eval.x86_64.python-wheel-build_1776_fromager-653@sha256:80804862a75f5ad92620b6ecdc2492d15df433db76980099855305deb94930ef
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/test_packagesettings.py::test_parse_full
+    - tests/test_packagesettings.py::test_parse_full_file
+    - tests/test_packagesettings.py::test_parse_minimal
+    - tests/test_packagesettings.py::test_parse_minimal_file
+    - tests/test_packagesettings.py::test_default_settings
+    - tests/test_sources.py::test_default_download_source_from_settings
+    - tests/test_sources.py::test_default_download_source_with_predefined_resolve_dist
+    p2p:
+    - tests/test_packagesettings.py::test_pbi_test_pkg_extra_environ
+    - tests/test_packagesettings.py::test_pbi_test_pkg
+    - tests/test_packagesettings.py::test_pbi_test_pkg_patches
+    - tests/test_packagesettings.py::test_pbi_other
+    - tests/test_packagesettings.py::test_type_envvars
+    - tests/test_packagesettings.py::test_type_package
+    - tests/test_packagesettings.py::test_type_builddirectory
+    - tests/test_packagesettings.py::test_global_settings
+    - tests/test_packagesettings.py::test_settings_overrides
+    - tests/test_packagesettings.py::test_global_changelog
+    - tests/test_packagesettings.py::test_settings_list
+    - tests/test_packagesettings.py::test_parallel_jobs
+    - tests/test_packagesettings.py::test_substitute_template[-template_env0-]
+    - tests/test_packagesettings.py::test_substitute_template[${var}-template_env1-value]
+    - tests/test_packagesettings.py::test_substitute_template[$${var}-template_env2-${var}]
+    - tests/test_packagesettings.py::test_substitute_template[${var:-}-template_env3-]
+    - tests/test_packagesettings.py::test_substitute_template[${var:-default}-template_env4-default]
+    - tests/test_packagesettings.py::test_substitute_template[${var:-default}-template_env5-value]
+    - tests/test_packagesettings.py::test_substitute_template[$${var:-default}-template_env6-${var:-default}]
+    - tests/test_packagesettings.py::test_substitute_template_key_error
+    - tests/test_packagesettings.py::test_git_options_default
+    - tests/test_packagesettings.py::test_git_options_with_submodules_enabled
+    - tests/test_packagesettings.py::test_git_options_with_specific_paths
+    - tests/test_packagesettings.py::test_git_options_with_both_settings
+    - tests/test_packagesettings.py::test_package_settings_git_options_default
+    - tests/test_packagesettings.py::test_package_settings_git_options_from_dict
+    - tests/test_packagesettings.py::test_package_settings_git_options_from_dict_empty
+    - tests/test_packagesettings.py::test_package_settings_git_options_from_file
+    - tests/test_packagesettings.py::test_package_build_info_git_options
+    - tests/test_packagesettings.py::test_package_build_info_exclusive_build
+    - tests/test_resolver.py::test_provider_choose_wheel
+    - tests/test_resolver.py::test_provider_cache
+    - tests/test_resolver.py::test_provider_choose_wheel_prereleases
+    - tests/test_resolver.py::test_provider_choose_wheel_local
+    - tests/test_resolver.py::test_provider_choose_sdist
+    - tests/test_resolver.py::test_provider_choose_either_with_constraint
+    - tests/test_resolver.py::test_provider_constraint_mismatch
+    - tests/test_resolver.py::test_provider_constraint_match
+    - tests/test_resolver.py::test_resolve_github
+    - tests/test_resolver.py::test_github_constraint_mismatch
+    - tests/test_resolver.py::test_github_constraint_match
+    - tests/test_resolver.py::test_resolve_generic
+    - tests/test_resolver.py::test_resolve_gitlab
+    - tests/test_resolver.py::test_gitlab_constraint_mismatch
+    - tests/test_resolver.py::test_gitlab_constraint_match
+    - tests/test_sources.py::test_invalid_tarfile
+    - tests/test_sources.py::test_invalid_version
+    - tests/test_sources.py::test_patch_sources_apply_unversioned_and_versioned
+    - tests/test_sources.py::test_patch_sources_apply_only_unversioned
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 7
+    empty_p2p:
+    - 49
+    - 49
+    gold_f2p:
+    - 7
+    - 7
+    gold_p2p:
+    - 49
+    - 49
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: scrapy__scrapy-7351_interface
+  repo: scrapy/scrapy
+  family: rebench
+  created_at: '2026-03-24 14:13:12'
+  base_commit: 2b174e348d88d19dd32135e8e483c4eb784aeca8
+  receipt: runs/rebench/work/scrapy__scrapy-7351_interface/receipt.json
+  original: runs/rebench/work/scrapy__scrapy-7351_interface/staging/original
+  baseline: runs/rebench/work/scrapy__scrapy-7351_interface/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\scrapy__scrapy-7351_interface.json
+  clean_record: docs/rebench/clean-images/scrapy__scrapy-7351_interface.json
+  official_image_digest: swerebench/sweb.eval.x86_64.scrapy_1776_scrapy-7351_interface@sha256:e2dac643fa183d405b22f193717d2a932aa6f0116fec89f3ef7811bb0cdbb8dc
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/test_pqueues.py::TestDownloaderAwarePriorityQueue::test_tie_breaking_rotates_slots
+    - tests/test_pqueues.py::TestDownloaderAwarePriorityQueue::test_tie_breaking_keeps_rotation_after_selected_slot_is_deleted
+    p2p:
+    - tests/test_pqueues.py::TestPriorityQueue::test_queue_push_pop_one
+    - tests/test_pqueues.py::TestPriorityQueue::test_peek
+    - tests/test_pqueues.py::TestPriorityQueue::test_queue_push_pop_priorities
+    - tests/test_pqueues.py::TestDownloaderAwarePriorityQueue::test_push_pop
+    - tests/test_pqueues.py::TestDownloaderAwarePriorityQueue::test_peek
+    - tests/test_pqueues.py::test_pop_order[input_0-output0]
+    - tests/test_pqueues.py::test_pop_order[input_1-output1]
+    - tests/test_pqueues.py::test_pop_order[input_2-output2]
+    - tests/test_pqueues.py::test_pop_order[input_3-output3]
+    - tests/test_pqueues.py::test_pop_order[input_4-output4]
+    - tests/test_pqueues.py::test_pop_order[input_5-output5]
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 2
+    empty_p2p:
+    - 11
+    - 11
+    gold_f2p:
+    - 2
+    - 2
+    gold_p2p:
+    - 11
+    - 11
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: stan-dev__cmdstanpy-801
+  repo: stan-dev/cmdstanpy
+  family: rebench
+  created_at: '2025-08-07 02:32:53+00:00'
+  base_commit: 538342474b12e720416bd0521a3b95511ba3ba6b
+  receipt: runs/rebench/work/stan-dev__cmdstanpy-801/receipt.json
+  original: runs/rebench/work/stan-dev__cmdstanpy-801/staging/original
+  baseline: runs/rebench/work/stan-dev__cmdstanpy-801/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\stan-dev__cmdstanpy-801.json
+  clean_record: docs/rebench/clean-images/stan-dev__cmdstanpy-801.json
+  official_image_digest: swerebench/sweb.eval.x86_64.stan-dev_1776_cmdstanpy-801@sha256:43fe396527267e4974d16aec032eeabe76797feeef91de4bfbd35ff7d78086cc
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+    - -W
+    - ignore::DeprecationWarning
+  grader_nodeids:
+    f2p:
+    - test/test_stancsv.py::test_csv_bytes_empty
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_header_no_draws
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_header_no_draws_no_polars
+    p2p:
+    - test/test_sample.py::test_validate_big_run
+    - test/test_sample.py::test_instantiate_from_csvfiles
+    - test/test_sample.py::test_instantiate_from_csvfiles_fail
+    - test/test_sample.py::test_from_csv_fixed_param
+    - test/test_sample.py::test_from_csv_no_param_hmc
+    - test/test_sample.py::test_validate_bad_run
+    - test/test_sample.py::test_variables_2d
+    - test/test_sample.py::test_variables_3d
+    - test/test_sample.py::test_metadata
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_no_header
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_no_header_no_polars
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_with_header
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_single_element
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_single_element_no_polars
+    - test/test_stancsv.py::test_csv_bytes_to_numpy_with_header_no_polars
+    - test/test_stancsv.py::test_parse_comments_and_draws
+    - test/test_stancsv.py::test_parsing_adaptation_lines
+    - test/test_stancsv.py::test_parsing_adaptation_lines_diagonal
+    - test/test_stancsv.py::test_parsing_adaptation_lines_dense
+    - test/test_stancsv.py::test_parsing_adaptation_lines_missing_step_size
+    - test/test_stancsv.py::test_parsing_adaptation_lines_no_free_params
+    - test/test_stancsv.py::test_csv_polars_and_numpy_equiv
+    - test/test_stancsv.py::test_csv_polars_and_numpy_equiv_one_line
+    - test/test_stancsv.py::test_csv_polars_and_numpy_equiv_one_element
+    - test/test_stancsv.py::test_parse_stan_csv_from_file
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 3
+    empty_p2p:
+    - 25
+    - 25
+    gold_f2p:
+    - 3
+    - 3
+    gold_p2p:
+    - 25
+    - 25
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: stanfordnlp__dspy-9478_interface
+  repo: stanfordnlp/dspy
+  family: rebench
+  created_at: '2026-03-20 05:25:19'
+  base_commit: b7d573b8224b8e2e270523748e13f0836edc0576
+  receipt: runs/rebench/work/stanfordnlp__dspy-9478_interface/receipt.json
+  original: runs/rebench/work/stanfordnlp__dspy-9478_interface/staging/original
+  baseline: runs/rebench/work/stanfordnlp__dspy-9478_interface/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\stanfordnlp__dspy-9478_interface.json
+  clean_record: docs/rebench/clean-images/stanfordnlp__dspy-9478_interface.json
+  official_image_digest: swerebench/sweb.eval.x86_64.stanfordnlp_1776_dspy-9478_interface@sha256:0f51cbb2664fdd86069c39ef5529021dad3c2d35d8f7a9720221e754e5ceb3ea
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/retrievers/test_embeddings.py::test_embeddings_basic_search
+    - tests/retrievers/test_embeddings.py::test_embeddings_multithreaded_search
+    - tests/retrievers/test_embeddings.py::test_embeddings_save_load
+    - tests/retrievers/test_embeddings.py::test_embeddings_from_saved
+    - tests/retrievers/test_embeddings.py::test_embeddings_load_nonexistent_path
+    - tests/retrievers/test_embeddings.py::test_embeddings_with_scores_basic_search
+    - tests/retrievers/test_embeddings.py::test_embeddings_with_scores_save_load
+    p2p: []
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 7
+    empty_p2p:
+    - 0
+    - 0
+    gold_f2p:
+    - 7
+    - 7
+    gold_p2p:
+    - 0
+    - 0
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: sympy__sympy-28738
+  repo: sympy/sympy
+  family: rebench
+  created_at: '2025-12-10 05:53:32'
+  base_commit: ccd0264bf63aac4594771cec17057f804c6161b7
+  receipt: runs/rebench/work/sympy__sympy-28738/receipt.json
+  original: runs/rebench/work/sympy__sympy-28738/staging/original
+  baseline: runs/rebench/work/sympy__sympy-28738/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\sympy__sympy-28738.json
+  clean_record: docs/rebench/clean-images/sympy__sympy-28738.json
+  official_image_digest: swerebench/sweb.eval.x86_64.sympy_1776_sympy-28738@sha256:e948bc9048a299a5417ad890a258d02f5053d98737e40bbbaeac5d984f5344dd
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - sympy/concrete/tests/test_sums_products.py::test_issue_28721
+    p2p:
+    - sympy/concrete/tests/test_sums_products.py::test_karr_convention
+    - sympy/concrete/tests/test_sums_products.py::test_karr_proposition_2a
+    - sympy/concrete/tests/test_sums_products.py::test_karr_proposition_2b
+    - sympy/concrete/tests/test_sums_products.py::test_arithmetic_sums
+    - sympy/concrete/tests/test_sums_products.py::test_polynomial_sums
+    - sympy/concrete/tests/test_sums_products.py::test_geometric_sums
+    - sympy/concrete/tests/test_sums_products.py::test_harmonic_sums
+    - sympy/concrete/tests/test_sums_products.py::test_composite_sums
+    - sympy/concrete/tests/test_sums_products.py::test_hypergeometric_sums
+    - sympy/concrete/tests/test_sums_products.py::test_other_sums
+    - sympy/concrete/tests/test_sums_products.py::test_evalf_fast_series
+    - sympy/concrete/tests/test_sums_products.py::test_evalf_fast_series_issue_4021
+    - sympy/concrete/tests/test_sums_products.py::test_evalf_slow_series
+    - sympy/concrete/tests/test_sums_products.py::test_evalf_oo_to_oo
+    - sympy/concrete/tests/test_sums_products.py::test_euler_maclaurin
+    - sympy/concrete/tests/test_sums_products.py::test_evalf_symbolic
+    - sympy/concrete/tests/test_sums_products.py::test_evalf_issue_3273
+    - sympy/concrete/tests/test_sums_products.py::test_simple_products
+    - sympy/concrete/tests/test_sums_products.py::test_rational_products
+    - sympy/concrete/tests/test_sums_products.py::test_wallis_product
+    - sympy/concrete/tests/test_sums_products.py::test_telescopic_sums
+    - sympy/concrete/tests/test_sums_products.py::test_sum_reconstruct
+    - sympy/concrete/tests/test_sums_products.py::test_limit_subs
+    - sympy/concrete/tests/test_sums_products.py::test_function_subs
+    - sympy/concrete/tests/test_sums_products.py::test_equality
+    - sympy/concrete/tests/test_sums_products.py::test_Sum_doit
+    - sympy/concrete/tests/test_sums_products.py::test_Product_doit
+    - sympy/concrete/tests/test_sums_products.py::test_Sum_interface
+    - sympy/concrete/tests/test_sums_products.py::test_diff
+    - sympy/concrete/tests/test_sums_products.py::test_hypersum
+    - sympy/concrete/tests/test_sums_products.py::test_issue_4170
+    - sympy/concrete/tests/test_sums_products.py::test_is_commutative
+    - sympy/concrete/tests/test_sums_products.py::test_is_zero
+    - sympy/concrete/tests/test_sums_products.py::test_is_number
+    - sympy/concrete/tests/test_sums_products.py::test_free_symbols
+    - sympy/concrete/tests/test_sums_products.py::test_conjugate_transpose
+    - sympy/concrete/tests/test_sums_products.py::test_noncommutativity_honoured
+    - sympy/concrete/tests/test_sums_products.py::test_issue_4171
+    - sympy/concrete/tests/test_sums_products.py::test_issue_6273
+    - sympy/concrete/tests/test_sums_products.py::test_issue_6274
+    - sympy/concrete/tests/test_sums_products.py::test_simplify_sum
+    - sympy/concrete/tests/test_sums_products.py::test_change_index
+    - sympy/concrete/tests/test_sums_products.py::test_reorder
+    - sympy/concrete/tests/test_sums_products.py::test_reverse_order
+    - sympy/concrete/tests/test_sums_products.py::test_issue_7097
+    - sympy/concrete/tests/test_sums_products.py::test_factor_expand_subs
+    - sympy/concrete/tests/test_sums_products.py::test_distribution_over_equality
+    - sympy/concrete/tests/test_sums_products.py::test_issue_2787
+    - sympy/concrete/tests/test_sums_products.py::test_issue_4668
+    - sympy/concrete/tests/test_sums_products.py::test_matrix_sum
+    - sympy/concrete/tests/test_sums_products.py::test_failing_matrix_sum
+    - sympy/concrete/tests/test_sums_products.py::test_indexed_idx_sum
+    - sympy/concrete/tests/test_sums_products.py::test_is_absolutely_convergent
+    - sympy/concrete/tests/test_sums_products.py::test_issue_6966
+    - sympy/concrete/tests/test_sums_products.py::test_issue_10156
+    - sympy/concrete/tests/test_sums_products.py::test_issue_10973
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14103
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14129
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14112
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14219
+    - sympy/concrete/tests/test_sums_products.py::test_sin_times_absolutely_convergent
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14111
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14484
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14640
+    - sympy/concrete/tests/test_sums_products.py::test_issue_15943
+    - sympy/concrete/tests/test_sums_products.py::test_Sum_dummy_eq
+    - sympy/concrete/tests/test_sums_products.py::test_issue_15852
+    - sympy/concrete/tests/test_sums_products.py::test_exceptions
+    - sympy/concrete/tests/test_sums_products.py::test_sumproducts_assumptions
+    - sympy/concrete/tests/test_sums_products.py::test_expand_with_assumptions
+    - sympy/concrete/tests/test_sums_products.py::test_has_finite_limits
+    - sympy/concrete/tests/test_sums_products.py::test_has_reversed_limits
+    - sympy/concrete/tests/test_sums_products.py::test_has_empty_sequence
+    - sympy/concrete/tests/test_sums_products.py::test_empty_sequence
+    - sympy/concrete/tests/test_sums_products.py::test_issue_8016
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14313
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14563
+    - sympy/concrete/tests/test_sums_products.py::test_issue_16735
+    - sympy/concrete/tests/test_sums_products.py::test_issue_14871
+    - sympy/concrete/tests/test_sums_products.py::test_issue_17165
+    - sympy/concrete/tests/test_sums_products.py::test_issue_19379
+    - sympy/concrete/tests/test_sums_products.py::test_issue_20777
+    - sympy/concrete/tests/test_sums_products.py::test__dummy_with_inherited_properties_concrete
+    - sympy/concrete/tests/test_sums_products.py::test_matrixsymbol_summation_numerical_limits
+    - sympy/concrete/tests/test_sums_products.py::test_issue_21651
+    - sympy/concrete/tests/test_sums_products.py::test_summation_by_residues
+    - sympy/concrete/tests/test_sums_products.py::test_process_limits
+    - sympy/concrete/tests/test_sums_products.py::test_pr_22677
+    - sympy/concrete/tests/test_sums_products.py::test_issue_23952
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 89
+    - 89
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 89
+    - 89
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: tobymao__sqlglot-5233
+  repo: tobymao/sqlglot
+  family: rebench
+  created_at: '2025-06-16 18:43:50'
+  base_commit: eccb44cc6b5401fbf48a7d376d1704a4e04838ad
+  receipt: runs/rebench/work/tobymao__sqlglot-5233/receipt.json
+  original: runs/rebench/work/tobymao__sqlglot-5233/staging/original
+  baseline: runs/rebench/work/tobymao__sqlglot-5233/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\tobymao__sqlglot-5233.json
+  clean_record: docs/rebench/clean-images/tobymao__sqlglot-5233.json
+  official_image_digest: swerebench/sweb.eval.x86_64.tobymao_1776_sqlglot-5233@sha256:3c4b5309d90c8eae58f2baabdd97b53c1f02d4615678d627c403f6f45cdfff10
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/dialects/test_athena.py::TestAthena::test_ddl
+    p2p:
+    - tests/dialects/test_athena.py::TestAthena::test_athena
+    - tests/dialects/test_athena.py::TestAthena::test_create_table
+    - tests/dialects/test_athena.py::TestAthena::test_ctas
+    - tests/dialects/test_athena.py::TestAthena::test_ddl_quoting
+    - tests/dialects/test_athena.py::TestAthena::test_dml
+    - tests/dialects/test_athena.py::TestAthena::test_dml_quoting
+    - tests/dialects/test_athena.py::TestAthena::test_parse_partitioned_by_returns_iceberg_transforms
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 7
+    - 7
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 7
+    - 7
+  export_keep_original_files: true
+  memory_bytes: 1073741824

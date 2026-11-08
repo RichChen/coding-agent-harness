@@ -1,0 +1,21 @@
+{
+  "task_id": "aws__bedrock-agentcore-sdk-python-279_interface",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:bb1b514fa7ce4d6d88e132a34776d842a595866ac160bcf7d346ed0b126e2ba5",
+  "clean_image_id": "sha256:bb1b514fa7ce4d6d88e132a34776d842a595866ac160bcf7d346ed0b126e2ba5",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.aws_1776_bedrock-agentcore-sdk-python-279_interface@sha256:4dfe004346a64cc8fdc1dfecd0d839923ab1e50f5ffab969fc0def85da001789",
+  "source_only_match": true,
+  "image_source_only_hash": "d6630c552e3afa6a02fc18f5e33956e79b956cbe990af991d9d61cf542ed5240",
+  "filesystem_scan": {
+    "needle_count": 10,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "e598fbe0906100e50995f556afee2956878d86c384d10daa32c8a8fea103dab4"
+}

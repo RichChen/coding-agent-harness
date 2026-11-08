@@ -1,0 +1,55 @@
+{
+  "tasks": 1,
+  "all_expected": true,
+  "results": {
+    "pypa__build-1027": {
+      "empty": {
+        "status": "fail",
+        "solved": false,
+        "grader_status": "fail",
+        "grader_ids": {
+          "f2p": 4,
+          "p2p": 63,
+          "missing": 0,
+          "reason": null
+        },
+        "model_calls": 1,
+        "tool_calls": 0,
+        "harness_tool_errors": 0,
+        "changed_files": [],
+        "cost_cny": "0.000",
+        "stop_reason": "completed",
+        "run_error": null,
+        "infra_reason": null,
+        "answer_isolation_pass": true,
+        "clean_image_digest": "coding-harness-rebench-clean@sha256:9e52350b8ec4f29395585008e0e41cab649d14e38870d3b27e5307c3be869b75",
+        "grader_candidate_error": null
+      },
+      "gold": {
+        "status": "pass",
+        "solved": true,
+        "grader_status": "pass",
+        "grader_ids": {
+          "f2p": 4,
+          "p2p": 63,
+          "missing": 0,
+          "reason": null
+        },
+        "model_calls": 2,
+        "tool_calls": 4,
+        "harness_tool_errors": 0,
+        "changed_files": [
+          "docs/changelog/860.bugfix.rst",
+          "src/build/_util.py"
+        ],
+        "cost_cny": "0.000",
+        "stop_reason": "completed",
+        "run_error": null,
+        "infra_reason": null,
+        "answer_isolation_pass": true,
+        "clean_image_digest": "coding-harness-rebench-clean@sha256:9e52350b8ec4f29395585008e0e41cab649d14e38870d3b27e5307c3be869b75",
+        "grader_candidate_error": null
+      }
+    }
+  }
+}

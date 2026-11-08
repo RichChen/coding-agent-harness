@@ -1,0 +1,21 @@
+{
+  "task_id": "pydata__xarray-10838",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:e2bdf9697c3aad3d0f021ea1070449c393caaaffdc634cc56b3e63f1a3f098ba",
+  "clean_image_id": "sha256:e2bdf9697c3aad3d0f021ea1070449c393caaaffdc634cc56b3e63f1a3f098ba",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.pydata_1776_xarray-10838@sha256:c4d48b85840248d34ff6f6f5dd57cba8f183e41418c0ed5991452ea7dd0d80cd",
+  "source_only_match": true,
+  "image_source_only_hash": "8661d39c2d9cc0384614ed235cbbe973ee71323753a30d9768f3b9b9010fefb1",
+  "filesystem_scan": {
+    "rule": "provenance-v1",
+    "needle_count": 9,
+    "raw_hit_count": 0,
+    "hits": [],
+    "hit_count": 0,
+    "excused": [],
+    "excused_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "808a2842a1ef0d78ceeaa8acf355bfd8ca0e3cb66b711c0b4b66d1a835996cf1"
+}

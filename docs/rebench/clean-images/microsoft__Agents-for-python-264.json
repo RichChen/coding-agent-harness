@@ -1,0 +1,21 @@
+{
+  "task_id": "microsoft__Agents-for-python-264",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:2822a5ca966e88aad1d83900e811a87db4800f43c716cc3a304cf753efd03166",
+  "clean_image_id": "sha256:2822a5ca966e88aad1d83900e811a87db4800f43c716cc3a304cf753efd03166",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.microsoft_1776_agents-for-python-264@sha256:a1f0c34c215180b07d97fc502d9cea94daecd08d3ba8643c2aa0c18acc432457",
+  "source_only_match": true,
+  "image_source_only_hash": "bc14e0b097691fd66946a093a05b88f550957a51350dd54181e1dca7e9372735",
+  "filesystem_scan": {
+    "needle_count": 8,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "169b9383a954777db558fd2f1bb4f3ddd7a2ca85832d4f789cf0a4d6ea090895"
+}

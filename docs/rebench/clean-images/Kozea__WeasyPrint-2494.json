@@ -1,0 +1,21 @@
+{
+  "task_id": "Kozea__WeasyPrint-2494",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:98f2e1b1b4f5ce1c796dd5b67ca0909c8613f6bd0d4419967319af8b0e1fb712",
+  "clean_image_id": "sha256:98f2e1b1b4f5ce1c796dd5b67ca0909c8613f6bd0d4419967319af8b0e1fb712",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.kozea_1776_weasyprint-2494@sha256:51aa2659bb95dbd352be1cbdcfe4610f6d9e50ddb93053728acfbe622637744f",
+  "source_only_match": true,
+  "image_source_only_hash": "d0e35f33cd7a7a89bae938d5d1adfcf5f7fff468926c9c87263a2a53d005d527",
+  "filesystem_scan": {
+    "needle_count": 7,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "031b07e91498e547529a6386a7847f49a5c7a9f591b7cc70c0a74e691168bb5c"
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "scrapy__scrapy-7351_interface",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:315aff3bcd43e3e505370607b37267f9d6ccec4cff1b25915a0a4c34b37f7a14",
+  "clean_image_id": "sha256:315aff3bcd43e3e505370607b37267f9d6ccec4cff1b25915a0a4c34b37f7a14",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.scrapy_1776_scrapy-7351_interface@sha256:e2dac643fa183d405b22f193717d2a932aa6f0116fec89f3ef7811bb0cdbb8dc",
+  "source_only_match": true,
+  "image_source_only_hash": "9aa66e366f88e5da98d6e55be193df93377fe681341c97f53556cdaa2f6b83b5",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "0787b4caef95abd9ecb4870cc7c4ea66a58bb3becfb5cb8db6af16332dfbfb83"
+}

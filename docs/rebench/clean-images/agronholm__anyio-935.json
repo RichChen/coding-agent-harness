@@ -1,0 +1,21 @@
+{
+  "task_id": "agronholm__anyio-935",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:cba9ef0c249b4deb83e586b65944141cf7c22a24915be0fb68fecd3251d81a8c",
+  "clean_image_id": "sha256:cba9ef0c249b4deb83e586b65944141cf7c22a24915be0fb68fecd3251d81a8c",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.agronholm_1776_anyio-935@sha256:dabe5fcaaa3954fcd92ae5701c63ee69c647fcd3f12704900602758c25c90517",
+  "source_only_match": true,
+  "image_source_only_hash": "369262d4db62f79aa8f0c2284faa9cd9457fadb5f624f5929a0c82443a0b9816",
+  "filesystem_scan": {
+    "needle_count": 11,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "9a43f69e33dc7b8fa8c56564db379c975211e8e7d7f94e62608ae240c75ab5eb"
+}

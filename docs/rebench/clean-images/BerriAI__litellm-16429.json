@@ -1,0 +1,21 @@
+{
+  "task_id": "BerriAI__litellm-16429",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:09014b00ea7d23dee2caaf25e93397f8eabbbd80c46bef4412a3b7168f01160f",
+  "clean_image_id": "sha256:09014b00ea7d23dee2caaf25e93397f8eabbbd80c46bef4412a3b7168f01160f",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.berriai_1776_litellm-16429@sha256:860aee04b45092dc34e22a12ad9662e43acc3fe959521f01b5e21253b8dfde42",
+  "source_only_match": true,
+  "image_source_only_hash": "a04066a7435ecb3a450f31a06399b8fd5806df110c0568be5903ec2ee5d56c3f",
+  "filesystem_scan": {
+    "rule": "provenance-v2",
+    "needle_count": 9,
+    "raw_hit_count": 0,
+    "hits": [],
+    "hit_count": 0,
+    "excused": [],
+    "excused_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "a614a7d1abeae6048c17b8a22c54c86ced9249d69fec5adbd1c74e30cd2fbaeb"
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "opsmill__infrahub-8423",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:eacbedf801022f48676e0ba3b0932c007ba8efd3028a57570de8d6b654325998",
+  "clean_image_id": "sha256:eacbedf801022f48676e0ba3b0932c007ba8efd3028a57570de8d6b654325998",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.opsmill_1776_infrahub-8423@sha256:ae2a5e2f7ca8227c2678ea0beff9863b032dc9fe5d68e5795b13fa4064fc3de3",
+  "source_only_match": true,
+  "image_source_only_hash": "7e2d686c044763a02d7d9574433f88259e22b36d17a6c92c1f860be95fb3d605",
+  "filesystem_scan": {
+    "rule": "provenance-v2",
+    "needle_count": 12,
+    "raw_hit_count": 0,
+    "hits": [],
+    "hit_count": 0,
+    "excused": [],
+    "excused_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "10c3fef0ab485d61b27ef468efcfa9395e8aa17a783286389485730496dec58b"
+}

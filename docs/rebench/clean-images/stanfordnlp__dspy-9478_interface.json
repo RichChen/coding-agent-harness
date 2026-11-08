@@ -1,0 +1,21 @@
+{
+  "task_id": "stanfordnlp__dspy-9478_interface",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:737b4e0c78e2c0ae9a093827674332a8cc1489e42b1db7c8d3f9200f7c10056a",
+  "clean_image_id": "sha256:737b4e0c78e2c0ae9a093827674332a8cc1489e42b1db7c8d3f9200f7c10056a",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.stanfordnlp_1776_dspy-9478_interface@sha256:0f51cbb2664fdd86069c39ef5529021dad3c2d35d8f7a9720221e754e5ceb3ea",
+  "source_only_match": true,
+  "image_source_only_hash": "8f95b4d466d1c78e8240df47edb549f34a5f22bf36c33fa8ad9cc9f4cf8e4157",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "aecc9b8c175d020063a98730cad7a5694192584ddc2ce584af7d9fed5b302e01"
+}

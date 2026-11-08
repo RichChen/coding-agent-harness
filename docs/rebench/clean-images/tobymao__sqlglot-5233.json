@@ -1,0 +1,21 @@
+{
+  "task_id": "tobymao__sqlglot-5233",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:d70ef59006cc3ce0dbd9da04e90a5e36322125c8fdd09768359011a1cd4fdd56",
+  "clean_image_id": "sha256:d70ef59006cc3ce0dbd9da04e90a5e36322125c8fdd09768359011a1cd4fdd56",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.tobymao_1776_sqlglot-5233@sha256:3c4b5309d90c8eae58f2baabdd97b53c1f02d4615678d627c403f6f45cdfff10",
+  "source_only_match": true,
+  "image_source_only_hash": "8af328fde3d63cf721d0a66908338d748fb6525928bf35d1cee65e8a109a32d1",
+  "filesystem_scan": {
+    "needle_count": 2,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "f9eed9b9ab1d6df856167b6eff5bec1abcd016ed9afbbd8a5d6fb782be02cf7b"
+}

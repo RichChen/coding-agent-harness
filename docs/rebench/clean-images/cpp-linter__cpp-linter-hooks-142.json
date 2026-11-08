@@ -1,0 +1,227 @@
+{
+  "task_id": "cpp-linter__cpp-linter-hooks-142",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:24ca3b490c738b0253f1a08799accd593164ab747a6e4bf27478af1729a636da",
+  "clean_image_id": "sha256:24ca3b490c738b0253f1a08799accd593164ab747a6e4bf27478af1729a636da",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.cpp-linter_1776_cpp-linter-hooks-142@sha256:6ad3796cc617d552170479da95c50d54440a755ecf7392fa1eec86d37dd47cff",
+  "source_only_match": true,
+  "image_source_only_hash": "6bad0615e51cef764c637c918976dce82bc86b2e9b376fc1c823958ddb12d4ad",
+  "filesystem_scan": {
+    "rule": "provenance-v2",
+    "needle_count": 12,
+    "raw_hit_count": 41,
+    "hits": [],
+    "hit_count": 0,
+    "excused": [
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/_pytest/compat.py",
+        "source": "dist-info RECORD",
+        "package": "pytest-9.0.1"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/_pytest/config/findpaths.py",
+        "source": "dist-info RECORD",
+        "package": "pytest-9.0.1"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/_pytest/pytester.py",
+        "source": "dist-info RECORD",
+        "package": "pytest-9.0.1"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/filelock/_api.py",
+        "source": "dist-info RECORD",
+        "package": "filelock-3.20.0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/filelock/asyncio.py",
+        "source": "dist-info RECORD",
+        "package": "filelock-3.20.0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/packaging/metadata.py",
+        "source": "dist-info RECORD",
+        "package": "packaging-25.0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/pip/_internal/utils/compat.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/pip/_vendor/certifi/core.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/pip/_vendor/packaging/metadata.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/pip/_vendor/rich/traceback.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/_vendor/packaging/metadata.py",
+        "source": "dist-info RECORD",
+        "package": "packaging-24.2"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_checkers.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_functions.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_importhook.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/_vendor/typing_extensions.py",
+        "source": "dist-info RECORD",
+        "package": "typing_extensions-4.12.2"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/compat/py310.py",
+        "source": "conda-meta",
+        "package": "setuptools-80.9.0-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/tests/__init__.py",
+        "source": "conda-meta",
+        "package": "setuptools-80.9.0-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/test/support/venv.py",
+        "source": "conda-meta",
+        "package": "python-3.12.12-hd17a9e1_1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/certifi/core.py",
+        "source": "dist-info RECORD",
+        "package": "certifi-2024.7.4"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/pip/_internal/pyproject.py",
+        "source": "dist-info RECORD",
+        "package": "pip-24.2"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/pip/_vendor/certifi/core.py",
+        "source": "dist-info RECORD",
+        "package": "pip-24.2"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_compat.py",
+        "source": "dist-info RECORD",
+        "package": "pip-24.2"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/pip/_vendor/typing_extensions.py",
+        "source": "dist-info RECORD",
+        "package": "pip-24.2"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_checkers.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_functions.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_importhook.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/_vendor/typing_extensions.py",
+        "source": "dist-info RECORD",
+        "package": "typing_extensions-4.12.2"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/compat/py310.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/typing_extensions.py",
+        "source": "dist-info RECORD",
+        "package": "typing_extensions-4.12.2"
+      },
+      {
+        "path": "/opt/conda/pkgs/pip-25.3-pyhc872135_0/site-packages/pip/_internal/utils/compat.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/pkgs/pip-25.3-pyhc872135_0/site-packages/pip/_vendor/certifi/core.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/pkgs/pip-25.3-pyhc872135_0/site-packages/pip/_vendor/packaging/metadata.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/pkgs/pip-25.3-pyhc872135_0/site-packages/pip/_vendor/rich/traceback.py",
+        "source": "dist-info RECORD",
+        "package": "pip-25.3"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.12-hd17a9e1_1/lib/python3.12/test/support/venv.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.12-hd17a9e1_1"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.9.0-py312h06a4308_0/lib/python3.12/site-packages/setuptools/_vendor/packaging/metadata.py",
+        "source": "dist-info RECORD",
+        "package": "packaging-24.2"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.9.0-py312h06a4308_0/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_checkers.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.9.0-py312h06a4308_0/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_functions.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.9.0-py312h06a4308_0/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_importhook.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.9.0-py312h06a4308_0/lib/python3.12/site-packages/setuptools/_vendor/typing_extensions.py",
+        "source": "dist-info RECORD",
+        "package": "typing_extensions-4.12.2"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.9.0-py312h06a4308_0/lib/python3.12/site-packages/setuptools/compat/py310.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-80.9.0-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-80.9.0-py312h06a4308_0/lib/python3.12/site-packages/setuptools/tests/__init__.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-80.9.0-py312h06a4308_0"
+      }
+    ],
+    "excused_count": 41,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "26bfa90744cfd83e85812795a19e0f60ba89f6a58734cc19c56dc9300c3c355b"
+}

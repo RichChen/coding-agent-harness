@@ -1,0 +1,21 @@
+{
+  "task_id": "microsoft__qcodes-8039",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:c64bd006c4d3b4d00f0fe3e54e3954c85c009257dcb6f96d489e71ef65a4a1c8",
+  "clean_image_id": "sha256:c64bd006c4d3b4d00f0fe3e54e3954c85c009257dcb6f96d489e71ef65a4a1c8",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.microsoft_1776_qcodes-8039@sha256:ce91b642dde511eb1e07e8b2fe846d3d599ec54c9feb9f2eaf6a91c820060f24",
+  "source_only_match": true,
+  "image_source_only_hash": "adb32a4b99de7ac8d156b2201ca4010fd890fe06ac72ba5952a3d8fa90ec8c45",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "9a3847a49116e9e324bfd54b726188b2ebc7b691ef2c82fc3f2c37202416ee7e"
+}

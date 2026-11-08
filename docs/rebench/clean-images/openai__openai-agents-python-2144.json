@@ -1,0 +1,21 @@
+{
+  "task_id": "openai__openai-agents-python-2144",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:bb4917b863d5538c814a611c37776f88273b9ca1662f25f0b35cebc79bfebbf4",
+  "clean_image_id": "sha256:bb4917b863d5538c814a611c37776f88273b9ca1662f25f0b35cebc79bfebbf4",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.openai_1776_openai-agents-python-2144@sha256:8909a7cdc4466d4222c18e00955aa5444c0466e9ccc11b16f20a82f126669553",
+  "source_only_match": true,
+  "image_source_only_hash": "1aff4f3b60a860611d8ce36e36790c475b11fc70ba3b3ce48517a23e29d2b593",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "f1f45a322b52be9a23794e9b3d68f50ec74ce413dbc419c7b7bdf66328cfadba"
+}

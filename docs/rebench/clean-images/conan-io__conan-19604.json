@@ -1,0 +1,21 @@
+{
+  "task_id": "conan-io__conan-19604",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:f8e03a079bb855b6ab01a3305138971bac71d3e2e45d222aa1331e4e48ea3f64",
+  "clean_image_id": "sha256:f8e03a079bb855b6ab01a3305138971bac71d3e2e45d222aa1331e4e48ea3f64",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.conan-io_1776_conan-19604@sha256:a79eb716bef039cf4b3fa094ea7aca74067fcc3730412c90377a8501569a7b7b",
+  "source_only_match": true,
+  "image_source_only_hash": "0751bee7055e9a3271b41d97a18ac0e5a4dd6af44345d1a218f15baea4d5eeff",
+  "filesystem_scan": {
+    "needle_count": 11,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "3c254a6667ffd8b3e3a10ec861ff9ea252a17e20b9c17b257d2ab97e4f431c84"
+}

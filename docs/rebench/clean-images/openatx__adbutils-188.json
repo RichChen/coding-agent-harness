@@ -1,0 +1,227 @@
+{
+  "task_id": "openatx__adbutils-188",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:ed1563b03218f64cf8762932502873d299950701eeb2ffc79c279fb51c692ca4",
+  "clean_image_id": "sha256:ed1563b03218f64cf8762932502873d299950701eeb2ffc79c279fb51c692ca4",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.openatx_1776_adbutils-188@sha256:de989cba429ed062bad2a1a6ceb9c8436e7d8ab7be58f388e0af86982e08f846",
+  "source_only_match": true,
+  "image_source_only_hash": "4bfc07565406ba985f719127b8a6aa926129f41fb64928143f9ad94c8ac262ac",
+  "filesystem_scan": {
+    "rule": "provenance-v2",
+    "needle_count": 6,
+    "raw_hit_count": 41,
+    "hits": [],
+    "hit_count": 0,
+    "excused": [
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/idlelib/idle_test/test_autocomplete.py",
+        "source": "conda-meta",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/idlelib/idle_test/test_calltip.py",
+        "source": "conda-meta",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/idlelib/idle_test/test_debugger.py",
+        "source": "conda-meta",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/idlelib/idle_test/test_parenmatch.py",
+        "source": "conda-meta",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/idlelib/idle_test/test_replace.py",
+        "source": "conda-meta",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/idlelib/idle_test/test_squeezer.py",
+        "source": "conda-meta",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/idlelib/idle_test/test_undo.py",
+        "source": "conda-meta",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_checkers.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/tests/config/test_apply_pyprojecttoml.py",
+        "source": "conda-meta",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/tests/config/test_setupcfg.py",
+        "source": "conda-meta",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/tests/test_build_py.py",
+        "source": "conda-meta",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/tests/test_core_metadata.py",
+        "source": "conda-meta",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/tests/test_editable_install.py",
+        "source": "conda-meta",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/envs/testbed/lib/python3.12/site-packages/setuptools/tests/test_shutil_wrapper.py",
+        "source": "conda-meta",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/idlelib/idle_test/test_autocomplete.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/idlelib/idle_test/test_calltip.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/idlelib/idle_test/test_debugger.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/idlelib/idle_test/test_parenmatch.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/idlelib/idle_test/test_replace.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/idlelib/idle_test/test_squeezer.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/idlelib/idle_test/test_undo.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_checkers.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/tests/config/test_apply_pyprojecttoml.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/tests/config/test_setupcfg.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/tests/test_bdist_wheel.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/tests/test_build_py.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/lib/python3.12/site-packages/setuptools/tests/test_editable_install.py",
+        "source": "base image",
+        "package": "continuumio/miniconda3@sha256:f37f8c7db26ae7ec0098df530e96c9cde139026b9faf3914800d1522c47a49b1"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.11-h22baa00_0/lib/python3.12/idlelib/idle_test/test_autocomplete.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.11-h22baa00_0/lib/python3.12/idlelib/idle_test/test_calltip.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.11-h22baa00_0/lib/python3.12/idlelib/idle_test/test_debugger.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.11-h22baa00_0/lib/python3.12/idlelib/idle_test/test_parenmatch.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.11-h22baa00_0/lib/python3.12/idlelib/idle_test/test_replace.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.11-h22baa00_0/lib/python3.12/idlelib/idle_test/test_squeezer.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/python-3.12.11-h22baa00_0/lib/python3.12/idlelib/idle_test/test_undo.py",
+        "source": "conda pkgs paths.json",
+        "package": "python-3.12.11-h22baa00_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-78.1.1-py312h06a4308_0/lib/python3.12/site-packages/setuptools/_vendor/typeguard/_checkers.py",
+        "source": "dist-info RECORD",
+        "package": "typeguard-4.3.0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-78.1.1-py312h06a4308_0/lib/python3.12/site-packages/setuptools/tests/config/test_apply_pyprojecttoml.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-78.1.1-py312h06a4308_0/lib/python3.12/site-packages/setuptools/tests/config/test_setupcfg.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-78.1.1-py312h06a4308_0/lib/python3.12/site-packages/setuptools/tests/test_build_py.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-78.1.1-py312h06a4308_0/lib/python3.12/site-packages/setuptools/tests/test_core_metadata.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-78.1.1-py312h06a4308_0/lib/python3.12/site-packages/setuptools/tests/test_editable_install.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      },
+      {
+        "path": "/opt/conda/pkgs/setuptools-78.1.1-py312h06a4308_0/lib/python3.12/site-packages/setuptools/tests/test_shutil_wrapper.py",
+        "source": "conda pkgs paths.json",
+        "package": "setuptools-78.1.1-py312h06a4308_0"
+      }
+    ],
+    "excused_count": 41,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "f3130a9b42aa1b8852559bd47fecec5301ed85cd6832aa3967b0f55c49af86c8"
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "pyccel__pyccel-2454",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:7c1261c9242af221f52d59e8d167a500829cae0ec5a8f405b435e2525736d3fc",
+  "clean_image_id": "sha256:7c1261c9242af221f52d59e8d167a500829cae0ec5a8f405b435e2525736d3fc",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.pyccel_1776_pyccel-2454@sha256:9c8e37a54125c9b0b8faa410c0fe4ba8ccf167370d23a801cb969111c6acb216",
+  "source_only_match": true,
+  "image_source_only_hash": "95e1971ab2d6c3303ead560dea86bf8e292d71a48365bddc739b4626e3174cc4",
+  "filesystem_scan": {
+    "needle_count": 10,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "d85352b9b8b0b54c921aa926268e0cf8e9bf8a126bc71791f1ca15990d6b9d86"
+}

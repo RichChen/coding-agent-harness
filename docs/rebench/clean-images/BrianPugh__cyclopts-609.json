@@ -1,0 +1,21 @@
+{
+  "task_id": "BrianPugh__cyclopts-609",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:63e4cca0173a1d235a6c66339f811f95f9279b17b64165e30dcfefeb42cba62e",
+  "clean_image_id": "sha256:63e4cca0173a1d235a6c66339f811f95f9279b17b64165e30dcfefeb42cba62e",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.brianpugh_1776_cyclopts-609@sha256:468208cf60b545dcca338453077d8ae6657a1673f7a7cc14616a6de93b11b3fb",
+  "source_only_match": true,
+  "image_source_only_hash": "018b0b2549500485d1c05622b8146141ffec1bc6d15f6b458408c8936f713097",
+  "filesystem_scan": {
+    "needle_count": 10,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "6ce416ce8b3adbfed15f4798738904780699e9bbbd8c84965a09dca81cc89fbf"
+}

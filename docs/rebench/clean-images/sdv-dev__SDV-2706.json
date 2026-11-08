@@ -1,0 +1,21 @@
+{
+  "task_id": "sdv-dev__SDV-2706",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:362f52048e2a85de0525e4ff91dcfc1f81ffced8caa7ed87acda54ce08656fb9",
+  "clean_image_id": "sha256:362f52048e2a85de0525e4ff91dcfc1f81ffced8caa7ed87acda54ce08656fb9",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.sdv-dev_1776_sdv-2706@sha256:45d3e94c8886bed4ecb3321e46c98221c06eab8dad33f424cd3a19d33fcbd9e4",
+  "source_only_match": true,
+  "image_source_only_hash": "825259ff5aea1b5c62c332934655fc69c6b92b0b51f4aaf104e1d8f72e9bd083",
+  "filesystem_scan": {
+    "needle_count": 3,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "417a8471202a13e70504e51b016c73dc43a17f23df1667392d70c506c9e7eb58"
+}

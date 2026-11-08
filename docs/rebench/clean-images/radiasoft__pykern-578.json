@@ -1,0 +1,21 @@
+{
+  "task_id": "radiasoft__pykern-578",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:f8dc9f6e34a25fc97e78310fdbea75c3ebc62ce9c808488bafecb3818b4199c7",
+  "clean_image_id": "sha256:f8dc9f6e34a25fc97e78310fdbea75c3ebc62ce9c808488bafecb3818b4199c7",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.radiasoft_1776_pykern-578@sha256:600bef3d87d1cf84ef27f2ba12c9614cc7588ac7690c33c5f7f4825456b83bb2",
+  "source_only_match": true,
+  "image_source_only_hash": "b1073abc1520d866ad23091d614a5d9cf0a74171d1134687d9194766bdf56eae",
+  "filesystem_scan": {
+    "needle_count": 5,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "41db123f5cf68c261f37ccaa6b2d7f59240aabb428b6942403a0b03f4c8d2cde"
+}

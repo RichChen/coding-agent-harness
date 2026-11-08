@@ -1,0 +1,1237 @@
+{
+  "schema": "unleash-pilot.ingest.v1",
+  "plan_sha256": "fd72435b1ae7d0230d4e6a37e4ba708282f528aca93982dea8270bbbe84e606c",
+  "manifest": "configs/rebench/unleash-pilot-tasks.yaml",
+  "export_keep_original_files": true,
+  "model_calls": 0,
+  "slots": [
+    {
+      "stratum": "easy",
+      "rank": 1,
+      "original": "tobymao__sqlglot-5233",
+      "final": "tobymao__sqlglot-5233",
+      "attempts": [
+        {
+          "instance_id": "tobymao__sqlglot-5233",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            7,
+            7
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            7,
+            7
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 2,
+      "original": "genericmappingtools__pygmt-4342",
+      "final": "optuna__optuna-6428",
+      "attempts": [
+        {
+          "instance_id": "genericmappingtools__pygmt-4342",
+          "accepted": false,
+          "failed_clauses": [
+            3,
+            4
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            0
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            0,
+            0
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "optuna__optuna-6428",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            17,
+            17
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            17,
+            17
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 3,
+      "original": "microsoft__Agents-for-python-264",
+      "final": "microsoft__Agents-for-python-264",
+      "attempts": [
+        {
+          "instance_id": "microsoft__Agents-for-python-264",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 4,
+      "original": "pydata__xarray-10838",
+      "final": "pydata__xarray-10838",
+      "attempts": [
+        {
+          "instance_id": "pydata__xarray-10838",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            193,
+            193
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            193,
+            193
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 5,
+      "original": "feder-observatory__stellarphot-526",
+      "final": "feder-observatory__stellarphot-526",
+      "attempts": [
+        {
+          "instance_id": "feder-observatory__stellarphot-526",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            47,
+            47
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            47,
+            47
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 6,
+      "original": "conan-io__conan-19604",
+      "final": "conan-io__conan-19604",
+      "attempts": [
+        {
+          "instance_id": "conan-io__conan-19604",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 7,
+      "original": "sdv-dev__SDV-2706",
+      "final": "scrapy__scrapy-7351_interface",
+      "attempts": [
+        {
+          "instance_id": "sdv-dev__SDV-2706",
+          "accepted": false,
+          "failed_clauses": [
+            3
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            2,
+            2
+          ],
+          "gold_f2p": [
+            0,
+            2
+          ],
+          "gold_p2p": [
+            2,
+            2
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "scrapy__scrapy-7351_interface",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            11,
+            11
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            11,
+            11
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 8,
+      "original": "microsoft__fabric-cicd-394",
+      "final": "microsoft__fabric-cicd-394",
+      "attempts": [
+        {
+          "instance_id": "microsoft__fabric-cicd-394",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            5
+          ],
+          "empty_p2p": [
+            14,
+            14
+          ],
+          "gold_f2p": [
+            5,
+            5
+          ],
+          "gold_p2p": [
+            14,
+            14
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 9,
+      "original": "openatx__adbutils-188",
+      "final": "openatx__adbutils-188",
+      "attempts": [
+        {
+          "instance_id": "openatx__adbutils-188",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            4,
+            4
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            4,
+            4
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 10,
+      "original": "BrianPugh__cyclopts-609",
+      "final": "BrianPugh__cyclopts-609",
+      "attempts": [
+        {
+          "instance_id": "BrianPugh__cyclopts-609",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            80,
+            80
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            80,
+            80
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 11,
+      "original": "sympy__sympy-28738",
+      "final": "sympy__sympy-28738",
+      "attempts": [
+        {
+          "instance_id": "sympy__sympy-28738",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            89,
+            89
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            89,
+            89
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 12,
+      "original": "Ultraplot__UltraPlot-346",
+      "final": "dask__fastparquet-961",
+      "attempts": [
+        {
+          "instance_id": "Ultraplot__UltraPlot-346",
+          "accepted": false,
+          "failed_clauses": [
+            2
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            15
+          ],
+          "empty_p2p": [
+            78,
+            78
+          ],
+          "gold_f2p": [
+            15,
+            15
+          ],
+          "gold_p2p": [
+            78,
+            78
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "dask__fastparquet-961",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 13,
+      "original": "BerriAI__litellm-16429",
+      "final": "BerriAI__litellm-16429",
+      "attempts": [
+        {
+          "instance_id": "BerriAI__litellm-16429",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 14,
+      "original": "cpp-linter__cpp-linter-hooks-142",
+      "final": "openai__openai-agents-python-2144",
+      "attempts": [
+        {
+          "instance_id": "cpp-linter__cpp-linter-hooks-142",
+          "accepted": false,
+          "failed_clauses": [
+            4
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            1,
+            2
+          ],
+          "empty_p2p": [
+            26,
+            27
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            26,
+            27
+          ],
+          "p2p_excluded": 1,
+          "error": null
+        },
+        {
+          "instance_id": "openai__openai-agents-python-2144",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            4,
+            4
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            4,
+            4
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 15,
+      "original": "apache__iceberg-python-3295",
+      "final": "apache__iceberg-python-3295",
+      "attempts": [
+        {
+          "instance_id": "apache__iceberg-python-3295",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            7
+          ],
+          "empty_p2p": [
+            164,
+            164
+          ],
+          "gold_f2p": [
+            7,
+            7
+          ],
+          "gold_p2p": [
+            164,
+            164
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 1,
+      "original": "agronholm__anyio-935",
+      "final": "agronholm__anyio-935",
+      "attempts": [
+        {
+          "instance_id": "agronholm__anyio-935",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            3
+          ],
+          "empty_p2p": [
+            27,
+            27
+          ],
+          "gold_f2p": [
+            3,
+            3
+          ],
+          "gold_p2p": [
+            27,
+            27
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 2,
+      "original": "microsoft__qcodes-8039",
+      "final": "microsoft__qcodes-8039",
+      "attempts": [
+        {
+          "instance_id": "microsoft__qcodes-8039",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            6,
+            6
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            6,
+            6
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 3,
+      "original": "aws__bedrock-agentcore-sdk-python-279_interface",
+      "final": "aws__bedrock-agentcore-sdk-python-279_interface",
+      "attempts": [
+        {
+          "instance_id": "aws__bedrock-agentcore-sdk-python-279_interface",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            3
+          ],
+          "empty_p2p": [
+            90,
+            90
+          ],
+          "gold_f2p": [
+            3,
+            3
+          ],
+          "gold_p2p": [
+            90,
+            90
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 4,
+      "original": "python-wheel-build__fromager-653",
+      "final": "python-wheel-build__fromager-653",
+      "attempts": [
+        {
+          "instance_id": "python-wheel-build__fromager-653",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            7
+          ],
+          "empty_p2p": [
+            49,
+            49
+          ],
+          "gold_f2p": [
+            7,
+            7
+          ],
+          "gold_p2p": [
+            49,
+            49
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 5,
+      "original": "pyfar__pyrato-113",
+      "final": "stan-dev__cmdstanpy-801",
+      "attempts": [
+        {
+          "instance_id": "pyfar__pyrato-113",
+          "accepted": false,
+          "failed_clauses": [
+            3
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            4
+          ],
+          "empty_p2p": [
+            6,
+            6
+          ],
+          "gold_f2p": [
+            0,
+            4
+          ],
+          "gold_p2p": [
+            6,
+            6
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "stan-dev__cmdstanpy-801",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            3
+          ],
+          "empty_p2p": [
+            25,
+            25
+          ],
+          "gold_f2p": [
+            3,
+            3
+          ],
+          "gold_p2p": [
+            25,
+            25
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 6,
+      "original": "newton-physics__newton-1653",
+      "final": "newton-physics__newton-1653",
+      "attempts": [
+        {
+          "instance_id": "newton-physics__newton-1653",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            137,
+            137
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            137,
+            137
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 7,
+      "original": "stanfordnlp__dspy-9478_interface",
+      "final": "stanfordnlp__dspy-9478_interface",
+      "attempts": [
+        {
+          "instance_id": "stanfordnlp__dspy-9478_interface",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            7
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            7,
+            7
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 8,
+      "original": "pyinfra-dev__pyinfra-1630",
+      "final": "astropy__astropy-18818",
+      "attempts": [
+        {
+          "instance_id": "pyinfra-dev__pyinfra-1630",
+          "accepted": false,
+          "failed_clauses": [
+            3
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            7
+          ],
+          "empty_p2p": [
+            3,
+            4
+          ],
+          "gold_f2p": [
+            1,
+            7
+          ],
+          "gold_p2p": [
+            3,
+            4
+          ],
+          "p2p_excluded": 1,
+          "error": null
+        },
+        {
+          "instance_id": "astropy__astropy-18818",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            40,
+            40
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            40,
+            40
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 9,
+      "original": "marshmallow-code__marshmallow-2925_interface",
+      "final": "marshmallow-code__marshmallow-2925_interface",
+      "attempts": [
+        {
+          "instance_id": "marshmallow-code__marshmallow-2925_interface",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            222,
+            222
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            222,
+            222
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 10,
+      "original": "jsonpickle__jsonpickle-587",
+      "final": "jsonpickle__jsonpickle-587",
+      "attempts": [
+        {
+          "instance_id": "jsonpickle__jsonpickle-587",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            80,
+            80
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            80,
+            80
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 11,
+      "original": "huggingface__trl-5135",
+      "final": "omni-us__jsonargparse-770",
+      "attempts": [
+        {
+          "instance_id": "huggingface__trl-5135",
+          "accepted": false,
+          "failed_clauses": [
+            3,
+            4
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            0
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            0,
+            0
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "omni-us__jsonargparse-770",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            9,
+            9
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            9,
+            9
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 12,
+      "original": "Kozea__WeasyPrint-2494",
+      "final": "Kozea__WeasyPrint-2494",
+      "attempts": [
+        {
+          "instance_id": "Kozea__WeasyPrint-2494",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            46,
+            46
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            46,
+            46
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 13,
+      "original": "pycqa__isort-2491",
+      "final": "pycqa__isort-2491",
+      "attempts": [
+        {
+          "instance_id": "pycqa__isort-2491",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            73,
+            73
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            73,
+            73
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 14,
+      "original": "pyccel__pyccel-2454",
+      "final": "pyccel__pyccel-2454",
+      "attempts": [
+        {
+          "instance_id": "pyccel__pyccel-2454",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            3
+          ],
+          "empty_p2p": [
+            15,
+            30
+          ],
+          "gold_f2p": [
+            3,
+            3
+          ],
+          "gold_p2p": [
+            15,
+            30
+          ],
+          "p2p_excluded": 15,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 15,
+      "original": "py-pdf__pdfly-219",
+      "final": "py-pdf__pdfly-219",
+      "attempts": [
+        {
+          "instance_id": "py-pdf__pdfly-219",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            3,
+            3
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            3,
+            3
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "substitutions": [
+    {
+      "stratum": "easy",
+      "rank": 2,
+      "original": "genericmappingtools__pygmt-4342",
+      "replaced": "genericmappingtools__pygmt-4342",
+      "failed_clauses": [
+        3,
+        4
+      ],
+      "error": null,
+      "replacement": "optuna__optuna-6428"
+    },
+    {
+      "stratum": "easy",
+      "rank": 7,
+      "original": "sdv-dev__SDV-2706",
+      "replaced": "sdv-dev__SDV-2706",
+      "failed_clauses": [
+        3
+      ],
+      "error": null,
+      "replacement": "scrapy__scrapy-7351_interface"
+    },
+    {
+      "stratum": "easy",
+      "rank": 12,
+      "original": "Ultraplot__UltraPlot-346",
+      "replaced": "Ultraplot__UltraPlot-346",
+      "failed_clauses": [
+        2
+      ],
+      "error": null,
+      "replacement": "dask__fastparquet-961"
+    },
+    {
+      "stratum": "easy",
+      "rank": 14,
+      "original": "cpp-linter__cpp-linter-hooks-142",
+      "replaced": "cpp-linter__cpp-linter-hooks-142",
+      "failed_clauses": [
+        4
+      ],
+      "error": null,
+      "replacement": "openai__openai-agents-python-2144"
+    },
+    {
+      "stratum": "other",
+      "rank": 5,
+      "original": "pyfar__pyrato-113",
+      "replaced": "pyfar__pyrato-113",
+      "failed_clauses": [
+        3
+      ],
+      "error": null,
+      "replacement": "stan-dev__cmdstanpy-801"
+    },
+    {
+      "stratum": "other",
+      "rank": 8,
+      "original": "pyinfra-dev__pyinfra-1630",
+      "replaced": "pyinfra-dev__pyinfra-1630",
+      "failed_clauses": [
+        3
+      ],
+      "error": null,
+      "replacement": "astropy__astropy-18818"
+    },
+    {
+      "stratum": "other",
+      "rank": 11,
+      "original": "huggingface__trl-5135",
+      "replaced": "huggingface__trl-5135",
+      "failed_clauses": [
+        3,
+        4
+      ],
+      "error": null,
+      "replacement": "omni-us__jsonargparse-770"
+    }
+  ],
+  "accepted": 30,
+  "pending": [],
+  "unfilled": []
+}

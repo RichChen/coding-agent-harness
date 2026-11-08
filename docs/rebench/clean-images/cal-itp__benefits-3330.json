@@ -1,0 +1,21 @@
+{
+  "task_id": "cal-itp__benefits-3330",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:5930048b9bb9e5b559941492f8df9781ab263d6f433ad81da98dee3938bac0a4",
+  "clean_image_id": "sha256:5930048b9bb9e5b559941492f8df9781ab263d6f433ad81da98dee3938bac0a4",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.cal-itp_1776_benefits-3330@sha256:c92fbdd33f0748befcea0c1dabc543739f311714944fa8e14e14a28646473e2c",
+  "source_only_match": true,
+  "image_source_only_hash": "70b89b9235accf3f9105d15b5fa8747f83d04ec4165c6b0d6194c196b52c20ff",
+  "filesystem_scan": {
+    "needle_count": 9,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "1a5cce1d5e9b35d58883d997efa36317852f6c7610283eebaa818fa844273e60"
+}

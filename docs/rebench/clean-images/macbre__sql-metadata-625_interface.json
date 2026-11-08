@@ -1,0 +1,26 @@
+{
+  "task_id": "macbre__sql-metadata-625_interface",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:88a5a8681d698d67b9795c50c9e0de1dc3ae193a9a21852a4d6a3c3cf984dd32",
+  "clean_image_id": "sha256:88a5a8681d698d67b9795c50c9e0de1dc3ae193a9a21852a4d6a3c3cf984dd32",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.macbre_1776_sql-metadata-625_interface@sha256:5cece931a26478cd7247ba8ccbcd6c2865aa0437aeed4ac84f23744a9f53ef85",
+  "source_only_match": true,
+  "image_source_only_hash": "f8deee681b7ca6b4cfa7ed007d561c2a5859e63eade3252be0820ea35cf1b2a6",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [
+      "/opt/conda/envs/testbed/lib/python3.13/site-packages/sqlglot/_typing.py",
+      "/opt/conda/envs/testbed/lib/python3.13/site-packages/sqlglot/expressions/datatypes.py",
+      "/opt/conda/envs/testbed/lib/python3.13/site-packages/sqlglot/generator.py",
+      "/opt/conda/envs/testbed/lib/python3.13/site-packages/sqlglot/parsers/athena.py"
+    ],
+    "install_record_same_count": 4,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "ba42232f4b9379087e06c75222e69468904daaf814028574debe01ab96f70ba5"
+}

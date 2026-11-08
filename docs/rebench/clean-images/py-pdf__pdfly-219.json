@@ -1,0 +1,21 @@
+{
+  "task_id": "py-pdf__pdfly-219",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:1bd15cec38cec060fb912e415474d2d04e389b12b7e2efc8381df7152e0e67f9",
+  "clean_image_id": "sha256:1bd15cec38cec060fb912e415474d2d04e389b12b7e2efc8381df7152e0e67f9",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.py-pdf_1776_pdfly-219@sha256:e1f7c8d2e72c83e9cbef223a0f4f4388c30be2c88aed8463dac48b0b73bea910",
+  "source_only_match": true,
+  "image_source_only_hash": "21a5d1684adfb2e11f94e73ff440ae5fcaf455cf87ef71d026f4e1d7a4f06b25",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "0cf475c886cbc84905f8adad84d71e71c9f21b8d9f3dd70e16457c19d420271b"
+}

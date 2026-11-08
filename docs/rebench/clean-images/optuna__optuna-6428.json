@@ -1,0 +1,21 @@
+{
+  "task_id": "optuna__optuna-6428",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:f96bd80608125c5e003f4e120a45c143a51a7a65c3a7cd1099ef69196cb02510",
+  "clean_image_id": "sha256:f96bd80608125c5e003f4e120a45c143a51a7a65c3a7cd1099ef69196cb02510",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.optuna_1776_optuna-6428@sha256:188c885af47c20661c8b9a2018f6701113d81ae5fb546c551aacf8cf26192945",
+  "source_only_match": true,
+  "image_source_only_hash": "41bf509bdf58523000b822d17c76f7892c79ad73c961056a2733199baf88eb0e",
+  "filesystem_scan": {
+    "needle_count": 11,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "48676ab4524bf3d25eddc738fd4de7b2e0623844cf7e6471d95f8f956ba3f009"
+}

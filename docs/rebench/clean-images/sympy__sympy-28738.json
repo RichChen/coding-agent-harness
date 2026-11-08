@@ -1,0 +1,21 @@
+{
+  "task_id": "sympy__sympy-28738",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:09cb96f8d1c2d1db40ac9b99cf626e2d3be7cc7ab43eed483cb87d1cb90f9806",
+  "clean_image_id": "sha256:09cb96f8d1c2d1db40ac9b99cf626e2d3be7cc7ab43eed483cb87d1cb90f9806",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.sympy_1776_sympy-28738@sha256:e948bc9048a299a5417ad890a258d02f5053d98737e40bbbaeac5d984f5344dd",
+  "source_only_match": true,
+  "image_source_only_hash": "576dbda1efc546a7984b1a8316b8998cd82038a801ecab49a03103b8b7f938b0",
+  "filesystem_scan": {
+    "needle_count": 7,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "3467b7a19497911429876e2227f14567b984a56f990a662173b2c2a010f89be7"
+}

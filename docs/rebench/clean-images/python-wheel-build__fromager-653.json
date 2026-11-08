@@ -1,0 +1,21 @@
+{
+  "task_id": "python-wheel-build__fromager-653",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:78dad47de7f91826042879268cd44bae19c0019aed1ace483f5fbc4ecdecc48e",
+  "clean_image_id": "sha256:78dad47de7f91826042879268cd44bae19c0019aed1ace483f5fbc4ecdecc48e",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.python-wheel-build_1776_fromager-653@sha256:80804862a75f5ad92620b6ecdc2492d15df433db76980099855305deb94930ef",
+  "source_only_match": true,
+  "image_source_only_hash": "740ebbe5fe8b8edbf3b59604a35e15696c847879d1116a3f49bf3488361f0e74",
+  "filesystem_scan": {
+    "needle_count": 6,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "e8b32c6d81410a5e301a51f6fe1de24f47a075137d49aad07c2775feaeafa540"
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "omni-us__jsonargparse-770",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:1751680c063c45d4376a99c5ade9539a0f92b5fd3aac5348fc1d8e0ec760a0c4",
+  "clean_image_id": "sha256:1751680c063c45d4376a99c5ade9539a0f92b5fd3aac5348fc1d8e0ec760a0c4",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.omni-us_1776_jsonargparse-770@sha256:14f8b2f467cdfad34dac79ab2731a1421b8ec731151a45ac2eb4e17fc89b3330",
+  "source_only_match": true,
+  "image_source_only_hash": "1d021361ead4f3349af99bedce5f3565d50d6d4e72d645751e27bea7ca4fa878",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "bcc74cc55f1aaee0f485ee708e01f4fd5c86af5cf9dc8970e2af2eefd56cfaf6"
+}

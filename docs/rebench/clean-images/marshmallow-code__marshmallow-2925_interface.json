@@ -1,0 +1,21 @@
+{
+  "task_id": "marshmallow-code__marshmallow-2925_interface",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:34328fea0fb19cff162625e74fb2b0ae5d3e425059a29ccebdedd2f9879faf0f",
+  "clean_image_id": "sha256:34328fea0fb19cff162625e74fb2b0ae5d3e425059a29ccebdedd2f9879faf0f",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.marshmallow-code_1776_marshmallow-2925_interface@sha256:967a07ee58cd51e937b4f6575c89d1c37bdc24ba18003914a50bc5d1e7f50589",
+  "source_only_match": true,
+  "image_source_only_hash": "68578bbdc7379d86c890c10e88120d7525f012fc5a1090f3ad610079e40f0604",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "2f28805398aed2f1a56aca85f011db7f77f29463c2915db9ea7cc16f1d492f3b"
+}

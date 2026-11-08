@@ -1,0 +1,21 @@
+{
+  "task_id": "collective__icalendar-880",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:da12ab8acc98cc31c2262c343db1a989f8bc5a14c46098d75b3cec5968e92671",
+  "clean_image_id": "sha256:da12ab8acc98cc31c2262c343db1a989f8bc5a14c46098d75b3cec5968e92671",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.collective_1776_icalendar-880@sha256:3c58d47abca96b0684fa1c54a22671849cc01fb37301db3e284cf29bc225dd6b",
+  "source_only_match": true,
+  "image_source_only_hash": "3d9ba6510d70c781e915986497fca51d9be51375c66c6e9dccfd9d80bd3da2e8",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "590ba2e74dfdb4b82f255a6e4a7bcdb96d541e03873446fd0c3cf4384f993b7a"
+}

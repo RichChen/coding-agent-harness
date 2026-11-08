@@ -1,0 +1,21 @@
+{
+  "task_id": "newton-physics__newton-1653",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:c917fbd0efb5e7d850eabe8c9b6725e9bc94ef6027fe48c457dd6586f4df6b47",
+  "clean_image_id": "sha256:c917fbd0efb5e7d850eabe8c9b6725e9bc94ef6027fe48c457dd6586f4df6b47",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.newton-physics_1776_newton-1653@sha256:33c25430d2993f61523dd7ad4ccd257cc6b31601309e23ceaf543558b8de3f38",
+  "source_only_match": true,
+  "image_source_only_hash": "2ea0613ffe84e3439ba7cc0735474e57ec2dd8d43e494bcfe430a54c86aaf467",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "6f42bbfb724a895a185b9cdba18020c3c7c22d23b6e8510a6aaa519e7731b6dd"
+}

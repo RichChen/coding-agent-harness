@@ -1,0 +1,21 @@
+{
+  "task_id": "allenneuraldynamics__aind-data-schema-1677",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:1e2074fa5d186028b0f1973dbc03bb791d6f120c3e5539fd5cd5a3073fc30202",
+  "clean_image_id": "sha256:1e2074fa5d186028b0f1973dbc03bb791d6f120c3e5539fd5cd5a3073fc30202",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.allenneuraldynamics_1776_aind-data-schema-1677@sha256:5f5e38e372e9e52e2ab10320341f784be52c999e3177034beb3e41820919eede",
+  "source_only_match": true,
+  "image_source_only_hash": "89bb634b08413044897f7ced7235884c7fc6260f17c833aa422feca90f74e74c",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "223877a40aabfc6d98998977688432908149fbacd080fd2dfa714a73c2cdcd81"
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "feder-observatory__stellarphot-526",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:bbe01d64f5774bf2cc2386dcbe78ecfb2d86b4779ac861101df9f089dd15bf13",
+  "clean_image_id": "sha256:bbe01d64f5774bf2cc2386dcbe78ecfb2d86b4779ac861101df9f089dd15bf13",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.feder-observatory_1776_stellarphot-526@sha256:ca93c9e772112eb02abd0f9bb6c75bee1904db2e25233f859278d1840e180d1b",
+  "source_only_match": true,
+  "image_source_only_hash": "2ac06e57eee2ef13af8ed219a06f5f6cf8a7106570c770dea7f653ee58c86167",
+  "filesystem_scan": {
+    "needle_count": 6,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "b8e74f88746af1a1a36807e432dcb549ce8a73a821239e861142cf0d5d9f15c2"
+}

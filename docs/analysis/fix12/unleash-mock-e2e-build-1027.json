@@ -1,0 +1,180 @@
+{
+  "schema": "unleash-pilot.mock-e2e.v1",
+  "task": "pypa__build-1027",
+  "model_calls": 0,
+  "system_and_task_prompt_identical": true,
+  "ok": true,
+  "groups": {
+    "A": {
+      "requests": 3,
+      "settled": 3,
+      "context_prepared": 3,
+      "thinking_problems": [],
+      "injected_messages": [],
+      "telemetry_problems": [],
+      "admission_methods": [
+        "utf8_bytes_plus_protocol_allowance"
+      ],
+      "request_options": [
+        {
+          "max_tokens": 8192,
+          "model": "deepseek-flash",
+          "reasoning_effort": null,
+          "stream": true,
+          "thinking": "disabled"
+        },
+        {
+          "max_tokens": 8192,
+          "model": "deepseek-flash",
+          "reasoning_effort": null,
+          "stream": true,
+          "thinking": "disabled"
+        },
+        {
+          "max_tokens": 8192,
+          "model": "deepseek-flash",
+          "reasoning_effort": null,
+          "stream": true,
+          "thinking": "disabled"
+        }
+      ],
+      "reasoning_tokens": [
+        null,
+        null,
+        null
+      ],
+      "status": "pass",
+      "solved": true,
+      "changed_files": [
+        "docs/changelog/860.bugfix.rst",
+        "src/build/_util.py"
+      ],
+      "cost_cny": "0.005981",
+      "stop_reason": "completed",
+      "ledger": {
+        "total": "4.000",
+        "build": "0.000",
+        "pilot": "4.000",
+        "reserve": "0.000"
+      },
+      "ledger_settlement": {
+        "mode": "provider_usage",
+        "time_of_day": false
+      }
+    },
+    "U": {
+      "requests": 3,
+      "settled": 3,
+      "context_prepared": 3,
+      "thinking_problems": [],
+      "injected_messages": [],
+      "telemetry_problems": [],
+      "admission_methods": [
+        "ascii_bytes_calibrated_v1_plus_non_ascii_bytes_plus_protocol_allowance"
+      ],
+      "request_options": [
+        {
+          "max_tokens": 8192,
+          "model": "deepseek-flash",
+          "reasoning_effort": null,
+          "stream": true,
+          "thinking": "disabled"
+        },
+        {
+          "max_tokens": 8192,
+          "model": "deepseek-flash",
+          "reasoning_effort": null,
+          "stream": true,
+          "thinking": "disabled"
+        },
+        {
+          "max_tokens": 8192,
+          "model": "deepseek-flash",
+          "reasoning_effort": null,
+          "stream": true,
+          "thinking": "disabled"
+        }
+      ],
+      "reasoning_tokens": [
+        null,
+        null,
+        null
+      ],
+      "status": "pass",
+      "solved": true,
+      "changed_files": [
+        "docs/changelog/860.bugfix.rst",
+        "src/build/_util.py"
+      ],
+      "cost_cny": "0.006133",
+      "stop_reason": "completed",
+      "ledger": {
+        "total": "4.000",
+        "build": "0.000",
+        "pilot": "4.000",
+        "reserve": "0.000"
+      },
+      "ledger_settlement": {
+        "mode": "provider_usage",
+        "time_of_day": false
+      }
+    },
+    "UT": {
+      "requests": 3,
+      "settled": 3,
+      "context_prepared": 3,
+      "thinking_problems": [],
+      "injected_messages": [],
+      "telemetry_problems": [],
+      "admission_methods": [
+        "ascii_bytes_calibrated_v1_plus_non_ascii_bytes_plus_protocol_allowance"
+      ],
+      "request_options": [
+        {
+          "max_tokens": 32768,
+          "model": "deepseek-flash",
+          "reasoning_effort": "high",
+          "stream": true,
+          "thinking": "enabled"
+        },
+        {
+          "max_tokens": 32768,
+          "model": "deepseek-flash",
+          "reasoning_effort": "high",
+          "stream": true,
+          "thinking": "enabled"
+        },
+        {
+          "max_tokens": 32768,
+          "model": "deepseek-flash",
+          "reasoning_effort": "high",
+          "stream": true,
+          "thinking": "enabled"
+        }
+      ],
+      "reasoning_tokens": [
+        6,
+        0,
+        4
+      ],
+      "status": "pass",
+      "solved": true,
+      "changed_files": [
+        "docs/changelog/860.bugfix.rst",
+        "src/build/_util.py"
+      ],
+      "cost_cny": "0.006268",
+      "stop_reason": "completed",
+      "ledger": {
+        "total": "4.000",
+        "build": "0.000",
+        "pilot": "4.000",
+        "reserve": "0.000"
+      },
+      "ledger_settlement": {
+        "mode": "provider_usage",
+        "time_of_day": false
+      }
+    }
+  }
+}

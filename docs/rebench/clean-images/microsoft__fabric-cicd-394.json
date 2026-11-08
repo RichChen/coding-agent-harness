@@ -1,0 +1,21 @@
+{
+  "task_id": "microsoft__fabric-cicd-394",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:1650c41869c0bcc071b5456b43f9b67c892c6c69c2343c647aad6ff64700037d",
+  "clean_image_id": "sha256:1650c41869c0bcc071b5456b43f9b67c892c6c69c2343c647aad6ff64700037d",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.microsoft_1776_fabric-cicd-394@sha256:457a3b078aaec7098f4d2596a2c8c30802c5c56e39a5da353b4db926578a2967",
+  "source_only_match": true,
+  "image_source_only_hash": "62f5edc4f30753de06e3d192acfad14d690706ccbed7d8b70e562d9c05135c03",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "551d0ea4f63f69c517e77ed1259744cfe2d587dd1c81af5eed9ff9e7e2e416a6"
+}

@@ -1,0 +1,23 @@
+{
+  "task_id": "apache__iceberg-python-3295",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:67bb1a313f0cbdbe344f8529e0fd7ef3049b9e336657c26c36693f39b6f7cfc6",
+  "clean_image_id": "sha256:67bb1a313f0cbdbe344f8529e0fd7ef3049b9e336657c26c36693f39b6f7cfc6",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.apache_1776_iceberg-python-3295@sha256:10595208bda942416f6673a2629c9fb66bd5226818bbe62ce1ef99a3bef8e6d1",
+  "source_only_match": true,
+  "image_source_only_hash": "59ee4979318a32f3f54fa852f10987e107f95748e1208238ab10312847a72bdc",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [
+    "pyiceberg/avro/decoder_fast.cpython-313-x86_64-linux-gnu.so"
+  ],
+  "build_input_sha256": "c1711953b406e32afa90afb1f3fe993b82d626813022d0ee320cbc97098b3097"
+}

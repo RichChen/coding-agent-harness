@@ -1,0 +1,21 @@
+{
+  "task_id": "pyinfra-dev__pyinfra-1630",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:fc8d37b5e729009d5d1c8dbe0345e06275aa1ac02dbe39f123038f53d3f0c0a8",
+  "clean_image_id": "sha256:fc8d37b5e729009d5d1c8dbe0345e06275aa1ac02dbe39f123038f53d3f0c0a8",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.pyinfra-dev_1776_pyinfra-1630@sha256:866ee2ffb5683f7962c13d76eacf3d58042f1642721c2a30aac990e7c54c112e",
+  "source_only_match": true,
+  "image_source_only_hash": "d162874771969e2fb566bf416729f49238ffe36bbd8cbea4cca3c3268ea4c98e",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "268f626d10fd6427a5455bf22075e521ae4fd1ff036c14cc988819eb7bdab9f8"
+}

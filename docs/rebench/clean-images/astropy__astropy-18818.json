@@ -1,0 +1,39 @@
+{
+  "task_id": "astropy__astropy-18818",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:12a0b94da970afd1e63db384e23c7be125d64fbd422cfaa13aa0fec2d150f478",
+  "clean_image_id": "sha256:12a0b94da970afd1e63db384e23c7be125d64fbd422cfaa13aa0fec2d150f478",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.astropy_1776_astropy-18818@sha256:7629ae96fdb4cd87957a46abb55b7f6fee802eeb4f820a33e701463533282743",
+  "source_only_match": true,
+  "image_source_only_hash": "ca7e611ec2f06a7339f8a1884c16d258e743899069c63b77df101cebc35c3ecd",
+  "filesystem_scan": {
+    "needle_count": 8,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [
+    "astropy/compiler_version.cpython-311-x86_64-linux-gnu.so",
+    "astropy/convolution/_convolve.cpython-311-x86_64-linux-gnu.so",
+    "astropy/cosmology/_src/flrw/scalar_inv_efuncs.cpython-311-x86_64-linux-gnu.so",
+    "astropy/cosmology/_src/signature_deprecations.cpython-311-x86_64-linux-gnu.so",
+    "astropy/io/ascii/cparser.cpython-311-x86_64-linux-gnu.so",
+    "astropy/io/fits/_utils.cpython-311-x86_64-linux-gnu.so",
+    "astropy/io/fits/hdu/compressed/_compression.cpython-311-x86_64-linux-gnu.so",
+    "astropy/io/votable/tablewriter.cpython-311-x86_64-linux-gnu.so",
+    "astropy/stats/_fast_sigma_clip.cpython-311-x86_64-linux-gnu.so",
+    "astropy/stats/_stats.cpython-311-x86_64-linux-gnu.so",
+    "astropy/table/_column_mixins.cpython-311-x86_64-linux-gnu.so",
+    "astropy/table/_np_utils.cpython-311-x86_64-linux-gnu.so",
+    "astropy/time/_parse_times.cpython-311-x86_64-linux-gnu.so",
+    "astropy/timeseries/periodograms/bls/_impl.cpython-311-x86_64-linux-gnu.so",
+    "astropy/timeseries/periodograms/lombscargle/implementations/cython_impl.cpython-311-x86_64-linux-gnu.so",
+    "astropy/utils/xml/_iterparser.cpython-311-x86_64-linux-gnu.so",
+    "astropy/wcs/_wcs.cpython-311-x86_64-linux-gnu.so"
+  ],
+  "build_input_sha256": "7f965bc2e65f410f7a971e422cb7d6bec81701b3611eb63e5d2d4b7a33752a1c"
+}

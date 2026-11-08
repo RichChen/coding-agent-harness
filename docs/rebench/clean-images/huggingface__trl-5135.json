@@ -1,0 +1,21 @@
+{
+  "task_id": "huggingface__trl-5135",
+  "answer_isolation_pass": true,
+  "clean_image_digest": "coding-harness-rebench-clean@sha256:2e12254f7c5d58b2b0c9d299ff3855b17a3b794965cb41276ea26c52d98d98e2",
+  "clean_image_id": "sha256:2e12254f7c5d58b2b0c9d299ff3855b17a3b794965cb41276ea26c52d98d98e2",
+  "official_image_digest": "swerebench/sweb.eval.x86_64.huggingface_1776_trl-5135@sha256:c69c3c2acb9de1dc73ea57cab222046d411cdbe0cc9589eb1a9906355678e616",
+  "source_only_match": true,
+  "image_source_only_hash": "1bbd998b4ba029da3f3319d0ac20bf60786ec25f2e6a668c833efbe8dc181eb8",
+  "filesystem_scan": {
+    "needle_count": 12,
+    "hits": [],
+    "hit_count": 0,
+    "base_image_same": [],
+    "base_image_same_count": 0,
+    "install_record_same": [],
+    "install_record_same_count": 0,
+    "pass": true
+  },
+  "native_artifacts": [],
+  "build_input_sha256": "4a6b0e5eb5601936963dcbf168005216f718725843357a71d25e5a496a4beb5b"
+}
