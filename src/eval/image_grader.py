@@ -180,12 +180,14 @@ class ImageGrader:
 
     async def collect(self, *, image: str, test_overlay: dict, paths: list[str], autoload_plugins: bool = False,
                       pytest_options: list[str] | None = None, timeout: float = 600, repo_root: str = "/opt/repo",
-                      python_bin: str = "/usr/local/bin/python") -> dict:
-        """Collect node ids with the test overlay applied. Used to repair truncated ids before grading."""
+                      python_bin: str = "/usr/local/bin/python", delta: dict | None = None,
+                      keep_original_files: bool = False) -> dict:
+        """Collect node ids with the test overlay (and delta, if given) applied. Used to repair truncated ids
+        before grading; a test module importing a name the gold patch adds only collects with the gold delta."""
         args = list(pytest_options or []) + ["--collect-only", "-q", *paths]
-        result = await self._run(image=image, delta=None, test_overlay=test_overlay, args=args, sympy=False,
+        result = await self._run(image=image, delta=delta, test_overlay=test_overlay, args=args, sympy=False,
                                  django=False, autoload_plugins=autoload_plugins, timeout=timeout,
-                                 repo_root=repo_root, python_bin=python_bin)
+                                 repo_root=repo_root, python_bin=python_bin, keep_original_files=keep_original_files)
         receipt = result.pop("receipt", None) or {}
         return {"collected": list(receipt.get("collected") or []), "reason": result.get("reason"),
                 **receipt_diagnostics(receipt)}

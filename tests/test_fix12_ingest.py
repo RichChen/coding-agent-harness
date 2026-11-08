@@ -49,6 +49,36 @@ def test_empty_id_list_is_not_a_leak(tmp_path, monkeypatch):
         prepare.write_task_files(task_row("apply diff --git a/x b/x"))
 
 
+def test_calibration_collects_with_the_gold_patch(tmp_path, monkeypatch):
+    """A test module that imports a name only the gold patch adds collects nothing without it."""
+    from scripts.rebench import prepare
+    from src.eval import image_grader
+
+    gold = {"changed": {"pkg/new.py": "Z29sZA=="}, "deleted": []}
+    calls = []
+
+    class Grader:
+        def __init__(self, **kwargs):
+            pass
+
+        async def collect(self, **kwargs):
+            calls.append(kwargs)
+            return {"collected": ["t.py::a"] if kwargs.get("delta") == gold else [], "reason": None}
+
+        async def evaluate(self, **kwargs):
+            outcome = "passed" if kwargs["delta"] == gold else "failed"
+            return {"status": "pass" if outcome == "passed" else "fail", "reason": None, "execution_status": "completed",
+                    "cases": [{"nodeid": "t.py::a", "outcome": outcome}]}
+
+    monkeypatch.setattr(image_grader, "ImageGrader", Grader)
+    monkeypatch.setattr(prepare, "staging", lambda row, work: ({"t.py": "dA=="}, gold, ["t.py"], ["pkg/new.py"]))
+    row = {"FAIL_TO_PASS": '["t.py::a"]', "PASS_TO_PASS": "[]", "install_config": {"test_cmd": "pytest -p no:cacheprovider"}}
+    state = {"image": {"clean_digest": "img@sha256:" + "0" * 64}, "isolation": {"answer_isolation_pass": True}}
+    result = prepare.calibration_stage(row, tmp_path, 3, True)(state)["calibration"]
+    assert calls[0]["delta"] == gold and calls[0]["keep_original_files"] is True
+    assert result["failed_clauses"] == [] and result["f2p"] == ["t.py::a"]
+
+
 def record(keep=True, memory=None):
     cal = {"options": ["-p", "no:cacheprovider"], "f2p": ["t::a"], "p2p": ["t::b"], "p2p_excluded": [],
            "summary": {"gold_f2p": [1, 1]}, "keep_original_files": keep}

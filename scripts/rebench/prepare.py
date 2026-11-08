@@ -363,8 +363,7 @@ def calibration_stage(row: dict, work: Path, repeats: int, keep_original_files: 
         raw_f2p = [n for n in parse_id_list(row["FAIL_TO_PASS"]) if usable_nodeid(n)]
         raw_p2p = [n for n in parse_id_list(row["PASS_TO_PASS"]) if usable_nodeid(n)]
         files = sorted({n.split("::", 1)[0] for n in raw_f2p + raw_p2p if n.split("::", 1)[0].endswith(".py")})
-        collect_args = {k: v for k, v in common.items() if k != "keep_original_files"}
-        collection = await grader.collect(paths=files, timeout=GRADER_TIMEOUT, **collect_args)
+        collection = await grader.collect(paths=files, delta=gold, timeout=GRADER_TIMEOUT, **common)
         collected = collection.get("collected") or []
         if not collected and collection.get("reason"):
             raise GraderInfraError("collection failed before running: " + str(collection["reason"])[:300])

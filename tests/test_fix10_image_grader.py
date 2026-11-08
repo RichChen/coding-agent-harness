@@ -31,12 +31,15 @@ class FakeBackend:
         self.uploads = []
         self.requests = []
         self.docker_retries = []
+        self.sent = []
         FakeBackend.instances.append(self)
 
     async def start(self, seed):
         return None
 
     async def _ok(self, *argv, data=None, **kwargs):
+        if data is not None:
+            self.sent.append(data)
         if data is not None and b"a5-runner.py" in json.dumps(argv).encode():
             self.uploads.append(data)
         if "a5-pytest-receipt.json" in " ".join(str(a) for a in argv):
@@ -99,6 +102,19 @@ async def test_collect_returns_collected_node_ids(fake):
     args = json.loads(fake.instances[0].requests[0].stdin_bytes)["args"]
     assert args == ["-p", "no:cacheprovider", "--collect-only", "-q", "t.py"]
     assert collected["collected"] == ["t.py::a", "t.py::b[x y]"]
+
+
+def _applied(backend):
+    return [json.loads(d) for d in backend.sent if d.startswith(b"{") and b'"overlay"' in d]
+
+
+async def test_collect_applies_no_delta_by_default_and_the_given_delta_otherwise(fake):
+    overlay = {"t.py": "dGVzdA=="}
+    await ImageGrader().collect(image="img@sha256:" + "0" * 64, test_overlay=overlay, paths=["t.py"])
+    assert _applied(fake.instances[0]) == [{"deleted": [], "changed": {}, "overlay": overlay}]
+    gold = {"changed": {"pkg/new.py": "Z29sZA=="}, "deleted": []}
+    await ImageGrader().collect(image="img@sha256:" + "0" * 64, test_overlay=overlay, paths=["t.py"], delta=gold)
+    assert _applied(fake.instances[1]) == [{"deleted": [], "changed": {"pkg/new.py": "Z29sZA=="}, "overlay": overlay}]
 
 
 @pytest.mark.parametrize("cmd, expected", [
