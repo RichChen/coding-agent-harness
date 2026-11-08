@@ -472,12 +472,14 @@
       "stratum": "easy",
       "rank": 13,
       "original": "BerriAI__litellm-16429",
-      "final": "BerriAI__litellm-16429",
+      "final": "cal-itp__benefits-3330",
       "attempts": [
         {
           "instance_id": "BerriAI__litellm-16429",
-          "accepted": true,
-          "failed_clauses": [],
+          "accepted": false,
+          "failed_clauses": [
+            9
+          ],
           "memory_bytes": 1073741824,
           "empty_f2p": [
             0,
@@ -494,6 +496,56 @@
           "gold_p2p": [
             0,
             0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "radiasoft__pykern-578",
+          "accepted": false,
+          "failed_clauses": [
+            3
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            0,
+            1
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "cal-itp__benefits-3330",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            21,
+            21
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            21,
+            21
           ],
           "p2p_excluded": 0,
           "error": null
@@ -1229,9 +1281,36 @@
       ],
       "error": null,
       "replacement": "omni-us__jsonargparse-770"
+    },
+    {
+      "stratum": "easy",
+      "rank": 13,
+      "original": "BerriAI__litellm-16429",
+      "replaced": "BerriAI__litellm-16429",
+      "failed_clauses": [
+        9
+      ],
+      "error": null,
+      "replacement": "radiasoft__pykern-578",
+      "reopened": true
+    },
+    {
+      "stratum": "easy",
+      "rank": 13,
+      "original": "BerriAI__litellm-16429",
+      "replaced": "radiasoft__pykern-578",
+      "failed_clauses": [
+        3
+      ],
+      "error": null,
+      "replacement": "cal-itp__benefits-3330",
+      "reopened": true
     }
   ],
   "accepted": 30,
   "pending": [],
-  "unfilled": []
+  "unfilled": [],
+  "reopened": [
+    "BerriAI__litellm-16429"
+  ]
 }

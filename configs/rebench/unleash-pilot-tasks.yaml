@@ -1,46 +1,6 @@
 schema: rebench.tasks.v1
 notes: SWE-rebench tasks prepared by scripts/rebench/prepare.py. Images pinned by digest.
 tasks:
-- id: BerriAI__litellm-16429
-  repo: BerriAI/litellm
-  family: rebench
-  created_at: '2025-11-10 02:39:39'
-  base_commit: c088483da9c89261d6c773f9ed35ef5df541478f
-  receipt: runs/rebench/work/BerriAI__litellm-16429/receipt.json
-  original: runs/rebench/work/BerriAI__litellm-16429/staging/original
-  baseline: runs/rebench/work/BerriAI__litellm-16429/staging/baseline
-  public_task: D:\crq\src\coding-harness\runs\rebench\public\BerriAI__litellm-16429.json
-  clean_record: docs/rebench/clean-images/BerriAI__litellm-16429.json
-  official_image_digest: swerebench/sweb.eval.x86_64.berriai_1776_litellm-16429@sha256:860aee04b45092dc34e22a12ad9662e43acc3fe959521f01b5e21253b8dfde42
-  grader_timeout_seconds: 600
-  test_command: python -m pytest -p no:cacheprovider -W ignore::DeprecationWarning <test path>
-  grader:
-    autoload_plugins: true
-    pytest_options:
-    - -p
-    - no:cacheprovider
-    - -W
-    - ignore::DeprecationWarning
-  grader_nodeids:
-    f2p:
-    - tests/test_model_cost_map_url.py::test_model_cost_map_url_from_env
-    p2p: []
-  p2p_excluded: []
-  calibration:
-    empty_f2p:
-    - 0
-    - 1
-    empty_p2p:
-    - 0
-    - 0
-    gold_f2p:
-    - 1
-    - 1
-    gold_p2p:
-    - 0
-    - 0
-  export_keep_original_files: true
-  memory_bytes: 1073741824
 - id: BrianPugh__cyclopts-609
   repo: BrianPugh/cyclopts
   family: rebench
@@ -730,6 +690,65 @@ tasks:
     gold_p2p:
     - 90
     - 90
+  export_keep_original_files: true
+  memory_bytes: 1073741824
+- id: cal-itp__benefits-3330
+  repo: cal-itp/benefits
+  family: rebench
+  created_at: '2025-11-20 18:02:03'
+  base_commit: 2949c7d90b91830543d0a69c1bcbff8ddfcddc86
+  receipt: runs/rebench/work/cal-itp__benefits-3330/receipt.json
+  original: runs/rebench/work/cal-itp__benefits-3330/staging/original
+  baseline: runs/rebench/work/cal-itp__benefits-3330/staging/baseline
+  public_task: D:\crq\src\coding-harness\runs\rebench\public\cal-itp__benefits-3330.json
+  clean_record: docs/rebench/clean-images/cal-itp__benefits-3330.json
+  official_image_digest: swerebench/sweb.eval.x86_64.cal-itp_1776_benefits-3330@sha256:c92fbdd33f0748befcea0c1dabc543739f311714944fa8e14e14a28646473e2c
+  grader_timeout_seconds: 600
+  test_command: python -m pytest -p no:cacheprovider <test path>
+  grader:
+    autoload_plugins: true
+    pytest_options:
+    - -p
+    - no:cacheprovider
+  grader_nodeids:
+    f2p:
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_exception_http_error_409
+    p2p:
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_get_group_funding_sources_funding_source_not_enrolled_yet
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_get_group_funding_sources_funding_source_already_enrolled
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_system_error[500]
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_system_error[501]
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_system_error[502]
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_system_error[503]
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_system_error[504]
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_exception_http_error_400
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_exception_non_http_error
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_success_flow_does_not_support_expiration_customer_already_enrolled_no_expiry
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_success_flow_does_not_support_expiration_no_expiry
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_success_flow_supports_expiration
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_success_flow_supports_expiration_no_expiry
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_success_flow_supports_expiration_is_expired
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_success_flow_supports_expiration_is_within_reenrollment_window
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_reenrollment_error
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_enroll_does_not_support_expiration_has_expiration_date
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_request_card_tokenization_access
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_request_card_tokenization_access_system_error
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_request_card_tokenization_access_http_400_error
+    - tests/pytest/enrollment_littlepay/test_enrollment.py::test_request_card_tokenization_access_exception
+  p2p_excluded: []
+  calibration:
+    empty_f2p:
+    - 0
+    - 1
+    empty_p2p:
+    - 21
+    - 21
+    gold_f2p:
+    - 1
+    - 1
+    gold_p2p:
+    - 21
+    - 21
   export_keep_original_files: true
   memory_bytes: 1073741824
 - id: conan-io__conan-19604
