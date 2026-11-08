@@ -199,7 +199,7 @@ mock 端到端，三组都通过：
 2. **沙箱条件造成的样本偏差**：SDV、geocat 需要联网；pyinfra、trl 需要 uid 1000 有用户记录；pyrato 需要可写目录。这些题都被排除了。设计按此排除是一致的，但样本因此偏向对运行环境要求少的题。
 3. **数据集镜像缺陷**：pygmt 镜像里的 GMT 版本太旧；cpp-linter-hooks 的一个 F2P 不打补丁也能通过。
 4. **每步推理 token 数没有实测**：E5 冒烟测试只有玩具用例，每步分别是 0、14、47 个推理 token。第 8.3 节的费用中段仍按三档假设。250 元的批次上限和前 5 个区组之后的预测检查可以兜底，但费用预估的不确定性仍在。
-5. **磁盘**：Docker 镜像共占约 217 GB，其中 38 GB 可回收；C 盘剩余 35.6 GB，D 盘剩余 287 GB。Docker 数据放在哪个盘没有确认。开跑前应确认，运行期间留意剩余空间。
+5. **磁盘**：Docker 镜像共占约 217 GB，其中 38 GB 可回收。Docker 数据在 E 盘（作者确认），E 盘剩余 399.5 GB，足够。
 6. **镜像下载**：经代理拉取约 0.6 MB/s。改为直接从 CDN 下载分层，逐层核对 sha256 后再导入，RepoDigest 与官方一致，速度约 10–16 MB/s。下载工具没有入库。
 7. **节假日没有建模**（沿用已有说明）：法定节假日的工作日会被当成高峰时段，低谷判断偏保守，只会多等，不会多花钱。
 
@@ -219,6 +219,5 @@ mock 端到端，三组都通过：
 开跑步骤：
 
 1. 作者做最终批准。
-2. 确认 Docker 数据所在盘有足够空间。
-3. 运行 `.\.venv\Scripts\python.exe scripts\rebench\run_unleash.py --preflight`，确认结论为通过。
-4. 运行 `.\.venv\Scripts\python.exe scripts\rebench\run_unleash.py --authorized 180,250`。参数必须与启动脚本里的 180 次运行、250 元上限一致，否则拒绝运行。新运行只在低谷时段启动。
+2. 运行 `.\.venv\Scripts\python.exe scripts\rebench\run_unleash.py --preflight`，确认结论为通过。
+3. 运行 `.\.venv\Scripts\python.exe scripts\rebench\run_unleash.py --authorized 180,250`。参数必须与启动脚本里的 180 次运行、250 元上限一致，否则拒绝运行。新运行只在低谷时段启动。
