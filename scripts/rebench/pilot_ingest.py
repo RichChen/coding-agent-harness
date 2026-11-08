@@ -98,12 +98,16 @@ def main() -> None:
     parser.add_argument("--record", type=Path, default=RECORD)
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--only", action="append", default=[])
+    parser.add_argument("--recheck-isolation", action="append", default=[], metavar="ID",
+                        help="rerun the isolation stage of this task under the current rule (revision R7)")
     args = parser.parse_args()
     plan = json.loads(args.plan.read_text(encoding="utf-8"))
+    recheck = set(args.recheck_isolation)
 
     def ingest(instance_id, repeats):
         print("==", instance_id, flush=True)
-        state = prepare.prepare_task(instance_id, repeats, keep_original_files=True, manifest=args.manifest)
+        state = prepare.prepare_task(instance_id, repeats, keep_original_files=True, manifest=args.manifest,
+                                     recheck_isolation=instance_id in recheck)
         print(instance_id, json.dumps({"accepted": state["accepted"],
                                        "failed_clauses": state["calibration"]["failed_clauses"],
                                        "memory_bytes": (state.get("memory") or {}).get("memory_bytes")}), flush=True)
@@ -114,6 +118,10 @@ def main() -> None:
               "manifest": prepare.rel(args.manifest), "export_keep_original_files": True, "model_calls": 0, **record}
     if not args.only:
         args.record.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+        finals = set(task_map(record).values())
+        listed = {task["id"] for task in (prepare.yaml.safe_load(args.manifest.read_text(encoding="utf-8")) or {})
+                  .get("tasks") or []} if args.manifest.is_file() else set()
+        prepare.merge_manifest(args.manifest, [], drop=listed - finals)
     print(json.dumps({k: record[k] for k in ("accepted", "pending", "unfilled", "substitutions")}, indent=2))
 
 

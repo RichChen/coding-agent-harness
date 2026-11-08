@@ -6,9 +6,15 @@ from src.validation.replica import LocalFixtureExecutor
 from src.validation.service import ValidationService
 H=runpy.run_path(str(Path(__file__).parent/'fixtures/public_validation/support.py'))
 
+
+def real(s, seconds=60):
+    # A real interpreter and pytest start-up can take several seconds on a loaded machine.
+    return replace(s, limits=replace(s.limits, test_seconds=seconds, total_seconds=seconds + 30))
+
 @pytest.mark.asyncio
 async def test_real_local_pytest_fixture_failure_then_fix_and_clean_replica(tmp_path):
     c,store,e,s,ev,ex,svc,ctl=H['setup']()
+    s=real(s)
     materializer=H['Materializer'](store)
     svc=ValidationService(base_entries=c['C0'].entries,blobs=store,artifacts=store,
         executor=LocalFixtureExecutor(tmp_path,materializer),events=ev)
@@ -25,6 +31,7 @@ async def test_real_local_pytest_fixture_failure_then_fix_and_clean_replica(tmp_
 @pytest.mark.asyncio
 async def test_real_test_self_mutation_is_not_a_current_candidate_pass(tmp_path):
     c,store,e,s,ev,ex,svc,ctl=H['setup']()
+    s=real(s)
     original=H['Materializer'](store)
     executor=LocalFixtureExecutor(tmp_path,original)
     svc=ValidationService(base_entries=c['C0'].entries,blobs=store,artifacts=store,executor=executor,events=ev)
@@ -44,17 +51,18 @@ async def test_real_test_self_mutation_is_not_a_current_candidate_pass(tmp_path)
     (b"import os\nos._exit(0)\n",'evidence_incomplete'),
     (b"import pytest\ndef add(a,b):\n    pytest.skip('skip via implementation')\n",'no_effective_tests'),
     (b"def add(a,b):\n    print('passed '*20000)\n    return 0\n",'evidence_incomplete'),
-    (b"import time\ndef add(a,b):\n    time.sleep(10)\n    return a+b\n",'timeout'),
+    (b"import time\ndef add(a,b):\n    time.sleep(120)\n    return a+b\n",'timeout'),
 ])
 async def test_real_fixture_false_green_skip_output_limit_and_timeout(tmp_path,body,reason):
     c,store,e,s,ev,ex,svc,ctl=H['setup']()
+    s=real(s)
     materializer=H['Materializer'](store)
     svc=ValidationService(base_entries=c['C0'].entries,blobs=store,artifacts=store,
         executor=LocalFixtureExecutor(tmp_path,materializer),events=ev)
     baseline=await svc.validate(c['C0'],s,e,trigger='baseline',operation_id='base',control=ctl)
     binding=svc.bind_baseline(s,e,baseline)
     if reason=='timeout':
-        s=replace(s,limits=replace(s.limits,test_seconds=1))
+        s=real(s,15)
         # Changed policy requires its own baseline; use a fresh task ledger/service.
         c,store,e,_,ev,ex,_,ctl=H['setup']()
         materializer=H['Materializer'](store)

@@ -308,10 +308,40 @@ print(json.dumps(hashes))
 
 def filesystem_scan(digest: str, archive: Path, manifest: dict, test_patch: str, gold_patch: str, python_bin: str = "/usr/local/bin/python", base_image: str | None = None, timeout: float = 600):
     packages = repo_packages(manifest)
+    needles, found = scan_needles(digest, archive, test_patch, gold_patch, python_bin, timeout)
+    if not needles:
+        return {"needle_count": 0, "hits": ["no-unique-needle"], "pass": False, "base_image_same": []}
+    same: list[str] = []
+    install_same: list[str] = []
+    if base_image and found:
+        base_hashes = _base_image_hashes(base_image, [item["path"] for item in found], python_bin)
+        remaining, same = exclude_base_image_matches(found, base_hashes, packages)
+    else:
+        remaining = list(found)
+    if remaining:
+        recorded = _recorded_install_hashes(digest, python_bin)
+        hits, install_same = exclude_recorded_installs(remaining, recorded, packages)
+    else:
+        hits = []
+    return {
+        "needle_count": len(needles),
+        "hits": hits[:20],
+        "hit_count": len(hits),
+        "base_image_same": same[:20],
+        "base_image_same_count": len(same),
+        "install_record_same": install_same[:20],
+        "install_record_same_count": len(install_same),
+        "pass": not hits,
+    }
+
+
+def scan_needles(digest: str, archive: Path, test_patch: str, gold_patch: str, python_bin: str = "/usr/local/bin/python",
+                 timeout: float = 600) -> tuple[list[str], list[dict]]:
+    """Needles (added patch lines absent from the source) and every image file containing one: [{path, sha256}]."""
     blob = archive_text(archive)
     needles = added_lines(test_patch, blob) + added_lines(gold_patch, blob)
     if not needles:
-        return {"needle_count": 0, "hits": ["no-unique-needle"], "pass": False, "base_image_same": []}
+        return needles, []
     code = r'''
 import hashlib, json, pathlib, sys, tarfile, zipfile
 needles = json.load(sys.stdin)
@@ -354,29 +384,7 @@ for root in roots:
 print(json.dumps({"found": hits}))
 '''
     raw = docker_python(digest, code, json.dumps(needles).encode(), python_bin=python_bin, timeout=timeout)
-    found = json.loads(raw).get("found") or []
-    same: list[str] = []
-    install_same: list[str] = []
-    if base_image and found:
-        base_hashes = _base_image_hashes(base_image, [item["path"] for item in found], python_bin)
-        remaining, same = exclude_base_image_matches(found, base_hashes, packages)
-    else:
-        remaining = list(found)
-    if remaining:
-        recorded = _recorded_install_hashes(digest, python_bin)
-        hits, install_same = exclude_recorded_installs(remaining, recorded, packages)
-    else:
-        hits = []
-    return {
-        "needle_count": len(needles),
-        "hits": hits[:20],
-        "hit_count": len(hits),
-        "base_image_same": same[:20],
-        "base_image_same_count": len(same),
-        "install_record_same": install_same[:20],
-        "install_record_same_count": len(install_same),
-        "pass": not hits,
-    }
+    return needles, json.loads(raw).get("found") or []
 
 
 def main():

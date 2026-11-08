@@ -251,16 +251,24 @@ def image_present(digest: str) -> bool:
 # ---- isolation ----
 
 def isolation_stage(row: dict, work: Path):
-    from scripts.build_clean_baseline import docker_python, filesystem_scan, source_only_check
+    from scripts.build_clean_baseline import docker_python, repo_packages, scan_needles
+    from scripts.rebench.provenance import RULE, classify_hits, provenance, source_check
     from src.eval.a5_image_tree import archive_manifest
 
     def run(state):
         image = state["image"]["clean_digest"]
         archive = work / "source.tar.gz"
         manifest = archive_manifest(archive, row["repo"], row["base_commit"])
-        source_ok, source_hash = source_only_check(image, manifest)
-        scan = filesystem_scan(image, archive, manifest, row["test_patch"] or "", row["patch"] or "",
-                               timeout=SCAN_TIMEOUT)
+        source = source_check(image, archive, manifest)
+        source_ok = source["match"]
+        source_hash = manifest["source_tree_hash"] if source_ok else "mismatch:" + str(source["mismatch_count"])
+        needles, found = scan_needles(image, archive, row["test_patch"] or "", row["patch"] or "", timeout=SCAN_TIMEOUT)
+        failing, excused = classify_hits(found, provenance(image, found), repo_packages(manifest))
+        if not needles:
+            failing = ["no-unique-needle"]
+        scan = {"rule": RULE, "needle_count": len(needles), "raw_hit_count": len(found), "hits": failing[:50],
+                "hit_count": len(failing), "excused": excused[:200], "excused_count": len(excused),
+                "pass": not failing}
         layout = json.loads(docker_python(image, (
             "import json, os, pathlib\n"
             "w = pathlib.Path('/workspace'); t = pathlib.Path('/testbed')\n"
@@ -269,8 +277,9 @@ def isolation_stage(row: dict, work: Path):
             " 'repo_git': pathlib.Path('/opt/repo/.git').exists(), 'repo_extra_files': len(extra), 'repo_extra_sample': extra[:8],"
             " 'natives': json.loads(pathlib.Path('/opt/native-artifacts.json').read_text())}))\n")))
         passed = bool(source_ok and scan.get("pass") and layout["workspace_entries"] == 0 and not layout["repo_git"])
-        return {"isolation": {"source_only_match": source_ok, "source_hash": source_hash, "filesystem_scan": scan,
-                              "layout": layout, "answer_isolation_pass": passed}}
+        return {"isolation": {"rule": RULE, "source_only_match": source_ok, "source_check": source,
+                              "source_hash": source_hash, "filesystem_scan": scan, "layout": layout,
+                              "answer_isolation_pass": passed}}
     return run
 
 
@@ -494,8 +503,29 @@ def outputs_stage(row: dict, work: Path, manifest: Path = MANIFEST):
     return run
 
 
+def recheck_isolation_state(state: dict, isolation) -> bool:
+    """Rerun the isolation stage under the current rule and redo clause 2 in place; calibration is kept.
+    The earlier isolation result is kept in isolation_history. True when the state changed."""
+    from scripts.rebench.provenance import RULE
+
+    if "isolation" not in state.get("done", []) or (state.get("isolation") or {}).get("rule") == RULE:
+        return False
+    history = state.get("isolation_history") or []
+    history.append(state["isolation"])
+    state.update(isolation(state))
+    state["isolation_history"] = history
+    cal = state.get("calibration")
+    if "calibration" in state["done"] and cal and "failed_clauses" in cal:
+        clauses = [c for c in cal["failed_clauses"] if c != 2]
+        if not state["isolation"]["answer_isolation_pass"]:
+            clauses.append(2)
+        cal["failed_clauses"] = sorted(clauses)
+        cal["accepted"] = not clauses
+    return True
+
+
 def prepare_task(instance_id: str, repeats: int, redo=(), *, keep_original_files: bool = False,
-                 manifest: Path = MANIFEST) -> dict:
+                 manifest: Path = MANIFEST, recheck_isolation: bool = False) -> dict:
     row = load_row(instance_id)
     work = WORK / instance_id
     work.mkdir(parents=True, exist_ok=True)
@@ -512,6 +542,11 @@ def prepare_task(instance_id: str, repeats: int, redo=(), *, keep_original_files
             redo.add("calibration")
         if "outputs" in state.get("done", []) and state.get("manifest") != rel(manifest):
             redo.add("outputs")
+    if recheck_isolation and path.is_file():
+        state = json.loads(path.read_text(encoding="utf-8"))
+        if recheck_isolation_state(state, isolation_stage(row, work)):
+            _save(path, state)
+            redo.add("memory")
     stages = [("source", source_stage(row, work)),
               ("task_files", lambda state: write_task_files(row)),
               ("image", image_stage(row, work)),

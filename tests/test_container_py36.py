@@ -23,6 +23,7 @@ MODULES = [
     "scripts/preflight_a5_repo_baseline.py",
     "scripts/build_clean_baseline.py",
     "scripts/rewritten_sources.py",
+    "scripts/rebench/provenance.py",
 ]
 # Uploaded to /tmp/a5-runner.py and run as a whole file.
 WHOLE_FILES = ["scripts/a5_django_observer.py"]

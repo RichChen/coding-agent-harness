@@ -46,6 +46,37 @@ def test_escaping_cyclic_and_dangling_links_rejected(target):
         validate_entries(entries)
 
 
+def test_link_to_internal_directory_is_bound():
+    entries = tree(); entries['docs/srclink'] = dict(kind='symlink', mode=0o777, target='../src')
+    assert tree_hash(validate_entries(entries)) != tree_hash(tree())
+
+
+@pytest.mark.parametrize('target', ['..', '.', '../docs', '../docs/link'])
+def test_link_to_an_ancestor_or_another_link_rejected(target):
+    entries = tree(); entries['docs/up'] = dict(kind='symlink', mode=0o777, target=target)
+    with pytest.raises(ValueError):
+        validate_entries(entries)
+
+
+def test_rebench_directory_link_archive_manifest(tmp_path):
+    path = tmp_path / 'repo.tar.gz'
+    with tarfile.open(str(path), 'w:gz', pax_headers={'comment': 'abc'}) as archive:
+        for name, kind, data in [('enterprise', 'dir', b''), ('enterprise/a.py', 'file', b'x'), ('pkg', 'dir', b''),
+                                 ('pkg/proxy', 'dir', b''), ('pkg/proxy/enterprise', 'sym', b'../../enterprise')]:
+            info = tarfile.TarInfo('repo-abc/' + name)
+            if kind == 'dir':
+                info.type, info.mode = tarfile.DIRTYPE, 0o755
+                archive.addfile(info)
+            elif kind == 'sym':
+                info.type, info.linkname, info.mode = tarfile.SYMTYPE, data.decode(), 0o777
+                archive.addfile(info)
+            else:
+                info.size, info.mode = len(data), 0o644
+                archive.addfile(info, io.BytesIO(data))
+    manifest = archive_manifest(path, 'o/repo', 'abc')
+    assert manifest['entries']['pkg/proxy/enterprise'] == dict(kind='symlink', mode=0o777, target='../../enterprise')
+
+
 def test_child_below_link_and_special_mode_rejected():
     entries = tree(); entries['docs/link/child'] = file_meta()
     with pytest.raises(ValueError, match='ancestor'):

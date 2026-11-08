@@ -72,10 +72,14 @@ def validate_entries(entries):
             resolved = posixpath.normpath(posixpath.join(str(path.parent), target))
             if resolved == '..' or resolved.startswith('../'):
                 raise ValueError('escaping link target')
-            # Bind only links terminating in a regular file. This rejects link
-            # cycles and traversal through links while preserving A5 doc assets.
-            if entries.get(resolved, {}).get('kind') != 'file':
-                raise ValueError('symlink does not name an internal regular file')
+            # Bind only links naming a real internal file or directory (never a link,
+            # never an ancestor of the link). This rejects cycles and traversal
+            # through links; nothing is recorded below a linked directory.
+            kind = entries.get(resolved, {}).get('kind')
+            if kind == 'dir' and (str(path) + '/').startswith(resolved + '/'):
+                raise ValueError('symlink names an ancestor directory')
+            if kind not in ('file', 'dir'):
+                raise ValueError('symlink does not name an internal regular file or directory')
     return entries
 
 
