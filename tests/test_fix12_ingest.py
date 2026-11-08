@@ -189,3 +189,63 @@ def test_exhausted_queue_leaves_the_slot_unfilled():
     ingest, _ = fake({"o1": [4], "o2": [5]})
     result = ingest_plan(plan(), ingest)
     assert result["unfilled"] == ["o1"] and result["accepted"] == 2
+
+
+def test_reopening_a_slot_moves_no_task_of_another_slot():
+    from scripts.rebench.pilot_ingest import reopen_slot
+
+    first, _ = fake({"e1": [3]})
+    record = ingest_plan(plan(), first)
+    assert task_map(record) == {"e1": "e3", "e2": "e2", "o1": "o1"}
+    again, calls = fake({"e2": [9]})
+    reopened = reopen_slot(plan(), record, "e2", again)
+    assert calls == ["e2", "e4"]
+    assert task_map(reopened) == {"e1": "e3", "e2": "e4", "o1": "o1"}
+    last = reopened["substitutions"][-1]
+    assert (last["replaced"], last["failed_clauses"], last["replacement"], last["reopened"]) == ("e2", [9], "e4", True)
+    assert reopened["reopened"] == ["e2"] and reopened["accepted"] == 3
+    assert reopened["slots"][0] == record["slots"][0]
+
+
+class FakeBackend:
+    outcomes: list = []
+    made: list = []
+
+    def __init__(self, image, *, keep_original_files, memory_bytes):
+        self.workspace_bytes = 256 * 1024**2
+        FakeBackend.made.append((image, keep_original_files, memory_bytes))
+
+    async def start(self):
+        outcome = FakeBackend.outcomes.pop(0)
+        if outcome:
+            raise RuntimeError(outcome)
+
+    async def close(self):
+        pass
+
+
+def workspace(monkeypatch, outcomes, *, accepted=True, memory=2 * 1024**3):
+    from scripts import run_swe_task
+    from scripts.rebench import prepare
+
+    FakeBackend.outcomes, FakeBackend.made = list(outcomes), []
+    monkeypatch.setattr(run_swe_task, "clean_backend", FakeBackend)
+    state = {"image": {"clean_digest": "img"}, "memory": {"memory_bytes": memory},
+             "calibration": {"accepted": accepted, "failed_clauses": [] if accepted else [3]}, "accepted": accepted}
+    return prepare.workspace_stage({}, None, keep_original_files=True)(state)
+
+
+def test_a_workspace_that_cannot_start_twice_fails_clause_9(monkeypatch):
+    out = workspace(monkeypatch, ["Docker control output quota exceeded"] * 2)
+    assert out["accepted"] is False and out["calibration"]["accepted"] is False
+    assert out["calibration"]["failed_clauses"] == [9] and "quota" in out["workspace"]["error"]
+    assert FakeBackend.made == [("img", True, 2 * 1024**3)] * 2
+
+
+def test_one_transient_start_failure_does_not_exclude(monkeypatch):
+    out = workspace(monkeypatch, ["transient", None])
+    assert out == {"workspace": {**out["workspace"], "ok": True, "error": None}} and len(FakeBackend.made) == 2
+
+
+def test_rejected_tasks_are_not_probed(monkeypatch):
+    assert workspace(monkeypatch, [], accepted=False) == {"workspace": {"probed": False}}

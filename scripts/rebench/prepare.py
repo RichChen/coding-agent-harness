@@ -48,7 +48,7 @@ CONDA_PYTHON = "/opt/conda/envs/testbed/bin/python"
 GRADER_TIMEOUT = 600
 SCAN_TIMEOUT = 3600  # the answer-isolation scan reads every file of the image, archives included
 DIGEST = re.compile(r"^[^@\s]+@sha256:[0-9a-f]{64}$")
-STAGES = ("source", "task_files", "image", "isolation", "calibration", "memory", "outputs")
+STAGES = ("source", "task_files", "image", "isolation", "calibration", "memory", "workspace", "outputs")
 
 
 def rel(path: Path) -> str:
@@ -431,6 +431,45 @@ def memory_stage(row: dict, work: Path, keep_original_files: bool = False):
     return run
 
 
+WORKSPACE_CLAUSE = 9
+
+
+def workspace_stage(row: dict, work: Path, keep_original_files: bool = False):
+    """Start the agent's workspace once as a real run does: same backend, limits and memory. A task whose
+    repository cannot be copied into the workspace fails clause 9 (pilot design revision R10)."""
+    from scripts.run_swe_task import clean_backend
+
+    async def probe(state):
+        cal = state["calibration"]
+        if not cal["accepted"]:
+            return {"workspace": {"probed": False}}
+        memory = (state.get("memory") or {}).get("memory_bytes") or ONE_GIB
+        errors = []
+        # A second attempt keeps a transient Docker failure from excluding a task.
+        for _ in range(2):
+            backend = clean_backend(state["image"]["clean_digest"], keep_original_files=keep_original_files,
+                                    memory_bytes=memory)
+            try:
+                await backend.start()
+                break
+            except Exception as exc:  # noqa: BLE001 - any start failure is the finding
+                errors.append(type(exc).__name__ + ": " + str(exc)[:500])
+            finally:
+                await backend.close()
+        error = errors[-1] if len(errors) == 2 else None
+        found = {"probed": True, "ok": error is None, "error": error, "attempt_errors": errors,
+                 "workspace_bytes": backend.workspace_bytes, "memory_bytes": memory}
+        if error is None:
+            return {"workspace": found}
+        clauses = sorted(set(cal["failed_clauses"]) | {WORKSPACE_CLAUSE})
+        return {"workspace": found, "calibration": {**cal, "failed_clauses": clauses, "accepted": False},
+                "accepted": False}
+
+    def run(state):
+        return asyncio.run(probe(state))
+    return run
+
+
 # ---- outputs ----
 
 def clean_record(record: dict) -> dict:
@@ -552,6 +591,7 @@ def prepare_task(instance_id: str, repeats: int, redo=(), *, keep_original_files
               ("isolation", isolation_stage(row, work)),
               ("calibration", calibration_stage(row, work, repeats, keep_original_files)),
               ("memory", memory_stage(row, work, keep_original_files)),
+              ("workspace", workspace_stage(row, work, keep_original_files)),
               ("outputs", lambda state: {**outputs_stage(row, work, manifest)(state), "manifest": rel(manifest)})]
     return run_stages(path, stages, redo=redo)
 

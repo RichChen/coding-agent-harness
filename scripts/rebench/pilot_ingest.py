@@ -80,10 +80,46 @@ def ingest_plan(plan: dict, ingest, repeats: int = 3, only: set[str] | None = No
             final = attempts[-1]["instance_id"] if attempts[-1]["accepted"] else None
             slots.append({"stratum": stratum, "rank": primary["rank"], "original": primary["instance_id"],
                           "final": final, "attempts": attempts})
-    return {"slots": slots, "substitutions": substitutions,
-            "accepted": sum(1 for slot in slots if slot["final"]),
+    return summarize_slots({"slots": slots, "substitutions": substitutions})
+
+
+def summarize_slots(record: dict) -> dict:
+    slots = record["slots"]
+    return {**record, "accepted": sum(1 for slot in slots if slot["final"]),
             "pending": [s["attempts"][-1]["instance_id"] for s in slots if s["attempts"][-1].get("pending")],
             "unfilled": [s["original"] for s in slots if not s["final"] and not s["attempts"][-1].get("pending")]}
+
+
+def reopen_slot(plan: dict, record: dict, final_id: str, ingest, repeats: int = 3) -> dict:
+    """Re-ingest the accepted task of one slot after the batch has started (design revision R10). Every other
+    slot keeps its recorded attempts: its tasks stay tried and its final repository stays taken, so no task
+    that has started model runs is moved."""
+    slot = next(s for s in record["slots"] if s["final"] == final_id)
+    stratum = slot["stratum"]
+    repos = {task["instance_id"]: task["repo"] for name in ("easy", "other") for task in plan["tasks"][name]}
+    queue = [task for task in plan["tasks"][stratum] if task["role"] == "replacement"]
+    tried = {a["instance_id"] for s in record["slots"] if s["stratum"] == stratum for a in s["attempts"]}
+    taken = {repos[s["final"]] for s in record["slots"] if s["final"] and s is not slot}
+    attempts = [*slot["attempts"][:-1], attempt(final_id, repeats, ingest)]
+    substitutions = list(record["substitutions"])
+    current = final_id
+    while not attempts[-1]["accepted"] and not attempts[-1].get("pending"):
+        substitute = choose_replacement(queue, tried, taken)
+        if substitute is None:
+            break
+        substitutions.append({"stratum": stratum, "rank": slot["rank"], "original": slot["original"],
+                              "replaced": current, "failed_clauses": attempts[-1]["failed_clauses"],
+                              "error": attempts[-1]["error"], "replacement": substitute["instance_id"],
+                              "reopened": True})
+        tried.add(substitute["instance_id"])
+        taken.add(substitute["repo"])
+        current = substitute["instance_id"]
+        attempts.append(attempt(current, repeats, ingest))
+    reopened = {**slot, "final": attempts[-1]["instance_id"] if attempts[-1]["accepted"] else None,
+                "attempts": attempts}
+    slots = [reopened if s is slot else s for s in record["slots"]]
+    return summarize_slots({**record, "slots": slots, "substitutions": substitutions,
+                            "reopened": [*record.get("reopened", []), final_id]})
 
 
 def task_map(record: dict) -> dict[str, str]:
@@ -98,6 +134,8 @@ def main() -> None:
     parser.add_argument("--record", type=Path, default=RECORD)
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--only", action="append", default=[])
+    parser.add_argument("--reopen", action="append", default=[], metavar="ID",
+                        help="after the batch started: re-ingest this accepted task; all other slots stay as recorded")
     parser.add_argument("--recheck-isolation", action="append", default=[], metavar="ID",
                         help="rerun the isolation stage of this task under the current rule (revision R7)")
     args = parser.parse_args()
@@ -113,9 +151,16 @@ def main() -> None:
                                        "memory_bytes": (state.get("memory") or {}).get("memory_bytes")}), flush=True)
         return state
 
-    record = ingest_plan(plan, ingest, args.repeats, set(args.only) or None)
-    record = {"schema": "unleash-pilot.ingest.v1", "plan_sha256": prepare.hashlib.sha256(args.plan.read_bytes()).hexdigest(),
-              "manifest": prepare.rel(args.manifest), "export_keep_original_files": True, "model_calls": 0, **record}
+    if args.reopen:
+        record = json.loads(args.record.read_text(encoding="utf-8"))
+        for final_id in args.reopen:
+            record = reopen_slot(plan, record, final_id, ingest, args.repeats)
+    else:
+        record = ingest_plan(plan, ingest, args.repeats, set(args.only) or None)
+        record = {"schema": "unleash-pilot.ingest.v1",
+                  "plan_sha256": prepare.hashlib.sha256(args.plan.read_bytes()).hexdigest(),
+                  "manifest": prepare.rel(args.manifest), "export_keep_original_files": True, "model_calls": 0,
+                  **record}
     if not args.only:
         args.record.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
         finals = set(task_map(record).values())
