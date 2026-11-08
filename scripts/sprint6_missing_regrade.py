@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.run_a5_main import accepted_tasks, load_targets, materialize_runner_task  # noqa: E402
-from scripts.run_swe_task import calibration_row, delta_changes, empty_regrade, prerun_check  # noqa: E402
+from scripts.run_swe_task import delta_changes, empty_calibration, empty_regrade, prerun_check  # noqa: E402
 from src.eval.candidate_error import (  # noqa: E402
     classify_missing,
     classify_timeout,
@@ -27,7 +27,8 @@ from src.eval.candidate_error import (  # noqa: E402
 )
 
 
-async def regrade_run(run_dir: Path) -> dict:
+async def regrade_run(run_dir: Path, prepared: dict | None = None) -> dict:
+    """prepared: the runner task the run used; by default looked up among the sprint targets."""
     summary_path = run_dir / "summary.json"
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     evaluation = json.loads((run_dir / "grader-result.json").read_text(encoding="utf-8"))
@@ -39,17 +40,18 @@ async def regrade_run(run_dir: Path) -> dict:
         raise SystemExit("infra_error runs are not regraded: " + str(run_dir))
     if summary.get("grader_candidate_error"):
         raise SystemExit("already classified: " + str(run_dir))
-    task = next(task for task in accepted_tasks(load_targets()) if task["id"] == summary["task_id"])
-    prepared = materialize_runner_task(task)
+    if prepared is None:
+        task = next(task for task in accepted_tasks(load_targets()) if task["id"] == summary["task_id"])
+        prepared = materialize_runner_task(task)
     spec, image, clean, failure = prerun_check(prepared, mock=False)
     if failure:
         raise SystemExit("pre-run check failed: " + failure)
     if clean is not None and summary.get("clean_image_digest") not in (None, image):
         raise SystemExit("image differs from the run: " + str(image) + " vs " + str(summary.get("clean_image_digest")))
     f2p = [node for node in spec.expected_nodeids if node not in spec.baseline_passed]
-    regrade = await empty_regrade(prepared, image, spec, f2p)
+    regrade = await empty_regrade(prepared, image, spec, f2p, bool(prepared.get("export_keep_original_files")))
     (run_dir / "grader-regrade-empty.json").write_text(json.dumps(regrade, indent=2, default=str), encoding="utf-8")
-    verdict = regrade_verdict(regrade, expected_empty(calibration_row(prepared["id"])))
+    verdict = regrade_verdict(regrade, expected_empty(empty_calibration(prepared)))
     if missing:
         delta_path = run_dir / "candidate-delta.json"
         changed = delta_changes(json.loads(delta_path.read_text(encoding="utf-8"))) if delta_path.is_file() else []

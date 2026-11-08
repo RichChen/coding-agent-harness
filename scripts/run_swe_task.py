@@ -500,7 +500,7 @@ def grader_options(task: dict) -> dict:
     return options
 
 
-async def empty_regrade(task: dict, image: str, spec, f2p: list[str]) -> dict:
+async def empty_regrade(task: dict, image: str, spec, f2p: list[str], keep_original_files: bool = False) -> dict:
     """Grade the same image and test overlay with an empty delta. No model calls."""
     return await ImageGrader().evaluate(
         image=image,
@@ -511,6 +511,7 @@ async def empty_regrade(task: dict, image: str, spec, f2p: list[str]) -> dict:
         django=task.get("family") == "django",
         sympy=False,
         timeout=float(task["grader_timeout_seconds"]),
+        keep_original_files=keep_original_files,
         **grader_options(task),
     )
 
@@ -518,6 +519,26 @@ async def empty_regrade(task: dict, image: str, spec, f2p: list[str]) -> dict:
 def calibration_row(task_id: str, root: Path = MAIN_CALIBRATION) -> dict | None:
     path = root / (task_id + ".json")
     return load_json(path) if path.is_file() else None
+
+
+def rebench_calibration(task: dict) -> dict | None:
+    """A SWE-rebench task's calibration: counts from its manifest row, plus the F2P ids that every empty-delta
+    run of its ingest calibration reported missing (kept in the ingest state next to the receipt)."""
+    counts = task.get("calibration") or {}
+    if counts.get("empty_f2p") is None or counts.get("empty_p2p") is None or not task.get("receipt"):
+        return None
+    state = ROOT / Path(task["receipt"]).parent / "state.json"
+    if not state.is_file():
+        return None
+    runs = ((load_json(state).get("calibration") or {}).get("runs") or {}).get("empty") or []
+    missing = [{node for node, outcome in (run.get("f2p_outcomes") or {}).items() if outcome == "missing"} for run in runs]
+    return {"empty_f2p": counts["empty_f2p"], "empty_p2p": counts["empty_p2p"],
+            "p2p_excluded": task.get("p2p_excluded") or [],
+            "empty_missing": sorted(set.intersection(*missing)) if missing else []}
+
+
+def empty_calibration(task: dict) -> dict | None:
+    return rebench_calibration(task) if task.get("family") == "rebench" else calibration_row(task["id"])
 
 
 def parse_created_at(value, what: str) -> datetime:
@@ -924,9 +945,9 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
     verdict = None
     regrade_retries = []
     if (missing or timed_out) and not infra:
-        regrade = await empty_regrade(task, image, spec, f2p)
+        regrade = await empty_regrade(task, image, spec, f2p, keep_original)
         (output / "grader-regrade-empty.json").write_text(json.dumps(regrade, indent=2, default=str), encoding="utf-8")
-        verdict = regrade_verdict(regrade, expected_empty(calibration_row(task["id"])))
+        verdict = regrade_verdict(regrade, expected_empty(empty_calibration(task)))
         regrade_retries = regrade.get("docker_retries") or []
     candidate_error = None
     if missing and not infra:

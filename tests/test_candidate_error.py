@@ -166,6 +166,35 @@ def test_the_traceback_rule_still_comes_first_and_no_missing_needs_nothing():
     assert classify_missing(_evaluation(cases=[{"nodeid": "x", "outcome": "failed"}]), CHANGED, None) is None
 
 
+INTERFACE_CALIBRATION = {"empty_f2p": [0, 2], "empty_p2p": [3, 3], "p2p_excluded": [], "empty_missing": ["f1", "f0"]}
+
+
+def _interface_regrade(missing=("f0", "f1")):
+    cases = [{"nodeid": n, "outcome": "missing" if n in missing else "failed"} for n in ("f0", "f1")] + [
+        {"nodeid": "p" + str(i), "outcome": "missing" if "p" + str(i) in missing else "passed"} for i in range(3)]
+    passed = sum(1 for i in range(3) if "p" + str(i) not in missing)
+    return {"status": "fail", "reason": None, "cases": cases, "f2p_passed": 0, "f2p_total": 2, "p2p_passed": passed, "p2p_total": 3}
+
+
+def test_an_empty_regrade_reproducing_the_calibrated_missing_ids_is_consistent(tmp_path):
+    expected = expected_empty(INTERFACE_CALIBRATION)
+    assert expected == {"f2p": [0, 2], "p2p": [3, 3], "missing": ["f0", "f1"]}
+    evaluation = _evaluation(cases=[{"nodeid": "f0", "outcome": "missing"}, {"nodeid": "f1", "outcome": "missing"}])
+    verdict = regrade_verdict(_interface_regrade(), expected)
+    assert verdict["consistent"] and verdict["missing"] == 2
+    assert classify_missing(evaluation, CHANGED, verdict) == "execution"
+    _summary(tmp_path, "o__r-1_interface", grader_candidate_error="execution", missing_regrade=verdict)
+    assert halt_reason(tmp_path, "b0") is None
+
+
+def test_missing_ids_other_than_the_calibrated_ones_still_stop():
+    expected = expected_empty(INTERFACE_CALIBRATION)
+    evaluation = _evaluation(cases=[{"nodeid": "f0", "outcome": "missing"}])
+    assert not regrade_verdict(_interface_regrade(missing=("f0",)), expected)["consistent"]
+    assert not regrade_verdict(_interface_regrade(missing=("f0", "f1", "p0")), {**expected, "p2p": [2, 3]})["consistent"]
+    assert classify_missing(evaluation, CHANGED, regrade_verdict(_interface_regrade(missing=("f0",)), expected)) is None
+
+
 SPHINX_CALIBRATION = {"empty_f2p": [0, 1], "empty_p2p": [24, 24], "p2p_excluded": []}
 RECEIPT_GONE = "DockerUnavailable: Docker exec failed after 3 retries: FileNotFoundError: /tmp/a5-pytest-receipt.json"
 

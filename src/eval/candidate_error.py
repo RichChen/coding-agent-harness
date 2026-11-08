@@ -60,28 +60,41 @@ def expected_empty(calibration: dict | None) -> dict | None:
 
     P2P follows the approved p2p_excluded reading: excluded ids leave the runtime set, and in calibration they
     all failed under the empty delta, so the total drops by their count and the passed count stays.
+    A calibration with empty_missing lists ids every empty-delta calibration run reported missing, e.g. a test
+    module that imports a name only the gold patch adds; the regrade must then report exactly those as missing.
     """
     if not calibration or calibration.get("empty_f2p") is None or calibration.get("empty_p2p") is None:
         return None
     excluded = len(calibration.get("p2p_excluded") or [])
     passed, total = calibration["empty_p2p"]
-    return {"f2p": list(calibration["empty_f2p"]), "p2p": [passed, total - excluded]}
+    expected = {"f2p": list(calibration["empty_f2p"]), "p2p": [passed, total - excluded]}
+    if calibration.get("empty_missing"):
+        expected["missing"] = sorted(calibration["empty_missing"])
+    return expected
+
+
+def missing_ids(evaluation: dict) -> list[str]:
+    return sorted(case.get("nodeid") for case in evaluation.get("cases") or [] if case.get("outcome") == "missing")
 
 
 def regrade_verdict(regrade: dict, expected: dict | None) -> dict:
-    """missing_regrade: the empty-delta regrade has no missing id and matches calibration."""
+    """missing_regrade: the empty-delta regrade matches calibration, missing ids included (none unless the
+    calibration recorded some)."""
     got = {
         "f2p": [regrade.get("f2p_passed"), regrade.get("f2p_total")],
         "p2p": [regrade.get("p2p_passed"), regrade.get("p2p_total")],
     }
     missing = missing_count(regrade)
+    consistent = (expected is not None and not regrade.get("reason")
+                  and got == {"f2p": expected["f2p"], "p2p": expected["p2p"]}
+                  and missing_ids(regrade) == expected.get("missing", []))
     return {
         "status": regrade.get("status"),
         "reason": regrade.get("reason"),
         "missing": missing,
         **got,
         "expected": expected,
-        "consistent": expected is not None and missing == 0 and not regrade.get("reason") and got == expected,
+        "consistent": consistent,
     }
 
 
