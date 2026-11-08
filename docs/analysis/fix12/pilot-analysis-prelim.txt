@@ -1,0 +1,73 @@
+G1 tasks with all 6 runs valid: 30 / 30
+status by group: {'A': {'partial': 3, 'fail': 41, 'delta_too_large': 2, 'pass': 14}, 'UT': {'pass': 44, 'fail': 11, 'partial': 3, 'delta_too_large': 2}, 'U': {'pass': 23, 'fail': 34, 'partial': 3}}
+A: solved 14/60 = 23.3%, cost 14.68 CNY, per run 0.245, per solve 1.048, median calls 40
+U: solved 23/60 = 38.3%, cost 14.49 CNY, per run 0.241, per solve 0.630, median calls 92
+UT: solved 44/60 = 73.3%, cost 13.83 CNY, per run 0.231, per solve 0.314, median calls 28
+strata sizes: {'easy': 15, 'other': 15}
+
+== overall (30 tasks)
+  U-A: delta +15.0 pp, cost ratio 0.987, per-solve ratio 0.601
+  UT-U: delta +35.0 pp, cost ratio 0.955, per-solve ratio 0.499
+  UT-A: delta +50.0 pp, cost ratio 0.942, per-solve ratio 0.300
+  bootstrap U-A: delta 95% [+3.3, +28.3] pp; cost ratio [0.774, 1.237]; per-solve ratio [0.286, 1.011] (dropped 0.0%)
+  bootstrap UT-U: delta 95% [+21.7, +48.3] pp; cost ratio [0.782, 1.187]; per-solve ratio [0.308, 0.759] (dropped 0.0%)
+  bootstrap UT-A: delta 95% [+35.0, +65.0] pp; cost ratio [0.776, 1.119]; per-solve ratio [0.128, 0.496] (dropped 0.0%)
+
+== stratum easy (15 tasks)
+  U-A: delta +23.3 pp, cost ratio 1.016, per-solve ratio 0.423
+  UT-U: delta +50.0 pp, cost ratio 0.759, per-solve ratio 0.337
+  UT-A: delta +73.3 pp, cost ratio 0.771, per-solve ratio 0.143
+
+== stratum other (15 tasks)
+  U-A: delta +6.7 pp, cost ratio 0.958, per-solve ratio 0.784
+  UT-U: delta +20.0 pp, cost ratio 1.161, per-solve ratio 0.751
+  UT-A: delta +26.7 pp, cost ratio 1.113, per-solve ratio 0.589
+
+== without interface tasks (26 tasks)
+  U-A: delta +9.6 pp, cost ratio 1.060, per-solve ratio 0.729
+  UT-U: delta +38.5 pp, cost ratio 0.926, per-solve ratio 0.412
+  UT-A: delta +48.1 pp, cost ratio 0.982, per-solve ratio 0.300
+
+== created 2025 (19 tasks)
+  U-A: delta +10.5 pp, cost ratio 0.990, per-solve ratio 0.660
+  UT-U: delta +42.1 pp, cost ratio 0.968, per-solve ratio 0.415
+  UT-A: delta +52.6 pp, cost ratio 0.958, per-solve ratio 0.274
+
+== created 2026 (11 tasks)
+  U-A: delta +22.7 pp, cost ratio 0.982, per-solve ratio 0.536
+  UT-U: delta +22.7 pp, cost ratio 0.931, per-solve ratio 0.640
+  UT-A: delta +45.5 pp, cost ratio 0.914, per-solve ratio 0.343
+
+per task solved (A U UT, of 2):
+  easy  BrianPugh__cyclopts-609                                 0 1 2
+  other Kozea__WeasyPrint-2494                                  0 0 2
+  other agronholm__anyio-935                                    2 2 2
+  easy  apache__iceberg-python-3295                             1 1 2
+  other astropy__astropy-18818                                  0 1 1
+  other aws__bedrock-agentcore-sdk-python-279_interface         2 2 2
+  easy  cal-itp__benefits-3330                                  0 0 2
+  easy  conan-io__conan-19604                                   0 2 2
+  easy  dask__fastparquet-961                                   2 2 2
+  easy  feder-observatory__stellarphot-526                      0 1 2
+  other jsonpickle__jsonpickle-587                              0 0 0
+  other marshmallow-code__marshmallow-2925_interface            0 1 2
+  easy  microsoft__Agents-for-python-264                        0 2 2
+  easy  microsoft__fabric-cicd-394                              0 0 0
+  other microsoft__qcodes-8039                                  2 1 2
+  other newton-physics__newton-1653                             0 0 0
+  other omni-us__jsonargparse-770                               0 0 0
+  easy  openai__openai-agents-python-2144                       0 0 1
+  easy  openatx__adbutils-188                                   2 1 2
+  easy  optuna__optuna-6428                                     0 0 2
+  other py-pdf__pdfly-219                                       2 2 2
+  other pyccel__pyccel-2454                                     0 0 2
+  other pycqa__isort-2491                                       0 0 0
+  easy  pydata__xarray-10838                                    0 0 2
+  other python-wheel-build__fromager-653                        0 0 0
+  easy  scrapy__scrapy-7351_interface                           0 2 2
+  other stan-dev__cmdstanpy-801                                 0 0 0
+  other stanfordnlp__dspy-9478_interface                        1 2 2
+  easy  sympy__sympy-28738                                      0 0 2
+  easy  tobymao__sqlglot-5233                                   0 0 2
+
+stop reasons: {'A': {'max_model_calls': 41, 'completed': 17, 'candidate_snapshot_failed': 2}, 'U': {'max_model_calls': 29, 'completed': 29, 'insufficient_reserve': 1, 'response_incomplete': 1}, 'UT': {'completed': 58, 'candidate_snapshot_failed': 2}}

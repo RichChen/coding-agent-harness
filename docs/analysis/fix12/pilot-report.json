@@ -1,0 +1,57 @@
+{
+  "schema": "unleash-pilot.batch-report.v1",
+  "label": "pilot",
+  "mock": false,
+  "started_at": "2026-11-08T20:40:24.357052+00:00",
+  "finished_at": "2026-11-08T21:22:43.839557+00:00",
+  "parallel": 3,
+  "batch_cap_cny": "250",
+  "run_cap_cny": "4.000",
+  "halt_reason": null,
+  "slots": 180,
+  "final_runs": 180,
+  "started_this_launch": 29,
+  "max_concurrent": 3,
+  "spent_cny": "43.101925",
+  "forecast_cny": "53.98569180",
+  "by_group": {
+    "A": {
+      "final_runs": 60,
+      "solved": 14,
+      "cny_cap_stops": 0,
+      "infra_retired": 0,
+      "retired_cost_cny": "0",
+      "cost_cny": "14.675839"
+    },
+    "U": {
+      "final_runs": 60,
+      "solved": 23,
+      "cny_cap_stops": 0,
+      "infra_retired": 0,
+      "retired_cost_cny": "0",
+      "cost_cny": "14.485083"
+    },
+    "UT": {
+      "final_runs": 60,
+      "solved": 44,
+      "cny_cap_stops": 0,
+      "infra_retired": 1,
+      "retired_cost_cny": "0.109513",
+      "cost_cny": "13.941003"
+    }
+  },
+  "infra_kept": [],
+  "price": {
+    "start": "runs/unleash-pilot/price/price-start-20261109T044024.json",
+    "checks": [],
+    "end": "runs/unleash-pilot/price/price-end-20261109T052243.json",
+    "fetch_errors": [],
+    "end_problem": null
+  },
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "system_fingerprints": [
+    "bc19ba97cbe016479903222bb1578db6"
+  ]
+}
