@@ -366,12 +366,45 @@ def existing_attempts(out_root: Path, slots: list[dict]) -> dict:
     return rows
 
 
+async def run_one(task: dict, group: str, output: Path, *, mock: bool) -> dict:
+    from scripts.run_swe_task import run_task
+    from src.harness.factory import load_config
+
+    config = load_config(PROFILES[group])
+    llm = None
+    if mock:
+        from scripts.rebench.unleash_mock_e2e import scripted_llm
+
+        llm = scripted_llm(group, task, config)[0]
+    return await run_task(task, PROFILES[group], output, mock=mock, variant=VARIANTS[group], mock_llm=llm,
+                          on_agent=tool_recorder(output, tap_model=not mock), ledger_options=ledger_options(config))
+
+
+def child_command() -> list[str]:
+    return [sys.executable, str(Path(__file__).resolve()), "--child"]
+
+
+async def run_in_child(task: dict, group: str, output: Path, *, mock: bool) -> None:
+    """Session recording writes synchronously, so runs sharing one event loop stall each other's Docker calls
+    past their cleanup timeouts. Each run therefore gets its own interpreter."""
+    spec = json.dumps({"task": task, "group": group, "output": str(output), "mock": mock}).encode("utf-8")
+    proc = await asyncio.create_subprocess_exec(*child_command(), stdin=asyncio.subprocess.PIPE, cwd=ROOT)
+    try:
+        await proc.communicate(spec)
+    except asyncio.CancelledError:
+        if proc.returncode is None:
+            proc.kill()
+            await proc.wait()
+        raise
+    if proc.returncode:
+        raise RuntimeError(f"run process exited with code {proc.returncode}")
+
+
 async def run_batch(slots: list[dict], tasks: dict, *, out_root: Path, mock: bool, run=None, mock_llm=None,
                     clock=now_utc, sleep=asyncio.sleep, fetch=fetch_price_page, wait_for_off_peak: bool = True,
                     cap: Decimal = BATCH_CAP, label: str = "batch", log=print) -> dict:
-    """tasks: ingested task id -> manifest row. mock_llm(group, task, config) returns the scripted client."""
-    if run is None:
-        from scripts.run_swe_task import run_task as run
+    """tasks: ingested task id -> manifest row. Without run, every slot runs in its own process (run_in_child).
+    An injected run is awaited in this process; mock_llm(group, task, config) then returns its scripted client."""
     from src.harness.factory import load_config
 
     lock = acquire_lock(out_root)
@@ -449,10 +482,13 @@ async def run_batch(slots: list[dict], tasks: dict, *, out_root: Path, mock: boo
                 try:
                     output.mkdir(parents=True, exist_ok=True)
                     task = tasks[slot["task"]]
-                    await run(task, PROFILES[group], output, mock=mock, variant=VARIANTS[group],
-                              mock_llm=mock_llm(group, task, config) if mock_llm else None,
-                              on_agent=tool_recorder(output, tap_model=not mock),
-                              ledger_options=ledger_options(config))
+                    if run is None:
+                        await run_in_child(task, group, output, mock=mock)
+                    else:
+                        await run(task, PROFILES[group], output, mock=mock, variant=VARIANTS[group],
+                                  mock_llm=mock_llm(group, task, config) if mock_llm else None,
+                                  on_agent=tool_recorder(output, tap_model=not mock),
+                                  ledger_options=ledger_options(config))
                 except (Exception, SystemExit) as exc:
                     state["halt"] = state["halt"] or f"run crashed: {slot_label(slot)} {type(exc).__name__}: {str(exc)[:300]}"
                     return
@@ -590,7 +626,12 @@ def main():
     parser.add_argument("--limit", type=int, default=None, help="with --mock: only the first N slots")
     parser.add_argument("--wait-off-peak", action="store_true", help="with --mock: wait for off-peak like a real run")
     parser.add_argument("--authorized", default=None)
+    parser.add_argument("--child", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
+    if args.child:
+        spec = json.loads(sys.stdin.buffer.read().decode("utf-8"))
+        asyncio.run(run_one(spec["task"], spec["group"], Path(spec["output"]), mock=spec["mock"]))
+        return
     if args.preflight:
         report = preflight()
         LOGS.mkdir(parents=True, exist_ok=True)
@@ -599,12 +640,9 @@ def main():
         raise SystemExit(0 if report["pass"] else 1)
     _, _, slots, tasks = load_inputs()
     if args.mock:
-        from scripts.rebench.unleash_mock_e2e import scripted_llm
-
         os.environ["LLM_API_KEY"] = "mock-placeholder"
         report = asyncio.run(run_batch(slots[:args.limit] if args.limit else slots, tasks,
                                        out_root=ROOT / "runs" / "unleash-pilot-mock", mock=True,
-                                       mock_llm=lambda group, task, config: scripted_llm(group, task, config)[0],
                                        fetch=None, wait_for_off_peak=args.wait_off_peak, label="mock"))
     else:
         check_authorized(args.authorized)

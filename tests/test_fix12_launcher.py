@@ -360,6 +360,61 @@ def test_price_page_is_archived_and_a_change_stops(tmp_path, env):
         launch(tmp_path / "bad", plan, FakeRuns(plan), fetch=lambda: PAGE.replace("Flash-1017", "Flash-1201"))
 
 
+def test_without_an_injected_run_every_slot_goes_to_a_child_process(tmp_path, env, monkeypatch):
+    plan = slots(blocks=2)
+    calls, active = [], {"now": 0, "max": 0}
+
+    async def child(task, group, output, *, mock):
+        calls.append((task["id"], group, output.parts[-3:], mock))
+        active["now"] += 1
+        active["max"] = max(active["max"], active["now"])
+        await asyncio.sleep(0.01)
+        active["now"] -= 1
+        write_run(output, group, task=task["id"])
+
+    monkeypatch.setattr(ru, "run_in_child", child)
+    report = asyncio.run(ru.run_batch(plan, {s["task"]: {"id": s["task"]} for s in plan}, out_root=tmp_path / "out",
+                                      mock=True, fetch=None, wait_for_off_peak=False, log=lambda _: None))
+    assert report["halt_reason"] is None and report["final_runs"] == 12 and active["max"] == 3
+    assert [c[2] for c in calls] == [(s["task"], s["group"], "r" + str(s["repeat"])) for s in plan]
+    assert all(c[0] == c[2][0] and c[1] == c[2][1] and c[3] is True for c in calls)
+
+
+def test_a_child_gets_its_slot_on_stdin_and_a_failed_exit_raises(tmp_path, monkeypatch):
+    import os
+    import sys
+
+    seen = tmp_path / "seen.json"
+    script = ("import json, os, sys; data = json.loads(sys.stdin.buffer.read().decode('utf-8')); "
+              f"open({str(seen)!r}, 'w').write(json.dumps([os.getpid(), data]))")
+    monkeypatch.setattr(ru, "child_command", lambda: [sys.executable, "-c", script])
+    asyncio.run(ru.run_in_child({"id": "t1", "title": "ü"}, "UT", tmp_path / "r1", mock=False))
+    pid, spec = json.loads(seen.read_text())
+    assert pid != os.getpid()
+    assert spec == {"task": {"id": "t1", "title": "ü"}, "group": "UT", "output": str(tmp_path / "r1"), "mock": False}
+    monkeypatch.setattr(ru, "child_command", lambda: [sys.executable, "-c", "raise SystemExit(3)"])
+    with pytest.raises(RuntimeError, match="code 3"):
+        asyncio.run(ru.run_in_child({"id": "t1"}, "A", tmp_path / "r2", mock=True))
+
+
+def test_the_child_entry_runs_the_slot_it_reads(tmp_path, monkeypatch):
+    import io
+    import sys
+    from types import SimpleNamespace
+
+    got = []
+
+    async def one(task, group, output, *, mock):
+        got.append((task, group, output, mock))
+
+    spec = {"task": {"id": "t1"}, "group": "U", "output": str(tmp_path / "r1"), "mock": True}
+    monkeypatch.setattr(ru, "run_one", one)
+    monkeypatch.setattr(sys, "argv", ["run_unleash.py", "--child"])
+    monkeypatch.setattr(sys, "stdin", SimpleNamespace(buffer=io.BytesIO(json.dumps(spec).encode("utf-8"))))
+    ru.main()
+    assert got == [({"id": "t1"}, "U", tmp_path / "r1", True)]
+
+
 def test_unauthorized_real_run_is_refused():
     with pytest.raises(SystemExit):
         ru.check_authorized(None)
