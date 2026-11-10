@@ -1,0 +1,64 @@
+{
+ "A": {
+  "failed": 46,
+  "loop_by_class": {
+   "found_idle": 16,
+   "not_found": 3
+  },
+  "no_loop_by_class": {
+   "found_idle": 10,
+   "not_found": 7,
+   "edited_reverted": 3,
+   "edited_reference": 6,
+   "edited_elsewhere": 1
+  },
+  "found_idle": 26,
+  "found_idle_loop": 16,
+  "loop_before_located": 0,
+  "onset_after_located_median": 22.5,
+  "onset_after_located_min": 6,
+  "silent_before_located_median": 0.5,
+  "silent_after_located_median": 0.96,
+  "fresh_calls_after_located_median": 0.59,
+  "no_loop_found_idle_tail_repeat": [
+   0.1,
+   0.3,
+   0.0,
+   0.15,
+   0.35,
+   0.2,
+   0.3,
+   0.1,
+   0.15,
+   0.0
+  ]
+ },
+ "U": {
+  "failed": 37,
+  "loop_by_class": {
+   "found_idle": 16,
+   "not_found": 4,
+   "edited_reference": 1,
+   "edited_elsewhere": 4
+  },
+  "no_loop_by_class": {
+   "found_idle": 3,
+   "edited_reference": 6,
+   "not_found": 1,
+   "edited_elsewhere": 2
+  },
+  "found_idle": 19,
+  "found_idle_loop": 16,
+  "loop_before_located": 0,
+  "onset_after_located_median": 31.5,
+  "onset_after_located_min": 3,
+  "silent_before_located_median": 0.5,
+  "silent_after_located_median": 1.0,
+  "fresh_calls_after_located_median": 0.34,
+  "no_loop_found_idle_tail_repeat": [
+   0.0,
+   0.0,
+   0.0
+  ]
+ }
+}
