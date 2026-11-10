@@ -1,0 +1,239 @@
+{
+  "agreement": {
+    "located": 12,
+    "plan": 12,
+    "edited": 11
+  },
+  "bar": 10,
+  "reliable": true,
+  "detail": [
+    {
+      "label": "S01",
+      "auto": {
+        "located": 2,
+        "plan": false,
+        "edited": true
+      },
+      "manual": {
+        "located": 2,
+        "plan": false,
+        "edited": true
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "read _device_base.py 330-410 shows reverse_list; only workspace write is a scratch tests/test_repro_tmp.py; same python -c command repeated from about request 24 to 100"
+    },
+    {
+      "label": "S02",
+      "auto": {
+        "located": 15,
+        "plan": false,
+        "edited": true
+      },
+      "manual": {
+        "located": 15,
+        "plan": false,
+        "edited": true
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "read output.py 200-300 shows _with_from_imports; edits parse.py, output.py, wrap.py, a test; no assistant text"
+    },
+    {
+      "label": "S03",
+      "auto": {
+        "located": 22,
+        "plan": false,
+        "edited": false
+      },
+      "manual": {
+        "located": 22,
+        "plan": false,
+        "edited": false
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "sed 380,570p sampler.py shows sample_relative; an earlier grep -A 60 at request 7 probably showed it as search context; six-call sed cycle repeated to request 40"
+    },
+    {
+      "label": "S04",
+      "auto": {
+        "located": 3,
+        "plan": false,
+        "edited": true
+      },
+      "manual": {
+        "located": 3,
+        "plan": false,
+        "edited": false
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": false
+      },
+      "note": "read semantic.py 1900-2060 shows the reference; writes only to /tmp; identical grep repeated from about request 37 to 100"
+    },
+    {
+      "label": "S05",
+      "auto": {
+        "located": 6,
+        "plan": false,
+        "edited": false
+      },
+      "manual": {
+        "located": 6,
+        "plan": false,
+        "edited": false
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "read utils.py 225-295 shows equivalent; reproduced the bug; identical python -c repeated from about request 14 to 100; no assistant text"
+    },
+    {
+      "label": "S06",
+      "auto": {
+        "located": 2,
+        "plan": true,
+        "edited": true
+      },
+      "manual": {
+        "located": 2,
+        "plan": true,
+        "edited": true
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "read pickler.py 500-660 shows two references; message 6 says it will fix _flatten_newstyle_with_slots, then edits it"
+    },
+    {
+      "label": "S07",
+      "auto": {
+        "located": 2,
+        "plan": false,
+        "edited": false
+      },
+      "manual": {
+        "located": 2,
+        "plan": false,
+        "edited": false
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "read pickler.py 500-660; repro only in /tmp; six-call grep/read cycle repeated to request 40"
+    },
+    {
+      "label": "S08",
+      "auto": {
+        "located": 6,
+        "plan": false,
+        "edited": false
+      },
+      "manual": {
+        "located": 6,
+        "plan": false,
+        "edited": false
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "read sampler.py 330-530 shows sample_relative; identical failing grep repeated from request 45 to 100"
+    },
+    {
+      "label": "S09",
+      "auto": {
+        "located": null,
+        "plan": false,
+        "edited": true
+      },
+      "manual": {
+        "located": null,
+        "plan": false,
+        "edited": true
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "treated the task as documentation; edited docs/develop.md only; never opened a reference code file"
+    },
+    {
+      "label": "S10",
+      "auto": {
+        "located": null,
+        "plan": false,
+        "edited": true
+      },
+      "manual": {
+        "located": null,
+        "plan": false,
+        "edited": true
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "same as S09: docs/develop.md only"
+    },
+    {
+      "label": "S11",
+      "auto": {
+        "located": null,
+        "plan": false,
+        "edited": true
+      },
+      "manual": {
+        "located": null,
+        "plan": false,
+        "edited": true
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "convenience.py read starts at 480, after def table_to_hdu at 469; source seen via inspect.getsource (not a read); edited convenience.py and a test"
+    },
+    {
+      "label": "S12",
+      "auto": {
+        "located": 2,
+        "plan": false,
+        "edited": true
+      },
+      "manual": {
+        "located": 2,
+        "plan": false,
+        "edited": true
+      },
+      "agree": {
+        "located": true,
+        "plan": true,
+        "edited": true
+      },
+      "note": "read fabric_workspace.py 150-330 shows _refresh_repository_items; edits fabric_workspace.py; no assistant text"
+    }
+  ]
+}

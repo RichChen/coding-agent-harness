@@ -1,0 +1,17 @@
+{
+  "note": "Hand judgments from the blind sheets, written before classify.py was run. located = first request whose line-range read of a reference file shows a reference def/class line (grep -A context output not counted, as in P4); plan = assistant content after that request names a reference and states a change, or carries a code block; edited = any write into the workspace. While checking S01 the six adbutils summaries were printed, which revealed S01's group; the three judged facts come from the sheet only.",
+  "items": {
+    "S01": {"located": 2, "plan": false, "edited": true, "note": "read _device_base.py 330-410 shows reverse_list; only workspace write is a scratch tests/test_repro_tmp.py; same python -c command repeated from about request 24 to 100"},
+    "S02": {"located": 15, "plan": false, "edited": true, "note": "read output.py 200-300 shows _with_from_imports; edits parse.py, output.py, wrap.py, a test; no assistant text"},
+    "S03": {"located": 22, "plan": false, "edited": false, "note": "sed 380,570p sampler.py shows sample_relative; an earlier grep -A 60 at request 7 probably showed it as search context; six-call sed cycle repeated to request 40"},
+    "S04": {"located": 3, "plan": false, "edited": false, "note": "read semantic.py 1900-2060 shows the reference; writes only to /tmp; identical grep repeated from about request 37 to 100"},
+    "S05": {"located": 6, "plan": false, "edited": false, "note": "read utils.py 225-295 shows equivalent; reproduced the bug; identical python -c repeated from about request 14 to 100; no assistant text"},
+    "S06": {"located": 2, "plan": true, "edited": true, "note": "read pickler.py 500-660 shows two references; message 6 says it will fix _flatten_newstyle_with_slots, then edits it"},
+    "S07": {"located": 2, "plan": false, "edited": false, "note": "read pickler.py 500-660; repro only in /tmp; six-call grep/read cycle repeated to request 40"},
+    "S08": {"located": 6, "plan": false, "edited": false, "note": "read sampler.py 330-530 shows sample_relative; identical failing grep repeated from request 45 to 100"},
+    "S09": {"located": null, "plan": false, "edited": true, "note": "treated the task as documentation; edited docs/develop.md only; never opened a reference code file"},
+    "S10": {"located": null, "plan": false, "edited": true, "note": "same as S09: docs/develop.md only"},
+    "S11": {"located": null, "plan": false, "edited": true, "note": "convenience.py read starts at 480, after def table_to_hdu at 469; source seen via inspect.getsource (not a read); edited convenience.py and a test"},
+    "S12": {"located": 2, "plan": false, "edited": true, "note": "read fabric_workspace.py 150-330 shows _refresh_repository_items; edits fabric_workspace.py; no assistant text"}
+  }
+}

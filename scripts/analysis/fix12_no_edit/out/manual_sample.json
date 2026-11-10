@@ -1,0 +1,78 @@
+{
+  "seed": 11,
+  "failed": 99,
+  "items": [
+    {
+      "label": "S01",
+      "task": "openatx__adbutils-188",
+      "group": "U",
+      "repeat": "r1"
+    },
+    {
+      "label": "S02",
+      "task": "pycqa__isort-2491",
+      "group": "UT",
+      "repeat": "r2"
+    },
+    {
+      "label": "S03",
+      "task": "optuna__optuna-6428",
+      "group": "A",
+      "repeat": "r2"
+    },
+    {
+      "label": "S04",
+      "task": "pyccel__pyccel-2454",
+      "group": "U",
+      "repeat": "r2"
+    },
+    {
+      "label": "S05",
+      "task": "pydata__xarray-10838",
+      "group": "U",
+      "repeat": "r2"
+    },
+    {
+      "label": "S06",
+      "task": "jsonpickle__jsonpickle-587",
+      "group": "U",
+      "repeat": "r1"
+    },
+    {
+      "label": "S07",
+      "task": "jsonpickle__jsonpickle-587",
+      "group": "A",
+      "repeat": "r2"
+    },
+    {
+      "label": "S08",
+      "task": "optuna__optuna-6428",
+      "group": "U",
+      "repeat": "r1"
+    },
+    {
+      "label": "S09",
+      "task": "python-wheel-build__fromager-653",
+      "group": "UT",
+      "repeat": "r1"
+    },
+    {
+      "label": "S10",
+      "task": "python-wheel-build__fromager-653",
+      "group": "U",
+      "repeat": "r1"
+    },
+    {
+      "label": "S11",
+      "task": "astropy__astropy-18818",
+      "group": "UT",
+      "repeat": "r2"
+    },
+    {
+      "label": "S12",
+      "task": "microsoft__fabric-cicd-394",
+      "group": "UT",
+      "repeat": "r2"
+    }
+  ]
+}
