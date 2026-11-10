@@ -1,0 +1,1116 @@
+{
+  "schema": "fix12-gold-references.v1",
+  "tasks": {
+    "BrianPugh__cyclopts-609": {
+      "files": [
+        {
+          "path": "cyclopts/core.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "cyclopts/core.py",
+          "kind": "def",
+          "qualname": "App._parse_known_args",
+          "name": "_parse_known_args"
+        },
+        {
+          "file": "cyclopts/core.py",
+          "kind": "def",
+          "qualname": "_get_help_flag_index",
+          "name": "_get_help_flag_index"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "cd48e88146d332ef498adbea294bc320e913418e25638be1564c23afa954bb39",
+      "baseline_sha256": {
+        "cyclopts/core.py": "815b700740f4d1e63f3067997feecf64381c3ca2d84494ddcf9ab02f815eaeb4"
+      }
+    },
+    "Kozea__WeasyPrint-2494": {
+      "files": [
+        {
+          "path": "weasyprint/layout/column.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "weasyprint/layout/column.py",
+          "kind": "def",
+          "qualname": "columns_layout",
+          "name": "columns_layout"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "5021e6e707a75d7bbe6c1330feb15755f0aa34c96c6e83dc0ebca734a66e737a",
+      "baseline_sha256": {
+        "weasyprint/layout/column.py": "3fff3adeed3fbc56338a0f6d7c150c23c642a5795bc7d48ba187a46d9e6f8396"
+      }
+    },
+    "agronholm__anyio-935": {
+      "files": [
+        {
+          "path": "docs/versionhistory.rst",
+          "code": false
+        },
+        {
+          "path": "src/anyio/lowlevel.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "src/anyio/lowlevel.py",
+          "kind": "def",
+          "qualname": "RunVar._current_vars",
+          "name": "_current_vars"
+        },
+        {
+          "file": "src/anyio/lowlevel.py",
+          "kind": "def",
+          "qualname": "RunVar.get",
+          "name": "get"
+        },
+        {
+          "file": "src/anyio/lowlevel.py",
+          "kind": "def",
+          "qualname": "RunVar.set",
+          "name": "set"
+        },
+        {
+          "file": "src/anyio/lowlevel.py",
+          "kind": "def",
+          "qualname": "RunVar.reset",
+          "name": "reset"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "481a39f2d582ae41a0eac629c4f999b9e22012dd998f3c533f8cda79e5fae29a",
+      "baseline_sha256": {
+        "docs/versionhistory.rst": "84bc80eb1217c81ee648e40eb27e8cb5502b4b10ea6ccdf38a4d55b855c01a65",
+        "src/anyio/lowlevel.py": "9e48265bef92771195a747262d461ace392282f7919b91d8efe816f01a69f686"
+      }
+    },
+    "apache__iceberg-python-3295": {
+      "files": [
+        {
+          "path": "pyiceberg/expressions/__init__.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "pyiceberg/expressions/__init__.py",
+          "kind": "class",
+          "qualname": "And",
+          "name": "And"
+        },
+        {
+          "file": "pyiceberg/expressions/__init__.py",
+          "kind": "class",
+          "qualname": "Or",
+          "name": "Or"
+        },
+        {
+          "file": "pyiceberg/expressions/__init__.py",
+          "kind": "class",
+          "qualname": "Not",
+          "name": "Not"
+        }
+      ],
+      "granularity": "class",
+      "reliability": "gold",
+      "gold_patch_sha256": "b0f799df5455b17bcd8026c76a4e4c524faf7da92506655d6ce2c829b5273297",
+      "baseline_sha256": {
+        "pyiceberg/expressions/__init__.py": "11c52878d2b2df61996c93c7ab95bc9e771629eac6347d08dde6239b470c8e6b"
+      }
+    },
+    "astropy__astropy-18818": {
+      "files": [
+        {
+          "path": "astropy/io/fits/convenience.py",
+          "code": true
+        },
+        {
+          "path": "docs/changes/table/18818.bugfix.rst",
+          "code": false
+        }
+      ],
+      "refs": [
+        {
+          "file": "astropy/io/fits/convenience.py",
+          "kind": "def",
+          "qualname": "table_to_hdu",
+          "name": "table_to_hdu"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "3e12293c353b0c1109269a21497379c91f6583ffd22f098179fedcfa53ea884f",
+      "baseline_sha256": {
+        "astropy/io/fits/convenience.py": "a7366ffb0862b6b001c472e8e136fd4197157f15bbe0c57a9ff2290257095388",
+        "docs/changes/table/18818.bugfix.rst": null
+      }
+    },
+    "aws__bedrock-agentcore-sdk-python-279_interface": {
+      "files": [
+        {
+          "path": "src/bedrock_agentcore/memory/integrations/strands/config.py",
+          "code": true
+        },
+        {
+          "path": "src/bedrock_agentcore/memory/integrations/strands/session_manager.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "src/bedrock_agentcore/memory/integrations/strands/config.py",
+          "kind": "class",
+          "qualname": "AgentCoreMemoryConfig",
+          "name": "AgentCoreMemoryConfig"
+        },
+        {
+          "file": "src/bedrock_agentcore/memory/integrations/strands/session_manager.py",
+          "kind": "def",
+          "qualname": "AgentCoreMemorySessionManager.retrieve_customer_context",
+          "name": "retrieve_customer_context"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "5153a7ce087db42e17bfdcc9580e93299df4f056f76a58dc3a10fb5e8c079537",
+      "baseline_sha256": {
+        "src/bedrock_agentcore/memory/integrations/strands/config.py": "f5570222c2c792cf77371f862d77ae334aebdde910de2a7527c7503b663fd92b",
+        "src/bedrock_agentcore/memory/integrations/strands/session_manager.py": "ed96e07bd2be2bf0f971ccd6ab21cef09dfb64d6780ee5723988818a0d30babc"
+      }
+    },
+    "cal-itp__benefits-3330": {
+      "files": [
+        {
+          "path": "benefits/enrollment_littlepay/enrollment.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "benefits/enrollment_littlepay/enrollment.py",
+          "kind": "def",
+          "qualname": "enroll",
+          "name": "enroll"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "b4aa32036f48080ba66489576f2466bd0f22df734d5a11c29400caeed4cd7f7c",
+      "baseline_sha256": {
+        "benefits/enrollment_littlepay/enrollment.py": "19583455769d1390c2a59c6b08439584eec5936e6fac145b59d12ac912260c53"
+      }
+    },
+    "conan-io__conan-19604": {
+      "files": [
+        {
+          "path": "conan/internal/model/cpp_info.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "conan/internal/model/cpp_info.py",
+          "kind": "def",
+          "qualname": "_Component.serialize",
+          "name": "serialize"
+        },
+        {
+          "file": "conan/internal/model/cpp_info.py",
+          "kind": "def",
+          "qualname": "_Component.deserialize",
+          "name": "deserialize"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "bdf7a63adc1092c7300da0039caceb2b2e3b602a9545ada78b09e401c38cff79",
+      "baseline_sha256": {
+        "conan/internal/model/cpp_info.py": "85e6a52050de5b9ca00b577a27c8282434a9805dae324ffd4b4e58c2a0231aed"
+      }
+    },
+    "dask__fastparquet-961": {
+      "files": [
+        {
+          "path": "fastparquet/writer.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "fastparquet/writer.py",
+          "kind": "def",
+          "qualname": "convert",
+          "name": "convert"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "7494f4b6380ce4a8a5322017b97faee9885cce61f5e659f14bcdcd29f2673df2",
+      "baseline_sha256": {
+        "fastparquet/writer.py": "d1b724e791c71c39635e4b8fd29d518bb70da5180871b61ba410ca6670f2129f"
+      }
+    },
+    "feder-observatory__stellarphot-526": {
+      "files": [
+        {
+          "path": "stellarphot/photometry/photometry.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "stellarphot/photometry/photometry.py",
+          "kind": "def",
+          "qualname": "single_image_photometry",
+          "name": "single_image_photometry"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "b7b73a3d080d5ec363d95e227763f2d069a9e345d7c2a00642137b68102732d0",
+      "baseline_sha256": {
+        "stellarphot/photometry/photometry.py": "0794d575c0cc3f17c3120f659c6c8506c57dbeb33a517b1017d888462f90999c"
+      }
+    },
+    "jsonpickle__jsonpickle-587": {
+      "files": [
+        {
+          "path": ".gitignore",
+          "code": false
+        },
+        {
+          "path": ".pre-commit-config.yaml",
+          "code": false
+        },
+        {
+          "path": "CHANGES.rst",
+          "code": false
+        },
+        {
+          "path": "README.rst",
+          "code": false
+        },
+        {
+          "path": "jsonpickle/pickler.py",
+          "code": true
+        },
+        {
+          "path": "pyproject.toml",
+          "code": false
+        }
+      ],
+      "refs": [
+        {
+          "file": "jsonpickle/pickler.py",
+          "kind": "def",
+          "qualname": "Pickler._flatten_obj_attrs",
+          "name": "_flatten_obj_attrs"
+        },
+        {
+          "file": "jsonpickle/pickler.py",
+          "kind": "def",
+          "qualname": "Pickler._flatten_newstyle_with_slots",
+          "name": "_flatten_newstyle_with_slots"
+        },
+        {
+          "file": "jsonpickle/pickler.py",
+          "kind": "def",
+          "qualname": "Pickler._flatten_obj_instance",
+          "name": "_flatten_obj_instance"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "418ffe0f70b17724d8060afcd6c98fdb3fcdbd014f61f86915e474cd72d0f4a8",
+      "baseline_sha256": {
+        ".gitignore": "1028b86a7f09224ca99d32e64ec814da8140ff50b69e8f1bc7402aad818d917a",
+        ".pre-commit-config.yaml": "612a37566417eb357472883b95038db149e5a80b75ff91b0cc6de659f7fe41de",
+        "CHANGES.rst": "e63f3fab5a44a6fff89213e941823d672b8e02cd220681e5e45adabc168b8a04",
+        "README.rst": "24addf5d745031999096594489fb37ec42ac60aa5b92e40503a34eed91e6e910",
+        "jsonpickle/pickler.py": "f7e940aef3baad968cb3de523f620e3e4c2a5273409668762ee046bd216ecbd3",
+        "pyproject.toml": "d80c57b9fd0ab91af806313122941590f04b25b7ab30a7314e1eaa6b489edf41"
+      }
+    },
+    "marshmallow-code__marshmallow-2925_interface": {
+      "files": [
+        {
+          "path": "CHANGELOG.rst",
+          "code": false
+        },
+        {
+          "path": "src/marshmallow/fields.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "src/marshmallow/fields.py",
+          "kind": "def",
+          "qualname": "Tuple.__init__",
+          "name": "__init__"
+        },
+        {
+          "file": "src/marshmallow/fields.py",
+          "kind": "class",
+          "qualname": "Number",
+          "name": "Number"
+        },
+        {
+          "file": "src/marshmallow/fields.py",
+          "kind": "class",
+          "qualname": "Mapping",
+          "name": "Mapping"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "fcb026bcb288bcfdba8b2e05597fdac921666307f0d55574e7d19ccb07366d4f",
+      "baseline_sha256": {
+        "CHANGELOG.rst": "84dc700a63dfe93060af8ca3b04cbd0e18782b7e9b7a55fdfbb7a34b07ffe0f8",
+        "src/marshmallow/fields.py": "480e34cf185b0e9fa6d9355629acb94f21cb8b2cb3b954ae612626c85944d9a0"
+      }
+    },
+    "microsoft__Agents-for-python-264": {
+      "files": [
+        {
+          "path": "libraries/microsoft-agents-hosting-core/microsoft_agents/hosting/core/app/oauth/_sign_in_state.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "libraries/microsoft-agents-hosting-core/microsoft_agents/hosting/core/app/oauth/_sign_in_state.py",
+          "kind": "class",
+          "qualname": "_SignInState",
+          "name": "_SignInState"
+        },
+        {
+          "file": "libraries/microsoft-agents-hosting-core/microsoft_agents/hosting/core/app/oauth/_sign_in_state.py",
+          "kind": "def",
+          "qualname": "_SignInState.__init__",
+          "name": "__init__"
+        },
+        {
+          "file": "libraries/microsoft-agents-hosting-core/microsoft_agents/hosting/core/app/oauth/_sign_in_state.py",
+          "kind": "def",
+          "qualname": "_SignInState.store_item_to_json",
+          "name": "store_item_to_json"
+        },
+        {
+          "file": "libraries/microsoft-agents-hosting-core/microsoft_agents/hosting/core/app/oauth/_sign_in_state.py",
+          "kind": "def",
+          "qualname": "_SignInState.from_json_to_store_item",
+          "name": "from_json_to_store_item"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "9825f22b9750624e2535d882fd03b51fda1cfb2a28caaad5edb1202186d0bea7",
+      "baseline_sha256": {
+        "libraries/microsoft-agents-hosting-core/microsoft_agents/hosting/core/app/oauth/_sign_in_state.py": "942da8b4815c42d84067c92a918c55df02c13ceab35bd3115546dda903ed11d3"
+      }
+    },
+    "microsoft__fabric-cicd-394": {
+      "files": [
+        {
+          "path": "src/fabric_cicd/fabric_workspace.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "src/fabric_cicd/fabric_workspace.py",
+          "kind": "def",
+          "qualname": "FabricWorkspace._refresh_repository_items",
+          "name": "_refresh_repository_items"
+        },
+        {
+          "file": "src/fabric_cicd/fabric_workspace.py",
+          "kind": "class",
+          "qualname": "FabricWorkspace",
+          "name": "FabricWorkspace"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "0d1354fbe0197a4f7b78f2178baaaa5f973c801e6ea6495ad3c63de0df8679e4",
+      "baseline_sha256": {
+        "src/fabric_cicd/fabric_workspace.py": "c333952d06431b9b9e5130c5fa3d7ad0eee8a8027b819bff0b0a1f905f39dabc"
+      }
+    },
+    "microsoft__qcodes-8039": {
+      "files": [
+        {
+          "path": "docs/changes/newsfragments/5518.improved",
+          "code": false
+        },
+        {
+          "path": "src/qcodes/utils/attribute_helpers.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "src/qcodes/utils/attribute_helpers.py",
+          "kind": "def",
+          "qualname": "DelegateAttributes.__getattr__",
+          "name": "__getattr__"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "37473f71e8f257580288f7d53c4167ece5bf7492cb710248cb25300398555a91",
+      "baseline_sha256": {
+        "docs/changes/newsfragments/5518.improved": null,
+        "src/qcodes/utils/attribute_helpers.py": "f59f36c99d923ffb86db7ce5b01fdd83bf038800ce2ac34fe58781cbb44f1666"
+      }
+    },
+    "newton-physics__newton-1653": {
+      "files": [
+        {
+          "path": "newton/_src/sim/builder.py",
+          "code": true
+        },
+        {
+          "path": "newton/_src/solvers/mujoco/kernels.py",
+          "code": true
+        },
+        {
+          "path": "newton/_src/solvers/mujoco/solver_mujoco.py",
+          "code": true
+        },
+        {
+          "path": "newton/_src/utils/import_mjcf.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "newton/_src/sim/builder.py",
+          "kind": "class",
+          "qualname": "ModelBuilder.ShapeConfig",
+          "name": "ShapeConfig"
+        },
+        {
+          "file": "newton/_src/solvers/mujoco/kernels.py",
+          "kind": "def",
+          "qualname": "convert_newton_contacts_to_mjwarp_kernel",
+          "name": "convert_newton_contacts_to_mjwarp_kernel"
+        },
+        {
+          "file": "newton/_src/solvers/mujoco/kernels.py",
+          "kind": "def",
+          "qualname": "update_geom_properties_kernel",
+          "name": "update_geom_properties_kernel"
+        },
+        {
+          "file": "newton/_src/solvers/mujoco/solver_mujoco.py",
+          "kind": "def",
+          "qualname": "SolverMuJoCo.convert_contacts_to_mjwarp",
+          "name": "convert_contacts_to_mjwarp"
+        },
+        {
+          "file": "newton/_src/solvers/mujoco/solver_mujoco.py",
+          "kind": "def",
+          "qualname": "SolverMuJoCo._convert_to_mjc",
+          "name": "_convert_to_mjc"
+        },
+        {
+          "file": "newton/_src/solvers/mujoco/solver_mujoco.py",
+          "kind": "def",
+          "qualname": "SolverMuJoCo._convert_to_mjc.add_geoms",
+          "name": "add_geoms"
+        },
+        {
+          "file": "newton/_src/solvers/mujoco/solver_mujoco.py",
+          "kind": "def",
+          "qualname": "SolverMuJoCo.update_geom_properties",
+          "name": "update_geom_properties"
+        },
+        {
+          "file": "newton/_src/utils/import_mjcf.py",
+          "kind": "def",
+          "qualname": "parse_mjcf.parse_shapes",
+          "name": "parse_shapes"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "5816ea74cfe17e5dcf4498ded4745055878109be8448dd0de711ec86f6de2a30",
+      "baseline_sha256": {
+        "newton/_src/sim/builder.py": "fa1fc9060d1b81868b9899595f35888a20f17154865d1a80e0bf9532b42e77ae",
+        "newton/_src/solvers/mujoco/kernels.py": "7467bfb8abf3e01e5bdbcb9d1655d6e114631b8362d794d8a03430a497413ede",
+        "newton/_src/solvers/mujoco/solver_mujoco.py": "717b8d7ffcea8ad120cbf2909c66a41a9346c4e65c6b71dcbd0da53dc99437d5",
+        "newton/_src/utils/import_mjcf.py": "4bc534b24b3022c75ef4e9b5a4536bdd4b85cca88c25b3cff0c0d1b7b2c96546"
+      }
+    },
+    "omni-us__jsonargparse-770": {
+      "files": [
+        {
+          "path": "CHANGELOG.rst",
+          "code": false
+        },
+        {
+          "path": "jsonargparse/_common.py",
+          "code": true
+        },
+        {
+          "path": "jsonargparse/_stubs_resolver.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "jsonargparse/_common.py",
+          "kind": "def",
+          "qualname": "set_parsing_settings",
+          "name": "set_parsing_settings"
+        },
+        {
+          "file": "jsonargparse/_stubs_resolver.py",
+          "kind": "def",
+          "qualname": "get_stubs_resolver",
+          "name": "get_stubs_resolver"
+        },
+        {
+          "file": "jsonargparse/_stubs_resolver.py",
+          "kind": "def",
+          "qualname": "StubsResolver.add_module_aliases",
+          "name": "add_module_aliases"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "49727d30d8db0b64454233f9c3a26b7551a00e5a3e4f41fa517b18c3c3e6a5d3",
+      "baseline_sha256": {
+        "CHANGELOG.rst": "3286b833419438f20219d62f04cb31532352f18acab07c9417adb9bc09f8f1f7",
+        "jsonargparse/_common.py": "a2ba8112f1e9aabea3b9ff0e3f80322dcd32d22af4b590757795a923561464ce",
+        "jsonargparse/_stubs_resolver.py": "e455a2b935591c66c2e402819b044fcd88e9dbcb713bbf5d0e757c43067fe868"
+      }
+    },
+    "openai__openai-agents-python-2144": {
+      "files": [
+        {
+          "path": "src/agents/extensions/models/litellm_model.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "src/agents/extensions/models/litellm_model.py",
+          "kind": "def",
+          "qualname": "LitellmModel._fetch_response",
+          "name": "_fetch_response"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "1e785bf79490d3da986a3ba1133b314b2810ce2e7af25bb1b1d6e4202f99a0ea",
+      "baseline_sha256": {
+        "src/agents/extensions/models/litellm_model.py": "85b405840784179787772bb943eec73581448669f42852b628071f600d74bea7"
+      }
+    },
+    "openatx__adbutils-188": {
+      "files": [
+        {
+          "path": "adbutils/_device_base.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "adbutils/_device_base.py",
+          "kind": "def",
+          "qualname": "BaseDevice.reverse_list",
+          "name": "reverse_list"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "3c227638384750103ab91071833bb61ffa58183a0ff7c07892a1068f20660878",
+      "baseline_sha256": {
+        "adbutils/_device_base.py": "dbfc57ed92284bd0669446a68a91e30a6536e6b3492e09dce29358ef2bb65b4e"
+      }
+    },
+    "optuna__optuna-6428": {
+      "files": [
+        {
+          "path": "optuna/samplers/_tpe/sampler.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "optuna/samplers/_tpe/sampler.py",
+          "kind": "def",
+          "qualname": "TPESampler.sample_relative",
+          "name": "sample_relative"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "535e51521e8a4c7decf91ee681abde2e9f7e18798a29abd661ba162e064bbe11",
+      "baseline_sha256": {
+        "optuna/samplers/_tpe/sampler.py": "97387c92bda34bca5c5c5426699d9f930daaa327bac6df39c8f74c3ee71c1bbf"
+      }
+    },
+    "py-pdf__pdfly-219": {
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "code": false
+        },
+        {
+          "path": "pdfly/booklet.py",
+          "code": true
+        },
+        {
+          "path": "pdfly/up2.py",
+          "code": true
+        },
+        {
+          "path": "pdfly/x2pdf.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "pdfly/booklet.py",
+          "kind": "def",
+          "qualname": "main",
+          "name": "main"
+        },
+        {
+          "file": "pdfly/up2.py",
+          "kind": "def",
+          "qualname": "main",
+          "name": "main"
+        },
+        {
+          "file": "pdfly/x2pdf.py",
+          "kind": "def",
+          "qualname": "image_to_pdf",
+          "name": "image_to_pdf"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "fc0f74a79c79a7a8bfeba4aa254c5f6945de7d7f8eb9d0275ab4e394a2ac9b08",
+      "baseline_sha256": {
+        "CHANGELOG.md": "141a47ac4d248adcc1c36a2cfccb443fbb7701ef8af685e38472c82e196fd76a",
+        "pdfly/booklet.py": "1d3a951f468eac4d5d3dcaf79687c1933ee4a81029ffee9bd9119c68ba3f140b",
+        "pdfly/up2.py": "f88eadb0b13e872d73d72be9192652ed837245338363417ed571858d05682637",
+        "pdfly/x2pdf.py": "92caf177316d21cb99e16c0aebaada7c50b9a23ef642960d40d73e7dbc484be8"
+      }
+    },
+    "pyccel__pyccel-2454": {
+      "files": [
+        {
+          "path": "AUTHORS",
+          "code": false
+        },
+        {
+          "path": "CHANGELOG.md",
+          "code": false
+        },
+        {
+          "path": "pyccel/parser/semantic.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "pyccel/parser/semantic.py",
+          "kind": "def",
+          "qualname": "SemanticParser._ensure_inferred_type_matches_existing",
+          "name": "_ensure_inferred_type_matches_existing"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "94d29c73c053838ec8feb5d2d34ecfaa771b58f35b1c15117dc99c09e84d46c5",
+      "baseline_sha256": {
+        "AUTHORS": "fd28609e36fd652da95ee53727d4f554d312e1d82a96aae479302132d8641235",
+        "CHANGELOG.md": "c88aec1b0481b220de925334ef784a5a77cce3d3ffc26bed7619fd4676709bf4",
+        "pyccel/parser/semantic.py": "ad156e7b50b1b2fd11f0d2b3a99265060e7017bea79498605eb0bb8cdaeacbfb"
+      }
+    },
+    "pycqa__isort-2491": {
+      "files": [
+        {
+          "path": "isort/output.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "isort/output.py",
+          "kind": "def",
+          "qualname": "_with_from_imports",
+          "name": "_with_from_imports"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "7ce99ce70e107a5ea62cc4d4cd725ec52eb31e5f6ed6bf55e4472f22bfd053b4",
+      "baseline_sha256": {
+        "isort/output.py": "0bb4e76e57cbc868920d51ebe20079188d8faf2557c725ec575f6d1fa730030a"
+      }
+    },
+    "pydata__xarray-10838": {
+      "files": [
+        {
+          "path": "xarray/core/utils.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "xarray/core/utils.py",
+          "kind": "def",
+          "qualname": "equivalent",
+          "name": "equivalent"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "b29c1d1bda9c877522bcc93f9ea04437b2c77ce3176ba47e43324be73d81c763",
+      "baseline_sha256": {
+        "xarray/core/utils.py": "ff1ef303de37b300fda1d6eacb3570d881c301481582869efc539886330a3dce"
+      }
+    },
+    "python-wheel-build__fromager-653": {
+      "files": [
+        {
+          "path": ".gitignore",
+          "code": false
+        },
+        {
+          "path": "docs/develop.md",
+          "code": false
+        },
+        {
+          "path": "pyproject.toml",
+          "code": false
+        },
+        {
+          "path": "src/fromager/bootstrapper.py",
+          "code": true
+        },
+        {
+          "path": "src/fromager/dependencies.py",
+          "code": true
+        },
+        {
+          "path": "src/fromager/packagesettings.py",
+          "code": true
+        },
+        {
+          "path": "src/fromager/resolver.py",
+          "code": true
+        },
+        {
+          "path": "src/fromager/sources.py",
+          "code": true
+        },
+        {
+          "path": "src/fromager/wheels.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "src/fromager/bootstrapper.py",
+          "kind": "def",
+          "qualname": "Bootstrapper.bootstrap",
+          "name": "bootstrap"
+        },
+        {
+          "file": "src/fromager/bootstrapper.py",
+          "kind": "def",
+          "qualname": "Bootstrapper._unpack_metadata_from_wheel",
+          "name": "_unpack_metadata_from_wheel"
+        },
+        {
+          "file": "src/fromager/bootstrapper.py",
+          "kind": "def",
+          "qualname": "Bootstrapper._create_unpack_dir",
+          "name": "_create_unpack_dir"
+        },
+        {
+          "file": "src/fromager/dependencies.py",
+          "kind": "def",
+          "qualname": "get_build_system_dependencies",
+          "name": "get_build_system_dependencies"
+        },
+        {
+          "file": "src/fromager/dependencies.py",
+          "kind": "def",
+          "qualname": "get_build_backend_dependencies",
+          "name": "get_build_backend_dependencies"
+        },
+        {
+          "file": "src/fromager/dependencies.py",
+          "kind": "def",
+          "qualname": "get_build_sdist_dependencies",
+          "name": "get_build_sdist_dependencies"
+        },
+        {
+          "file": "src/fromager/packagesettings.py",
+          "kind": "class",
+          "qualname": "ResolverDist",
+          "name": "ResolverDist"
+        },
+        {
+          "file": "src/fromager/packagesettings.py",
+          "kind": "def",
+          "qualname": "ResolverDist.validate_ignore_platform",
+          "name": "validate_ignore_platform"
+        },
+        {
+          "file": "src/fromager/packagesettings.py",
+          "kind": "def",
+          "qualname": "PackageBuildInfo.resolver_ignore_platform",
+          "name": "resolver_ignore_platform"
+        },
+        {
+          "file": "src/fromager/packagesettings.py",
+          "kind": "class",
+          "qualname": "PackageBuildInfo",
+          "name": "PackageBuildInfo"
+        },
+        {
+          "file": "src/fromager/resolver.py",
+          "kind": "def",
+          "qualname": "resolve",
+          "name": "resolve"
+        },
+        {
+          "file": "src/fromager/resolver.py",
+          "kind": "def",
+          "qualname": "default_resolver_provider",
+          "name": "default_resolver_provider"
+        },
+        {
+          "file": "src/fromager/resolver.py",
+          "kind": "def",
+          "qualname": "get_project_from_pypi",
+          "name": "get_project_from_pypi"
+        },
+        {
+          "file": "src/fromager/resolver.py",
+          "kind": "def",
+          "qualname": "BaseProvider.__init__",
+          "name": "__init__"
+        },
+        {
+          "file": "src/fromager/resolver.py",
+          "kind": "def",
+          "qualname": "PyPIProvider.__init__",
+          "name": "__init__"
+        },
+        {
+          "file": "src/fromager/resolver.py",
+          "kind": "def",
+          "qualname": "PyPIProvider.find_matches",
+          "name": "find_matches"
+        },
+        {
+          "file": "src/fromager/sources.py",
+          "kind": "def",
+          "qualname": "default_resolve_source",
+          "name": "default_resolve_source"
+        },
+        {
+          "file": "src/fromager/wheels.py",
+          "kind": "def",
+          "qualname": "resolve_prebuilt_wheel",
+          "name": "resolve_prebuilt_wheel"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "8812dbf86047afc6b093a77fa715fe8893acd37632c6363abee50b6e4da1ed9d",
+      "baseline_sha256": {
+        ".gitignore": "dc724541cf4fd0b770bf55283948d1ae70ae2b75de5faa8827118cf783521f21",
+        "docs/develop.md": "3fe1d00d7835b957e33d73afbe7eda1e5c833a3c3ff3bc1d58e991bf9046e266",
+        "pyproject.toml": "6b7d1dc16cf4c3c8a44e8d09927625e47e37d3fd26a8cc72b2143da6d5d531ba",
+        "src/fromager/bootstrapper.py": "158078b8d9b666293bd07956f3dd1dbb4c8d6a57155f9288cb9a6d97ac69f581",
+        "src/fromager/dependencies.py": "42bdccb5f808c681a207b509837a071ec02ccd3a7d006b5856df672345296737",
+        "src/fromager/packagesettings.py": "bd0f6ec46b2ddf1d5fdf4811d05671ab9be5a98c58071879daffa6a03cc9fbc2",
+        "src/fromager/resolver.py": "4cf663444513a0ece45b6c7162e0016247ba3053a32cc0dd975394ae88917f33",
+        "src/fromager/sources.py": "ace64661654e9a8af950ed085217830e523cebb24e86fa8217db94c879b3780f",
+        "src/fromager/wheels.py": "aca42bf31d501f27fb7d5de0ef3749e694e023a35d54223281259a20d638656c"
+      }
+    },
+    "scrapy__scrapy-7351_interface": {
+      "files": [
+        {
+          "path": "scrapy/pqueues.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "scrapy/pqueues.py",
+          "kind": "def",
+          "qualname": "DownloaderAwarePriorityQueue.__init__",
+          "name": "__init__"
+        },
+        {
+          "file": "scrapy/pqueues.py",
+          "kind": "class",
+          "qualname": "DownloaderAwarePriorityQueue",
+          "name": "DownloaderAwarePriorityQueue"
+        },
+        {
+          "file": "scrapy/pqueues.py",
+          "kind": "def",
+          "qualname": "DownloaderAwarePriorityQueue.pop",
+          "name": "pop"
+        },
+        {
+          "file": "scrapy/pqueues.py",
+          "kind": "def",
+          "qualname": "DownloaderAwarePriorityQueue.peek",
+          "name": "peek"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "8b781f9d755cf8fca2ce783735b5a434314a495e42eef97c1a4ed324a226c1ce",
+      "baseline_sha256": {
+        "scrapy/pqueues.py": "1a8dd4cef63cc6efe631e203a2200fb9d5daf381289f606dc43290fd51305a1e"
+      }
+    },
+    "stan-dev__cmdstanpy-801": {
+      "files": [
+        {
+          "path": "cmdstanpy/utils/stancsv.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "cmdstanpy/utils/stancsv.py",
+          "kind": "def",
+          "qualname": "csv_bytes_list_to_numpy",
+          "name": "csv_bytes_list_to_numpy"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "6fadfadb58a426bc87c6c59253b52c7aaecac1171d3753f1f1adb52591f74caf",
+      "baseline_sha256": {
+        "cmdstanpy/utils/stancsv.py": "255de199e5bbc38de3aaa5558681d8eaf456c487163609acab6c01a47c8d5ed0"
+      }
+    },
+    "stanfordnlp__dspy-9478_interface": {
+      "files": [
+        {
+          "path": "dspy/retrievers/__init__.py",
+          "code": true
+        },
+        {
+          "path": "dspy/retrievers/embeddings.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "dspy/retrievers/embeddings.py",
+          "kind": "class",
+          "qualname": "Embeddings",
+          "name": "Embeddings"
+        },
+        {
+          "file": "dspy/retrievers/embeddings.py",
+          "kind": "def",
+          "qualname": "Embeddings.forward",
+          "name": "forward"
+        },
+        {
+          "file": "dspy/retrievers/embeddings.py",
+          "kind": "def",
+          "qualname": "Embeddings._rerank_and_predict",
+          "name": "_rerank_and_predict"
+        },
+        {
+          "file": "dspy/retrievers/embeddings.py",
+          "kind": "def",
+          "qualname": "Embeddings.from_saved",
+          "name": "from_saved"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "1db96fb5882dd9da0c256bf93766bd611e929c67de57a8f01bc7aa96d7e9d23b",
+      "baseline_sha256": {
+        "dspy/retrievers/__init__.py": "29a4e89c4d9a71e8af445e8a12cdf4cc6482a69b9441ac64fe1248db70a59de4",
+        "dspy/retrievers/embeddings.py": "9d96f588ef8ff78abc7692c9785d37968635e9b1e5251745e79f10dae6e22606"
+      }
+    },
+    "sympy__sympy-28738": {
+      "files": [
+        {
+          "path": "sympy/concrete/summations.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "sympy/concrete/summations.py",
+          "kind": "def",
+          "qualname": "Sum._eval_is_zero",
+          "name": "_eval_is_zero"
+        },
+        {
+          "file": "sympy/concrete/summations.py",
+          "kind": "def",
+          "qualname": "_eval_matrix_sum",
+          "name": "_eval_matrix_sum"
+        }
+      ],
+      "granularity": "def",
+      "reliability": "gold",
+      "gold_patch_sha256": "8812ae478329a7c1a919ab4a7cf5e44d75d1e430e18e5c1aa71a973ca47ab2d1",
+      "baseline_sha256": {
+        "sympy/concrete/summations.py": "285edc45ad36f498be884c8879315e8d22cfe1645b9a15b71402efb717c409c2"
+      }
+    },
+    "tobymao__sqlglot-5233": {
+      "files": [
+        {
+          "path": "sqlglot/dialects/athena.py",
+          "code": true
+        }
+      ],
+      "refs": [
+        {
+          "file": "sqlglot/dialects/athena.py",
+          "kind": "class",
+          "qualname": "Athena.Tokenizer",
+          "name": "Tokenizer"
+        }
+      ],
+      "granularity": "class",
+      "reliability": "gold",
+      "gold_patch_sha256": "377c7ed5b42612ab9a0fef37b93e8f23edd3564d1ba69dcf1ce909da89aae155",
+      "baseline_sha256": {
+        "sqlglot/dialects/athena.py": "c63cbbe5e8f44f7768b8251f14a844d48de4aaf3c4b90636f71db8586d7ef95c"
+      }
+    }
+  }
+}
