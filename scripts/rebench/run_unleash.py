@@ -227,9 +227,13 @@ def telemetry_problems(group: str, records: list[dict]) -> list[str]:
             problems.append(where + ": billing usage unknown")
         if record.get("error_kind") == "http" and record.get("status_code") == 400:
             problems.append(where + ": HTTP 400 (reasoning_content replay or request rejected)")
+        # A failed attempt without usage carries no telemetry; one that settled at provider usage (a truncated
+        # response) was sent and billed like any other request, so the field and request checks still apply.
         if record.get("success") is False:
-            continue
-        answered += 1
+            if not record.get("usage"):
+                continue
+        else:
+            answered += 1
         telemetry = record.get("telemetry")
         if not isinstance(telemetry, dict):
             problems.append(where + ": no request telemetry")

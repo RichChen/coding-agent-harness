@@ -92,6 +92,16 @@ def test_rules_that_do_not_apply():
     assert ru.telemetry_problems("UT", [record("UT", reasoning=0), record("UT", reasoning=7)]) == []
 
 
+def test_a_failed_request_settled_at_usage_is_checked_like_any_other():
+    truncated = {**record("U"), "success": False, "error_kind": "incomplete"}
+    assert ru.telemetry_problems("U", [truncated, record("U")]) == []
+    no_fields = {**truncated, "telemetry": {k: v for k, v in truncated["telemetry"].items() if k != "prompt_tokens"}}
+    assert "telemetry fields missing: prompt_tokens" in ru.telemetry_problems("U", [no_fields])[0]
+    assert "no request telemetry" in ru.telemetry_problems("U", [{**truncated, "telemetry": None}])[0]
+    over = {**record("UT", prompt=300, admission=200), "success": False, "error_kind": "incomplete"}
+    assert "above the admission estimate" in ru.telemetry_problems("UT", [over, record("UT")])[0]
+
+
 # --- batch rules ---------------------------------------------------------------------------------
 
 def rows_for(tmp_path, specs, *, mock=True):
