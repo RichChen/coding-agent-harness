@@ -1,0 +1,282 @@
+{
+  "schema": "fix12.unleash-pilot-audit.v1",
+  "source_hashes": {
+    "docs/analysis/fix12/pilot-report.json": {
+      "exists": true,
+      "sha256": "8c3be98cede9594b3d81cbfef88e4d0f455a0ebcd47e0acec35a0757126495bb"
+    },
+    "docs/analysis/fix12/pilot-analysis-prelim.txt": {
+      "exists": true,
+      "sha256": "d69526ed5e3eeebc0ff7c30ec0e99140ab7356f9cb093b8bedce8f7396563c10"
+    },
+    "docs/analysis/UNLEASH-PILOT-DESIGN.zh-CN.md": {
+      "exists": true,
+      "sha256": "6572465a7cc3e45972f6054ba2368b1dd5bd7b3d3d093f82c2b13950c7d12751"
+    },
+    "docs/analysis/fix12/FIX-12-AUDIT-REVIEW.zh-CN.md": {
+      "exists": true,
+      "sha256": "5914b714414bcc532ba30fe20882cad7a38b754d0d074ef9783af6ba7789b45b"
+    },
+    "configs/rebench/unleash-pilot-tasks.yaml": {
+      "exists": true,
+      "sha256": "ee527dea1be6791656b0653c0b5e0907582a88648846d3a05b99ecf6ee12717a"
+    },
+    "scripts/rebench/out/unleash_pilot_ingest.json": {
+      "exists": true,
+      "sha256": "0f54add16ff27319ebbc8b1ba6f37c373d558202d74f7d2117e6affcc6f79743"
+    },
+    "scripts/rebench/out/unleash_pilot_tasks.json": {
+      "exists": true,
+      "sha256": "fd72435b1ae7d0230d4e6a37e4ba708282f528aca93982dea8270bbbe84e606c"
+    },
+    "configs/rebench/unleash-a.yaml": {
+      "exists": true,
+      "sha256": "98d9599ddbc297953877c1416bfbf6bb83c11548e49d57f65ed02b69bdfca76a"
+    },
+    "configs/rebench/unleash-u.yaml": {
+      "exists": true,
+      "sha256": "fe72f2bb89e247e1b028ea4b26c2c57c0c98ad93c940115705023a09b58c41d6"
+    },
+    "configs/rebench/unleash-ut.yaml": {
+      "exists": true,
+      "sha256": "aaba0e819346a1968c0fc1538e0d622f58eb61d72cd4c3a07cd2c9506942f0af"
+    },
+    "scripts/rebench/run_unleash.py": {
+      "exists": true,
+      "sha256": "29d4671d04b18bb7d1021b8b88f480e6fe8413808748c1edd150dc3a63655362"
+    }
+  },
+  "missing_fields": [],
+  "git_head": "bf11538110228b797ee49f395ae72757cbfcfa01",
+  "experiment_identity": {
+    "task_manifest": "configs/rebench/unleash-pilot-tasks.yaml",
+    "ingest": "scripts/rebench/out/unleash_pilot_ingest.json",
+    "run_order": "scripts/rebench/out/unleash_pilot_tasks.json",
+    "profiles": {
+      "A": "configs/rebench/unleash-a.yaml",
+      "U": "configs/rebench/unleash-u.yaml",
+      "UT": "configs/rebench/unleash-ut.yaml"
+    },
+    "model": [
+      "deepseek-flash"
+    ],
+    "system_fingerprints": [
+      "bc19ba97cbe016479903222bb1578db6"
+    ],
+    "run_summary_coding_harness_heads": [
+      "036dbb0aeb1b84b2a24ae4c3c998a27ee9fdd11b",
+      "3def9fc3e95526efdc764f49c02c2f696bae8e05",
+      "4720567893dd92a1f75af37993894f40a36e8a1c",
+      "997c8708191fe6c3434343554d0ade05973fbff6",
+      "fd44c8f4fbf7c915ff743c0a4071599791a1213e"
+    ]
+  },
+  "run_accounting": {
+    "final_slots": 180,
+    "expected_final_slots": 180,
+    "attempt_summaries": 181,
+    "retired_attempts": 1,
+    "final_slot_cost_cny": "42.992412",
+    "retired_cost_cny": "0.109513",
+    "pre_run_attempts": 20,
+    "voided_attempts": 1,
+    "pre_run_cost_cny": "5.463016",
+    "voided_cost_cny": "0.000000",
+    "batch_spend_cny": "43.101925",
+    "forecast_cny": "53.98569180"
+  },
+  "by_group": {
+    "A": {
+      "final_runs": 60,
+      "solved_runs": 14,
+      "solve_rate": 0.23333333333333334,
+      "solved_task_count_any_repeat": 8,
+      "final_slot_cost_cny": "14.675839",
+      "cost_per_solved_run_cny": "1.048274",
+      "request_count": 2075,
+      "reasoning_run_mean_median": 0.0,
+      "status_counts": {
+        "pass": 14,
+        "fail": 41,
+        "delta_too_large": 2,
+        "partial": 3
+      },
+      "stop_reason_counts": {
+        "completed": 17,
+        "max_model_calls": 41,
+        "candidate_snapshot_failed": 2
+      }
+    },
+    "U": {
+      "final_runs": 60,
+      "solved_runs": 23,
+      "solve_rate": 0.38333333333333336,
+      "solved_task_count_any_repeat": 15,
+      "final_slot_cost_cny": "14.485083",
+      "cost_per_solved_run_cny": "0.629786",
+      "request_count": 3842,
+      "reasoning_run_mean_median": 0.0,
+      "status_counts": {
+        "pass": 23,
+        "fail": 34,
+        "partial": 3
+      },
+      "stop_reason_counts": {
+        "completed": 29,
+        "max_model_calls": 29,
+        "insufficient_reserve": 1,
+        "response_incomplete": 1
+      }
+    },
+    "UT": {
+      "final_runs": 60,
+      "solved_runs": 44,
+      "solve_rate": 0.7333333333333333,
+      "solved_task_count_any_repeat": 23,
+      "final_slot_cost_cny": "13.831490",
+      "cost_per_solved_run_cny": "0.314352",
+      "request_count": 2095,
+      "reasoning_run_mean_median": 241.0284722222222,
+      "status_counts": {
+        "pass": 44,
+        "delta_too_large": 2,
+        "partial": 3,
+        "fail": 11
+      },
+      "stop_reason_counts": {
+        "completed": 58,
+        "candidate_snapshot_failed": 2
+      }
+    }
+  },
+  "retired": [
+    {
+      "path": "runs/unleash-pilot/conan-io__conan-19604/UT/r2.infra1",
+      "group": "UT",
+      "cost_cny": "0.109513",
+      "status": "infra_error"
+    }
+  ],
+  "gates": {
+    "G1": {
+      "tasks_with_all_6_counted_valid_runs": 30
+    },
+    "G2": {
+      "A": {
+        "requests": 2075,
+        "masked": 1883,
+        "summarized": 0,
+        "admission_over": 0,
+        "missing_fields": 0
+      },
+      "U": {
+        "requests": 3842,
+        "masked": 0,
+        "summarized": 0,
+        "admission_over": 0,
+        "missing_fields": 0
+      },
+      "UT": {
+        "requests": 2095,
+        "masked": 0,
+        "summarized": 0,
+        "admission_over": 0,
+        "missing_fields": 0
+      }
+    },
+    "G3": {
+      "UT_runs": 60,
+      "UT_requests": 2095,
+      "UT_reasoning_nonzero_requests": 1812,
+      "UT_reasoning_request_fraction": 0.8649164677804296,
+      "note": "low exposure; run-level gate and request-level exposure are separate"
+    },
+    "G4": {
+      "cny_cap_stops": {
+        "A": 0,
+        "U": 0,
+        "UT": 0
+      }
+    },
+    "G5": {
+      "final_settled_requests": 8012,
+      "telemetry_complete_requests": 8012,
+      "missing_or_incomplete": 0,
+      "independent_posthoc_scan": true
+    }
+  },
+  "failure_taxonomy": {
+    "request_level": {
+      "response_incomplete": 1
+    },
+    "run_status": {
+      "A": {
+        "pass": 14,
+        "fail": 41,
+        "delta_too_large": 2,
+        "partial": 3
+      },
+      "U": {
+        "pass": 23,
+        "fail": 34,
+        "partial": 3
+      },
+      "UT": {
+        "pass": 44,
+        "delta_too_large": 2,
+        "partial": 3,
+        "fail": 11
+      }
+    },
+    "run_stop_reason": {
+      "A": {
+        "completed": 17,
+        "max_model_calls": 41,
+        "candidate_snapshot_failed": 2
+      },
+      "U": {
+        "completed": 29,
+        "max_model_calls": 29,
+        "insufficient_reserve": 1,
+        "response_incomplete": 1
+      },
+      "UT": {
+        "completed": 58,
+        "candidate_snapshot_failed": 2
+      }
+    }
+  },
+  "timing_recording": {
+    "A": {
+      "runs_with_timing": 60,
+      "agent_wall_seconds_sum": 9032.103,
+      "session_record_seconds_sum": 4302.516,
+      "session_record_seconds_median": 81.826
+    },
+    "U": {
+      "runs_with_timing": 60,
+      "agent_wall_seconds_sum": 28829.397,
+      "session_record_seconds_sum": 18534.126,
+      "session_record_seconds_median": 448.953
+    },
+    "UT": {
+      "runs_with_timing": 60,
+      "agent_wall_seconds_sum": 18002.042,
+      "session_record_seconds_sum": 5629.079,
+      "session_record_seconds_median": 53.1075
+    }
+  },
+  "model_fingerprints": {
+    "models": [
+      "deepseek-flash"
+    ],
+    "system_fingerprints": [
+      "bc19ba97cbe016479903222bb1578db6"
+    ]
+  },
+  "paired_bootstrap_source": {
+    "path": "docs/analysis/fix12/pilot-analysis-prelim.txt",
+    "sha256": "d69526ed5e3eeebc0ff7c30ec0e99140ab7356f9cb093b8bedce8f7396563c10",
+    "reported_in_prelim": true
+  }
+}

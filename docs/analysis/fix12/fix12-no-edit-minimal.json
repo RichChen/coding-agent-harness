@@ -1,0 +1,911 @@
+{
+  "schema": "fix12.no-edit-minimal.candidate.v1",
+  "scope": "10 high-confidence task candidates only",
+  "warning": "Candidate found-but-idle signals are descriptive and are not a P4-equivalent final classification.",
+  "references": {
+    "agronholm__anyio-935": [
+      [
+        "src/anyio/lowlevel.py",
+        [
+          "_current_vars",
+          "get",
+          "set",
+          "reset"
+        ]
+      ]
+    ],
+    "apache__iceberg-python-3295": [
+      [
+        "pyiceberg/expressions/__init__.py",
+        [
+          "__new__"
+        ]
+      ]
+    ],
+    "conan-io__conan-19604": [
+      [
+        "conan/internal/model/cpp_info.py",
+        [
+          "serialize"
+        ]
+      ]
+    ],
+    "dask__fastparquet-961": [
+      [
+        "fastparquet/writer.py",
+        [
+          "convert"
+        ]
+      ]
+    ],
+    "jsonpickle__jsonpickle-587": [
+      [
+        "jsonpickle/pickler.py",
+        [
+          "_flatten_obj_attrs",
+          "_flatten_newstyle_with_slots"
+        ]
+      ]
+    ],
+    "openai__openai-agents-python-2144": [
+      [
+        "src/agents/models/chatcmpl_stream_handler.py",
+        [
+          "handle_stream"
+        ]
+      ],
+      [
+        "src/agents/models/openai_chatcompletions.py",
+        [
+          "stream_response"
+        ]
+      ]
+    ],
+    "openatx__adbutils-188": [
+      [
+        "adbutils/_adb.py",
+        [
+          "reverse_list"
+        ]
+      ]
+    ],
+    "optuna__optuna-6428": [
+      [
+        "optuna/samplers/_partial_fixed.py",
+        [
+          "sample_relative",
+          "sample_independent"
+        ]
+      ],
+      [
+        "optuna/trial/_trial.py",
+        [
+          "suggest_float"
+        ]
+      ]
+    ],
+    "scrapy__scrapy-7351_interface": [
+      [
+        "scrapy/pqueues.py",
+        [
+          "pop",
+          "_active_downloads"
+        ]
+      ]
+    ],
+    "stan-dev__cmdstanpy-801": [
+      [
+        "cmdstanpy/utils/stancsv.py",
+        [
+          "csv_bytes_list_to_numpy"
+        ]
+      ],
+      [
+        "cmdstanpy/stanfit/mcmc.py",
+        [
+          "_assemble_draws"
+        ]
+      ]
+    ]
+  },
+  "reference_hashes": {
+    "agronholm__anyio-935": {
+      "src/anyio/lowlevel.py": "9e48265bef92771195a747262d461ace392282f7919b91d8efe816f01a69f686"
+    },
+    "apache__iceberg-python-3295": {
+      "pyiceberg/expressions/__init__.py": "11c52878d2b2df61996c93c7ab95bc9e771629eac6347d08dde6239b470c8e6b"
+    },
+    "conan-io__conan-19604": {
+      "conan/internal/model/cpp_info.py": "85e6a52050de5b9ca00b577a27c8282434a9805dae324ffd4b4e58c2a0231aed"
+    },
+    "dask__fastparquet-961": {
+      "fastparquet/writer.py": "d1b724e791c71c39635e4b8fd29d518bb70da5180871b61ba410ca6670f2129f"
+    },
+    "jsonpickle__jsonpickle-587": {
+      "jsonpickle/pickler.py": "f7e940aef3baad968cb3de523f620e3e4c2a5273409668762ee046bd216ecbd3"
+    },
+    "openai__openai-agents-python-2144": {
+      "src/agents/models/chatcmpl_stream_handler.py": "d2092e5a8b7cf7b4c80f54a8fbbfc27490ff811a5ab86aff5ca9ff473019d74c",
+      "src/agents/models/openai_chatcompletions.py": "d82e6c78dffe55045f4b63be9c10c86da7cb397b0102a877dc47d4dbc053d7fc"
+    },
+    "openatx__adbutils-188": {
+      "adbutils/_adb.py": "10aff30a6779ee4b172378dbb63777960b9af477c345e1296e1b1d28ee4e6466"
+    },
+    "optuna__optuna-6428": {
+      "optuna/samplers/_partial_fixed.py": "4743009380337d10d346d6b5f8ca373dab0b1955d2bd0c10d3d6a3b4fa11c935",
+      "optuna/trial/_trial.py": "39a808a755b77ea787a80ea14a9394e638100f4cca0a228901292d244644b0e4"
+    },
+    "scrapy__scrapy-7351_interface": {
+      "scrapy/pqueues.py": "1a8dd4cef63cc6efe631e203a2200fb9d5daf381289f606dc43290fd51305a1e"
+    },
+    "stan-dev__cmdstanpy-801": {
+      "cmdstanpy/utils/stancsv.py": "255de199e5bbc38de3aaa5558681d8eaf456c487163609acab6c01a47c8d5ed0",
+      "cmdstanpy/stanfit/mcmc.py": "8d7096318c42ac1bb0fc27d3be74a76248e692bc792beaadf492b4f0d6c56104"
+    }
+  },
+  "rows": [
+    {
+      "task": "agronholm__anyio-935",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        8
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "agronholm__anyio-935",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        8,
+        23,
+        39
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "agronholm__anyio-935",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        6
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "agronholm__anyio-935",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        6
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "agronholm__anyio-935",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        4,
+        4,
+        4,
+        5,
+        5,
+        5
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "agronholm__anyio-935",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        11
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "apache__iceberg-python-3295",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "apache__iceberg-python-3295",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        27,
+        31
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "apache__iceberg-python-3295",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        21,
+        22,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        34,
+        35,
+        36,
+        41,
+        42,
+        43,
+        44
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "apache__iceberg-python-3295",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "apache__iceberg-python-3295",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 3,
+      "edit_requests_after_reference": [
+        17,
+        18,
+        19,
+        20,
+        23
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "apache__iceberg-python-3295",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        19,
+        19,
+        19,
+        20,
+        20,
+        20,
+        20,
+        21,
+        21,
+        21,
+        21
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "conan-io__conan-19604",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        10,
+        10
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "conan-io__conan-19604",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        5,
+        5
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "conan-io__conan-19604",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        7,
+        7
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "conan-io__conan-19604",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        4,
+        4,
+        27,
+        29,
+        35
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "conan-io__conan-19604",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        8,
+        8,
+        14
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "conan-io__conan-19604",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 1,
+      "edit_requests_after_reference": [
+        14,
+        14,
+        17,
+        20,
+        21
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "dask__fastparquet-961",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "dask__fastparquet-961",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 3,
+      "edit_requests_after_reference": [
+        5,
+        15,
+        18
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "dask__fastparquet-961",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "dask__fastparquet-961",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "dask__fastparquet-961",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 3,
+      "edit_requests_after_reference": [
+        7,
+        8,
+        21,
+        32,
+        34,
+        37,
+        39
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "dask__fastparquet-961",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "jsonpickle__jsonpickle-587",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        39,
+        40
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "jsonpickle__jsonpickle-587",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "jsonpickle__jsonpickle-587",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        6,
+        8,
+        10,
+        14
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "jsonpickle__jsonpickle-587",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        6,
+        8,
+        11
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "jsonpickle__jsonpickle-587",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        11,
+        12,
+        13,
+        17,
+        18,
+        21
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "jsonpickle__jsonpickle-587",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        19,
+        19,
+        20,
+        24,
+        25,
+        33
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openai__openai-agents-python-2144",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openai__openai-agents-python-2144",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openai__openai-agents-python-2144",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openai__openai-agents-python-2144",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openai__openai-agents-python-2144",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openai__openai-agents-python-2144",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": null,
+      "edit_requests_after_reference": [],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openatx__adbutils-188",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        9,
+        13,
+        29,
+        30
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openatx__adbutils-188",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        8
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openatx__adbutils-188",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        11,
+        14
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openatx__adbutils-188",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        13,
+        13
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openatx__adbutils-188",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        11
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "openatx__adbutils-188",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 3,
+      "edit_requests_after_reference": [
+        8
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "optuna__optuna-6428",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "optuna__optuna-6428",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "optuna__optuna-6428",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "optuna__optuna-6428",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "optuna__optuna-6428",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        23,
+        24,
+        26
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "optuna__optuna-6428",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 3,
+      "edit_requests_after_reference": [
+        7,
+        13
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "scrapy__scrapy-7351_interface",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        22,
+        23
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "scrapy__scrapy-7351_interface",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        11,
+        16,
+        17,
+        18
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "scrapy__scrapy-7351_interface",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        7,
+        9,
+        10,
+        11,
+        14
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "scrapy__scrapy-7351_interface",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        7,
+        9,
+        10
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "scrapy__scrapy-7351_interface",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        8,
+        10,
+        11,
+        12,
+        14,
+        19,
+        20,
+        21,
+        22
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "scrapy__scrapy-7351_interface",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        5,
+        6,
+        8,
+        9
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "stan-dev__cmdstanpy-801",
+      "variant": "A",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "stan-dev__cmdstanpy-801",
+      "variant": "A",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        17,
+        22,
+        28,
+        32,
+        36
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "stan-dev__cmdstanpy-801",
+      "variant": "U",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        14,
+        23,
+        24,
+        27,
+        32,
+        35
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "stan-dev__cmdstanpy-801",
+      "variant": "U",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [],
+      "edit_seen": false,
+      "candidate_found_but_idle": true
+    },
+    {
+      "task": "stan-dev__cmdstanpy-801",
+      "variant": "UT",
+      "run": "r1",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        23,
+        38,
+        39,
+        52
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    },
+    {
+      "task": "stan-dev__cmdstanpy-801",
+      "variant": "UT",
+      "run": "r2",
+      "located_reference_request": 2,
+      "edit_requests_after_reference": [
+        14,
+        19,
+        20,
+        26,
+        28,
+        38,
+        42
+      ],
+      "edit_seen": true,
+      "candidate_found_but_idle": false
+    }
+  ],
+  "by_variant": {
+    "A": {
+      "runs": 20,
+      "located": 17,
+      "edit_seen": 13,
+      "candidate_found_but_idle": 5
+    },
+    "U": {
+      "runs": 20,
+      "located": 16,
+      "edit_seen": 15,
+      "candidate_found_but_idle": 4
+    },
+    "UT": {
+      "runs": 20,
+      "located": 17,
+      "edit_seen": 20,
+      "candidate_found_but_idle": 0
+    }
+  }
+}
