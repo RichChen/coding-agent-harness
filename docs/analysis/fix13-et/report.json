@@ -1,0 +1,436 @@
+{
+  "schema": "fix13et.analysis.v1",
+  "planned_slots": 60,
+  "completed_slots": 60,
+  "valid_slots": 60,
+  "complete_tasks": 30,
+  "missing_or_invalid_tasks": [],
+  "groups": {
+    "U": {
+      "completed_slots": 60,
+      "valid_slots": 60,
+      "planned_slots": 60,
+      "solved": 16,
+      "at_least_once_solved_tasks": 9,
+      "cost_cny_final_runs": "15.800914",
+      "cost_cny_all_attempts": "15.800914",
+      "cost_per_solved_run_cny": "0.987557125",
+      "failure_classes": {
+        "found_idle": 19,
+        "edited_reference": 15,
+        "edited_elsewhere": 6,
+        "not_found": 2,
+        "edited_reverted": 2
+      },
+      "found_idle_all_allocated": 0.31666666666666665,
+      "found_idle_failed": 0.4318181818181818,
+      "high_repeat": 22,
+      "no_edit_calls": 22,
+      "no_final_source_change": 26,
+      "explanation_eligible_turns": 3533,
+      "visible_nonempty_turns": 158,
+      "visible_within40_turns": 157,
+      "length_responses": 0,
+      "reasoning_nonzero_requests": 0,
+      "reasoning_run_mean_median": 0.0,
+      "requests": 3623,
+      "cache_hit_tokens": 121832192,
+      "prompt_tokens": 123807899,
+      "completion_tokens": 872026,
+      "stop_reasons": {
+        "completed": 29,
+        "max_model_calls": 28,
+        "candidate_snapshot_failed": 2,
+        "insufficient_reserve": 1
+      }
+    },
+    "E": {
+      "completed_slots": 60,
+      "valid_slots": 60,
+      "planned_slots": 60,
+      "solved": 26,
+      "at_least_once_solved_tasks": 13,
+      "cost_cny_final_runs": "7.265339",
+      "cost_cny_all_attempts": "7.323528",
+      "cost_per_solved_run_cny": "0.2816741538461538461538461538",
+      "failure_classes": {
+        "edited_reference": 22,
+        "edited_elsewhere": 5,
+        "found_idle": 4,
+        "not_found": 1,
+        "edited_reverted": 2
+      },
+      "found_idle_all_allocated": 0.06666666666666667,
+      "found_idle_failed": 0.11764705882352941,
+      "high_repeat": 5,
+      "no_edit_calls": 5,
+      "no_final_source_change": 8,
+      "explanation_eligible_turns": 1894,
+      "visible_nonempty_turns": 1096,
+      "visible_within40_turns": 1061,
+      "length_responses": 1,
+      "reasoning_nonzero_requests": 0,
+      "reasoning_run_mean_median": 0.0,
+      "requests": 2009,
+      "cache_hit_tokens": 47711488,
+      "prompt_tokens": 48999963,
+      "completion_tokens": 347492,
+      "stop_reasons": {
+        "completed": 52,
+        "response_incomplete": 1,
+        "max_model_calls": 5,
+        "candidate_snapshot_failed": 2
+      }
+    },
+    "UT": {
+      "completed_slots": 60,
+      "valid_slots": 60,
+      "planned_slots": 60,
+      "solved": 28,
+      "at_least_once_solved_tasks": 16,
+      "cost_cny_final_runs": "16.091229",
+      "cost_cny_all_attempts": "16.870168",
+      "cost_per_solved_run_cny": "0.602506",
+      "failure_classes": {
+        "edited_reverted": 3,
+        "edited_reference": 23,
+        "edited_elsewhere": 6
+      },
+      "found_idle_all_allocated": 0.0,
+      "found_idle_failed": 0.0,
+      "high_repeat": 0,
+      "no_edit_calls": 0,
+      "no_final_source_change": 5,
+      "explanation_eligible_turns": 2031,
+      "visible_nonempty_turns": 59,
+      "visible_within40_turns": 55,
+      "length_responses": 0,
+      "reasoning_nonzero_requests": 1920,
+      "reasoning_run_mean_median": 307.5689655172414,
+      "requests": 2149,
+      "cache_hit_tokens": 83379710,
+      "prompt_tokens": 85585043,
+      "completion_tokens": 1043173,
+      "stop_reasons": {
+        "completed": 55,
+        "candidate_snapshot_failed": 3,
+        "max_model_calls": 2
+      }
+    },
+    "ET": {
+      "completed_slots": 60,
+      "valid_slots": 60,
+      "planned_slots": 60,
+      "solved": 27,
+      "at_least_once_solved_tasks": 14,
+      "cost_cny_final_runs": "14.421519",
+      "cost_cny_all_attempts": "15.392193",
+      "cost_per_solved_run_cny": "0.5700812222222222222222222222",
+      "failure_classes": {
+        "edited_reference": 21,
+        "found_idle": 1,
+        "edited_elsewhere": 7,
+        "edited_reverted": 4
+      },
+      "found_idle_all_allocated": 0.016666666666666666,
+      "found_idle_failed": 0.030303030303030304,
+      "high_repeat": 0,
+      "no_edit_calls": 2,
+      "no_final_source_change": 6,
+      "explanation_eligible_turns": 1777,
+      "visible_nonempty_turns": 809,
+      "visible_within40_turns": 808,
+      "length_responses": 0,
+      "reasoning_nonzero_requests": 1606,
+      "reasoning_run_mean_median": 255.8974358974359,
+      "requests": 1895,
+      "cache_hit_tokens": 69012224,
+      "prompt_tokens": 70755049,
+      "completion_tokens": 1021923,
+      "stop_reasons": {
+        "completed": 54,
+        "max_model_calls": 1,
+        "insufficient_reserve": 1,
+        "candidate_snapshot_failed": 4
+      }
+    }
+  },
+  "paired": {
+    "tasks": 30,
+    "bootstrap_draws": 10000,
+    "sign_flip_draws": 100000,
+    "seeds": {
+      "bootstrap": 20261201,
+      "sign_flip": 20261202
+    },
+    "comparisons": [
+      {
+        "comparison": "ET-UT",
+        "kind": "primary",
+        "difference": -0.016666666666666666,
+        "ci95": [
+          -0.08333333333333326,
+          0.033333333333333326
+        ],
+        "p_raw": 1.0,
+        "cost_per_run_ratio_ci95": [
+          0.7430173952580157,
+          1.0558202675359845
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.7467361497698861,
+          1.156455076329204
+        ],
+        "p_holm": 1
+      },
+      {
+        "comparison": "ET-E",
+        "kind": "primary",
+        "difference": 0.016666666666666666,
+        "ci95": [
+          -0.04999999999999993,
+          0.09999999999999998
+        ],
+        "p_raw": 1.0,
+        "cost_per_run_ratio_ci95": [
+          1.5841072575770383,
+          2.413926387889914
+        ],
+        "cost_per_solved_ratio_ci95": [
+          1.433850108704484,
+          2.394557010996736
+        ],
+        "p_holm": 1
+      },
+      {
+        "comparison": "ET-U",
+        "kind": "secondary",
+        "difference": 0.18333333333333332,
+        "ci95": [
+          0.06666666666666665,
+          0.31666666666666665
+        ],
+        "p_raw": null,
+        "cost_per_run_ratio_ci95": [
+          0.5967320561553323,
+          1.4079592636448806
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.26289216219753503,
+          0.9934367273202329
+        ]
+      },
+      {
+        "comparison": "E-U",
+        "kind": "context",
+        "difference": 0.16666666666666666,
+        "ci95": [
+          0.033333333333333326,
+          0.31666666666666665
+        ],
+        "p_raw": null,
+        "cost_per_run_ratio_ci95": [
+          0.3133750468580105,
+          0.6674800495829549
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.13406726873763583,
+          0.5351008613801435
+        ]
+      },
+      {
+        "comparison": "UT-U",
+        "kind": "context",
+        "difference": 0.2,
+        "ci95": [
+          0.06666666666666671,
+          0.33333333333333337
+        ],
+        "p_raw": null,
+        "cost_per_run_ratio_ci95": [
+          0.6913412251060498,
+          1.5195913284780633
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.27776904886553044,
+          1.0688759541874886
+        ]
+      },
+      {
+        "comparison": "(ET-UT)-(E-U)",
+        "kind": "exploratory_interaction",
+        "difference": -0.18333333333333332,
+        "ci95": [
+          -0.33333333333333337,
+          -0.03333333333333338
+        ],
+        "p_raw": 0.04142958570414296,
+        "p_holm": null
+      }
+    ],
+    "holm_family": "ET-UT and ET-E only; the other rows and the interaction are exploratory",
+    "intervals": "ordinary marginal 95% intervals",
+    "sign_flip_assumption": "exchangeability of each task-level paired difference under the null"
+  },
+  "task_sets": {
+    "U": [
+      "Cambridge-ICCS__TCTrack-118",
+      "holoviz__holoviews-6783",
+      "marimo-team__marimo-8387_interface",
+      "ome-zarr-models__ome-zarr-models-py-206",
+      "packit__packit-2684",
+      "pasqal-io__Pulser-936",
+      "pgmpy__pgmpy-3137",
+      "spdx__tools-python-855",
+      "strands-agents__sdk-python-1734"
+    ],
+    "E": [
+      "Cambridge-ICCS__TCTrack-118",
+      "holoviz__holoviews-6783",
+      "keras-team__keras-22642",
+      "marimo-team__marimo-8387_interface",
+      "mpmath__mpmath-992",
+      "ome-zarr-models__ome-zarr-models-py-206",
+      "packit__packit-2684",
+      "pasqal-io__Pulser-936",
+      "pgmpy__pgmpy-3137",
+      "pytest-dev__pyfakefs-1286",
+      "researchobject__ro-crate-py-248",
+      "strands-agents__sdk-python-1734",
+      "tox-dev__tox-3846"
+    ],
+    "UT": [
+      "Cambridge-ICCS__TCTrack-118",
+      "holoviz__holoviews-6783",
+      "keras-team__keras-22642",
+      "marimo-team__marimo-8387_interface",
+      "mmornati__home-assistant-csnet-home-132",
+      "mpmath__mpmath-992",
+      "ome-zarr-models__ome-zarr-models-py-206",
+      "pab1it0__prometheus-mcp-server-76",
+      "packit__packit-2684",
+      "pasqal-io__Pulser-936",
+      "pgmpy__pgmpy-3137",
+      "pytest-dev__pyfakefs-1286",
+      "researchobject__ro-crate-py-248",
+      "spdx__tools-python-855",
+      "strands-agents__sdk-python-1734",
+      "tox-dev__tox-3846"
+    ],
+    "ET": [
+      "Cambridge-ICCS__TCTrack-118",
+      "holoviz__holoviews-6783",
+      "keras-team__keras-22642",
+      "marimo-team__marimo-8387_interface",
+      "mpmath__mpmath-992",
+      "ome-zarr-models__ome-zarr-models-py-206",
+      "packit__packit-2684",
+      "pasqal-io__Pulser-936",
+      "pgmpy__pgmpy-3137",
+      "pytest-dev__pyfakefs-1286",
+      "researchobject__ro-crate-py-248",
+      "spdx__tools-python-855",
+      "strands-agents__sdk-python-1734",
+      "tox-dev__tox-3846"
+    ]
+  },
+  "set_relations": {
+    "ET_subset_UT": true,
+    "E_subset_ET": true,
+    "ET_only_new_tasks": []
+  },
+  "decision": {
+    "label": "compatible_with_overlap",
+    "text": "ET 与 UT 的差在 ±10 个百分点内：与重叠/替代相容，但不能证明两者机制相同。"
+  },
+  "batch": {
+    "schema": "fix13et.batch-report.v1",
+    "mock": false,
+    "slots": 60,
+    "group": "ET",
+    "batch_cap_cny": "60",
+    "start_threshold_cny": "48",
+    "inflight_buffer_cny": "12",
+    "prior_cost_cny": "0.000360",
+    "spent_cny": "15.392553",
+    "known_settled_cny": "15.392553",
+    "unreconciled_attempts": [],
+    "unreconciled_reserve_cny": "0",
+    "forecast_cny": "15.392553",
+    "halt_reason": null,
+    "started_this_launch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      9,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      15,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ],
+    "max_concurrent": 2,
+    "final_runs": 60,
+    "by_group": {
+      "ET": {
+        "final_runs": 60,
+        "cost_cny": "15.392193"
+      }
+    }
+  },
+  "evidence_boundary": "post-hoc ET addendum on the same 30 exposed tasks; not part of the original pre-registered family"
+}

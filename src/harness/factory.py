@@ -376,6 +376,7 @@ def build_agent(
         estimated_input_tokens=budget_cfg.get("estimated_input_tokens", 512),
         request_telemetry=bool(tracing_cfg.get("request_telemetry", False)),
         announce_remaining_calls=not budget_cfg.get("hide_remaining_calls", False),
+        tool_intervention=rt_cfg.get("tool_intervention", "none"),
     )
     agent.execution_backend = docker_backend
     agent.workspace_controller = workspace_controller

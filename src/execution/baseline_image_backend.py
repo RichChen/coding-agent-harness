@@ -52,7 +52,7 @@ else:
 pathlib.Path("/tmp/a5-native-links.json").write_text(json.dumps(linked))
 '''
 
-_SKIP_DIRS = frozenset({"__pycache__", ".pytest_cache", "build"})
+_SKIP_DIRS = frozenset({"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache", "build"})
 _SKIP_SUFFIXES = (".pyc", ".pyo", ".so", ".pyd", ".o", ".dylib")
 _SKIP_NAMES = frozenset({".coverage"})
 
@@ -75,7 +75,7 @@ EXPORT_DELTA = r'''
 import base64, json, pathlib, sys
 root = pathlib.Path("/opt/repo")
 work = pathlib.Path("/workspace")
-skip_dirs = {"__pycache__", ".pytest_cache", "build"}
+skip_dirs = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache", "build"}
 skip_names = {".coverage"}
 skip_suffixes = (".pyc", ".pyo", ".so", ".pyd", ".o", ".dylib")
 keep_original = False

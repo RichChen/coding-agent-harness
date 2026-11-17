@@ -1,0 +1,53 @@
+# FIX-13 local implementation. Paid execution requires separate review.
+llm:
+  base_url: https://api.deepseek.com/v1
+  api_key: ${LLM_API_KEY}
+  model: deepseek-flash
+  thinking: disabled
+  max_tokens: 8192
+  trust_env: false
+retry:
+  stop_on_unknown_usage: true
+runtime:
+  system_prompt_path: prompts/swe_b0.md
+  max_steps: 120
+  step_timeout_seconds: 900
+  total_timeout_seconds: 10800
+  context:
+    strategy: masking
+    max_tokens: 1100000
+    keep_recent_tool_results: 4
+    compact_token_threshold: 880000
+    plugin: noop
+    admission_estimate: calibrated_v1
+    compact_trigger_estimate: admission
+  budget:
+    max_model_calls: 100
+    max_tokens: 10000000
+    hide_remaining_calls: true
+  tool_intervention: result_explanation
+policy:
+  command:
+    execution_profile: docker_linux
+    docker_context: desktop-linux
+    docker_network: none
+    timeout_seconds: 120
+    env_whitelist: []
+    export_keep_original_files: true
+  file_size_limit_bytes: 1048576
+  tool_output_max_chars: 16000
+tools:
+  enabled:
+  - read_file
+  - write_file
+  - list_dir
+  - edit_file
+  - search_replace
+  - run_command
+  - search_code
+tracing:
+  lifecycle_events: true
+  llm_stream_events: true
+  request_telemetry: true
+  session_artifact_bytes: 536870912
+  session_artifact_item_bytes: 8388608

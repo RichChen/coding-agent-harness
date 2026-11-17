@@ -1,0 +1,439 @@
+{
+  "schema": "fix13et.tasks.v1",
+  "source_plan": "scripts/rebench/out/fix13_tasks.json",
+  "source_plan_sha256": "2ec5fb1d8fadd65c1c22e18dcaf7ee121657d828d3669318cbdc7d3f47945efe",
+  "run_order": [
+    {
+      "seq": 1,
+      "block": 1,
+      "instance_id": "pasqal-io__Pulser-936",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 2,
+      "block": 1,
+      "instance_id": "pasqal-io__Pulser-936",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 3,
+      "block": 2,
+      "instance_id": "packit__packit-2684",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 4,
+      "block": 2,
+      "instance_id": "packit__packit-2684",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 5,
+      "block": 3,
+      "instance_id": "vprusso__toqito-1298",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 6,
+      "block": 3,
+      "instance_id": "vprusso__toqito-1298",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 7,
+      "block": 4,
+      "instance_id": "spdx__tools-python-855",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 8,
+      "block": 4,
+      "instance_id": "spdx__tools-python-855",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 9,
+      "block": 5,
+      "instance_id": "line__line-bot-sdk-python-981_interface",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 10,
+      "block": 5,
+      "instance_id": "line__line-bot-sdk-python-981_interface",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 11,
+      "block": 6,
+      "instance_id": "deepset-ai__haystack-10189",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 12,
+      "block": 6,
+      "instance_id": "deepset-ai__haystack-10189",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 13,
+      "block": 7,
+      "instance_id": "vyperlang__vyper-4801",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 14,
+      "block": 7,
+      "instance_id": "vyperlang__vyper-4801",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 15,
+      "block": 8,
+      "instance_id": "google__secops-wrapper-119",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 16,
+      "block": 8,
+      "instance_id": "google__secops-wrapper-119",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 17,
+      "block": 9,
+      "instance_id": "marimo-team__marimo-8387_interface",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 18,
+      "block": 9,
+      "instance_id": "marimo-team__marimo-8387_interface",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 19,
+      "block": 10,
+      "instance_id": "tox-dev__tox-3846",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 20,
+      "block": 10,
+      "instance_id": "tox-dev__tox-3846",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 21,
+      "block": 11,
+      "instance_id": "pymc-devs__pytensor-1668",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 22,
+      "block": 11,
+      "instance_id": "pymc-devs__pytensor-1668",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 23,
+      "block": 12,
+      "instance_id": "avaiga__taipy-2797",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 24,
+      "block": 12,
+      "instance_id": "avaiga__taipy-2797",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 25,
+      "block": 13,
+      "instance_id": "koxudaxi__datamodel-code-generator-2993",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 26,
+      "block": 13,
+      "instance_id": "koxudaxi__datamodel-code-generator-2993",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 27,
+      "block": 14,
+      "instance_id": "graphistry__pygraphistry-1107_interface",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 28,
+      "block": 14,
+      "instance_id": "graphistry__pygraphistry-1107_interface",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 29,
+      "block": 15,
+      "instance_id": "pab1it0__prometheus-mcp-server-76",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 30,
+      "block": 15,
+      "instance_id": "pab1it0__prometheus-mcp-server-76",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 31,
+      "block": 16,
+      "instance_id": "a2aproject__a2a-python-682_interface",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 32,
+      "block": 16,
+      "instance_id": "a2aproject__a2a-python-682_interface",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 33,
+      "block": 17,
+      "instance_id": "boxed__mutmut-403",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 34,
+      "block": 17,
+      "instance_id": "boxed__mutmut-403",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 35,
+      "block": 18,
+      "instance_id": "gidgethub__gidgethub-225",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 36,
+      "block": 18,
+      "instance_id": "gidgethub__gidgethub-225",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 37,
+      "block": 19,
+      "instance_id": "mpmath__mpmath-992",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 38,
+      "block": 19,
+      "instance_id": "mpmath__mpmath-992",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 39,
+      "block": 20,
+      "instance_id": "researchobject__ro-crate-py-248",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 40,
+      "block": 20,
+      "instance_id": "researchobject__ro-crate-py-248",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 41,
+      "block": 21,
+      "instance_id": "libp2p__py-libp2p-750",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 42,
+      "block": 21,
+      "instance_id": "libp2p__py-libp2p-750",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 43,
+      "block": 22,
+      "instance_id": "facelessuser__pymdown-extensions-2807",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 44,
+      "block": 22,
+      "instance_id": "facelessuser__pymdown-extensions-2807",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 45,
+      "block": 23,
+      "instance_id": "pgmpy__pgmpy-3137",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 46,
+      "block": 23,
+      "instance_id": "pgmpy__pgmpy-3137",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 47,
+      "block": 24,
+      "instance_id": "pytest-dev__pyfakefs-1286",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 48,
+      "block": 24,
+      "instance_id": "pytest-dev__pyfakefs-1286",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 49,
+      "block": 25,
+      "instance_id": "strands-agents__sdk-python-1734",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 50,
+      "block": 25,
+      "instance_id": "strands-agents__sdk-python-1734",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 51,
+      "block": 26,
+      "instance_id": "sktime__sktime-8723",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 52,
+      "block": 26,
+      "instance_id": "sktime__sktime-8723",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 53,
+      "block": 27,
+      "instance_id": "python-scim__scim2-models-120",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 54,
+      "block": 27,
+      "instance_id": "python-scim__scim2-models-120",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 55,
+      "block": 28,
+      "instance_id": "ome-zarr-models__ome-zarr-models-py-206",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 56,
+      "block": 28,
+      "instance_id": "ome-zarr-models__ome-zarr-models-py-206",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 57,
+      "block": 29,
+      "instance_id": "Cambridge-ICCS__TCTrack-118",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 58,
+      "block": 29,
+      "instance_id": "Cambridge-ICCS__TCTrack-118",
+      "group": "ET",
+      "repeat": 2
+    },
+    {
+      "seq": 59,
+      "block": 30,
+      "instance_id": "holoviz__holoviews-6783",
+      "group": "ET",
+      "repeat": 1
+    },
+    {
+      "seq": 60,
+      "block": 30,
+      "instance_id": "holoviz__holoviews-6783",
+      "group": "ET",
+      "repeat": 2
+    }
+  ],
+  "rules": {
+    "group": "ET",
+    "tasks": 30,
+    "repeats": [
+      1,
+      2
+    ],
+    "slots": 60,
+    "block_order": "inherited from the frozen FIX-13 plan",
+    "within_block_seed": 20261124
+  },
+  "note": "Post-hoc ET addendum on the same 30 tasks; two runs per task, no other arm in this batch."
+}

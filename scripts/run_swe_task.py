@@ -42,6 +42,7 @@ from src.harness.factory import build_agent, load_config
 from src.llm.client import LLMClient, LLMResponse, LLMStreamEvent, StreamCapability
 from src.policy.cny_budget import A5BudgetPlan, CnyBudgetLedger, PriceSnapshot
 from src.runtime.session import RunSession, compatibility, plain
+from src.tracing.store import StoreError, read_jsonl
 
 # Pilot targets from coding-agent assignments.json. Never tune on these.
 HOLDOUT = {
@@ -114,6 +115,13 @@ def load_yaml(path: Path):
 
 def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_run_events(path: Path):
+    events, state = read_jsonl(path)
+    if state != "complete":
+        raise StoreError(state)
+    return events
 
 
 def git_state(repo: Path) -> dict:
@@ -926,7 +934,7 @@ async def run_task(task: dict, profile: Path, output: Path, *, mock: bool, varia
     events = []
     events_path = output / "events.jsonl"
     if events_path.exists():
-        events = [json.loads(line) for line in events_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        events = load_run_events(events_path)
     result_plain = plain(result) if result else {}
     attempts = result_plain.get("llm_attempts") or []
     stats = summarize_events(events, result_plain, run_error, output / "session" / "artifacts")

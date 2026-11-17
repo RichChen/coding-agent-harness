@@ -4,7 +4,7 @@ Last reviewed: 2026-11-10 (Asia/Shanghai)
 
 This file is the dynamic memory for the coding-harness project. It records current state, decisions, evidence boundaries, open questions, and the next review point. It is not a chat transcript and should only retain information that remains useful across sessions.
 
-**当前入口（2026-11-10）：** FIX-12 已结束；R11 已获用户事后接受；11-09 文档已整理并纳入本次本地提交。后续已选 U／重复提醒／一句话解释／UT 四组，仅授权设计，未批准付费运行。以末尾「用户决定与当前任务」为准；带旧日期的准备、路线和临时结论保留作历史，不作为当前执行指令。
+**当前入口（2026-11-11）：** FIX-12 已结束，R11 已接受。FIX-13 新题已通过 25/30，继续完成最后五位置。用户现已明确授权：30 题到位后完成全流程无模型检查及开跑收尾，通过即直接启动四组正式运行，无需再次询问。沿现有 240 名额、并发 3、160 元标准峰价全流程上限与停止规则；预算充足不等于取消上限。题库目标止于旧 30＋新 30。复用原执行智能体，正常进度按批记录。最新授权见末尾，旧的“尚未授权付费”段落仅代表当时状态。
 
 ## Current objective
 
@@ -265,3 +265,194 @@ The job-seeking narrative is strongest when it emphasizes auditability, clean ev
 - 设计、预检、停止规则、预算、证据边界尚未经过用户审阅，**不得开始任何新付费实验**。旧试点预算不延用。
 - 费用表是服务方 usage 按标准峰价核算，尚非核实过的账户扣款；下轮应分别报告可核对的实际花费与用于组间比较的标准费用。
 - 轨迹都是事后描述。旧脚本对“输出相同”的判断只比较前 300 个字符，不能当作完整输出一致；低思考量报告阈值不是“thinking 有效”的门槛。不要据此主动增加思考量或声称已查明循环原因。
+
+## 首批新题接入授权（2026-11-10）
+
+用户同意先接入 5 道新题，通过的题直接纳入本轮后续使用，依据实测接入耗时再更新准备时间。先形成独立的新题候选/替补顺序，不能按下载快慢或接入难易事后挑题。
+
+网络为本次重点：先核验 Cursor 会话 `78860345-e424-4309-a6fd-7411437c36da` 的下载经验和残留工具，不向该会话发送消息。FIX-12-RESULTS 的镜像下载条目记录过代理拉取约 0.6 MB/s、CDN 分层下载校验后导入约 10–16 MB/s；历史速度不代表当前速度，须做有界小流量实测。明显低速时及时暂停排查，不沿同一路径空等数小时，不修改全局代理或重启 Docker。
+
+已委派 GPT-6.1 Sol：`network_history` 核验网络/历史并提供安全复用方法；`four_arm_design` 生成独立 FIX-13 清单并实际完成首 5 个位置接入。使用独立 plan、manifest、日志及结果路径，保留 FIX-12 所有原始证据。主会话负责审阅新题资格、接入结果和时间估计；当前不调用付费模型。详细草案见 `docs/roadmap/FIX-13-FOUR-ARM-DESIGN.zh-CN.md`。
+
+### 网络工作已完成（2026-11-10 14:51）
+
+指定 Cursor transcript 的第 661、664、670 行已核验网络历史，未向原会话发消息。首批五张官方镜像均已下载、逐层 SHA-256 校验、导入并与官方 RepoDigest 匹配；下载和导入任务均已退出。初测直连较快，后段遇 TLS reset/低速后按有界实测改用代理续传，没有重下整图或放松证书校验。不能把本机代理简单固定为“总该走”或“总不该走”。
+
+可复用工具为 `scripts/rebench/fetch_image_verified.py`，支持保留 partial 续传、共享完整层缓存、显式 `--proxy-blobs`、网络连接/低速/总时限及最终身份核对。大镜像导入本身也会慢（本批 205–2176 秒），不应误归因于下载；工具未承诺 Docker load 总时限，使用时继续观察进度。详细证据和调用方法见 `docs/analysis/fix13/NETWORK-PREFLIGHT.zh-CN.md`。
+
+首批任务接入仍在进行，权威进度为 `docs/roadmap/FIX-13-PREP-STATUS.zh-CN.md` 与 `runs/fix13-prep/stages.jsonl`。Packit 已完整通过，未重做已经通过的扫描；当前无付费模型调用。
+
+### 无模型工程适配并行进行（2026-11-10）
+
+首批接入运行期间，主会话将不依赖新题结果的四组最小实现交给 `four_arm_implementation`（GPT-6.1 Sol）：重复调用提醒、固定一句话解释提示、独立配置和启动器、本地针对性测试。它不修改首批选题/接入文件，不启动 Docker 或模型实验。结果入口为 `docs/roadmap/FIX-13-IMPLEMENTATION-STATUS.zh-CN.md`，由主会话复核实际改动与设计是否一致后采纳。
+
+### 用户批准简化重复提醒（2026-11-10）
+
+无模型开发回放发现，原先要求“成功、只读且完整输出一致”的规则，在旧 U 组 27 条高重复轨迹中触发 0 条；仅忽略包装耗时字段触发 1 条。它无法有效测试当前关心的现象。
+
+用户已明确选择“采用简单提醒，保留四组”：连续三个模型工具轮，每轮恰好一个调用，工具名和参数完全相同，即提醒一次。每次运行最多提醒一次；不以只读、成功或输出相同为条件；提示允许合理重复，不阻止调用。R/E/UT 的其余比较条件不随之改变。
+
+该候选在旧 U 的 27 条高重复轨迹中触发 24 条，其余 33 条未触发；全部 23 次通过运行中有 2 次触发，均属于高重复集。这是已见开发数据上的规则覆盖描述，不是提示有效或新题获益的证据。新验证题尚未运行模型。设计和实现由 `four_arm_implementation` 同步更新，不再探索其他提醒变体。
+
+### 四组工程复核与接入修订（2026-11-10）
+
+四组最小实现已完成主会话代码复核，131 项针对性测试通过；包含用户批准的简单 R 提醒、固定 E 提示、四份配置和独立启动器。接受本次工程改动不等于批准付费运行：完整新题集、真实 Docker 端到端预检及设计/预算审阅仍未完成。结果见 `docs/roadmap/FIX-13-IMPLEMENTATION-STATUS.zh-CN.md`。
+
+首五位置中，Pulser、packit、toqito、spdx 已完整通过。第五位置原 line SDK 题因既定隔离规则排除，沿固定同层队列替补 venvstacks。替补校准在实际测试前遇到生成目录 `.pdm-build` 的读取权限问题。主会话已采纳限定接入修订 P1：先核实目录不在基线源码中、仅含已记录的两个普通文件，再仅将该目录从 0700 改为 0755；文件内容/权限、源码、依赖、网络、运行用户与评分规则不变。旧镜像和证据保留，新镜像重新通过完整隔离、校准、内存与工作区检查后才能接受。若需扩大修复范围，回到主会话讨论。修订证据和最终状态以 `docs/roadmap/FIX-13-PREP-STATUS.zh-CN.md` 为准。
+
+北京时间 16:04，P1 新镜像完成上述完整检查，venvstacks 接受；批次结果为五个位置全部通过，pending 和 unfilled 均为空。总共尝试六个候选，只有 line SDK 按原规则排除，不能据这一个替补比例推断完整题池。五道通过题的运行入口绑定检查均通过，未调用付费模型。首批已完成，余下 25 题和正式四组 Docker 端到端预检尚未完成；后续按小批处理并核对容量，不自动 prune 或删除证据。
+
+首批从计划落地到接入完成约 133 分钟。余下 25 题暂按 8–16 小时安排准备，属于待下一批修正的工程估计，不是完成保证。接入结束后保留原 plan/ingest 字节，仅统一 plan 为 LF 并更新关联哈希；主会话已核对选题与顺序语义不变、plan/exposure 哈希一致、manifest 恰为五道通过题。迁移记录在 `runs/fix13-prep/line-ending-migration.json`。
+
+## 用户批准固定 60 题与继续接入（2026-11-10）
+
+- 用户已接受：完成本轮新 30 题后，以旧 30＋新 30 共 60 道通过题作为后续固定题库，不默认继续扩题。原规则拒绝候选仍可按既定队列替补并保留证据，不算新增研究题目。旧题用于开发诊断；新题支撑本轮预先确定的比较。后续若根据这 60 题成绩反复调整方法，不能继续将它们称为未见过的独立验证题。
+- 本次“开始吧”授权完成剩余 25 个位置的无模型接入。沿既有选题、替补和验收规则，每五位置一批继续至新 30 题到位；保留已通过的五题，不重新选样或重做完整校准。付费实验仍须设计、预检、停止规则、预算及证据边界审阅后才能开始。
+- 用户明确要求减少主审额度消耗和非必要治理。复用熟悉流程的 `four_arm_design` 执行智能体；脚本负责重复流程，执行智能体处理常规工程问题。正常批次只写接入结果文档，不逐分钟向主审反馈；主审只处理阻碍、重大风险、需用户决定事项和最终验收。不另开审计会话或追加独立审计智能体。
+- 容量核对：Docker 数据文件在 E 盘，约 418.1 GB，E 盘剩余约 389.1 GB，D 盘剩余约 291.5 GB。D/E 同属 `WDC WD20EZAZ-00GGJB0` 2 TB 机械硬盘，C 属另一块 512 GB Intel NVMe SSD。余下接入按批检查空间，避免同时进行多个重型导入/构建；不自动清理镜像、重分区、迁移数据或购买资源。扩容与历史镜像归档方式尚未批准实施。
+
+## 用户授权预检通过后直接正式运行（2026-11-11）
+
+用户明确表示新30题到位后继续全流程无模型检查、开跑前收尾，全部无问题即立刻开始正式运行，并已备好API预算；用户去休息，不需再次询问开跑许可。主会话据已讨论的推荐设计采纳240正式名额、U/R/E/UT各60次、并发3、单次4元、全流程160元标准峰价上限，启动阈值148元及12元在途缓冲。开发、身份冒烟、退役和重试同计总额，预算充足不授权无限花费或突破停止规则。
+
+执行分工：four_arm_design 完成最后五题并交接累计manifest/校准/替补；four_arm_implementation 接续无模型端到端预检、离线gold参照与身份/价格/预算绑定，通过后按本次授权启动唯一正式批次并跟进。两者直接协调重型Docker任务，不新建监控框架或额外审计会话。执行者可修复比较条件不变的普通工程故障并保留记录；若需要改提示、题目资格、评分规则、资源条件、模型窗口或突破费用上限，暂停并向主审报告，不趁用户离线变更实验。
+
+预检必须留下简洁可复核结果：完整30位置及240名额、各题真实Docker无模型作答/评分、四组提示/干预路径、答案隔离、费用/身份/恢复/停止检查、最终输入与离线gold参照绑定。已有131项通过结果可复用，只补新改动及真实路径的必要检查。初次身份请求若需要付费，列入既定不超过0.5元冒烟及160元总额，记录全部ledger。正式运行完毕后汇总费用、结果、异常与证据边界，报告使用易懂中文。
+
+### 新 30 题无模型接入完成（2026-11-11 02:25）
+
+固定新 30 个位置全部通过，manifest 恰为 30 题，pending/unfilled 为空；三空/三 gold、内存/工作区及运行入口绑定均完成。本轮共 36 个候选、六次替补事件，涉及五个原位置，未触及单位置三候选规则拒绝上限。剩余 25 位置续跑实际 9.49 小时，完成时 D/E 可用约 268.3/260.6 GB，模型调用为 0。
+
+除已采纳的限定 P1 外，续跑处理了原来源格式规则下 Spack 的确定性派生拒绝、累计记录原子替换的短时有界恢复，以及同 commit 的 Strands 来源包根名称适配。源码相对内容与验收边界保留，旧材料和失败历史均留存。最终 pgmpy 按旧规则排除六项 P2P，其余题无 P2P 排除。详见 `docs/roadmap/FIX-13-PREP-STATUS.zh-CN.md` 与 `runs/fix13-prep/all-30-summary.json`。
+
+接入写入与下载进程已退出、锁已释放，最终输入实际哈希和三十任务清单记录于 `runs/fix13-prep/handoff.json`；已明确交接既有 `four_arm_implementation` 接续全量无模型 Docker 预检及此前获准的正式运行，接入执行者不再修改累计 manifest/ingest。
+
+## ET 追加组（2026-11-12）
+
+用户在看过 FIX-13 四组结果后选择只跑 ET：即 UT（thinking high、32768 输出额度）再加 E 的固定一句话解释提示。ET 使用同一批 30 道新题，每题运行两次，共 60 个名额。设计、预检、预算和证据边界见 `docs/roadmap/FIX-13-ET-ADDENDUM.zh-CN.md`。这是事后追加的探索组，不能加入原四组的事前确认检验族；原四组报告保持不变。
+
+ET 配置只比 UT 多 `runtime.tool_intervention: result_explanation`；模型、系统提示、工具、镜像、评分器和任务清单均绑定到原 FIX-13 条件。ET 批次完成 60/60，30/30 道题均有两次有效运行，模型 `deepseek-flash` 和系统指纹与原批次一致。实际并发为 2，而原批次为 3；这是调度差异，未改变单次运行条件。全流程标准峰价费用 15.392553 元，其中最终名额 14.421519 元，约 0.97 元来自基础设施退役尝试；这不是已与账户账单核对的金额。
+
+结果是 U 16/60、E 26/60、UT 28/60、ET 27/60。按题配对，ET−UT 为 −1.7 个百分点，普通 95% 区间 [−8.3, +3.3]；ET−E 为 +1.7 个百分点，区间 [−5.0, +10.0]。两项追加比较的 Holm 校正 p 都为 1。探索性交互 `(ET−UT)−(E−U)` 为 −18.3 个百分点，普通区间 [−33.3, −3.3]，符号翻转 p=0.04143；它只支持“E 与 UT 的收益可能重叠”的后续研究线索，不能当作预注册结论。
+
+按题看，ET 至少解出一次的 14 道题全部属于 UT 的 16 道题；E 的 13 道题全部属于 ET。ET 相比 UT 有一题多解、两题少解；相比 E 有一题多解、一题少解。ET 没有解出任何 E 与 UT 都未解出的题。
+
+行为上，ET 只有 1 次定位后未编辑、2 次没有编辑调用、0 次高重复；E 为 4、5、5，UT 为 0、0、0。ET 有可见说明 809/1777 轮（45.5%），低于 E 的 1096/1894（57.9%）；reasoning 非零请求 1606/1895（84.7%），接近 UT 的 1920/2149（89.3%）。这说明 ET 同时保留了两条路径，但没有在 UT 之上产生可见的解出收益。
+
+实际含义：如果目标只是达到 UT 的解出水平，当前数据更支持单独使用 E，标准全尝试费用约 7.32 元，低于 UT 约 16.87 元；这不是普遍最优配置的证明。ET 可以作为同题、同模型、同评分链路下的后续探索比较，但不具有原四组同等的事前确认地位，也不能据此拆出 thinking、输出额度和 E 提示各自的单独因果作用。完整结果见 `docs/analysis/fix13-et/FIX-13-ET-RESULTS.zh-CN.md`、`docs/analysis/fix13-et/report.json` 和 `docs/analysis/fix13-et/runs.json`。
+
+## 后续方向记录（暂不启动）
+
+以下两条方向已记录，等主会话与用户决定后再写具体运行计划；当前没有运行授权：
+
+1. **E 提示机制消融**：在同一批固定题上比较完整的“总结上一步结果并说明下一步”与内容中和、只保留可见一句话结构的版本，判断收益来自结果解释本身，还是来自强制模型在工具轮之间写一句可见判断。
+2. **thinking 与输出额度的 2×2 补全**：现有 U（thinking 关、8192）、UT（thinking 开、32768）还缺 thinking 开但 8192、thinking 关但 32768 两个格子。补齐后可分别估计 thinking、输出额度和二者交互，避免把两者混为一个效果。
+
+这两条都只使用现有 60 道题；后续若反复按这 60 道题调参，结果属于固定题库上的开发和验证，不能再称为未见过的独立验证。
+
+## FIX-14 完成与结论（2026-11-14 02:50）
+
+120/120 个名额完成，30/30 个题区完成，批次正常退出。只读对账结果为 `final_slots_with_summary=120`、`consistent=true`、`complete=true`、`halt_reason=null`。标准峰价费用为 34.184036 元，另有 1.597987 元恢复预留，上限 80 元；这不是已和账户账单核对的金额。
+
+本轮补齐了 2×2：U（thinking 关、8192）、T8（thinking 开/high、8192）、O32（thinking 关、32768）、UT（thinking 开/high、32768）。四格完整题为 27 道，主比较只使用这 27 道；T8 和 O32 是 FIX-13 之后追加的格子，U/UT 来自 FIX-13，不能称为新的未见题独立验证。
+
+- **T8−U：+20.4 个百分点，普通 95% 区间 [+9.3, +33.3]，Holm p=0.0165。** 在相同 8192 输出额度下，打开 thinking 后解出率明显提高。
+- **O32−U：+1.9 个百分点，区间 [−9.3, +13.0]，p=1.0。** 在 thinking 关闭时把输出额度扩大到 32768，没有可检测的收益。
+- UT−T8 为 +3.7 个百分点，交互项为 +1.9 个百分点，区间都不能支持输出额度有稳定的独立作用。
+
+行为也同向：T8 的定位后未编辑为 1 次、高重复为 0 次，接近 UT；O32 的定位后未编辑为 19 次、高重复为 26 次，接近 U。当前证据支持“thinking 是主要变化，单独扩大输出额度没有明显作用”的判断，但不能把它推广到其他模型、题目或仓库规模，也不能把它解释成某个内部思维机制已经被证明。
+
+本轮有 8 个基础设施异常名额：1 个容器收尾失败的名额已用捕获补丁离线重评为 `partial` 并保留计分，其余 7 个因 `delta_too_large` 没有候选补丁，按不可评处理。T8 即使 5 个不可评名额全部未解出，仍高于 U 的缺失名额上界；O32 的上界与 U 重叠，主方向不由缺失名额造成。
+
+共享统计中的 `counted_status` 曾把 `delta_too_large` 单独计为有效标签。FIX-14 报告已经改用 grader 结果判断 `valid`；FIX-13 和 ET 的历史报告仍保留旧口径，后续应做一次免费的历史有效性复核。结果入口：`docs/analysis/fix14/FIX-14-RESULTS.zh-CN.md`、`docs/analysis/fix14/report.json`、`docs/analysis/fix14/runs.json`。
+
+## FIX-14 后续复核（2026-11-14）
+
+已完成一次离线有效性复核：统一把 `candidate_snapshot_failed` 视为不可评名额，保留原始运行目录和原报告不改写。FIX-13 的完整题数按组为 28、28、28、27；ET 合并比较的完整题数为 27。修正后的方向与原报告一致：FIX-13 的 R−U、E−U、UT−U 仍为正；ET 与 UT 仍接近，ET 与 E 的差异仍小。
+
+FIX-14 当前不需要补跑。T8−U 的方向在不可评名额的上下界下仍保持，O32−U 的区间与 U 重叠；若未来补跑，必须先修复 `delta_too_large` 的候选快照排除规则、重新做输入指纹和 Docker 预检，并说明与历史 U/UT 的可比性变化。详细记录见 `docs/analysis/fix14/HISTORICAL-VALIDITY-AUDIT.zh-CN.md` 和 `docs/analysis/fix14/FIX-14-INTERPRETATION.zh-CN.md`。
+
+## E 任务级离线复核（2026-11-14）
+
+在固定 60 题数据上完成了一次免费、事后、任务级复核，未调用模型、Docker 或网络，也未修改原始运行目录。按修正后的有效性规则，U 与 E 有 29 道题各有两次可评运行。以 U 中是否出现过“定位后不编辑”作解释性分层：12 道这类题中，E−U 平均解出率差为 +45.8 个百分点，定位后不编辑减少 70.8 个百分点，高重复减少 45.8 个百分点，有编辑率提高 66.7 个百分点；其余 17 道题的解出率差为 −2.9 个百分点，基本没有差异。整体 E−U 为 +17.2 个百分点。
+
+这是事后分层的描述性证据，支持“E 主要帮助 U 中找到目标却没有继续编辑的题”这一机制假设，但不能作为新的独立验证，也不能拆出 E 提示、可见说明和上下文结构各自的因果作用。独立测试是否通过没有被现有字段完整记录，因此报告使用最终 `pass` 作为解出结果，不声称单独测得验证成功率。详细结果见 `docs/analysis/fix13-et/E-TASK-AUDIT.zh-CN.md` 和 `E-TASK-AUDIT.json`；脚本为 `scripts/analysis/fix13_e_task_audit.py`。
+
+## FIX-15 E 机制消融（设计草案，未付费运行）
+
+基于任务级复核，下一条研究线改为同批次比较三个非-thinking 组：U-new（无干预）、N（只要求写一句可见下一步说明）和 E-new（当前完整 E）。每组 30 题×2 次，共 180 个名额。主要比较为 N−U-new 和 E-new−N，分别估计可见文字约束本身以及结果解释内容的额外作用。设计、预检、预算、停止规则和证据边界见 `docs/roadmap/FIX-15-E-ABLATION-DESIGN.zh-CN.md`；独立设计复核见 `docs/analysis/fix13-et/E-ABLATION-DESIGN-REVIEW.zh-CN.md`。
+
+尚未启动付费实验。正式运行前必须先修复并验证 `.mypy_cache`、`.ruff_cache` 等目录导致的 `delta_too_large` 候选快照问题，并完成三组的无模型/Docker/评分/账本预检。建议全流程硬上限 60 元，启动阈值 48 元，12 元在途缓冲。
+
+候选快照过滤的工程修复已完成：`.mypy_cache` 和 `.ruff_cache` 不再进入导出的候选补丁；`export_keep_original_files=true` 时，原始源码仍按原规则保留。针对性测试 `tests/test_export_delta.py` 与 `tests/test_fix12_export_rule.py` 共 12 项通过。该修复尚未替代正式运行前的三组真实 Docker 预检，也没有启动付费名额。
+
+FIX-15 的本地计划、配置和 runner 已完成：30 题×3 组×2 次共 180 个名额；`run_fix15.py --preflight` 与 `--bind-mock` 通过，确认三组均为 thinking disabled、8192 输出额度，差异只有 `next_action` 与 `result_explanation`。随后完成三组真实 Docker 无模型 wiring 预检：U-new、N、E-new 均通过，均为 scripted 4 请求、grader F2P 1/P2P 5、answer isolation 通过、账本 outstanding=0，`provider_calls=0`。请求体复核确认三组提示分别为无干预、NEXT_ACTION、RESULT_EXPLANATION。身份冒烟和正式 180 名额尚未启动；当前在此停下等待审阅。预检中的 `model_calls=4` 是本地 scripted transport 回合，约 0.008 元是 mock ledger 估算，不是付费账单。
+
+随后完成了单独的身份冒烟：U-new 和 E-new 各一次真实请求，共 2 次，标准峰价费用 0.000048 元，账本 outstanding=0，模型为 `deepseek-flash`，系统指纹 `bc19ba97cbe016479903222bb1578db6`，与 FIX-13 参考指纹一致，价格前后快照一致且 usage 均已结算。该冒烟的控制台输出曾因 Windows GBK 编码异常退出，但证据文件已完整写入并已核对；没有重复请求。`runs/fix15` 不存在，正式 180 个名额未启动。
+
+## FIX-15 正式运行与离线分析（2026-11-14）
+
+用户批准按既定设计启动 FIX-15 正式批次。三个非-thinking 组各 30 题×2 次，共 180 个名额：U-new 无干预，N 只要求每轮工具调用前写一句下一步，E-new 使用完整结果解释提示。执行与监控由独立子会话负责，主会话只处理账本、停止规则和需要决策的异常；模型为 `deepseek-flash`，并发上限 3，标准峰价总上限 60 元。
+
+批次已完成 180/180，三组各 60 次，`halt_reason=null`、`unreconciled_attempts=[]`、无未结算预留，总标准峰价费用 30.476552 元。解出数为 U-new 17/60（28.3%）、N 23/60（38.3%）、E-new 24/60（40.0%）；部分或完全通过为 22/60、30/60、34/60。平均模型调用为 63.5、41.5、35.5，平均费用为 0.225、0.163、0.120 元；每个完全解出运行费用约 0.795、0.425、0.300 元。这些是本批次观察值，成本下降不能单独归因于某个内部机制。
+
+运行中有两项工程事件均已按既定规则处理：`keras-team__keras-22642/U-new/r1` 的主账本落后于完整 `.tmp` 快照，已保留哈希、备份旧账本并原子提升完整快照，确认 provider usage 已结算且未重跑；`graphistry__pygraphistry-1107_interface/N/r1` 因候选快照 `delta_too_large` 退役，原始费用和证据保留，按规则重试后 N/r2 通过。两者都不作为模型能力证据。
+
+严格的题级解出比较排除 graphistry 这一不可评分题，使用 29 道完整题：N−U-new 为 +10.3 个百分点，普通 95% 区间 [−3.4,+24.1]，Holm p=0.494；E-new−N 为 +3.4 个百分点，区间 [−3.4,+10.3]，Holm p=0.623。把异常名额保守按未解出纳入 30 题时，N−U-new 为 +10.0 个百分点，E-new−N 为 +1.7 个百分点，方向不变。当前不能把最终解出差称为已检出的稳定效应。
+
+行为证据更一致：U-new/N/E-new 的 found_idle 次数为 24/9/3，分别占各组有效失败的 55.8%/25.0%/8.3%；可评分运行中从未调用编辑为 26/10/3，高重复轨迹为 29/10/5。严格 29 题配对 bootstrap 中，N−U-new 的编辑率差为 +25.9 个百分点、found_idle 差为 −24.1 个百分点；E-new−N 分别为 +15.5 和 −13.8 个百分点。该结果支持“干预能改变找到后是否继续编辑”的解释，但仍不能把差异唯一归因于一句可见话、结果解释本身或原有 harness 限制。
+
+FIX-15 因此明确回答了问题二的一部分：在固定题集和单一模型上，加入可见下一步或完整结果解释后，“找到却不编辑”和重复循环大幅减少。它没有直接回答问题一（原有 harness 限制是否压住模型的全部能力），因为本轮没有无 harness 对照；也没有回答问题三，因为所有 FIX-15 组都关闭 thinking。正式结果和详细口径见 `docs/analysis/fix15/FIX-15-RESULTS.zh-CN.md`、`docs/analysis/fix15/FIX-15-INDEPENDENT-STATS.zh-CN.md`、`docs/analysis/fix15/report.json` 与 `scripts/analysis/fix15_report.py`。后续解释应把“最终解出率未达到稳定显著”与“行动行为强烈改变”同时保留，不把前者写成无效或把后者写成普遍因果定律。
+
+## 全部实验总矩阵与跨批次结论（2026-11-15）
+
+已把 FIX-PLAN-12、FIX-13、FIX-13 ET、FIX-14 和 FIX-15 汇总为一张总矩阵：5 个正式批次、13 个不同实验组配置、780 个最终正式运行名额。按各批次报告字段相加的标准峰价 usage 约 178.598039 元；不同批次费用字段含义略有差异，且没有与账户实际扣款统一对账，不能当作精确账单。
+
+跨批次证据链为：FIX-12 的 A/U/U+T 解出率 23.3%/38.3%/73.3%，FIX-13 的 U/R/E/UT 为 26.7%/30.0%/43.3%/46.7%，ET 为 45.0%，FIX-14 的 T8/O32 为 43.3%/28.3%，FIX-15 的 U-new/N/E-new 为 28.3%/38.3%/40.0%。这些批次不能合并做一个总 p 值，因为题目、时间、代码续跑和有效名额不同；它们只用于检验方向是否重复出现。
+
+总分析当前支持三点：一，thinking 是完成率提升中最可信的因素，FIX-14 在相同 8192 输出额度下得到 T8−U +20.4 个百分点且区间不跨零，单独扩大输出额度没有同样证据；二，E/N 类提示最稳定地改变过程行为，跨批次都减少 found_idle 和重复循环；三，E 相对 N 的完全解出增量在 FIX-15 只有 +3.4 个百分点且区间跨零，因此不能把 E 写成已证明的普遍能力提升。
+
+问题一仍不能拆出每一项 harness 限制的独立贡献；问题二已经有较强的同批次支持，但只能说交互方式促成了“找到后不编辑”，不能唯一归因于某条提示或某个底层限制；问题三主要由 FIX-14 回答，FIX-15 本身没有测试 thinking。总矩阵和跨实验解释见 `docs/analysis/ALL-EXPERIMENT-MATRIX.zh-CN.md`。
+
+## 展示版收敛第一阶段（2026-11-15）
+
+用户同意先把 E 线和多种评测链路整理成求职展示版，不扩题集、不重跑正式实验。第一阶段已完成，范围是兼容层和无模型验证：
+
+- `src/runtime/tool_intervention.py` 增加版本化 `InterventionSpec`；保留 `none`、`repeat_reminder`、`next_action`、`result_explanation` 的原提示词和触发规则。
+- `AgentRunResult`、会话保存/恢复和 EventBus 增加独立的 `intervention_events`，不改变旧 `context_events` 顺序，也不改 FIX-12～FIX-15 的原始运行目录或评分规则。
+- 新增 `src/eval/unified/` 兼容层，提供 `TaskSpec`、`RunSpec`、`GraderSpec`、`RunReceipt` 和历史行归一化；保留 `adapter`、`grader`、`raw_receipt` 与 `provenance`，不强行统一 mini、repo pytest、SWE-bench 的执行和评分语义。
+- 新增只读命令 `scripts/unified_eval_report.py`。它只接受显式 JSON 数组或 `{ "rows": [...] }` 导出，不扫描 `runs/`，不调用模型/Docker，不修改输入；已读取 `docs/analysis/fix15/runs.json`，输出与正式报告一致：E-new 24/60、N 23/60（1 个无效）、U-new 17/60。
+- 相关无模型验证为 `28 passed, 16 skipped`；`compileall` 通过。未启动付费实验。
+
+当前仍未完成：三类 adapter 的真实执行接线、自动 manifest 入口、跨批次报告自动化和更广泛的非 Python 仓库验证。下一步先做一个 mini fixture 与一个 Docker mock 的展示 smoke，再决定是否需要更多工程化；旧实验继续以原 runner、grader 和原始报告为准。
+
+随后已完成三类统一回执的无模型展示 smoke：mini、repo_pytest、swebench 均能保留各自的 `kind`、`adapter`、`grader`、`raw_receipt` 和 `provenance`，共 29 项相关测试通过、16 项按环境跳过。该 smoke 只验证统一记录外壳，不证明三个 adapter 已经可以自动执行；没有启动模型或 Docker，也没有改写历史证据。展示说明见 `docs/roadmap/UNIFIED-EVAL-SHOWCASE.zh-CN.md`。
+
+在此基础上增加了最小 adapter facade：`ManifestEntry` 校验任务类型与 adapter 一致，`AdapterRegistry` 要求显式注册，不会隐式选择旧 runner，`MockAdapter` 仅用于无模型契约测试。当前仍没有把真实执行器接到统一入口，相关边界和风险见 `docs/roadmap/UNIFIED-EVAL-STATUS.zh-CN.md`。
+
+## 求职展示包第一版完成（2026-11-15）
+
+此前列出的四项展示内容已补齐到无模型、可复核的第一版：
+
+- 统一命令现在支持显式 JSON/YAML manifest 的 `--manifest --mock` 模式；它可以同时构造 mini、repo_pytest、swebench 的 mock 回执。未提供 `--mock` 时不会隐式调用真实 runner。
+- E 线展示报告见 `docs/SHOWCASE-E.zh-CN.md`，脚本为 `scripts/analysis/e_showcase_report.py`。它使用 FIX-15 导出摘要展示 U-new/N/E-new 的解出、found_idle、无编辑、高重复、编辑率、模型调用和费用，并明确 N 的无效名额和证据边界。
+- 跨仓库报告见 `docs/SHOWCASE-CROSS-REPO.zh-CN.md`，脚本为 `scripts/analysis/showcase_cross_repo.py`。当前 fix13 题单有 30 道任务、30 个去重仓库；报告区分任务数、仓库数和正式运行数，不宣称任意 GitHub 或非 Python 项目兼容。
+- 兼容性矩阵和边界已写入 `docs/roadmap/UNIFIED-EVAL-STATUS.zh-CN.md`。相关展示和契约测试合计 12 项通过，连同 E/历史/事件测试的总验证为 33 项通过、16 项环境跳过。
+
+这四项目前是求职展示版，不等同于三类真实 adapter 已经共享同一个执行器。真实执行接线、一个命令跑真实 mini/repo/SWE-bench、以及更广泛的非 Python 验证仍是后续阶段；没有新增付费实验。
+
+E 线又补充了逐题展示 `docs/SHOWCASE-E-TRACE.zh-CN.md` 和脚本 `scripts/analysis/e_trace_showcase.py`：它从 FIX-15 的显式运行摘要中并列同一题 U-new/N/E-new 的定位请求、首次编辑、编辑次数、尾部重复、状态、请求数和费用。该材料是轨迹摘要代理，不是完整 session 或内部思维观测；相关总验证为 41 项通过、16 项环境跳过。
+
+随后增加 `MiniAdapter`，通过显式注入的 `agent_factory` 复用旧 `EvalRunner` 的单题执行逻辑；repo pytest/SWE-bench 仍未接入统一 CLI。加入该 adapter 的相关验证后，总测试为 42 项通过、16 项按环境跳过。统一展示入口目前分为历史回放、manifest mock 和真实 mini Python API 三种，不能宣传为三类真实执行器已经统一。
+
+## E 核心与统一 adapter 接线完成（2026-11-15）
+
+在用户批准后完成了下一段无模型工程工作：
+
+- `InterventionSpec` 固定 `policy_version`、`config_hash` 和配置对象；`InterventionContext` / `InterventionDecision` 固定 schema 与字段校验，并暴露工具数、成功数、失败数、截断数等当前轮事实。
+- `AgentRunResult.intervention` 记录策略名、版本、配置哈希、触发次数、提示注入次数、session 恢复标记和紧凑事件摘要；统一 `RunSpec` / `RunReceipt.provenance` 会保留这些信息。
+- 新增 `src/runtime/intervention_fixtures.py` 的无模型 `showcase_policy`：成功读/搜后连续空转才产生候选提醒，失败结果不产生“已找到目标”断言，多工具轮不误判为单一重复调用。
+- 新增 `RepoPytestAdapter` 和 `SwebenchAdapter`。两者都要求显式 `case_loader`，分别调用已有 `RepositoryGrader` 和 `ImageGrader`，保留 adapter-specific 原始回执和 Docker/grader 语义。
+- `AdapterRegistry.execute_many_async()` 成为显式顺序调度面；不扫描目录、不猜 task、不隐式选择 runner。
+
+验证：E/intervention 与统一评测相关测试 50 项通过，相关模块 `compileall` 和 `git diff --check` 通过；未调用模型、Docker 或付费 API。统一 adapter 已完成工程接线，但还没有启动真实 repo/SWE-bench 批次，也没有把行为统计误写进 adapter 评分。

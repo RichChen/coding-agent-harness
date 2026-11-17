@@ -1,0 +1,3 @@
+# These intake snapshots are hashed as bytes; preserve their generated LF endings.
+/scripts/rebench/out/fix13_exposure.json text eol=lf
+/scripts/rebench/out/fix13_tasks.json text eol=lf

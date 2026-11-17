@@ -135,14 +135,16 @@ class RuntimeBudgetConfig(OmitNewDefaults):
     estimated_input_tokens: int = 512
 
 
-class RuntimeConfig(BaseModel):
+class RuntimeConfig(OmitNewDefaults):
     model_config = ConfigDict(extra="forbid")
+    omit_when_default = ("tool_intervention",)
 
     mode: str = "react"
     max_steps: int = 30
     step_timeout_seconds: int = 120
     total_timeout_seconds: int = 600
     system_prompt_path: str | None = None
+    tool_intervention: Literal["none", "repeat_reminder", "result_explanation", "next_action"] = "none"
     context: RuntimeContextConfig = Field(default_factory=RuntimeContextConfig)
     planner: RuntimePlannerConfig = Field(default_factory=RuntimePlannerConfig)
     subagents: RuntimeSubagentsConfig = Field(default_factory=RuntimeSubagentsConfig)

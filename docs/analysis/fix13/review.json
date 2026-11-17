@@ -1,0 +1,586 @@
+{
+  "schema": "fix13.review.v1",
+  "failure_review": {
+    "seed": 20261119,
+    "n": 12,
+    "agreement": 12,
+    "agreement_rate": 1.0,
+    "classification_changes": 0,
+    "affects_descriptive_conclusion": false,
+    "rows": [
+      {
+        "task": "libp2p__py-libp2p-750",
+        "group": "R",
+        "repeat": "r1",
+        "assigned": "edited_elsewhere",
+        "manual": "edited_elsewhere",
+        "agreement": true,
+        "rationale": "final changes exist without a gold reference code file",
+        "located_request": 3,
+        "first_edit_request": 19,
+        "requests": 100,
+        "changed_files": [
+          "dbg_tmp.py",
+          "tests/core/relay/test_repro_discovery.py"
+        ]
+      },
+      {
+        "task": "pytest-dev__pyfakefs-1286",
+        "group": "R",
+        "repeat": "r1",
+        "assigned": "found_idle",
+        "manual": "found_idle",
+        "agreement": true,
+        "rationale": "reference was located with the frozen late-request threshold and no edit",
+        "located_request": 5,
+        "first_edit_request": null,
+        "requests": 100,
+        "changed_files": []
+      },
+      {
+        "task": "canopen-python__canopen-613",
+        "group": "UT",
+        "repeat": "r2",
+        "assigned": "edited_reference",
+        "manual": "edited_reference",
+        "agreement": true,
+        "rationale": "final changed file intersects gold reference code files",
+        "located_request": 3,
+        "first_edit_request": 18,
+        "requests": 25,
+        "changed_files": [
+          "canopen/pdo/base.py"
+        ]
+      },
+      {
+        "task": "vprusso__toqito-1298",
+        "group": "E",
+        "repeat": "r2",
+        "assigned": "edited_reference",
+        "manual": "edited_reference",
+        "agreement": true,
+        "rationale": "final changed file intersects gold reference code files",
+        "located_request": 1,
+        "first_edit_request": 3,
+        "requests": 10,
+        "changed_files": [
+          "toqito/matrices/pauli.py",
+          "toqito/matrices/tests/test_pauli.py"
+        ]
+      },
+      {
+        "task": "avaiga__taipy-2797",
+        "group": "UT",
+        "repeat": "r2",
+        "assigned": "edited_reference",
+        "manual": "edited_reference",
+        "agreement": true,
+        "rationale": "final changed file intersects gold reference code files",
+        "located_request": 5,
+        "first_edit_request": 64,
+        "requests": 82,
+        "changed_files": [
+          ".taipy/cycles/CYCLE_id.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_0227b49d-3306-406b-89a1-87cb3f4a3c9f.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_03a02202-5632-4f96-83fc-1c1e4b1c0eeb.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_0bf62230-39d0-4d54-b193-2cd902824180.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_16f2aed6-cbce-42ef-bcfa-b2b81b0633ff.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_295f8ef6-fd98-4976-a762-37ddd9e86eb8.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_4ec4bf0e-aea0-45ce-8e69-1d7e8533cb34.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_8057d474-652a-49fb-b787-cbc0a6b1cabc.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_8597d8c9-2b1b-4337-941b-4dde7ae30e3e.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_b76b45f9-2d27-44b3-b399-9671a7e57603.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_b7d7f064-1438-47ad-b91f-88fcb1bb0ef5.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_d6e9d8d1-0b57-46a6-bb5e-243bd02441c7.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_ea465041-aeac-4905-be45-a9804cc2f9c1.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_eb0d04ba-768e-423f-913d-88dd17817f81.json",
+          ".taipy/data_nodes/DATANODE_data_node_config_id_ec69c357-27cd-47ef-875e-9a2d88b89f50.json",
+          ".taipy/data_nodes/DATANODE_dn_config_id_16323bab-d65c-4e47-b2fc-e2f0bf336663.json",
+          ".taipy/data_nodes/DATANODE_dn_config_id_5efeb1d4-0ca6-4ba9-8cd1-6fda2c732c3f.json",
+          ".taipy/data_nodes/DATANODE_dn_config_id_9b6fceb3-e94e-4a3a-b40e-7680318a38f3.json",
+          ".taipy/data_nodes/DATANODE_dn_config_id_d70a7de2-fbd3-4bb5-94db-f58739156cf7.json",
+          ".taipy/data_nodes/DATANODE_dn_config_id_dbdd9802-458b-4533-83d2-589d6fd17325.json",
+          ".taipy/data_nodes/DATANODE_dn_config_id_dcdf5793-84f5-4543-a147-3b4824c6e59c.json",
+          ".taipy/jobs/JOB_job_id.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_2c8ffaba-4e38-47a7-a50e-f789c8128e8e.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_37b000e6-1e23-4d85-bc28-a6c95da4109c.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_3f9d3a5d-b25c-4577-9b2d-9e4dc28718ac.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_62435fe9-550e-4bdd-bdd1-eb947274bdd1.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_62a09724-9fad-4434-b6e7-3b4d34179766.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_82867733-a720-48a3-8f83-a9f738c0d0d2.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_947f5624-8873-4114-99ee-4bdd6c876664.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_94c7ec1f-23c6-4c12-a0c3-92c12bcbb305.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_9f9553e6-c38a-467e-9487-3f27cdb43ffe.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_a3d4dbd4-bf8d-4c67-85c3-8732cb448d03.json",
+          ".taipy/scenarios/SCENARIO_scenario_config_id_ad814696-0f4c-46bb-b91c-6dab8621ec53.json",
+          ".taipy/submission/SUBMISSION_2c751e0b-608c-454b-a07b-5dd5472d64de.json",
+          ".taipy/submission/SUBMISSION_9f8ab1c1-e6fc-4c9f-a428-f6639958a3b3.json",
+          ".taipy/submission/SUBMISSION_c791d9ef-f442-4380-974f-3e4d17e1e532.json",
+          ".taipy/submission/SUBMISSION_e0950165-810b-483f-9dc2-071ce94fc01f.json",
+          ".taipy/submission/SUBMISSION_ec3a8ba5-b68e-462b-b253-e2f18c1e15f7.json",
+          ".taipy/tasks/TASK_task_config_id_0e85b783-c42b-435e-a7e2-d1baef48a7d6.json",
+          ".taipy/tasks/TASK_task_config_id_23d74f8d-5408-46ce-b07c-fefbc29e007f.json",
+          ".taipy/tasks/TASK_task_config_id_30cb6053-1853-48ed-8093-3bc88e9b580c.json",
+          ".taipy/tasks/TASK_task_config_id_5a335692-f8fb-4913-838f-e87dca0cf063.json",
+          ".taipy/tasks/TASK_task_config_id_609e9b2b-a8c8-45ae-974e-b70d4a88eb08.json",
+          ".taipy/tasks/TASK_task_config_id_80725e4d-410f-44a7-a4f3-88542c36971a.json",
+          ".taipy/tasks/TASK_task_config_id_8ecdc374-5486-477f-9adc-43a256c009cd.json",
+          ".taipy/tasks/TASK_task_config_id_b0c5f039-bf42-4783-94cb-4cd441aee675.json",
+          ".taipy/tasks/TASK_task_config_id_bd318e16-1977-4036-a47c-fce952939377.json",
+          ".taipy/tasks/TASK_task_config_id_c67b5d01-f18f-4eab-9409-5e2c3c56622f.json",
+          ".taipy/tasks/TASK_task_config_id_e97c02cb-ffdb-416d-b8c7-ac38c9757eba.json",
+          ".taipy/version.json",
+          ".taipy/version/501591c5-aec3-4464-8b9b-0b6f644d42d4.json",
+          "frontend/taipy/src/DataNodeViewer.tsx",
+          "taipy/gui_core/_adapters.py",
+          "tests/gui_core/test_adapters_json.py",
+          "user_data/pickles/DATANODE_data_node_config_id_0227b49d-3306-406b-89a1-87cb3f4a3c9f.p",
+          "user_data/pickles/DATANODE_data_node_config_id_03a02202-5632-4f96-83fc-1c1e4b1c0eeb.p",
+          "user_data/pickles/DATANODE_data_node_config_id_8057d474-652a-49fb-b787-cbc0a6b1cabc.p",
+          "user_data/pickles/DATANODE_data_node_config_id_8597d8c9-2b1b-4337-941b-4dde7ae30e3e.p",
+          "user_data/pickles/DATANODE_data_node_config_id_b76b45f9-2d27-44b3-b399-9671a7e57603.p",
+          "user_data/pickles/DATANODE_data_node_config_id_b7d7f064-1438-47ad-b91f-88fcb1bb0ef5.p",
+          "user_data/pickles/DATANODE_data_node_config_id_d6e9d8d1-0b57-46a6-bb5e-243bd02441c7.p",
+          "user_data/pickles/DATANODE_data_node_config_id_ea465041-aeac-4905-be45-a9804cc2f9c1.p",
+          "user_data/pickles/DATANODE_dn_config_id_5efeb1d4-0ca6-4ba9-8cd1-6fda2c732c3f.p",
+          "user_data/pickles/DATANODE_dn_config_id_9b6fceb3-e94e-4a3a-b40e-7680318a38f3.p",
+          "user_data/pickles/DATANODE_dn_config_id_dbdd9802-458b-4533-83d2-589d6fd17325.p"
+        ]
+      },
+      {
+        "task": "python-scim__scim2-models-120",
+        "group": "E",
+        "repeat": "r2",
+        "assigned": "found_idle",
+        "manual": "found_idle",
+        "agreement": true,
+        "rationale": "reference was located with the frozen late-request threshold and no edit",
+        "located_request": 4,
+        "first_edit_request": null,
+        "requests": 100,
+        "changed_files": []
+      },
+      {
+        "task": "researchobject__ro-crate-py-248",
+        "group": "U",
+        "repeat": "r2",
+        "assigned": "found_idle",
+        "manual": "found_idle",
+        "agreement": true,
+        "rationale": "reference was located with the frozen late-request threshold and no edit",
+        "located_request": 1,
+        "first_edit_request": null,
+        "requests": 100,
+        "changed_files": []
+      },
+      {
+        "task": "keras-team__keras-22642",
+        "group": "U",
+        "repeat": "r1",
+        "assigned": "found_idle",
+        "manual": "found_idle",
+        "agreement": true,
+        "rationale": "reference was located with the frozen late-request threshold and no edit",
+        "located_request": 3,
+        "first_edit_request": null,
+        "requests": 100,
+        "changed_files": []
+      },
+      {
+        "task": "spdx__tools-python-855",
+        "group": "R",
+        "repeat": "r2",
+        "assigned": "edited_elsewhere",
+        "manual": "edited_elsewhere",
+        "agreement": true,
+        "rationale": "final changes exist without a gold reference code file",
+        "located_request": 6,
+        "first_edit_request": 15,
+        "requests": 24,
+        "changed_files": [
+          "dummy_path",
+          "src/spdx_tools/spdx/parser/jsonlikedict/annotation_parser.py",
+          "src/spdx_tools/spdx/parser/jsonlikedict/creation_info_parser.py",
+          "src/spdx_tools/spdx/parser/jsonlikedict/dict_parsing_functions.py",
+          "src/spdx_tools/spdx/parser/jsonlikedict/extracted_licensing_info_parser.py",
+          "src/spdx_tools/spdx/parser/jsonlikedict/file_parser.py",
+          "src/spdx_tools/spdx/parser/jsonlikedict/package_parser.py",
+          "src/spdx_tools/spdx/parser/jsonlikedict/snippet_parser.py",
+          "src/spdx_tools/spdx/parser/tagvalue/parser.out",
+          "src/spdx_tools/spdx/parser/tagvalue/parsetab.py",
+          "tests/SPDX3_jsonld_test.jsonld",
+          "tests/spdx/parser/jsonlikedict/test_extracted_licensing_info_parser.py"
+        ]
+      },
+      {
+        "task": "koxudaxi__datamodel-code-generator-2993",
+        "group": "UT",
+        "repeat": "r1",
+        "assigned": "edited_reference",
+        "manual": "edited_reference",
+        "agreement": true,
+        "rationale": "final changed file intersects gold reference code files",
+        "located_request": 2,
+        "first_edit_request": 9,
+        "requests": 26,
+        "changed_files": [
+          "src/datamodel_code_generator/parser/jsonschema.py"
+        ]
+      },
+      {
+        "task": "spdx__tools-python-855",
+        "group": "E",
+        "repeat": "r2",
+        "assigned": "edited_elsewhere",
+        "manual": "edited_elsewhere",
+        "agreement": true,
+        "rationale": "final changes exist without a gold reference code file",
+        "located_request": 7,
+        "first_edit_request": 10,
+        "requests": 23,
+        "changed_files": [
+          "dummy_path",
+          "src/spdx_tools/spdx/parser/jsonlikedict/dict_parsing_functions.py",
+          "src/spdx_tools/spdx/parser/jsonlikedict/extracted_licensing_info_parser.py",
+          "src/spdx_tools/spdx/parser/tagvalue/parser.out",
+          "src/spdx_tools/spdx/parser/tagvalue/parsetab.py",
+          "tests/SPDX3_jsonld_test.jsonld",
+          "tests/spdx/parser/jsonlikedict/test_dict_parsing_functions.py",
+          "tests/spdx/parser/jsonlikedict/test_extracted_licensing_info_parser.py"
+        ]
+      },
+      {
+        "task": "tox-dev__tox-3846",
+        "group": "U",
+        "repeat": "r2",
+        "assigned": "found_idle",
+        "manual": "found_idle",
+        "agreement": true,
+        "rationale": "reference was located with the frozen late-request threshold and no edit",
+        "located_request": 2,
+        "first_edit_request": null,
+        "requests": 100,
+        "changed_files": []
+      }
+    ]
+  },
+  "explanation_review": {
+    "seed": 20261120,
+    "n_per_group": 8,
+    "total": 32,
+    "labels_by_group": {
+      "U": {
+        "mentions_previous_result": 0,
+        "generic_next_step": 1,
+        "no_sentence": 7
+      },
+      "R": {
+        "mentions_previous_result": 0,
+        "generic_next_step": 0,
+        "no_sentence": 8
+      },
+      "E": {
+        "mentions_previous_result": 4,
+        "generic_next_step": 0,
+        "no_sentence": 4
+      },
+      "UT": {
+        "mentions_previous_result": 0,
+        "generic_next_step": 0,
+        "no_sentence": 8
+      }
+    },
+    "rows": [
+      {
+        "group": "U",
+        "task": "mpmath__mpmath-992",
+        "repeat": "r1",
+        "request": 55,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "U",
+        "task": "tox-dev__tox-3846",
+        "repeat": "r2",
+        "request": 22,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "U",
+        "task": "avaiga__taipy-2797",
+        "repeat": "r1",
+        "request": 39,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "U",
+        "task": "graphistry__pygraphistry-1107_interface",
+        "repeat": "r2",
+        "request": 19,
+        "content": "Now let me write the binder module.",
+        "label": "generic_next_step",
+        "rationale": "visible sentence states a next action without an explicit prior-result observation"
+      },
+      {
+        "group": "U",
+        "task": "skrub-data__skrub-1899",
+        "repeat": "r2",
+        "request": 76,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "U",
+        "task": "libp2p__py-libp2p-750",
+        "repeat": "r2",
+        "request": 96,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "U",
+        "task": "lmstudio-ai__venvstacks-197",
+        "repeat": "r1",
+        "request": 97,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "U",
+        "task": "koxudaxi__datamodel-code-generator-2993",
+        "repeat": "r1",
+        "request": 73,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "facelessuser__pymdown-extensions-2807",
+        "repeat": "r2",
+        "request": 76,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "libp2p__py-libp2p-750",
+        "repeat": "r1",
+        "request": 9,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "avaiga__taipy-2797",
+        "repeat": "r1",
+        "request": 59,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "pytest-dev__pyfakefs-1286",
+        "repeat": "r1",
+        "request": 86,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "boxed__mutmut-403",
+        "repeat": "r2",
+        "request": 3,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "skrub-data__skrub-1899",
+        "repeat": "r2",
+        "request": 21,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "pytest-dev__pyfakefs-1286",
+        "repeat": "r1",
+        "request": 48,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "R",
+        "task": "spdx__tools-python-855",
+        "repeat": "r2",
+        "request": 5,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "E",
+        "task": "strands-agents__sdk-python-1734",
+        "repeat": "r2",
+        "request": 3,
+        "content": "The Plugin protocol exists in `strands.plugins`. Let me read the plugin module, registry, and the relevant agent.py sections.",
+        "label": "mentions_previous_result",
+        "rationale": "sentence contains an observation or result reference and a next-action decision"
+      },
+      {
+        "group": "E",
+        "task": "gidgethub__gidgethub-225",
+        "repeat": "r1",
+        "request": 11,
+        "content": "Collection errors are from missing optional deps; I'll run the sansio tests directly.",
+        "label": "mentions_previous_result",
+        "rationale": "sentence contains an observation or result reference and a next-action decision"
+      },
+      {
+        "group": "E",
+        "task": "ome-zarr-models__ome-zarr-models-py-206",
+        "repeat": "r1",
+        "request": 2,
+        "content": "The bug is at line 149. Let me reproduce it first with the patched test.",
+        "label": "mentions_previous_result",
+        "rationale": "sentence contains an observation or result reference and a next-action decision"
+      },
+      {
+        "group": "E",
+        "task": "facelessuser__pymdown-extensions-2807",
+        "repeat": "r2",
+        "request": 43,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "E",
+        "task": "graphistry__pygraphistry-1107_interface",
+        "repeat": "r1",
+        "request": 27,
+        "content": "All 10 lowering.py mypy errors are pre-existing (redundant-cast/no-any-return at unrelated lines), and the full compute suite passes (1957 passed). Let me add a CHANGELOG entry and run the top-level test suite.",
+        "label": "mentions_previous_result",
+        "rationale": "sentence contains an observation or result reference and a next-action decision"
+      },
+      {
+        "group": "E",
+        "task": "vyperlang__vyper-4801",
+        "repeat": "r1",
+        "request": 64,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "E",
+        "task": "vyperlang__vyper-4801",
+        "repeat": "r1",
+        "request": 92,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "E",
+        "task": "python-scim__scim2-models-120",
+        "repeat": "r2",
+        "request": 26,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "pytest-dev__pyfakefs-1286",
+        "repeat": "r2",
+        "request": 36,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "mmornati__home-assistant-csnet-home-132",
+        "repeat": "r2",
+        "request": 16,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "mpmath__mpmath-992",
+        "repeat": "r2",
+        "request": 28,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "python-scim__scim2-models-120",
+        "repeat": "r2",
+        "request": 34,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "pasqal-io__Pulser-936",
+        "repeat": "r1",
+        "request": 9,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "packit__packit-2684",
+        "repeat": "r2",
+        "request": 17,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "mpmath__mpmath-992",
+        "repeat": "r2",
+        "request": 21,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      },
+      {
+        "group": "UT",
+        "task": "pytest-dev__pyfakefs-1286",
+        "repeat": "r1",
+        "request": 24,
+        "content": "",
+        "label": "no_sentence",
+        "rationale": "visible assistant content is empty"
+      }
+    ],
+    "semantic_review_scope": "manual review of visible assistant text and the same-turn tool call boundary",
+    "semantic_agreement_rate": "not independently double-coded"
+  }
+}

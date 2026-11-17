@@ -90,6 +90,8 @@ def runtime_fingerprint(loop):
         spec["model"]["reasoning_effort"] = loop.llm.reasoning_effort
     if not getattr(loop, "announce_remaining_calls", True):
         spec["remaining_calls_hidden"] = True
+    if getattr(loop, "tool_intervention", "none") != "none":
+        spec["tool_intervention"] = loop.tool_intervention
     if getattr(loop, "workspace_controller", None) is not None:
         spec["workspace_v1"] = loop.workspace_controller.fingerprint()
     return digest(canonical(spec).encode())

@@ -169,6 +169,8 @@ class EvalRunner:
                         "plan": result.plan,
                         "context_events": result.context_events,
                         "summary": result.summary,
+                        "intervention": result.intervention,
+                        "intervention_events": result.intervention_events,
                         "subagent_traces": result.subagent_traces,
                     },
                 )
@@ -191,6 +193,7 @@ class EvalRunner:
                 expected_failures=expected_failures,
                 tags=task.get("tags", []),
                 trace_file=trace_file,
+                intervention=result.intervention,
             )
         finally:
             # Lifecycle: release owned HTTP clients after success, error, or cancel.

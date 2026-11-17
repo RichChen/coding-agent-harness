@@ -1,0 +1,458 @@
+{
+  "schema": "fix14.analysis.v1",
+  "planned_slots": 120,
+  "completed_slots": 120,
+  "complete_tasks": 27,
+  "missing_or_invalid_tasks": [
+    "graphistry__pygraphistry-1107_interface",
+    "libp2p__py-libp2p-750",
+    "pasqal-io__Pulser-936"
+  ],
+  "groups": {
+    "U": {
+      "cell": {
+        "thinking": "thinking off",
+        "max_tokens": "8192"
+      },
+      "completed_slots": 60,
+      "valid_slots": 58,
+      "planned_slots": 60,
+      "solved": 16,
+      "at_least_once_solved_tasks": 9,
+      "cost_cny_final_runs": "15.800914",
+      "cost_cny_all_attempts": "15.800914",
+      "cost_per_solved_run_cny": "0.987557125",
+      "failure_classes": {
+        "found_idle": 19,
+        "edited_reference": 15,
+        "edited_elsewhere": 6,
+        "not_found": 2
+      },
+      "found_idle_all_allocated": 0.31666666666666665,
+      "high_repeat": 22,
+      "no_edit_calls": 22,
+      "no_final_source_change": 26,
+      "reasoning_nonzero_requests": 0,
+      "reasoning_run_mean_median": 0.0,
+      "length_responses": 0,
+      "requests": 3623,
+      "cache_hit_tokens": 121832192,
+      "prompt_tokens": 123807899,
+      "completion_tokens": 872026,
+      "stop_reasons": {
+        "completed": 29,
+        "max_model_calls": 28,
+        "candidate_snapshot_failed": 2,
+        "insufficient_reserve": 1
+      }
+    },
+    "T8": {
+      "cell": {
+        "thinking": "thinking on/high",
+        "max_tokens": "8192"
+      },
+      "completed_slots": 60,
+      "valid_slots": 55,
+      "planned_slots": 60,
+      "solved": 26,
+      "at_least_once_solved_tasks": 15,
+      "cost_cny_final_runs": "16.229758",
+      "cost_cny_all_attempts": "17.241127",
+      "cost_per_solved_run_cny": "0.6631202692307692307692307692",
+      "failure_classes": {
+        "edited_reference": 21,
+        "edited_elsewhere": 7,
+        "found_idle": 1
+      },
+      "found_idle_all_allocated": 0.016666666666666666,
+      "high_repeat": 0,
+      "no_edit_calls": 2,
+      "no_final_source_change": 8,
+      "reasoning_nonzero_requests": 1877,
+      "reasoning_run_mean_median": 325.5232558139535,
+      "length_responses": 1,
+      "requests": 2202,
+      "cache_hit_tokens": 85841916,
+      "prompt_tokens": 87928863,
+      "completion_tokens": 1077772,
+      "stop_reasons": {
+        "completed": 51,
+        "max_model_calls": 2,
+        "cleanup_failed": 1,
+        "response_incomplete": 1,
+        "candidate_snapshot_failed": 5
+      }
+    },
+    "O32": {
+      "cell": {
+        "thinking": "thinking off",
+        "max_tokens": "32768"
+      },
+      "completed_slots": 60,
+      "valid_slots": 58,
+      "planned_slots": 60,
+      "solved": 17,
+      "at_least_once_solved_tasks": 11,
+      "cost_cny_final_runs": "16.399805",
+      "cost_cny_all_attempts": "16.942721",
+      "cost_per_solved_run_cny": "0.9966306470588235294117647059",
+      "failure_classes": {
+        "edited_reference": 14,
+        "found_idle": 19,
+        "not_found": 2,
+        "edited_elsewhere": 6
+      },
+      "found_idle_all_allocated": 0.31666666666666665,
+      "high_repeat": 26,
+      "no_edit_calls": 21,
+      "no_final_source_change": 26,
+      "reasoning_nonzero_requests": 0,
+      "reasoning_run_mean_median": 0.0,
+      "length_responses": 0,
+      "requests": 3664,
+      "cache_hit_tokens": 126392064,
+      "prompt_tokens": 128697065,
+      "completion_tokens": 742891,
+      "stop_reasons": {
+        "completed": 28,
+        "max_model_calls": 27,
+        "insufficient_reserve": 1,
+        "billing_usage_unknown": 2,
+        "candidate_snapshot_failed": 2
+      }
+    },
+    "UT": {
+      "cell": {
+        "thinking": "thinking on/high",
+        "max_tokens": "32768"
+      },
+      "completed_slots": 60,
+      "valid_slots": 57,
+      "planned_slots": 60,
+      "solved": 28,
+      "at_least_once_solved_tasks": 16,
+      "cost_cny_final_runs": "16.091229",
+      "cost_cny_all_attempts": "16.870168",
+      "cost_per_solved_run_cny": "0.602506",
+      "failure_classes": {
+        "edited_reference": 23,
+        "edited_elsewhere": 6
+      },
+      "found_idle_all_allocated": 0.0,
+      "high_repeat": 0,
+      "no_edit_calls": 0,
+      "no_final_source_change": 5,
+      "reasoning_nonzero_requests": 1920,
+      "reasoning_run_mean_median": 307.5689655172414,
+      "length_responses": 0,
+      "requests": 2149,
+      "cache_hit_tokens": 83379710,
+      "prompt_tokens": 85585043,
+      "completion_tokens": 1043173,
+      "stop_reasons": {
+        "completed": 55,
+        "candidate_snapshot_failed": 3,
+        "max_model_calls": 2
+      }
+    }
+  },
+  "paired": {
+    "tasks": 27,
+    "bootstrap_draws": 10000,
+    "sign_flip_draws": 100000,
+    "seeds": {
+      "bootstrap": 20261213,
+      "sign_flip": 20261214
+    },
+    "comparisons": [
+      {
+        "comparison": "T8-U",
+        "kind": "primary",
+        "label": "打开 thinking，输出额度同为 8192",
+        "difference": 0.2037037037037037,
+        "ci95": [
+          0.09259259259259256,
+          0.33333333333333337
+        ],
+        "p_raw": 0.008269917300826992,
+        "cost_per_run_ratio_ci95": [
+          0.7079816333832655,
+          1.6745567135712898
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.27401739087075205,
+          1.142496838282217
+        ],
+        "p_holm": 0.016539834601653983
+      },
+      {
+        "comparison": "O32-U",
+        "kind": "primary",
+        "label": "输出额度扩大到 32768，thinking 同为关闭",
+        "difference": 0.018518518518518517,
+        "ci95": [
+          -0.09259259259259262,
+          0.12962962962962965
+        ],
+        "p_raw": 1.0,
+        "cost_per_run_ratio_ci95": [
+          0.6872393067802756,
+          1.6560663106777023
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.4557384437018481,
+          2.0957071776424985
+        ],
+        "p_holm": 1
+      },
+      {
+        "comparison": "UT-T8",
+        "kind": "exploratory",
+        "label": "thinking 已开时把输出额度从 8192 提到 32768",
+        "difference": 0.037037037037037035,
+        "ci95": [
+          0.0,
+          0.09259259259259262
+        ],
+        "p_raw": null,
+        "cost_per_run_ratio_ci95": [
+          0.8705698368310701,
+          1.078456663131342
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.7762914065878714,
+          1.0021396977476875
+        ]
+      },
+      {
+        "comparison": "UT-O32",
+        "kind": "exploratory",
+        "label": "thinking 与输出额度的联合差",
+        "difference": 0.2222222222222222,
+        "ci95": [
+          0.09259259259259259,
+          0.3518518518518519
+        ],
+        "p_raw": null,
+        "cost_per_run_ratio_ci95": [
+          0.6996832785353811,
+          1.3667754178095555
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.28416923339529776,
+          0.916321069960706
+        ]
+      },
+      {
+        "comparison": "T8-O32",
+        "kind": "exploratory",
+        "label": "thinking on/8192 对 thinking off/32768",
+        "difference": 0.18518518518518517,
+        "ci95": [
+          0.05555555555555558,
+          0.3148148148148149
+        ],
+        "p_raw": null,
+        "cost_per_run_ratio_ci95": [
+          0.7130789097972571,
+          1.4517595799229315
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.31502957662599873,
+          1.059182138081556
+        ]
+      },
+      {
+        "comparison": "UT-U",
+        "kind": "context",
+        "label": "两处都打开，对照 FIX-13 的既有结论",
+        "difference": 0.24074074074074073,
+        "ci95": [
+          0.1111111111111111,
+          0.38888888888888895
+        ],
+        "p_raw": null,
+        "cost_per_run_ratio_ci95": [
+          0.6852443130570735,
+          1.5912965053206092
+        ],
+        "cost_per_solved_ratio_ci95": [
+          0.240725648275676,
+          1.0112856736131655
+        ]
+      },
+      {
+        "comparison": "(UT-T8)-(O32-U)",
+        "kind": "exploratory_interaction",
+        "label": "两个开关的交互：输出额度在 thinking 开启时的额外作用",
+        "difference": 0.018518518518518517,
+        "ci95": [
+          -0.09259259259259262,
+          0.12962962962962965
+        ],
+        "p_raw": 1.0,
+        "p_holm": null
+      }
+    ],
+    "holm_family": "T8-U and O32-U only; every other row, including the interaction, is exploratory",
+    "intervals": "ordinary marginal 95% intervals",
+    "sign_flip_assumption": "exchangeability of each task-level paired difference under the null"
+  },
+  "verdict": {
+    "label": "thinking_dominant",
+    "text": "T8−U 为 +20.4 个百分点且区间不跨零，O32−U 为 +1.9 个百分点且区间跨零：在这批题上，thinking 开关是主要作用，单独扩大输出额度没有可检测的收益。"
+  },
+  "infra_error_slots": 7,
+  "infra_slots": [
+    {
+      "path": "graphistry__pygraphistry-1107_interface/O32/r1",
+      "infra_reason": "candidate snapshot failed: ValueError: delta_too_large",
+      "stop_reason": "candidate_snapshot_failed",
+      "cost_cny": "0.435977",
+      "delta_bytes": 0
+    },
+    {
+      "path": "graphistry__pygraphistry-1107_interface/O32/r2",
+      "infra_reason": "candidate snapshot failed: ValueError: delta_too_large",
+      "stop_reason": "candidate_snapshot_failed",
+      "cost_cny": "0.196370",
+      "delta_bytes": 0
+    },
+    {
+      "path": "graphistry__pygraphistry-1107_interface/T8/r1",
+      "infra_reason": "candidate snapshot failed: ValueError: delta_too_large",
+      "stop_reason": "candidate_snapshot_failed",
+      "cost_cny": "0.282693",
+      "delta_bytes": 0
+    },
+    {
+      "path": "graphistry__pygraphistry-1107_interface/T8/r2",
+      "infra_reason": "candidate snapshot failed: ValueError: delta_too_large",
+      "stop_reason": "candidate_snapshot_failed",
+      "cost_cny": "0.269968",
+      "delta_bytes": 0
+    },
+    {
+      "path": "libp2p__py-libp2p-750/T8/r1",
+      "infra_reason": "candidate snapshot failed: ValueError: delta_too_large",
+      "stop_reason": "candidate_snapshot_failed",
+      "cost_cny": "0.222026",
+      "delta_bytes": 0
+    },
+    {
+      "path": "libp2p__py-libp2p-750/T8/r2",
+      "infra_reason": "candidate snapshot failed: ValueError: delta_too_large",
+      "stop_reason": "candidate_snapshot_failed",
+      "cost_cny": "0.405424",
+      "delta_bytes": 0
+    },
+    {
+      "path": "pasqal-io__Pulser-936/T8/r2",
+      "infra_reason": "candidate snapshot failed: ValueError: delta_too_large",
+      "stop_reason": "candidate_snapshot_failed",
+      "cost_cny": "0.189961",
+      "delta_bytes": 0
+    }
+  ],
+  "batch": {
+    "schema": "fix13.batch-report.v1",
+    "mock": false,
+    "slots": 120,
+    "groups": [
+      "T8",
+      "O32"
+    ],
+    "batch_cap_cny": "80",
+    "start_threshold_cny": "68",
+    "inflight_buffer_cny": "12",
+    "prior_cost_cny": "0.000188",
+    "recovery_reserve_cny": "1.597987",
+    "spent_cny": null,
+    "known_settled_cny": "34.184036",
+    "total_with_recovery_reserve_cny": "35.782023",
+    "unreconciled_attempts": [],
+    "unreconciled_reserve_cny": "0",
+    "forecast_cny": "35.78202300000000000000000000",
+    "halt_reason": null,
+    "started_this_launch": [
+      57,
+      58,
+      59,
+      58,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120
+    ],
+    "max_concurrent": 3,
+    "final_runs": 120,
+    "by_group": {
+      "T8": {
+        "final_runs": 60,
+        "cost_cny": "17.241127"
+      },
+      "O32": {
+        "final_runs": 60,
+        "cost_cny": "16.942721"
+      }
+    }
+  },
+  "evidence_boundary": "T8/O32 are post-hoc cells on the same 30 tasks already used by FIX-13 and ET; U/UT come from the FIX-13 batch; public data cannot establish training non-exposure"
+}

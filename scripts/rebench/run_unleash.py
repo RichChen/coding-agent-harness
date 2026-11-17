@@ -152,7 +152,16 @@ def price_snapshot(page: str) -> dict:
     """The model details and price table of the official page, as text, plus the fields the ledger relies on."""
     text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", page, flags=re.S)
     text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", text))).strip()
-    start, end = text.find("模型细节"), text.find("网页搜索与抓取价格", text.find("模型细节") + 1)
+    start = text.find("模型细节")
+    # The model-details block ends either at a following "网页搜索与抓取价格" section or, once
+    # that section is absent, at the concurrency footnote. Both anchors are tried so that a
+    # documentation edit upstream is not reported as a price change; the section text and its
+    # hash stay identical either way, and the version/price constants are still checked.
+    end = text.find("网页搜索与抓取价格", start + 1) if start >= 0 else -1
+    if end < 0:
+        footnote = "更多并发限制细节，请参考 限速与隔离 。"
+        at = text.find(footnote, start + 1) if start >= 0 else -1
+        end = at + len(footnote) if at >= 0 else -1
     section = text[start:end].strip() if start >= 0 and end > start else ""
     version = re.search(r"模型版本\s+(\S+)", section)
     peak = [m.group(1) for m in re.finditer(r"高峰时段\s+([0-9.]+)\s*元", section)][:3]

@@ -1,0 +1,1298 @@
+{
+  "schema": "fix13.ingest.v1",
+  "plan_sha256": "2ec5fb1d8fadd65c1c22e18dcaf7ee121657d828d3669318cbdc7d3f47945efe",
+  "manifest": "configs/rebench/fix13-tasks.yaml",
+  "export_keep_original_files": true,
+  "model_calls": 0,
+  "authorized_positions": [
+    "pasqal-io__Pulser-936",
+    "packit__packit-2684",
+    "vprusso__toqito-1298",
+    "spdx__tools-python-855",
+    "line__line-bot-sdk-python-981_interface",
+    "deepset-ai__haystack-10189",
+    "vyperlang__vyper-4801",
+    "google__secops-wrapper-119",
+    "marimo-team__marimo-8387_interface",
+    "tox-dev__tox-3846",
+    "pymc-devs__pytensor-1668",
+    "avaiga__taipy-2797",
+    "koxudaxi__datamodel-code-generator-2993",
+    "graphistry__pygraphistry-1107_interface",
+    "pab1it0__prometheus-mcp-server-76",
+    "a2aproject__a2a-python-682_interface",
+    "boxed__mutmut-403",
+    "gidgethub__gidgethub-225",
+    "mpmath__mpmath-992",
+    "researchobject__ro-crate-py-248",
+    "libp2p__py-libp2p-750",
+    "facelessuser__pymdown-extensions-2807",
+    "pgmpy__pgmpy-3137",
+    "pytest-dev__pyfakefs-1286",
+    "strands-agents__sdk-python-1734",
+    "sktime__sktime-8723",
+    "python-scim__scim2-models-120",
+    "ome-zarr-models__ome-zarr-models-py-206",
+    "Cambridge-ICCS__TCTrack-118",
+    "holoviz__holoviews-6783"
+  ],
+  "slots": [
+    {
+      "stratum": "easy",
+      "rank": 3,
+      "original": "pasqal-io__Pulser-936",
+      "final": "pasqal-io__Pulser-936",
+      "attempts": [
+        {
+          "instance_id": "pasqal-io__Pulser-936",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            22,
+            22
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            22,
+            22
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 10,
+      "original": "packit__packit-2684",
+      "final": "packit__packit-2684",
+      "attempts": [
+        {
+          "instance_id": "packit__packit-2684",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            3
+          ],
+          "empty_p2p": [
+            51,
+            51
+          ],
+          "gold_f2p": [
+            3,
+            3
+          ],
+          "gold_p2p": [
+            51,
+            51
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 8,
+      "original": "vprusso__toqito-1298",
+      "final": "vprusso__toqito-1298",
+      "attempts": [
+        {
+          "instance_id": "vprusso__toqito-1298",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            26,
+            26
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            26,
+            26
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 6,
+      "original": "spdx__tools-python-855",
+      "final": "spdx__tools-python-855",
+      "attempts": [
+        {
+          "instance_id": "spdx__tools-python-855",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 7,
+      "original": "line__line-bot-sdk-python-981_interface",
+      "final": "lmstudio-ai__venvstacks-197",
+      "attempts": [
+        {
+          "instance_id": "line__line-bot-sdk-python-981_interface",
+          "accepted": false,
+          "failed_clauses": [
+            2
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            4
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            4,
+            4
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "lmstudio-ai__venvstacks-197",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            5
+          ],
+          "empty_p2p": [
+            48,
+            48
+          ],
+          "gold_f2p": [
+            5,
+            5
+          ],
+          "gold_p2p": [
+            48,
+            48
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 13,
+      "original": "deepset-ai__haystack-10189",
+      "final": "mmornati__home-assistant-csnet-home-132",
+      "attempts": [
+        {
+          "instance_id": "deepset-ai__haystack-10189",
+          "accepted": false,
+          "failed_clauses": [
+            2
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            27,
+            27
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            27,
+            27
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "mmornati__home-assistant-csnet-home-132",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            5
+          ],
+          "empty_p2p": [
+            72,
+            72
+          ],
+          "gold_f2p": [
+            5,
+            5
+          ],
+          "gold_p2p": [
+            72,
+            72
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 14,
+      "original": "vyperlang__vyper-4801",
+      "final": "vyperlang__vyper-4801",
+      "attempts": [
+        {
+          "instance_id": "vyperlang__vyper-4801",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            1,
+            1
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            1,
+            1
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 11,
+      "original": "google__secops-wrapper-119",
+      "final": "google__secops-wrapper-119",
+      "attempts": [
+        {
+          "instance_id": "google__secops-wrapper-119",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            9,
+            9
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            9,
+            9
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 13,
+      "original": "marimo-team__marimo-8387_interface",
+      "final": "marimo-team__marimo-8387_interface",
+      "attempts": [
+        {
+          "instance_id": "marimo-team__marimo-8387_interface",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            16
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            16,
+            16
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 12,
+      "original": "tox-dev__tox-3846",
+      "final": "tox-dev__tox-3846",
+      "attempts": [
+        {
+          "instance_id": "tox-dev__tox-3846",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            7
+          ],
+          "empty_p2p": [
+            110,
+            110
+          ],
+          "gold_f2p": [
+            7,
+            7
+          ],
+          "gold_p2p": [
+            110,
+            110
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 15,
+      "original": "pymc-devs__pytensor-1668",
+      "final": "canopen-python__canopen-613",
+      "attempts": [
+        {
+          "instance_id": "pymc-devs__pytensor-1668",
+          "accepted": false,
+          "failed_clauses": [
+            8
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            267,
+            561
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            267,
+            561
+          ],
+          "p2p_excluded": 294,
+          "error": null
+        },
+        {
+          "instance_id": "canopen-python__canopen-613",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            6,
+            6
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            6,
+            6
+          ],
+          "p2p_excluded": 0,
+          "error": null,
+          "history": [
+            {
+              "instance_id": "canopen-python__canopen-613",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "RuntimeError: bounded download failed, partial retained sha256:3dba2c6c4c54c28b6d1be7a83ede3797c6a3b8dc8e859cea003785adf8b0aaf4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 14,
+      "original": "avaiga__taipy-2797",
+      "final": "avaiga__taipy-2797",
+      "attempts": [
+        {
+          "instance_id": "avaiga__taipy-2797",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            84,
+            84
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            84,
+            84
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 2,
+      "original": "koxudaxi__datamodel-code-generator-2993",
+      "final": "koxudaxi__datamodel-code-generator-2993",
+      "attempts": [
+        {
+          "instance_id": "koxudaxi__datamodel-code-generator-2993",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            498,
+            498
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            498,
+            498
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 9,
+      "original": "graphistry__pygraphistry-1107_interface",
+      "final": "graphistry__pygraphistry-1107_interface",
+      "attempts": [
+        {
+          "instance_id": "graphistry__pygraphistry-1107_interface",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            7
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            7,
+            7
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 15,
+      "original": "pab1it0__prometheus-mcp-server-76",
+      "final": "pab1it0__prometheus-mcp-server-76",
+      "attempts": [
+        {
+          "instance_id": "pab1it0__prometheus-mcp-server-76",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            25,
+            25
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            25,
+            25
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 4,
+      "original": "a2aproject__a2a-python-682_interface",
+      "final": "keras-team__keras-22642",
+      "attempts": [
+        {
+          "instance_id": "a2aproject__a2a-python-682_interface",
+          "accepted": false,
+          "failed_clauses": [
+            2
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            5,
+            5
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            5,
+            5
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        },
+        {
+          "instance_id": "spack__spack-51723",
+          "accepted": false,
+          "failed_clauses": [
+            1
+          ],
+          "error": "ValueError: symlink does not name an internal regular file or directory",
+          "history": [
+            {
+              "instance_id": "spack__spack-51723",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "ValueError: symlink does not name an internal regular file or directory"
+            },
+            {
+              "instance_id": "spack__spack-51723",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "ValueError: symlink does not name an internal regular file or directory"
+            }
+          ],
+          "classification_revision": "verified baseline typed-tree incompatibility under existing clause 1"
+        },
+        {
+          "instance_id": "keras-team__keras-22642",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            16,
+            16
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            16,
+            16
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 9,
+      "original": "boxed__mutmut-403",
+      "final": "boxed__mutmut-403",
+      "attempts": [
+        {
+          "instance_id": "boxed__mutmut-403",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            163,
+            163
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            163,
+            163
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 5,
+      "original": "gidgethub__gidgethub-225",
+      "final": "gidgethub__gidgethub-225",
+      "attempts": [
+        {
+          "instance_id": "gidgethub__gidgethub-225",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            56,
+            56
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            56,
+            56
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 7,
+      "original": "mpmath__mpmath-992",
+      "final": "mpmath__mpmath-992",
+      "attempts": [
+        {
+          "instance_id": "mpmath__mpmath-992",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            59,
+            59
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            59,
+            59
+          ],
+          "p2p_excluded": 0,
+          "error": null,
+          "history": [
+            {
+              "instance_id": "mpmath__mpmath-992",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "RuntimeError: bounded download failed, partial retained sha256:94c043f28de333ec1523c0d55107414dc4ca075e35b3847e4ca008ed720dcc36"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 2,
+      "original": "researchobject__ro-crate-py-248",
+      "final": "researchobject__ro-crate-py-248",
+      "attempts": [
+        {
+          "instance_id": "researchobject__ro-crate-py-248",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            37,
+            37
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            37,
+            37
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 6,
+      "original": "libp2p__py-libp2p-750",
+      "final": "libp2p__py-libp2p-750",
+      "attempts": [
+        {
+          "instance_id": "libp2p__py-libp2p-750",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            3,
+            3
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            3,
+            3
+          ],
+          "p2p_excluded": 0,
+          "error": null,
+          "history": [
+            {
+              "instance_id": "libp2p__py-libp2p-750",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "RuntimeError: bounded download failed, partial retained sha256:9f564b54dd421ba015c68e9d367f5fa3cc7221d7bafd1d6cc8ff7e6504ee8bf8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 1,
+      "original": "facelessuser__pymdown-extensions-2807",
+      "final": "facelessuser__pymdown-extensions-2807",
+      "attempts": [
+        {
+          "instance_id": "facelessuser__pymdown-extensions-2807",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            715,
+            715
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            715,
+            715
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 8,
+      "original": "pgmpy__pgmpy-3137",
+      "final": "pgmpy__pgmpy-3137",
+      "attempts": [
+        {
+          "instance_id": "pgmpy__pgmpy-3137",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            60,
+            66
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            60,
+            66
+          ],
+          "p2p_excluded": 6,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 5,
+      "original": "pytest-dev__pyfakefs-1286",
+      "final": "pytest-dev__pyfakefs-1286",
+      "attempts": [
+        {
+          "instance_id": "pytest-dev__pyfakefs-1286",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            28
+          ],
+          "empty_p2p": [
+            0,
+            0
+          ],
+          "gold_f2p": [
+            28,
+            28
+          ],
+          "gold_p2p": [
+            0,
+            0
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 1,
+      "original": "strands-agents__sdk-python-1734",
+      "final": "strands-agents__sdk-python-1734",
+      "attempts": [
+        {
+          "instance_id": "strands-agents__sdk-python-1734",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            4
+          ],
+          "empty_p2p": [
+            109,
+            109
+          ],
+          "gold_f2p": [
+            4,
+            4
+          ],
+          "gold_p2p": [
+            109,
+            109
+          ],
+          "p2p_excluded": 0,
+          "error": null,
+          "history": [
+            {
+              "instance_id": "strands-agents__sdk-python-1734",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "ValueError: archive root/commit mismatch"
+            },
+            {
+              "instance_id": "strands-agents__sdk-python-1734",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "ValueError: archive root/commit mismatch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 10,
+      "original": "sktime__sktime-8723",
+      "final": "skrub-data__skrub-1899",
+      "attempts": [
+        {
+          "instance_id": "sktime__sktime-8723",
+          "accepted": false,
+          "failed_clauses": [
+            3,
+            8
+          ],
+          "memory_bytes": null,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            0,
+            1
+          ],
+          "gold_f2p": [
+            0,
+            1
+          ],
+          "gold_p2p": [
+            0,
+            1
+          ],
+          "p2p_excluded": 1,
+          "error": null,
+          "history": [
+            {
+              "instance_id": "sktime__sktime-8723",
+              "accepted": false,
+              "failed_clauses": [],
+              "pending": true,
+              "error": "RuntimeError: bounded download failed, partial retained sha256:b8dfbcd36bfb283cd9079864ab0bbd5ad6b40e172d17251f39c22ab4af34fdb7"
+            }
+          ]
+        },
+        {
+          "instance_id": "skrub-data__skrub-1899",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            6
+          ],
+          "empty_p2p": [
+            126,
+            126
+          ],
+          "gold_f2p": [
+            6,
+            6
+          ],
+          "gold_p2p": [
+            126,
+            126
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 3,
+      "original": "python-scim__scim2-models-120",
+      "final": "python-scim__scim2-models-120",
+      "attempts": [
+        {
+          "instance_id": "python-scim__scim2-models-120",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            3
+          ],
+          "empty_p2p": [
+            300,
+            300
+          ],
+          "gold_f2p": [
+            3,
+            3
+          ],
+          "gold_p2p": [
+            300,
+            300
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 12,
+      "original": "ome-zarr-models__ome-zarr-models-py-206",
+      "final": "ome-zarr-models__ome-zarr-models-py-206",
+      "attempts": [
+        {
+          "instance_id": "ome-zarr-models__ome-zarr-models-py-206",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            5,
+            5
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            5,
+            5
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "other",
+      "rank": 4,
+      "original": "Cambridge-ICCS__TCTrack-118",
+      "final": "Cambridge-ICCS__TCTrack-118",
+      "attempts": [
+        {
+          "instance_id": "Cambridge-ICCS__TCTrack-118",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            2
+          ],
+          "empty_p2p": [
+            89,
+            89
+          ],
+          "gold_f2p": [
+            2,
+            2
+          ],
+          "gold_p2p": [
+            89,
+            89
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "stratum": "easy",
+      "rank": 11,
+      "original": "holoviz__holoviews-6783",
+      "final": "holoviz__holoviews-6783",
+      "attempts": [
+        {
+          "instance_id": "holoviz__holoviews-6783",
+          "accepted": true,
+          "failed_clauses": [],
+          "memory_bytes": 1073741824,
+          "empty_f2p": [
+            0,
+            1
+          ],
+          "empty_p2p": [
+            96,
+            96
+          ],
+          "gold_f2p": [
+            1,
+            1
+          ],
+          "gold_p2p": [
+            96,
+            96
+          ],
+          "p2p_excluded": 0,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "substitutions": [
+    {
+      "stratum": "other",
+      "rank": 7,
+      "original": "line__line-bot-sdk-python-981_interface",
+      "replaced": "line__line-bot-sdk-python-981_interface",
+      "failed_clauses": [
+        2
+      ],
+      "error": null,
+      "replacement": "lmstudio-ai__venvstacks-197"
+    },
+    {
+      "stratum": "other",
+      "rank": 13,
+      "original": "deepset-ai__haystack-10189",
+      "replaced": "deepset-ai__haystack-10189",
+      "failed_clauses": [
+        2
+      ],
+      "error": null,
+      "replacement": "mmornati__home-assistant-csnet-home-132"
+    },
+    {
+      "stratum": "other",
+      "rank": 15,
+      "original": "pymc-devs__pytensor-1668",
+      "replaced": "pymc-devs__pytensor-1668",
+      "failed_clauses": [
+        8
+      ],
+      "error": null,
+      "replacement": "canopen-python__canopen-613"
+    },
+    {
+      "stratum": "easy",
+      "rank": 4,
+      "original": "a2aproject__a2a-python-682_interface",
+      "replaced": "a2aproject__a2a-python-682_interface",
+      "failed_clauses": [
+        2
+      ],
+      "error": null,
+      "replacement": "spack__spack-51723"
+    },
+    {
+      "stratum": "easy",
+      "rank": 4,
+      "original": "a2aproject__a2a-python-682_interface",
+      "replaced": "spack__spack-51723",
+      "failed_clauses": [
+        1
+      ],
+      "error": "ValueError: symlink does not name an internal regular file or directory",
+      "replacement": "keras-team__keras-22642"
+    },
+    {
+      "stratum": "other",
+      "rank": 10,
+      "original": "sktime__sktime-8723",
+      "replaced": "sktime__sktime-8723",
+      "failed_clauses": [
+        3,
+        8
+      ],
+      "error": null,
+      "replacement": "skrub-data__skrub-1899"
+    }
+  ],
+  "accepted": 30,
+  "pending": [],
+  "unfilled": [],
+  "infra_failures": {
+    "canopen-python__canopen-613": 1,
+    "spack__spack-51723": 2,
+    "mpmath__mpmath-992": 1,
+    "libp2p__py-libp2p-750": 1,
+    "strands-agents__sdk-python-1734": 0,
+    "sktime__sktime-8723": 1
+  },
+  "updated_at": "2026-11-10T18:25:51.948986+00:00",
+  "recovery_history": [
+    {
+      "task": "strands-agents__sdk-python-1734",
+      "at": "2026-11-10T15:49:05.103551+00:00",
+      "previous_infra_attempts": 2,
+      "reason": "same-commit transport archive root alias normalized, old bytes preserved"
+    }
+  ]
+}

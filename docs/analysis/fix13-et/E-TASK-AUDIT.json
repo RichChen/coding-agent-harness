@@ -1,0 +1,363 @@
+{
+  "schema": "fix13.e-task-audit.v1",
+  "groups": {
+    "U": {
+      "planned_or_present": 60,
+      "audit_valid": 58,
+      "solved": 16,
+      "found_idle": 20,
+      "found_idle_rate": 0.3448275862068966,
+      "no_edit": 22,
+      "high_repeat": 21,
+      "edited": 36,
+      "median_edit_delay_after_locate": 7,
+      "tests_invoked": 330
+    },
+    "E": {
+      "planned_or_present": 60,
+      "audit_valid": 58,
+      "solved": 26,
+      "found_idle": 4,
+      "found_idle_rate": 0.06896551724137931,
+      "no_edit": 5,
+      "high_repeat": 5,
+      "edited": 53,
+      "median_edit_delay_after_locate": 5.0,
+      "tests_invoked": 365
+    },
+    "UT": {
+      "planned_or_present": 60,
+      "audit_valid": 57,
+      "solved": 28,
+      "found_idle": 0,
+      "found_idle_rate": 0.0,
+      "no_edit": 0,
+      "high_repeat": 0,
+      "edited": 57,
+      "median_edit_delay_after_locate": 16,
+      "tests_invoked": 309
+    },
+    "ET": {
+      "planned_or_present": 60,
+      "audit_valid": 56,
+      "solved": 27,
+      "found_idle": 2,
+      "found_idle_rate": 0.03571428571428571,
+      "no_edit": 2,
+      "high_repeat": 0,
+      "edited": 54,
+      "median_edit_delay_after_locate": 9,
+      "tests_invoked": 325
+    }
+  },
+  "complete_tasks_eu": 29,
+  "complete_tasks_u_e_ut": 28,
+  "eu_summaries": [
+    {
+      "left": "E",
+      "right": "U",
+      "baseline_found_idle": true,
+      "tasks": 12,
+      "mean_solve_delta": 0.4583333333333333,
+      "mean_found_idle_delta": -0.7083333333333334,
+      "mean_high_repeat_delta": -0.4583333333333333,
+      "mean_edit_rate_delta": 0.6666666666666666,
+      "mean_edit_delay_delta": -2.3333333333333335,
+      "tasks_left_better": 6,
+      "tasks_equal": 6,
+      "tasks_right_better": 0
+    },
+    {
+      "left": "E",
+      "right": "U",
+      "baseline_found_idle": false,
+      "tasks": 17,
+      "mean_solve_delta": -0.029411764705882353,
+      "mean_found_idle_delta": 0.029411764705882353,
+      "mean_high_repeat_delta": -0.14705882352941177,
+      "mean_edit_rate_delta": 0.029411764705882353,
+      "mean_edit_delay_delta": -2.78125,
+      "tasks_left_better": 0,
+      "tasks_equal": 16,
+      "tasks_right_better": 1
+    },
+    {
+      "left": "E",
+      "right": "U",
+      "baseline_found_idle": null,
+      "tasks": 29,
+      "mean_solve_delta": 0.1724137931034483,
+      "mean_found_idle_delta": -0.27586206896551724,
+      "mean_high_repeat_delta": -0.27586206896551724,
+      "mean_edit_rate_delta": 0.29310344827586204,
+      "mean_edit_delay_delta": -2.710526315789474,
+      "tasks_left_better": 6,
+      "tasks_equal": 22,
+      "tasks_right_better": 1
+    }
+  ],
+  "eu_task_rows": [
+    {
+      "task": "pasqal-io__Pulser-936",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -0.5
+    },
+    {
+      "task": "packit__packit-2684",
+      "baseline_found_idle": true,
+      "solve_delta": 0.5,
+      "found_idle_delta": -0.5,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 0.5,
+      "edit_delay_delta": -7.0
+    },
+    {
+      "task": "vprusso__toqito-1298",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -1.5
+    },
+    {
+      "task": "spdx__tools-python-855",
+      "baseline_found_idle": false,
+      "solve_delta": -0.5,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -4
+    },
+    {
+      "task": "lmstudio-ai__venvstacks-197",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -0.5
+    },
+    {
+      "task": "mmornati__home-assistant-csnet-home-132",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -1.0
+    },
+    {
+      "task": "vyperlang__vyper-4801",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.5,
+      "high_repeat_delta": -1.0,
+      "edit_rate_delta": 0.5,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "google__secops-wrapper-119",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -4.0
+    },
+    {
+      "task": "marimo-team__marimo-8387_interface",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -4.5
+    },
+    {
+      "task": "tox-dev__tox-3846",
+      "baseline_found_idle": true,
+      "solve_delta": 1.0,
+      "found_idle_delta": -1.0,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 1.0,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "canopen-python__canopen-613",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -5.5
+    },
+    {
+      "task": "avaiga__taipy-2797",
+      "baseline_found_idle": true,
+      "solve_delta": 0.0,
+      "found_idle_delta": -1.0,
+      "high_repeat_delta": 1.0,
+      "edit_rate_delta": 0.5,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "koxudaxi__datamodel-code-generator-2993",
+      "baseline_found_idle": true,
+      "solve_delta": 0.0,
+      "found_idle_delta": -1.0,
+      "high_repeat_delta": -1.0,
+      "edit_rate_delta": 1.0,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "pab1it0__prometheus-mcp-server-76",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -2.0
+    },
+    {
+      "task": "keras-team__keras-22642",
+      "baseline_found_idle": true,
+      "solve_delta": 1.0,
+      "found_idle_delta": -1.0,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 1.0,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "boxed__mutmut-403",
+      "baseline_found_idle": true,
+      "solve_delta": 0.0,
+      "found_idle_delta": -1.0,
+      "high_repeat_delta": -1.0,
+      "edit_rate_delta": 1.0,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "gidgethub__gidgethub-225",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -1.5
+    },
+    {
+      "task": "mpmath__mpmath-992",
+      "baseline_found_idle": true,
+      "solve_delta": 1.0,
+      "found_idle_delta": -1.0,
+      "high_repeat_delta": -1.0,
+      "edit_rate_delta": 1.0,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "researchobject__ro-crate-py-248",
+      "baseline_found_idle": true,
+      "solve_delta": 1.0,
+      "found_idle_delta": -1.0,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 1.0,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "libp2p__py-libp2p-750",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -7.0
+    },
+    {
+      "task": "facelessuser__pymdown-extensions-2807",
+      "baseline_found_idle": true,
+      "solve_delta": 0.0,
+      "found_idle_delta": -0.5,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.5,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "pgmpy__pgmpy-3137",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": 0.0
+    },
+    {
+      "task": "pytest-dev__pyfakefs-1286",
+      "baseline_found_idle": true,
+      "solve_delta": 1.0,
+      "found_idle_delta": -0.5,
+      "high_repeat_delta": -1.0,
+      "edit_rate_delta": 0.5,
+      "edit_delay_delta": 0.5
+    },
+    {
+      "task": "strands-agents__sdk-python-1734",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -0.5
+    },
+    {
+      "task": "skrub-data__skrub-1899",
+      "baseline_found_idle": true,
+      "solve_delta": 0.0,
+      "found_idle_delta": -0.5,
+      "high_repeat_delta": -0.5,
+      "edit_rate_delta": 0.5,
+      "edit_delay_delta": -0.5
+    },
+    {
+      "task": "python-scim__scim2-models-120",
+      "baseline_found_idle": true,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.5,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": -0.5,
+      "edit_delay_delta": null
+    },
+    {
+      "task": "ome-zarr-models__ome-zarr-models-py-206",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -1.0
+    },
+    {
+      "task": "Cambridge-ICCS__TCTrack-118",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": 0.0
+    },
+    {
+      "task": "holoviz__holoviews-6783",
+      "baseline_found_idle": false,
+      "solve_delta": 0.0,
+      "found_idle_delta": 0.0,
+      "high_repeat_delta": 0.0,
+      "edit_rate_delta": 0.0,
+      "edit_delay_delta": -11.0
+    }
+  ],
+  "evidence_boundary": "post-hoc descriptive analysis on the fixed 60-task development corpus; no independent validation"
+}

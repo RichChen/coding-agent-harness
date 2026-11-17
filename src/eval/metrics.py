@@ -31,6 +31,7 @@ class TaskResult:
     expected_failures: list[str] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
     trace_file: str = ""  # relative path to JSONL trace for this task
+    intervention: dict | None = None
 
 
 @dataclass

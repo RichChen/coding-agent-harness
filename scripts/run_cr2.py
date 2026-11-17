@@ -465,7 +465,8 @@ def _events(run_dir: Path) -> list[dict]:
     path = run_dir / "events.jsonl"
     if not path.is_file():
         return []
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    with path.open(encoding="utf-8") as handle:
+        return [json.loads(line) for line in handle if line.strip()]
 
 
 def provider_failure(run_dir: Path) -> str | None:

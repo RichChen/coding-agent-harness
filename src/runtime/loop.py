@@ -146,6 +146,10 @@ class AgentRunResult:
     total_tool_invocations: int = 0
     plan: dict | None = None
     context_events: list[dict] = field(default_factory=list)
+    # Structured intervention records are separate from context_events so the
+    # legacy FIX-13/FIX-15 context-event ordering remains unchanged.
+    intervention_events: list[dict] = field(default_factory=list)
+    intervention: dict | None = None
     subagent_traces: list[dict] = field(default_factory=list)
     llm_attempts: list[dict] = field(default_factory=list)
     termination_kind: str | None = None
@@ -187,6 +191,8 @@ class AgentLoop:
         estimated_input_tokens: int = 512,
         request_telemetry: bool = False,
         announce_remaining_calls: bool = True,
+        tool_intervention: str = "none",
+        intervention_policy=None,
     ):
         self.llm = llm
         self.tools = tools
@@ -210,6 +216,15 @@ class AgentLoop:
         self.hooks = hooks
         self.event_bus = event_bus
         self.system_prompt = system_prompt if system_prompt else SYSTEM_PROMPT
+        from src.runtime.tool_intervention import build_intervention_policy
+        self.intervention_policy = build_intervention_policy(
+            intervention_policy if intervention_policy is not None else tool_intervention
+        )
+        self.intervention = self.intervention_policy.spec
+        self.tool_intervention = self.intervention.mode
+        prompt = self.intervention_policy.initial_prompt()
+        if prompt is not None:
+            self.system_prompt += "\n\n" + prompt
         self.runtime_mode = runtime_mode
         self.planner = planner
         self.use_llm_stream = use_llm_stream
@@ -238,6 +253,8 @@ class AgentLoop:
         total_tool_invocations: int = 0,
         plan: dict | None = None,
         context_events: list | None = None,
+        intervention_events: list | None = None,
+        intervention: dict | None = None,
         subagent_traces: list | None = None,
         start_time: float,
         termination_kind: str | None = None,
@@ -256,6 +273,8 @@ class AgentLoop:
             total_tool_invocations=total_tool_invocations,
             plan=plan,
             context_events=context_events or [],
+            intervention_events=intervention_events if intervention_events is not None else list(getattr(self, "_intervention_events", [])),
+            intervention=intervention if intervention is not None else self._intervention_summary(),
             subagent_traces=subagent_traces or [],
             llm_attempts=self._attempt_dicts(),
             termination_kind=termination_kind or (
@@ -275,6 +294,32 @@ class AgentLoop:
         if self.session and self.execution_backend is None:
             self.session.finish(result)
         return result
+
+    def _intervention_summary(self) -> dict:
+        """Return compact, adapter-neutral intervention provenance for a run."""
+        events = list(getattr(self, "_intervention_events", []))
+        configured = next((event for event in events
+                           if event.get("event") == "intervention_configured"), {})
+        triggered = [event for event in events
+                     if event.get("event") == "intervention_triggered"]
+        return {
+            "schema": "intervention_run.v1",
+            "policy": configured.get("mode", self.intervention.mode),
+            "policy_version": configured.get("policy_version", self.intervention.policy_version),
+            "config_hash": configured.get("config_hash", self.intervention.config_hash),
+            "trigger_count": len(triggered),
+            "prompt_injection_count": sum(1 for event in triggered
+                                           if event.get("prompt_injected") is True),
+            "resumed": bool(getattr(self, "_intervention_resumed", False)),
+            "events": [
+                {
+                    "trigger": event.get("trigger"),
+                    "prompt_injected": bool(event.get("prompt_injected")),
+                    "metadata": dict(event.get("metadata") or {}),
+                }
+                for event in triggered
+            ],
+        }
 
     def _error_text(self, error: BaseException) -> str:
         text = redact_secrets(str(error), (getattr(self.llm, "api_key", None),))
@@ -618,6 +663,18 @@ class AgentLoop:
             self.run_output_meter = RunOutputMeter(limit_bytes=self.run_output_meter.limit_bytes)
 
         saved = self.session.state.loop if self.session else {}
+        self._intervention_events = []
+        self._intervention_resumed = bool(saved)
+        self._intervention_events.append({
+            "event": "intervention_configured",
+            **self.intervention.as_dict(),
+        })
+        # Restore dynamic policy state.  ``repeat_call`` remains accepted for
+        # FIX-13/FIX-15 session compatibility.
+        policy_snapshot = saved.get("intervention_policy")
+        if policy_snapshot is None and self.tool_intervention == "repeat_reminder":
+            policy_snapshot = saved.get("repeat_call")
+        self.intervention_policy.restore(policy_snapshot)
         if self.session:
             from datetime import datetime
             started_at = datetime.fromisoformat(self.session.state.manifest["started_at"]).timestamp()
@@ -637,6 +694,7 @@ class AgentLoop:
             policy_blocks = saved["policy_blocks"]
             total_tool_invocations = saved["total_tool_invocations"]
             context_events = saved.get("context_events", [])
+            self._intervention_events = saved.get("intervention_events", self._intervention_events)
             self.run_output_meter = RunOutputMeter(**self.session.state.run_output)
             step_remaining = saved["step_expires_at"] - time.time()
             self.deadline.step_deadline_mono = time.monotonic() + step_remaining
@@ -657,12 +715,17 @@ class AgentLoop:
                     step_expires_at=time.time() + (self.deadline.step_deadline_mono - time.monotonic()),
                     total_tokens=total_tokens, tool_failures=tool_failures, policy_blocks=policy_blocks,
                     context_events=context_events,
+                    intervention_events=self._intervention_events,
                     total_tool_invocations=total_tool_invocations, run_output=self.run_output_meter.snapshot(),
-                    response=persisted_response(response) if response else None, response_operations=response_operations))
+                    response=persisted_response(response) if response else None, response_operations=response_operations,
+                    intervention_policy=self.intervention_policy.snapshot(),
+                    **({"repeat_call": self.intervention_policy.snapshot().get("repeat_call")}
+                       if self.intervention_policy.snapshot().get("repeat_call") is not None else {})))
 
         if self.event_bus:
             self.event_bus.open(task_id)
             self.event_bus.emit("run_start", task_id=task_id)
+            self.event_bus.emit("intervention_configured", **self.intervention.as_dict())
             if plan:
                 self.event_bus.emit("plan_created", task_id=task_id, plan=plan.to_dict())
 
@@ -1209,6 +1272,35 @@ class AgentLoop:
                             start_time=start_time,
                             termination_kind=batch_stop_kind,
                         )
+
+                from src.runtime.tool_intervention import InterventionContext
+                decision = self.intervention_policy.observe(InterventionContext(
+                    request=(self.model_ledger.calls_started if self.model_ledger
+                             else len(self.attempt_sink.attempts)),
+                    step=state.step_number,
+                    calls=tuple(response.tool_calls),
+                    results=tuple(tool_results),
+                    prior_events=tuple(self._intervention_events),
+                ))
+                if decision is not None:
+                    if decision.prompt is not None:
+                        messages.append({"role": "user", "content": decision.prompt})
+                    metadata = dict(decision.metadata or {})
+                    if decision.trigger == "three_identical_single_tool_calls":
+                        context_events.append({"event": "repeat_call_reminder", **metadata})
+                    event = {
+                        "event": "intervention_triggered",
+                        "schema": self.intervention.schema,
+                        "mode": self.intervention.mode,
+                        "trigger": decision.trigger,
+                        **metadata,
+                        **decision.as_dict(),
+                    }
+                    self._intervention_events.append(event)
+                    if self.event_bus:
+                        if decision.trigger == "three_identical_single_tool_calls":
+                            self.event_bus.emit("repeat_call_reminder", **metadata)
+                        self.event_bus.emit("intervention_triggered", **event)
 
                 # Hook: after all tool results appended (e.g. compaction)
                 if self.hooks:
